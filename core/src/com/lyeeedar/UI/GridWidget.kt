@@ -1,0 +1,90 @@
+package com.lyeeedar.UI
+
+import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.graphics.g2d.Batch
+import com.badlogic.gdx.graphics.g2d.SpriteBatch
+import com.badlogic.gdx.scenes.scene2d.InputEvent
+import com.badlogic.gdx.scenes.scene2d.Touchable
+import com.badlogic.gdx.scenes.scene2d.ui.Widget
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener
+import com.lyeeedar.Board.Grid
+import com.lyeeedar.Global
+import com.lyeeedar.SpaceSlot
+import com.lyeeedar.Sprite.Sprite
+import com.lyeeedar.Sprite.SpriteRenderer
+import com.lyeeedar.Util.AssetManager
+import com.lyeeedar.Util.Point
+
+/**
+ * Created by Philip on 05-Jul-16.
+ */
+
+class GridWidget() : Widget()
+{
+	init
+	{
+		touchable = Touchable.enabled
+
+		addListener(object : ClickListener()
+		{
+			override fun clicked(event: InputEvent?, x: Float, y: Float)
+			{
+				val sx = (x / Global.tileSize).toInt()
+				val sy = (height-1) - (y / Global.tileSize).toInt()
+
+				grid?.select(Point(sx, sy))
+			}
+		})
+	}
+
+	val frame: Sprite = AssetManager.loadSprite("GUI/frame")
+	val renderer: SpriteRenderer = SpriteRenderer()
+
+	var grid: Grid? = null
+		set(value)
+		{
+			field = value
+			invalidate()
+		}
+
+	val width: Int
+		get() = grid?.width ?: 0
+
+	val height: Int
+		get() = grid?.height ?: 0
+
+	override fun getPrefHeight(): Float
+	{
+		return height.toFloat() * Global.tileSize
+	}
+
+	override fun getPrefWidth(): Float
+	{
+		return width.toFloat() * Global.tileSize
+	}
+
+	override fun draw(batch: Batch?, parentAlpha: Float)
+	{
+		if (grid == null) return
+
+		for (x in 0..width-1)
+		{
+			for (y in 0..height-1)
+			{
+				val tile = grid!!.grid[x, y]
+				val orb = tile.orb
+
+				if (orb != null)
+				{
+					renderer.queueSprite(orb.sprite, x.toFloat(), (height-1) - y.toFloat(), this.x.toFloat(), this.y.toFloat(), SpaceSlot.ORB, 0)
+				}
+				if (tile.isSelected)
+				{
+					renderer.queueSprite(frame, x.toFloat(), (height-1) - y.toFloat(), this.x.toFloat(), this.y.toFloat(), SpaceSlot.ORB, 10)
+				}
+			}
+		}
+
+		renderer.flush(Gdx.app.graphics.deltaTime, batch as SpriteBatch)
+	}
+}

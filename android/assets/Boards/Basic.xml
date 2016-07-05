@@ -1,0 +1,14 @@
+<Grid>
+    <Rows>
+        <Row>##########</Row>
+        <Row>#s..ss..s#</Row>
+        <Row>#........#</Row>
+        <Row>#........#</Row>
+        <Row>#........#</Row>
+        <Row>#........#</Row>
+        <Row>#........#</Row>
+        <Row>#........#</Row>
+        <Row>#........#</Row>
+        <Row>##########</Row>
+    </Rows>
+</Grid>

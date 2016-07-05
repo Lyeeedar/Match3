@@ -1,0 +1,223 @@
+
+SpriteAtlas.png
+size: 1024,128
+format: RGBA8888
+filter: MipMapLinearLinear,MipMapLinearLinear
+repeat: none
+GUI/Button
+  rotate: false
+  xy: 158, 18
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+GUI/ButtonBorder
+  rotate: false
+  xy: 566, 86
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+GUI/ButtonDown
+  rotate: false
+  xy: 194, 18
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+GUI/Checked
+  rotate: false
+  xy: 602, 86
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+GUI/Cog
+  rotate: false
+  xy: 230, 18
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+GUI/Eye
+  rotate: false
+  xy: 638, 86
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+GUI/PanelHorizontal
+  rotate: false
+  xy: 2, 54
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+GUI/PanelVertical
+  rotate: false
+  xy: 70, 54
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+GUI/PassiveTileBorder
+  rotate: false
+  xy: 302, 18
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+GUI/ProgressIndicator
+  rotate: false
+  xy: 446, 42
+  size: 24, 24
+  orig: 24, 24
+  offset: 0, 0
+  index: -1
+GUI/QuestionMark
+  rotate: false
+  xy: 710, 86
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+GUI/SeperatorHorizontal
+  rotate: false
+  xy: 158, 8
+  size: 32, 6
+  orig: 32, 6
+  offset: 0, 0
+  index: -1
+GUI/SeperatorVertical
+  rotate: false
+  xy: 818, 86
+  size: 6, 32
+  orig: 6, 32
+  offset: 0, 0
+  index: -1
+GUI/Sheathed
+  rotate: false
+  xy: 338, 18
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+GUI/SpeechBubble
+  rotate: false
+  xy: 138, 54
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+GUI/SpeechBubbleArrow
+  rotate: false
+  xy: 566, 74
+  size: 8, 8
+  orig: 8, 8
+  offset: 0, 0
+  index: -1
+GUI/TextField
+  rotate: false
+  xy: 746, 86
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+GUI/TileBackground
+  rotate: false
+  xy: 206, 54
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+GUI/TileBorder
+  rotate: false
+  xy: 274, 54
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+GUI/TilePanel
+  rotate: false
+  xy: 374, 18
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+GUI/Tooltip
+  rotate: false
+  xy: 342, 54
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+GUI/Unchecked
+  rotate: false
+  xy: 410, 34
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+GUI/Unsheathed
+  rotate: false
+  xy: 782, 86
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+GUI/background
+  rotate: false
+  xy: 106, 2
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+GUI/frame_0
+  rotate: false
+  xy: 266, 18
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+GUI/frame_1
+  rotate: false
+  xy: 674, 86
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+GUI/loading
+  rotate: false
+  xy: 514, 70
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+Oryx/uf_split/uf_items/crystal_blood
+  rotate: false
+  xy: 54, 2
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+Oryx/uf_split/uf_items/crystal_dragon
+  rotate: false
+  xy: 410, 70
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+Oryx/uf_split/uf_items/crystal_sky
+  rotate: false
+  xy: 2, 2
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+Oryx/uf_split/uf_items/crystal_sun
+  rotate: false
+  xy: 462, 70
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1

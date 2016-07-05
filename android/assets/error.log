@@ -1,0 +1,10 @@
+kotlin.KotlinNullPointerException
+	at com.lyeeedar.Board.Grid.select(Grid.kt:53)
+	at com.lyeeedar.UI.GridWidget$1.clicked(GridWidget.kt:35)
+	at com.badlogic.gdx.scenes.scene2d.utils.ClickListener.touchUp(ClickListener.java:89)
+	at com.badlogic.gdx.scenes.scene2d.InputListener.handle(InputListener.java:58)
+	at com.badlogic.gdx.scenes.scene2d.Stage.touchUp(Stage.java:353)
+	at com.badlogic.gdx.InputMultiplexer.touchUp(InputMultiplexer.java:96)
+	at com.badlogic.gdx.backends.lwjgl.LwjglInput.processEvents(LwjglInput.java:332)
+	at com.badlogic.gdx.backends.lwjgl.LwjglApplication.mainLoop(LwjglApplication.java:215)
+	at com.badlogic.gdx.backends.lwjgl.LwjglApplication$1.run(LwjglApplication.java:124)
