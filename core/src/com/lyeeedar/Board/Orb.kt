@@ -15,6 +15,8 @@ class Orb(val desc: OrbDesc)
 	//val properties: Array<OrbProperty> = Array()
 	var armed: Boolean = false
 
+	var markedForDeletion: Boolean = false
+
 	val key: Int
 		get() = desc.key
 

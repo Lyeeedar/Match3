@@ -5,10 +5,12 @@ import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.IntIntMap
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Direction
+import com.lyeeedar.Global
 import com.lyeeedar.SpaceSlot
 import com.lyeeedar.Sprite.Sprite
 import com.lyeeedar.Sprite.SpriteAnimation.BumpAnimation
 import com.lyeeedar.Sprite.SpriteAnimation.MoveAnimation
+import com.lyeeedar.Sprite.SpriteAnimation.StretchAnimation
 import com.lyeeedar.Sprite.SpriteRenderer
 import com.lyeeedar.Util.Array2D
 import com.lyeeedar.Util.AssetManager
@@ -28,6 +30,8 @@ class Grid(val width: Int, val height: Int)
 	val sunkCount: IntIntMap = IntIntMap()
 
 	var selected: Point = Point.MINUS_ONE
+
+	val animSpeed = 0.2f
 
 	init
 	{
@@ -65,12 +69,12 @@ class Grid(val width: Int, val height: Int)
 					oldTile.orb = oldOrb
 					newTile.orb = newOrb
 
-					oldOrb.sprite.spriteAnimation = BumpAnimation.obtain().set(0.15f, Direction.Companion.getDirection(oldTile, newTile))
+					oldOrb.sprite.spriteAnimation = BumpAnimation.obtain().set(animSpeed, Direction.Companion.getDirection(oldTile, newTile))
 				}
 				else
 				{
-					oldOrb.sprite.spriteAnimation = MoveAnimation.obtain().set(0.15f, newTile.getPosDiff(oldTile), MoveAnimation.MoveEquation.LINEAR)
-					newOrb.sprite.spriteAnimation = MoveAnimation.obtain().set(0.15f, oldTile.getPosDiff(newTile), MoveAnimation.MoveEquation.LINEAR)
+					oldOrb.sprite.spriteAnimation = MoveAnimation.obtain().set(animSpeed, newTile.getPosDiff(oldTile), MoveAnimation.MoveEquation.LINEAR)
+					newOrb.sprite.spriteAnimation = MoveAnimation.obtain().set(animSpeed, oldTile.getPosDiff(newTile), MoveAnimation.MoveEquation.LINEAR)
 				}
 			}
 			else
@@ -146,13 +150,13 @@ class Grid(val width: Int, val height: Int)
 					// check for drop
 					if (diagL != null && diagL.canHaveOrb && diagL.orb == null)
 					{
-						orb.sprite.spriteAnimation = MoveAnimation.obtain().set(0.15f, diagL.getPosDiff(tile), MoveAnimation.MoveEquation.LINEAR)
+						orb.sprite.spriteAnimation = MoveAnimation.obtain().set(animSpeed, diagL.getPosDiff(tile), MoveAnimation.MoveEquation.LINEAR)
 						diagL.orb = orb
 						tile.orb = null
 						cascadeComplete = false
 					} else if (diagR != null && diagR.canHaveOrb && diagR.orb == null)
 					{
-						orb.sprite.spriteAnimation = MoveAnimation.obtain().set(0.15f, diagR.getPosDiff(tile), MoveAnimation.MoveEquation.LINEAR)
+						orb.sprite.spriteAnimation = MoveAnimation.obtain().set(animSpeed, diagR.getPosDiff(tile), MoveAnimation.MoveEquation.LINEAR)
 						diagR.orb = orb
 						tile.orb = null
 						cascadeComplete = false
@@ -188,6 +192,8 @@ class Grid(val width: Int, val height: Int)
 		// if in update, do animations
 		if (!hasAnim())
 		{
+			cleanup()
+
 			val cascadeComplete = cascade()
 
 			if (cascadeComplete)
@@ -204,7 +210,23 @@ class Grid(val width: Int, val height: Int)
 		// else detonate
 		// else match
 		// else wait for input
+	}
 
+	fun cleanup()
+	{
+		for (x in 0..width-1)
+		{
+			for (y in 0..height - 1)
+			{
+				val tile = grid[x, y]
+				val orb = tile.orb ?: continue
+
+				if (orb.markedForDeletion && orb.sprite.spriteAnimation == null)
+				{
+					tile.orb = null
+				}
+			}
+		}
 	}
 
 	fun spawn(): Boolean
@@ -218,6 +240,7 @@ class Grid(val width: Int, val height: Int)
 				if (tile.canSpawn && tile.orb == null)
 				{
 					val orb = Orb(validOrbs.random())
+					orb.sprite.spriteAnimation = MoveAnimation.obtain().set(animSpeed, floatArrayOf(0f, Global.tileSize.toFloat()), MoveAnimation.MoveEquation.LINEAR)
 					tile.orb = orb
 					complete = false
 				}
@@ -414,10 +437,10 @@ class Grid(val width: Int, val height: Int)
 				val y = match.first.y + (ystep * i).toInt()
 
 				val tile = tile(x, y) ?: continue
-				if (tile.orb != null)
-				{
-					tile.orb = null
-				}
+				val orb = tile.orb ?: continue
+
+				orb.sprite.spriteAnimation = StretchAnimation.obtain().set(animSpeed, floatArrayOf(0f, 0f), 0f, StretchAnimation.StretchEquation.EXPAND)
+				orb.markedForDeletion = true
 			}
 
 			// if 4 or 5 match then spawn new orb
