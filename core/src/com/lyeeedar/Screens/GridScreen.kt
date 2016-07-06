@@ -31,7 +31,7 @@ class GridScreen(): AbstractScreen()
 		table.isVisible = true
 		table.setFillParent(true)
 		stage.addActor(table)
-		table.debug()
+		//table.debug()
 
 		table.add(widget)
 	}

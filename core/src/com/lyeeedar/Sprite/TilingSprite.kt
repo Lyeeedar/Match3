@@ -21,7 +21,8 @@ class TilingSprite
 	{
 		sprites.put(CENTER, topSprite)
 		sprites.put(SOUTH, frontSprite)
-		sprites.put(NORTH, overhangSprite)
+
+		overhang = overhangSprite
 
 		hasAllElements = true
 	}
@@ -42,6 +43,8 @@ class TilingSprite
 	var spriteBase = Element("Sprite", null)
 	var additive = false
 
+	var overhang: Sprite? = null
+
 	var hasAllElements: Boolean = false
 
 	fun copy(): TilingSprite
@@ -53,6 +56,7 @@ class TilingSprite
 		copy.maskName = maskName
 		copy.spriteBase = spriteBase
 		copy.hasAllElements = hasAllElements
+		copy.overhang = overhang?.copy()
 
 		for (pair in sprites.entries())
 		{
@@ -79,14 +83,15 @@ class TilingSprite
 
 			sprites.put(CENTER, topSprite)
 			sprites.put(SOUTH, frontSprite)
-			sprites.put(NORTH, overhangSprite)
+
+			overhang = overhangSprite
 
 			hasAllElements = true
 		}
 
-		val spriteElement = xml.getChildByName("Sprite")
-		val texName = spriteElement?.get("Name")
-		val maskName = xml.get("Mask", null)
+		val spriteElement = xml.getChildByName("Sprite") ?: this.spriteBase
+		val texName = spriteElement.get("Name", null)
+		val maskName = xml.get("Mask", "")
 
 		this.additive = xml.getBoolean("Additive", false)
 
@@ -114,7 +119,8 @@ class TilingSprite
 			{
 				return sprites.get(CENTER)
 			}
-		} else
+		}
+		else
 		{
 			var sprite: Sprite? = sprites.get(emptyDirections.bitFlag)
 			if (sprite != null)

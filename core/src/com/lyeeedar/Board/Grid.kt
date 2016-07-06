@@ -12,8 +12,11 @@ import com.lyeeedar.Sprite.SpriteAnimation.BumpAnimation
 import com.lyeeedar.Sprite.SpriteAnimation.MoveAnimation
 import com.lyeeedar.Sprite.SpriteAnimation.StretchAnimation
 import com.lyeeedar.Sprite.SpriteRenderer
+import com.lyeeedar.Sprite.SpriteWrapper
+import com.lyeeedar.Sprite.TilingSprite
 import com.lyeeedar.Util.Array2D
 import com.lyeeedar.Util.AssetManager
+import com.lyeeedar.Util.EnumBitflag
 import com.lyeeedar.Util.Point
 import java.util.*
 
@@ -32,6 +35,10 @@ class Grid(val width: Int, val height: Int)
 	var selected: Point = Point.MINUS_ONE
 
 	val animSpeed = 0.2f
+
+	lateinit var outerwall: SpriteWrapper
+	lateinit var floor: SpriteWrapper
+	lateinit var innerwall: SpriteWrapper
 
 	init
 	{
@@ -114,14 +121,21 @@ class Grid(val width: Int, val height: Int)
 				val orb = tile.orb
 				if (orb != null && !orb.armed)
 				{
-					val below = tile(x, y+1)
-					// check for drop
-
-					if (below != null && below.canHaveOrb && below.orb == null && (!below.canSink || orb.desc.canSink))
+					if (orb.sprite.spriteAnimation == null)
 					{
-						orb.sprite.spriteAnimation = MoveAnimation.obtain().set(0.15f, below.getPosDiff(tile), MoveAnimation.MoveEquation.LINEAR)
-						below.orb = orb
-						tile.orb = null
+						val below = tile(x, y + 1)
+						// check for drop
+
+						if (below != null && below.canHaveOrb && below.orb == null && (!below.canSink || orb.desc.canSink))
+						{
+							orb.sprite.spriteAnimation = MoveAnimation.obtain().set(0.15f, below.getPosDiff(tile), MoveAnimation.MoveEquation.LINEAR)
+							below.orb = orb
+							tile.orb = null
+							cascadeComplete = false
+						}
+					}
+					else
+					{
 						cascadeComplete = false
 					}
 				}
@@ -154,7 +168,8 @@ class Grid(val width: Int, val height: Int)
 						diagL.orb = orb
 						tile.orb = null
 						cascadeComplete = false
-					} else if (diagR != null && diagR.canHaveOrb && diagR.orb == null)
+					}
+					else if (diagR != null && diagR.canHaveOrb && diagR.orb == null)
 					{
 						orb.sprite.spriteAnimation = MoveAnimation.obtain().set(animSpeed, diagR.getPosDiff(tile), MoveAnimation.MoveEquation.LINEAR)
 						diagR.orb = orb
@@ -252,10 +267,16 @@ class Grid(val width: Int, val height: Int)
 
 	fun match(): Boolean
 	{
-		val matches = findMatches()
-		clearMatches(matches)
+		val match5 = findMatches(5)
+		clearMatches(match5)
 
-		return matches.size == 0
+		val match4 = findMatches(4)
+		clearMatches(match4)
+
+		val match3 = findMatches(3)
+		clearMatches(match3)
+
+		return match5.size == 0 && match4.size == 0 && match3.size == 0
 	}
 
 	fun detonate(): Boolean
@@ -323,10 +344,21 @@ class Grid(val width: Int, val height: Int)
 	{
 		val matches = Array<Pair<Point, Point>>()
 
+		matches.addAll(findMatches(3))
+		matches.addAll(findMatches(4))
+		matches.addAll(findMatches(5))
+
+		return matches
+	}
+
+	fun findMatches(length: Int) : Array<Pair<Point, Point>>
+	{
+		val matches = Array<Pair<Point, Point>>()
+
 		fun addMatch(p1: Point, p2: Point)
 		{
 			val dst = p1.dist(p2)
-			if (dst >= 2)
+			if (dst >= length-1)
 			{
 				matches.add(Pair(p1, p2))
 			}
@@ -455,6 +487,25 @@ class Grid(val width: Int, val height: Int)
 		else return null
 	}
 
+	// ----------------------------------------------------------------------
+	fun buildTilingBitflag(bitflag: EnumBitflag<Direction>, x: Int, y: Int, id: Long)
+	{
+		// Build bitflag of surrounding tiles
+		bitflag.clear()
+		for (dir in Direction.Values)
+		{
+			val tile = tile( x - dir.x, y - dir.y )
+
+			if (tile != null)
+			{
+				if (tile.sprite.tilingSprite == null || tile.sprite.tilingSprite?.checkID != id)
+				{
+					bitflag.setBit(dir)
+				}
+			}
+		}
+	}
+
 	companion object
 	{
 		fun load(path: String) : Grid
@@ -467,6 +518,10 @@ class Grid(val width: Int, val height: Int)
 
 			val grid = Grid(width, height)
 
+			grid.outerwall = SpriteWrapper.load(xml.getChildByName("OuterWall"))
+			grid.innerwall = SpriteWrapper.load(xml.getChildByName("InnerWall"))
+			grid.floor = SpriteWrapper.load(xml.getChildByName("Floor"))
+
 			for (x in 0..width-1)
 			{
 				for (y in 0..height-1)
@@ -477,14 +532,21 @@ class Grid(val width: Int, val height: Int)
 					if (char == '#')
 					{
 						tile.canHaveOrb = false
+						tile.sprite = grid.outerwall.copy()
 					}
 					else if (char == 's')
 					{
 						tile.canSpawn = true
+						tile.sprite = grid.floor.copy()
 					}
 					else if (char == 'v')
 					{
 						tile.canSink = true
+						tile.sprite = grid.floor.copy()
+					}
+					else
+					{
+						tile.sprite = grid.floor.copy()
 					}
 				}
 			}

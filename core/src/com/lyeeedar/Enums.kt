@@ -243,10 +243,10 @@ enum class Direction private constructor(val x: Int, val y: Int, val identifier:
 // ----------------------------------------------------------------------
 enum class SpaceSlot
 {
-	BACKGROUND,
 	TILE,
 	ORB,
-	PROPERTIES;
+	PROPERTIES,
+	OVERHANG;
 
 
 	companion object

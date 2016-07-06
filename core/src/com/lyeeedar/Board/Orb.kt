@@ -17,6 +17,8 @@ class Orb(val desc: OrbDesc)
 
 	var markedForDeletion: Boolean = false
 
+	var fallCount = 0
+
 	val key: Int
 		get() = desc.key
 

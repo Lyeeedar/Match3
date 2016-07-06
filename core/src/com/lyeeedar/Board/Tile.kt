@@ -1,6 +1,7 @@
 package com.lyeeedar.Board
 
 import com.lyeeedar.Global
+import com.lyeeedar.Sprite.SpriteWrapper
 import com.lyeeedar.Util.Point
 
 /**
@@ -9,6 +10,8 @@ import com.lyeeedar.Util.Point
 
 class Tile(x: Int, y: Int) : Point(x, y)
 {
+	lateinit var sprite: SpriteWrapper
+
 	var orb: Orb? = null
 
 	var connectedTo: Tile? = null

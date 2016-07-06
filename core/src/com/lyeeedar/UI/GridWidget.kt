@@ -8,11 +8,13 @@ import com.badlogic.gdx.scenes.scene2d.Touchable
 import com.badlogic.gdx.scenes.scene2d.ui.Widget
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener
 import com.lyeeedar.Board.Grid
+import com.lyeeedar.Direction
 import com.lyeeedar.Global
 import com.lyeeedar.SpaceSlot
 import com.lyeeedar.Sprite.Sprite
 import com.lyeeedar.Sprite.SpriteRenderer
 import com.lyeeedar.Util.AssetManager
+import com.lyeeedar.Util.EnumBitflag
 import com.lyeeedar.Util.Point
 
 /**
@@ -39,6 +41,7 @@ class GridWidget() : Widget()
 
 	val frame: Sprite = AssetManager.loadSprite("GUI/frame")
 	val renderer: SpriteRenderer = SpriteRenderer()
+	val bitflag: EnumBitflag<Direction> = EnumBitflag()
 
 	var grid: Grid? = null
 		set(value)
@@ -74,13 +77,32 @@ class GridWidget() : Widget()
 				val tile = grid!!.grid[x, y]
 				val orb = tile.orb
 
+				val tileHeight = if (y == 0) SpaceSlot.OVERHANG else SpaceSlot.TILE
+
+				if (tile.sprite.sprite != null)
+				{
+					renderer.queueSprite(tile.sprite.sprite!!, x.toFloat(), (height-1) - y.toFloat(), this.x.toFloat(), this.y.toFloat(), tileHeight, 0)
+				}
+				if (tile.sprite.tilingSprite != null)
+				{
+					val tiling = tile.sprite.tilingSprite!!
+					grid!!.buildTilingBitflag(bitflag, x, y, tiling.checkID)
+					val sprite = tiling.getSprite( bitflag )
+					renderer.queueSprite(sprite, x.toFloat(), (height-1) - y.toFloat(), this.x.toFloat(), this.y.toFloat(), tileHeight, 0)
+
+					if (tiling.overhang != null && bitflag.contains(Direction.NORTH))
+					{
+						renderer.queueSprite(tiling.overhang!!, x.toFloat(), (height) - y.toFloat(), this.x.toFloat(), this.y.toFloat(), SpaceSlot.OVERHANG, 0)
+					}
+				}
+
 				if (orb != null)
 				{
-					renderer.queueSprite(orb.sprite, x.toFloat(), (height-1) - y.toFloat(), this.x.toFloat(), this.y.toFloat(), SpaceSlot.ORB, 0)
+					renderer.queueSprite(orb.sprite, x.toFloat(), (height-1) - y.toFloat(), this.x.toFloat(), this.y.toFloat(), SpaceSlot.ORB, 1)
 				}
 				if (tile.isSelected)
 				{
-					renderer.queueSprite(frame, x.toFloat(), (height-1) - y.toFloat(), this.x.toFloat(), this.y.toFloat(), SpaceSlot.ORB, 10)
+					renderer.queueSprite(frame, x.toFloat(), (height-1) - y.toFloat(), this.x.toFloat(), this.y.toFloat(), SpaceSlot.ORB, 0)
 				}
 			}
 		}
