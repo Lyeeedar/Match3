@@ -1,0 +1,41 @@
+<Specials>
+
+    <Match4>
+
+        <EAST>
+            <HitPattern>
+                <Row>...</Row>
+                <Row>L@R</Row>
+                <Row>...</Row>
+            </HitPattern>
+
+            <Icon>
+                <Name>Oryx/uf_split/uf_items/key_silver</Name>
+            </Icon>
+
+            <Sprite>
+                <Name>EffectSprites/IceBurst/IceBurst</Name>
+                <UpdateRate>0.1</UpdateRate>
+            </Sprite>
+        </EAST>
+
+        <NORTH>
+            <HitPattern>
+                <Row>.U.</Row>
+                <Row>.@.</Row>
+                <Row>.D.</Row>
+            </HitPattern>
+
+            <Icon>
+                <Name>Oryx/uf_split/uf_items/key_silver</Name>
+            </Icon>
+
+            <Sprite>
+                <Name>EffectSprites/IceBurst/IceBurst</Name>
+                <UpdateRate>0.1</UpdateRate>
+            </Sprite>
+        </NORTH>
+
+    </Match4>
+
+</Specials>

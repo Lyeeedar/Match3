@@ -96,9 +96,26 @@ class GridWidget() : Widget()
 					}
 				}
 
+				for (sprite in tile.effects)
+				{
+					if (sprite.completed)
+					{
+						tile.effects.removeValue(sprite, true)
+					}
+					else
+					{
+						renderer.queueSprite(sprite, x.toFloat(), (height-1) - y.toFloat(), this.x.toFloat(), this.y.toFloat(), SpaceSlot.ORB, 5)
+					}
+				}
+
 				if (orb != null)
 				{
 					renderer.queueSprite(orb.sprite, x.toFloat(), (height-1) - y.toFloat(), this.x.toFloat(), this.y.toFloat(), SpaceSlot.ORB, 1)
+
+					if (orb.explosion != null)
+					{
+						renderer.queueSprite(orb.explosion!!.icon, x.toFloat(), (height-1) - y.toFloat(), this.x.toFloat(), this.y.toFloat(), SpaceSlot.ORB, 2)
+					}
 				}
 				if (tile.isSelected)
 				{

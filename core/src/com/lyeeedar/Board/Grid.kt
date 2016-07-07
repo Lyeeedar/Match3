@@ -30,11 +30,13 @@ class Grid(val width: Int, val height: Int)
 
 	val validOrbs: Array<OrbDesc> = Array()
 
+	val specialOrbs: Array<Explosion> = Array()
+
 	val sunkCount: IntIntMap = IntIntMap()
 
 	var selected: Point = Point.MINUS_ONE
 
-	val animSpeed = 0.2f
+	val animSpeed = 0.15f
 
 	lateinit var outerwall: SpriteWrapper
 	lateinit var floor: SpriteWrapper
@@ -46,6 +48,28 @@ class Grid(val width: Int, val height: Int)
 		validOrbs.add(OrbDesc.load("Green"))
 		validOrbs.add(OrbDesc.load("Yellow"))
 		validOrbs.add(OrbDesc.load("Blue"))
+	}
+
+	fun getExplosion(count:Int, dir: Direction): Explosion?
+	{
+		var best: Explosion? = null
+
+		for (special in specialOrbs)
+		{
+			if (special.count <= count && special.dir == dir)
+			{
+				if (best == null)
+				{
+					best = special
+				}
+				else if (special.count > best.count)
+				{
+					best = special
+				}
+			}
+		}
+
+		return best
 	}
 
 	fun select(newSelection: Point)
@@ -190,7 +214,14 @@ class Grid(val width: Int, val height: Int)
 		{
 			for (y in 0..height-1)
 			{
-				val orb = grid[x, y].orb
+				val tile = grid[x, y]
+				if (tile.effects.size > 0)
+				{
+					hasAnim = true
+					break
+				}
+
+				val orb = tile.orb
 				if (orb != null && orb.sprite.spriteAnimation != null)
 				{
 					hasAnim = true
@@ -205,10 +236,10 @@ class Grid(val width: Int, val height: Int)
 	fun update()
 	{
 		// if in update, do animations
+		cleanup()
+
 		if (!hasAnim())
 		{
-			cleanup()
-
 			val cascadeComplete = cascade()
 
 			if (cascadeComplete)
@@ -236,7 +267,7 @@ class Grid(val width: Int, val height: Int)
 				val tile = grid[x, y]
 				val orb = tile.orb ?: continue
 
-				if (orb.markedForDeletion && orb.sprite.spriteAnimation == null)
+				if (orb.markedForDeletion && orb.sprite.spriteAnimation == null && !orb.armed)
 				{
 					tile.orb = null
 				}
@@ -281,7 +312,51 @@ class Grid(val width: Int, val height: Int)
 
 	fun detonate(): Boolean
 	{
-		return true
+		var complete = true
+
+		for (x in 0..width-1)
+		{
+			for (y in 0..height - 1)
+			{
+				val tile = grid[x, y]
+				val orb = tile.orb ?: continue
+
+				if (orb.armed)
+				{
+					if (orb.explosion != null) detonatePattern(x, y, orb.explosion!!)
+
+					orb.armed = false
+					complete = false
+				}
+			}
+		}
+
+		return complete
+	}
+
+	fun detonatePattern(x: Int, y: Int, explosion: Explosion)
+	{
+		for (dir in Direction.CardinalValues)
+		{
+			val points = explosion.dirs[dir]
+			for (point in points)
+			{
+				val current = Point(x, y) + point
+
+				while (true)
+				{
+					val tile = tile(current) ?: break
+
+					if (!tile.canHaveOrb) break
+
+					pop(tile.x, tile.y)
+
+					tile.effects.add(explosion.sprite.copy())
+
+					current += dir
+				}
+			}
+		}
 	}
 
 	fun processSunk(): Boolean
@@ -463,20 +538,53 @@ class Grid(val width: Int, val height: Int)
 			val xstep = xdiff.toFloat() / diff.toFloat()
 			val ystep = ydiff.toFloat() / diff.toFloat()
 
+			val dir = Direction.getDirection(match.first, match.second)
+			val desc = tile(match.first)?.orb?.desc
+
+			val middle = tile(match.first.x + xdiff / 2, match.first.y + ydiff / 2)
+
 			for (i in 0..diff)
 			{
 				val x = match.first.x + (xstep * i).toInt()
 				val y = match.first.y + (ystep * i).toInt()
 
-				val tile = tile(x, y) ?: continue
-				val orb = tile.orb ?: continue
+				pop(x, y)
 
-				orb.sprite.spriteAnimation = StretchAnimation.obtain().set(animSpeed, floatArrayOf(0f, 0f), 0f, StretchAnimation.StretchEquation.EXPAND)
-				orb.markedForDeletion = true
+				if (diff > 2 && desc != null)
+				{
+					val sprite = desc.sprite.copy()
+					sprite.spriteAnimation = MoveAnimation.obtain().set(animSpeed, middle!!.getPosDiff(x, y), MoveAnimation.MoveEquation.SMOOTHSTEP)
+
+					middle.effects.add(sprite)
+				}
 			}
 
 			// if 4 or 5 match then spawn new orb
+			if (diff > 2 && desc != null)
+			{
+				val special = getExplosion(diff+1, dir)
+
+				if (special != null)
+				{
+					val orb = Orb(desc)
+					orb.explosion = special
+
+					middle?.orb = orb
+				}
+			}
 		}
+	}
+
+	fun pop(x: Int, y: Int)
+	{
+		val tile = tile(x, y) ?: return
+		val orb = tile.orb ?: return
+		if (orb.markedForDeletion) return // already completed, dont do it again
+
+		orb.sprite.spriteAnimation = StretchAnimation.obtain().set(animSpeed, floatArrayOf(0f, 0f), 0f, StretchAnimation.StretchEquation.EXPAND)
+		orb.markedForDeletion = true
+
+		if (orb.explosion != null) orb.armed = true
 	}
 
 	fun tile(point: Point): Tile? = tile(point.x, point.y)
@@ -502,6 +610,30 @@ class Grid(val width: Int, val height: Int)
 				{
 					bitflag.setBit(dir)
 				}
+			}
+		}
+	}
+
+	fun loadSpecials()
+	{
+		val xml = XmlReader().parse(Gdx.files.internal("Orbs/Specials.xml"))
+
+		for (i in 0..xml.childCount-1)
+		{
+			val match = xml.getChild(i) // name in from matchX
+			val name = match.name.replace("Match", "")
+			val count = name.toInt()
+
+			for (ii in 0..match.childCount-1)
+			{
+				val special = match.getChild(ii)
+				val dir = Direction.valueOf(special.name)
+
+				val explosion = Explosion.load(special)
+				explosion.dir = dir
+				explosion.count = count
+
+				specialOrbs.add(explosion)
 			}
 		}
 	}
@@ -551,6 +683,7 @@ class Grid(val width: Int, val height: Int)
 				}
 			}
 
+			grid.loadSpecials()
 			grid.fill()
 
 			return grid

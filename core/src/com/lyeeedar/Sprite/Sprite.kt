@@ -47,6 +47,8 @@ class Sprite(var fileName: String, var animationDelay: Float, var textures: Arra
 
 	val size = intArrayOf(1, 1)
 
+	var completed = false
+
 	var spriteAnimation: AbstractSpriteAnimation? = null
 		set(value)
 		{
@@ -182,6 +184,7 @@ class Sprite(var fileName: String, var animationDelay: Float, var textures: Arra
 			animationStage = AnimationStage.END
 		}
 
+		if (!completed) completed = looped
 		return looped
 	}
 
