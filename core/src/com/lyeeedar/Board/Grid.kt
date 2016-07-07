@@ -1,6 +1,7 @@
 package com.lyeeedar.Board
 
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.IntIntMap
 import com.badlogic.gdx.utils.XmlReader
@@ -36,7 +37,7 @@ class Grid(val width: Int, val height: Int)
 
 	var selected: Point = Point.MINUS_ONE
 
-	val animSpeed = 0.15f
+	val animSpeed = 0.25f
 
 	lateinit var outerwall: SpriteWrapper
 	lateinit var floor: SpriteWrapper
@@ -123,13 +124,18 @@ class Grid(val width: Int, val height: Int)
 
 	fun cascade(): Boolean
 	{
-		val vert = cascadeVert()
-		val diag = if (vert) cascadeDiag() else false
+		var cascadeComplete = true
+
+		for (x in 0..width-1)
+		{
+			val done = cascadeColumn(x)
+			if (!done) cascadeComplete = false
+		}
 
 		val sunkComplete = processSunk()
 		val spawnComplete = spawn()
 
-		return vert && diag && sunkComplete && spawnComplete
+		return cascadeComplete && sunkComplete && spawnComplete
 	}
 
 	fun cascadeVert(): Boolean
@@ -205,6 +211,150 @@ class Grid(val width: Int, val height: Int)
 		}
 
 		return cascadeComplete
+	}
+
+	fun cascadeColumn(x: Int) : Boolean
+	{
+		var complete = true
+
+		var delay = 0f
+
+		var currentY = height-1
+		while (currentY >= 0)
+		{
+			val tile = grid[x, currentY]
+
+			// read up column, find first gap
+			if (tile.canHaveOrb && tile.orb == null)
+			{
+				// if gap found read up until solid / spawner
+				var found: Tile? = null
+
+				for (searchY in currentY-1 downTo 0)
+				{
+					val stile = grid[x, searchY]
+					if (stile.orb != null)
+					{
+						found = stile
+						break
+					}
+					else if (stile.canSpawn)
+					{
+						found = stile
+						break
+					}
+					else if (!stile.canHaveOrb)
+					{
+						break
+					}
+				}
+
+				// pull solid / spawn new down
+				if (found != null)
+				{
+					var orb: Orb
+
+					if (found.orb != null)
+					{
+						orb = found.orb!!
+						found.orb = null
+					}
+					else
+					{
+						orb = Orb(validOrbs.random())
+					}
+
+					tile.orb = orb
+					orb.sprite.spriteAnimation = MoveAnimation.obtain().set(animSpeed, tile.getPosDiff(found), MoveAnimation.MoveEquation.EXPONENTIAL)
+					orb.sprite.renderDelay = delay
+
+					delay += 0.02f
+
+					complete = false
+				}
+			}
+
+			currentY--
+		}
+
+		// walk down column
+		// each block with a clear, push 1 orb into the top from a neighbour
+
+		if (complete)
+		{
+			currentY = 0
+			var lookingForOrb = 0 // 0 = not looking, 1 = looking, 2 = placed
+			while (currentY < height)
+			{
+				val tile = grid[x, currentY]
+				if (tile.canHaveOrb && tile.orb == null)
+				{
+					if (lookingForOrb == 0)
+					{
+						lookingForOrb = 1
+					}
+				}
+				else if (!tile.canHaveOrb || lookingForOrb == 2)
+				{
+					lookingForOrb = 0
+				}
+				else if (tile.orb != null)
+				{
+					break
+				}
+
+				if (lookingForOrb == 1)
+				{
+					// check neighbours for orb
+					val diagL = tile(x - 1, currentY - 1)
+					val diagR = tile(x + 1, currentY - 1)
+
+					val diagLValid = diagL != null && diagL.orb != null && diagL.orb!!.sprite.spriteAnimation == null
+					val diagRValid = diagR != null && diagR.orb != null && diagR.orb!!.sprite.spriteAnimation == null
+
+					if (diagLValid || diagRValid)
+					{
+						fun pullIn(t: Tile)
+						{
+							val orb = t.orb!!
+							t.orb = null
+
+							tile.orb = orb
+							orb.sprite.spriteAnimation = MoveAnimation.obtain().set(animSpeed * 0.25f, tile.getPosDiff(t), MoveAnimation.MoveEquation.SMOOTHSTEP)
+							//orb.sprite.renderDelay = delay
+
+							complete = false
+						}
+
+						// if found one, pull in and set to 2
+						if (diagLValid && diagRValid)
+						{
+							if (MathUtils.randomBoolean())
+							{
+								pullIn(diagL!!)
+							} else
+							{
+								pullIn(diagR!!)
+							}
+						} else if (diagLValid)
+						{
+							pullIn(diagL!!)
+						} else
+						{
+							pullIn(diagR!!)
+						}
+
+						lookingForOrb = 2
+					}
+
+
+				}
+
+				currentY++
+			}
+		}
+
+		return complete
 	}
 
 	fun hasAnim(): Boolean
