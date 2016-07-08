@@ -1,6 +1,7 @@
 package com.lyeeedar.Board
 
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Direction
@@ -37,6 +38,7 @@ class Orb(val desc: OrbDesc)
 class OrbDesc
 {
 	lateinit var sprite: Sprite
+	lateinit var death: Sprite
 	var key: Int = -1
 
 	var canSink: Boolean = false
@@ -60,6 +62,7 @@ class OrbDesc
 			val orb = OrbDesc()
 
 			orb.sprite = AssetManager.loadSprite(xml.getChildByName("Sprite"))
+			orb.death = AssetManager.loadSprite(xml.getChildByName("Death"))
 
 			return orb
 		}

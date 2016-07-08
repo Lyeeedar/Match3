@@ -49,6 +49,8 @@ class Sprite(var fileName: String, var animationDelay: Float, var textures: Arra
 
 	var completed = false
 
+	var visible = true
+
 	var spriteAnimation: AbstractSpriteAnimation? = null
 		set(value)
 		{
@@ -143,11 +145,13 @@ class Sprite(var fileName: String, var animationDelay: Float, var textures: Arra
 						looped = true
 						repeatAccumulator = repeatDelay
 					}
-				} else if (animationState.mode == AnimationMode.SHRINK)
+				}
+				else if (animationState.mode == AnimationMode.SHRINK)
 				{
 					animationState.isShrunk = !animationState.isShrunk
 					looped = animationState.isShrunk
-				} else if (animationState.mode == AnimationMode.SINE)
+				}
+				else if (animationState.mode == AnimationMode.SINE)
 				{
 					looped = true
 				}
@@ -230,6 +234,8 @@ class Sprite(var fileName: String, var animationDelay: Float, var textures: Arra
 
 	private fun drawTexture(batch: SpriteBatch, texture: TextureRegion, x: Float, y: Float, width: Float, height: Float, scaleX: Float, scaleY: Float, animationState: AnimationState)
 	{
+		if (!visible) return
+
 		var x = x
 		var y = y
 		var width = width
@@ -260,7 +266,8 @@ class Sprite(var fileName: String, var animationDelay: Float, var textures: Arra
 		if (animationState.mode == AnimationMode.SHRINK && animationState.isShrunk)
 		{
 			height *= 0.85f
-		} else if (animationState.mode == AnimationMode.SINE)
+		}
+		else if (animationState.mode == AnimationMode.SINE)
 		{
 			y += height / 15f * animationState.sinOffset
 		}

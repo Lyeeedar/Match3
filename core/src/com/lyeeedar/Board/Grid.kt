@@ -133,84 +133,8 @@ class Grid(val width: Int, val height: Int)
 		}
 
 		val sunkComplete = processSunk()
-		val spawnComplete = spawn()
 
-		return cascadeComplete && sunkComplete && spawnComplete
-	}
-
-	fun cascadeVert(): Boolean
-	{
-		var cascadeComplete = true
-
-		// do below first
-		for (x in 0..width-1)
-		{
-			for (y in 0..height-1)
-			{
-				val tile = grid[x, y]
-				val orb = tile.orb
-				if (orb != null && !orb.armed)
-				{
-					if (orb.sprite.spriteAnimation == null)
-					{
-						val below = tile(x, y + 1)
-						// check for drop
-
-						if (below != null && below.canHaveOrb && below.orb == null && (!below.canSink || orb.desc.canSink))
-						{
-							orb.sprite.spriteAnimation = MoveAnimation.obtain().set(0.15f, below.getPosDiff(tile), MoveAnimation.MoveEquation.LINEAR)
-							below.orb = orb
-							tile.orb = null
-							cascadeComplete = false
-						}
-					}
-					else
-					{
-						cascadeComplete = false
-					}
-				}
-			}
-		}
-
-		return cascadeComplete
-	}
-
-	fun cascadeDiag(): Boolean
-	{
-		var cascadeComplete = true
-
-		// now try angles
-		for (x in 0..width-1)
-		{
-			for (y in 0..height - 1)
-			{
-				val tile = grid[x, y]
-				val orb = tile.orb
-				if (orb != null && !orb.armed)
-				{
-					val diagL = tile(x - 1, y + 1)
-					val diagR = tile(x + 1, y + 1)
-
-					// check for drop
-					if (diagL != null && diagL.canHaveOrb && diagL.orb == null)
-					{
-						orb.sprite.spriteAnimation = MoveAnimation.obtain().set(animSpeed, diagL.getPosDiff(tile), MoveAnimation.MoveEquation.LINEAR)
-						diagL.orb = orb
-						tile.orb = null
-						cascadeComplete = false
-					}
-					else if (diagR != null && diagR.canHaveOrb && diagR.orb == null)
-					{
-						orb.sprite.spriteAnimation = MoveAnimation.obtain().set(animSpeed, diagR.getPosDiff(tile), MoveAnimation.MoveEquation.LINEAR)
-						diagR.orb = orb
-						tile.orb = null
-						cascadeComplete = false
-					}
-				}
-			}
-		}
-
-		return cascadeComplete
+		return cascadeComplete && sunkComplete
 	}
 
 	fun cascadeColumn(x: Int) : Boolean
@@ -230,12 +154,12 @@ class Grid(val width: Int, val height: Int)
 				// if gap found read up until solid / spawner
 				var found: Tile? = null
 
-				for (searchY in currentY-1 downTo 0)
+				for (searchY in currentY downTo 0)
 				{
 					val stile = grid[x, searchY]
 					if (stile.orb != null)
 					{
-						found = stile
+						if (!stile.orb!!.armed) found = stile
 						break
 					}
 					else if (stile.canSpawn)
@@ -253,6 +177,7 @@ class Grid(val width: Int, val height: Int)
 				if (found != null)
 				{
 					var orb: Orb
+					var spawned = false
 
 					if (found.orb != null)
 					{
@@ -261,14 +186,16 @@ class Grid(val width: Int, val height: Int)
 					}
 					else
 					{
+						spawned = true
 						orb = Orb(validOrbs.random())
 					}
 
 					tile.orb = orb
-					orb.sprite.spriteAnimation = MoveAnimation.obtain().set(animSpeed, tile.getPosDiff(found), MoveAnimation.MoveEquation.EXPONENTIAL)
+					orb.sprite.spriteAnimation = MoveAnimation.obtain().set(animSpeed, tile.getPosDiff(found.x, if (spawned) found.y - 1 else found.y), MoveAnimation.MoveEquation.EXPONENTIAL)
 					orb.sprite.renderDelay = delay
+					orb.sprite.showBeforeRender = true
 
-					delay += 0.02f
+					delay += 0.06f
 
 					complete = false
 				}
@@ -309,8 +236,8 @@ class Grid(val width: Int, val height: Int)
 					val diagL = tile(x - 1, currentY - 1)
 					val diagR = tile(x + 1, currentY - 1)
 
-					val diagLValid = diagL != null && diagL.orb != null && diagL.orb!!.sprite.spriteAnimation == null
-					val diagRValid = diagR != null && diagR.orb != null && diagR.orb!!.sprite.spriteAnimation == null
+					val diagLValid = diagL != null && diagL.orb != null && diagL.orb!!.sprite.spriteAnimation == null && !diagL.orb!!.armed
+					val diagRValid = diagR != null && diagR.orb != null && diagR.orb!!.sprite.spriteAnimation == null && !diagR.orb!!.armed
 
 					if (diagLValid || diagRValid)
 					{
@@ -332,14 +259,17 @@ class Grid(val width: Int, val height: Int)
 							if (MathUtils.randomBoolean())
 							{
 								pullIn(diagL!!)
-							} else
+							}
+							else
 							{
 								pullIn(diagR!!)
 							}
-						} else if (diagLValid)
+						}
+						else if (diagLValid)
 						{
 							pullIn(diagL!!)
-						} else
+						}
+						else
 						{
 							pullIn(diagR!!)
 						}
@@ -425,27 +355,6 @@ class Grid(val width: Int, val height: Int)
 		}
 	}
 
-	fun spawn(): Boolean
-	{
-		var complete = true
-		for (x in 0..width-1)
-		{
-			for (y in 0..height-1)
-			{
-				val tile = grid[x, y]
-				if (tile.canSpawn && tile.orb == null)
-				{
-					val orb = Orb(validOrbs.random())
-					orb.sprite.spriteAnimation = MoveAnimation.obtain().set(animSpeed, floatArrayOf(0f, Global.tileSize.toFloat()), MoveAnimation.MoveEquation.LINEAR)
-					tile.orb = orb
-					complete = false
-				}
-			}
-		}
-
-		return complete
-	}
-
 	fun match(): Boolean
 	{
 		val match5 = findMatches(5)
@@ -464,6 +373,8 @@ class Grid(val width: Int, val height: Int)
 	{
 		var complete = true
 
+		val tilesToDetonate = Array<Tile>()
+
 		for (x in 0..width-1)
 		{
 			for (y in 0..height - 1)
@@ -473,12 +384,17 @@ class Grid(val width: Int, val height: Int)
 
 				if (orb.armed)
 				{
-					if (orb.explosion != null) detonatePattern(x, y, orb.explosion!!)
-
-					orb.armed = false
-					complete = false
+					tilesToDetonate.add(tile)
 				}
 			}
+		}
+
+		for (tile in tilesToDetonate)
+		{
+			detonatePattern(tile.x, tile.y, tile.orb!!.explosion!!)
+
+			tile.orb!!.armed = false
+			complete = false
 		}
 
 		return complete
@@ -491,6 +407,8 @@ class Grid(val width: Int, val height: Int)
 			val points = explosion.dirs[dir]
 			for (point in points)
 			{
+				var delay = 0f
+
 				val current = Point(x, y) + point
 
 				while (true)
@@ -499,9 +417,13 @@ class Grid(val width: Int, val height: Int)
 
 					if (!tile.canHaveOrb) break
 
-					pop(tile.x, tile.y)
+					pop(tile.x, tile.y, delay+0.2f)
 
-					tile.effects.add(explosion.sprite.copy())
+					val sprite = explosion.sprite.copy()
+					sprite.renderDelay = delay
+					tile.effects.add(sprite)
+
+					delay += 0.1f
 
 					current += dir
 				}
@@ -698,7 +620,7 @@ class Grid(val width: Int, val height: Int)
 				val x = match.first.x + (xstep * i).toInt()
 				val y = match.first.y + (ystep * i).toInt()
 
-				pop(x, y)
+				pop(x, y, 0f)
 
 				if (diff > 2 && desc != null)
 				{
@@ -725,14 +647,20 @@ class Grid(val width: Int, val height: Int)
 		}
 	}
 
-	fun pop(x: Int, y: Int)
+	fun pop(x: Int, y: Int, delay: Float)
 	{
 		val tile = tile(x, y) ?: return
 		val orb = tile.orb ?: return
 		if (orb.markedForDeletion) return // already completed, dont do it again
 
-		orb.sprite.spriteAnimation = StretchAnimation.obtain().set(animSpeed, floatArrayOf(0f, 0f), 0f, StretchAnimation.StretchEquation.EXPAND)
+		orb.sprite.visible = false
 		orb.markedForDeletion = true
+
+		val sprite = orb.desc.death.copy()
+		sprite.colour = orb.sprite.colour
+		sprite.renderDelay = delay
+
+		tile.effects.add(sprite)
 
 		if (orb.explosion != null) orb.armed = true
 	}

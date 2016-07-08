@@ -44,6 +44,8 @@ class MoveAnimation : AbstractSpriteAnimation
 
 		time = 0f
 
+		update(0f)
+
 		return this
 	}
 
@@ -62,8 +64,8 @@ class MoveAnimation : AbstractSpriteAnimation
 			alpha = 1f - (1f - alpha) * (1f - alpha) * (1f - alpha) * (1f - alpha)
 		}
 
-		offset[0] = (diff!![0] * alpha).toInt().toFloat()
-		offset[1] = (diff!![1] * alpha).toInt().toFloat()
+		offset[0] = (diff!![0] * alpha).toFloat()
+		offset[1] = (diff!![1] * alpha).toFloat()
 
 		if (eqn == MoveEquation.LEAP)
 		{

@@ -1,6 +1,12 @@
 <Orb>
     <Sprite>
-        <Name>Oryx/uf_split/uf_items/crystal_sky</Name>
+        <Name>Oryx/uf_split/uf_items/crystal_cloud</Name>
+        <Colour><RGB>100,100,255</RGB></Colour>
         <DrawActualSize>true</DrawActualSize>
     </Sprite>
+
+    <Death>
+        <Name>EffectSprites/Splatter/Splatter</Name>
+        <UpdateRate>0.1</UpdateRate>
+    </Death>
 </Orb>
