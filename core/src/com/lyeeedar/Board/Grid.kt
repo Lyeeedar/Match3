@@ -171,6 +171,10 @@ class Grid(val width: Int, val height: Int)
 					{
 						break
 					}
+					else if (stile.block != null)
+					{
+						break
+					}
 				}
 
 				// pull solid / spawn new down
@@ -214,14 +218,14 @@ class Grid(val width: Int, val height: Int)
 			while (currentY < height)
 			{
 				val tile = grid[x, currentY]
-				if (tile.canHaveOrb && tile.orb == null)
+				if (tile.canHaveOrb && tile.orb == null && tile.block == null)
 				{
 					if (lookingForOrb == 0)
 					{
 						lookingForOrb = 1
 					}
 				}
-				else if (!tile.canHaveOrb || lookingForOrb == 2)
+				else if (!tile.canHaveOrb || lookingForOrb == 2 || tile.block != null)
 				{
 					lookingForOrb = 0
 				}
@@ -247,7 +251,7 @@ class Grid(val width: Int, val height: Int)
 							t.orb = null
 
 							tile.orb = orb
-							orb.sprite.spriteAnimation = MoveAnimation.obtain().set(animSpeed * 0.25f, tile.getPosDiff(t), MoveAnimation.MoveEquation.SMOOTHSTEP)
+							orb.sprite.spriteAnimation = MoveAnimation.obtain().set(animSpeed * 0.25f, tile.getPosDiff(t), MoveAnimation.MoveEquation.EXPONENTIAL)
 							//orb.sprite.renderDelay = delay
 
 							complete = false
@@ -345,11 +349,23 @@ class Grid(val width: Int, val height: Int)
 			for (y in 0..height - 1)
 			{
 				val tile = grid[x, y]
-				val orb = tile.orb ?: continue
 
-				if (orb.markedForDeletion && orb.sprite.spriteAnimation == null && !orb.armed)
+				if (tile.orb != null)
 				{
-					tile.orb = null
+					val orb = tile.orb!!
+
+					if (orb.markedForDeletion && orb.sprite.spriteAnimation == null && !orb.armed)
+					{
+						tile.orb = null
+					}
+				}
+				else if (tile.block != null)
+				{
+					val block = tile.block!!
+					if (block.count <= 0)
+					{
+						tile.block = null
+					}
 				}
 			}
 		}
@@ -462,7 +478,7 @@ class Grid(val width: Int, val height: Int)
 		{
 			for (y in 0..height-1)
 			{
-				if (grid[x, y].canHaveOrb)
+				if (grid[x, y].canHaveOrb && grid[x, y].block == null)
 				{
 					val valid = Array(validOrbs)
 					val l1 = tile(x-1, y)
@@ -634,14 +650,17 @@ class Grid(val width: Int, val height: Int)
 			// if 4 or 5 match then spawn new orb
 			if (diff > 2 && desc != null)
 			{
-				val special = getExplosion(diff+1, dir)
-
-				if (special != null)
+				if (middle?.orb?.explosion == null)
 				{
-					val orb = Orb(desc)
-					orb.explosion = special
+					val special = getExplosion(diff+1, dir)
 
-					middle?.orb = orb
+					if (special != null)
+					{
+						val orb = Orb(desc)
+						orb.explosion = special
+
+						middle?.orb = orb
+					}
 				}
 			}
 		}
@@ -663,6 +682,15 @@ class Grid(val width: Int, val height: Int)
 		tile.effects.add(sprite)
 
 		if (orb.explosion != null) orb.armed = true
+
+		for (dir in Direction.CardinalValues)
+		{
+			val t = tile(x + dir.x, y + dir.y) ?: continue
+			if (t.block != null)
+			{
+				t.block!!.count--
+			}
+		}
 	}
 
 	fun tile(point: Point): Tile? = tile(point.x, point.y)
@@ -753,6 +781,12 @@ class Grid(val width: Int, val height: Int)
 					{
 						tile.canSink = true
 						tile.sprite = grid.floor.copy()
+					}
+					else if (char == '=')
+					{
+						tile.canHaveOrb = true
+						tile.sprite = grid.floor.copy()
+						tile.block = Block()
 					}
 					else
 					{

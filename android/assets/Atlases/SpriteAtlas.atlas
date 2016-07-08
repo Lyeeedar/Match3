@@ -1,306 +1,138 @@
 
 SpriteAtlas.png
-size: 1024,128
+size: 1024,64
 format: RGBA8888
 filter: MipMapLinearLinear,MipMapLinearLinear
 repeat: none
 EffectSprites/IceBurst/IceBurst_0
   rotate: false
-  xy: 726, 86
+  xy: 618, 18
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/IceBurst/IceBurst_1
   rotate: false
-  xy: 354, 18
+  xy: 654, 18
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/IceBurst/IceBurst_2
   rotate: false
-  xy: 762, 86
+  xy: 690, 18
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/IceBurst/IceBurst_3
   rotate: false
-  xy: 798, 86
+  xy: 726, 18
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/IceBurst/IceBurst_4
   rotate: false
-  xy: 834, 86
+  xy: 762, 18
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/IceBurst/IceBurst_5
   rotate: false
-  xy: 870, 86
+  xy: 798, 18
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/IceBurst/IceBurst_6
   rotate: false
-  xy: 906, 86
+  xy: 834, 18
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/Splatter/Splatter_0
   rotate: false
-  xy: 210, 18
+  xy: 366, 18
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/Splatter/Splatter_1
   rotate: false
-  xy: 618, 86
+  xy: 402, 18
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/Splatter/Splatter_2
   rotate: false
-  xy: 246, 18
+  xy: 438, 18
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/Splatter/Splatter_3
   rotate: false
-  xy: 654, 86
+  xy: 474, 18
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/Splatter/Splatter_4
   rotate: false
-  xy: 282, 18
+  xy: 510, 18
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/Splatter/Splatter_5
   rotate: false
-  xy: 690, 86
+  xy: 546, 18
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/Splatter/Splatter_6
   rotate: false
-  xy: 318, 18
+  xy: 582, 18
   size: 32, 32
   orig: 32, 32
-  offset: 0, 0
-  index: -1
-GUI/Button
-  rotate: false
-  xy: 942, 86
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-GUI/ButtonBorder
-  rotate: false
-  xy: 978, 86
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-GUI/ButtonDown
-  rotate: false
-  xy: 390, 18
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-GUI/Checked
-  rotate: false
-  xy: 426, 34
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-GUI/Cog
-  rotate: false
-  xy: 462, 34
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-GUI/Eye
-  rotate: false
-  xy: 498, 34
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-GUI/PanelHorizontal
-  rotate: false
-  xy: 2, 54
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
-GUI/PanelVertical
-  rotate: false
-  xy: 70, 54
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
-GUI/PassiveTileBorder
-  rotate: false
-  xy: 618, 50
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-GUI/ProgressIndicator
-  rotate: false
-  xy: 870, 58
-  size: 24, 24
-  orig: 24, 24
-  offset: 0, 0
-  index: -1
-GUI/QuestionMark
-  rotate: false
-  xy: 654, 50
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-GUI/SeperatorHorizontal
-  rotate: false
-  xy: 210, 8
-  size: 32, 6
-  orig: 32, 6
-  offset: 0, 0
-  index: -1
-GUI/SeperatorVertical
-  rotate: false
-  xy: 1014, 86
-  size: 6, 32
-  orig: 6, 32
-  offset: 0, 0
-  index: -1
-GUI/Sheathed
-  rotate: false
-  xy: 690, 50
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-GUI/SpeechBubble
-  rotate: false
-  xy: 138, 54
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
-GUI/SpeechBubbleArrow
-  rotate: false
-  xy: 606, 58
-  size: 8, 8
-  orig: 8, 8
-  offset: 0, 0
-  index: -1
-GUI/TextField
-  rotate: false
-  xy: 726, 50
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-GUI/TileBackground
-  rotate: false
-  xy: 206, 54
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
-GUI/TileBorder
-  rotate: false
-  xy: 274, 54
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
-GUI/TilePanel
-  rotate: false
-  xy: 762, 50
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-GUI/Tooltip
-  rotate: false
-  xy: 342, 54
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
-GUI/Unchecked
-  rotate: false
-  xy: 798, 50
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-GUI/Unsheathed
-  rotate: false
-  xy: 834, 50
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-GUI/background
-  rotate: false
-  xy: 158, 2
-  size: 48, 48
-  orig: 48, 48
   offset: 0, 0
   index: -1
 GUI/frame_0
   rotate: false
-  xy: 534, 34
+  xy: 870, 18
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 GUI/frame_1
   rotate: false
-  xy: 570, 34
+  xy: 906, 18
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-GUI/loading
-  rotate: false
-  xy: 566, 70
-  size: 48, 48
-  orig: 48, 48
-  offset: 0, 0
-  index: -1
 Oryx/uf_split/uf_items/crystal_cloud
   rotate: false
-  xy: 106, 2
+  xy: 210, 2
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/uf_split/uf_items/key_silver
   rotate: false
-  xy: 514, 70
+  xy: 262, 2
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+Oryx/uf_split/uf_terrain/crate
+  rotate: false
+  xy: 314, 2
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
@@ -314,21 +146,21 @@ Oryx/uf_split/uf_terrain/floor_extra_8
   index: -1
 Oryx/uf_split/uf_terrain/wall_dungeon_1
   rotate: false
-  xy: 462, 70
+  xy: 158, 2
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/uf_split/uf_terrain/wall_dungeon_14
   rotate: false
-  xy: 54, 2
+  xy: 106, 2
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/uf_split/uf_terrain/wall_dungeon_7
   rotate: false
-  xy: 410, 70
+  xy: 54, 2
   size: 48, 48
   orig: 48, 48
   offset: 0, 0

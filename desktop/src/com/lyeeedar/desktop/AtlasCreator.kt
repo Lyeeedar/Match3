@@ -46,19 +46,20 @@ class AtlasCreator
 		packer = TexturePacker(File("Sprites"), settings)
 
 		findFilesRecursive(File("").absoluteFile)
+		parseCodeFilesRecursive(File("../../core/src").absoluteFile)
 
 		// pack default stuff
 
 		// pack GUI
-		val guiDir = File("Sprites/GUI")
-		val guiFiles = guiDir.listFiles()
-		for (file in guiFiles)
-		{
-			if (file.path.endsWith(".png"))
-			{
-				packer.addImage(file)
-			}
-		}
+//		val guiDir = File("Sprites/GUI")
+//		val guiFiles = guiDir.listFiles()
+//		for (file in guiFiles)
+//		{
+//			if (file.path.endsWith(".png"))
+//			{
+//				packer.addImage(file)
+//			}
+//		}
 
 		val outDir = File("Atlases")
 		val contents = outDir.listFiles()
@@ -68,7 +69,8 @@ class AtlasCreator
 				if (file.path.endsWith(".png"))
 				{
 					file.delete()
-				} else if (file.path.endsWith(".atlas"))
+				}
+				else if (file.path.endsWith(".atlas"))
 				{
 					file.delete()
 				}
@@ -86,10 +88,45 @@ class AtlasCreator
 			if (file.isDirectory)
 			{
 				findFilesRecursive(file)
-			} else if (file.path.endsWith(".xml"))
+			}
+			else if (file.path.endsWith(".xml"))
 			{
 				parseXml(file.path)
 			}
+		}
+	}
+
+	private fun parseCodeFilesRecursive(dir: File)
+	{
+		val contents = dir.listFiles() ?: return
+
+		for (file in contents)
+		{
+			if (file.isDirectory)
+			{
+				parseCodeFilesRecursive(file)
+			}
+			else
+			{
+				parseCodeFile(file.path)
+			}
+		}
+	}
+
+	private fun parseCodeFile(file: String)
+	{
+		val contents = File(file).readText()
+		val regex = Regex("AssetManager.loadSprite\\(\".*")//(\".*\")")
+
+		val occurances = regex.findAll(contents)
+
+		for (occurance in occurances)
+		{
+			var path = occurance.value
+			path = path.replace("AssetManager.loadSprite(\"", "")
+			path = path.replace("\")", "")
+
+			processSprite(path)
 		}
 	}
 
@@ -314,7 +351,8 @@ class AtlasCreator
 			packer.addImage(handle.file())
 			packedPaths.add(path)
 			return true
-		} else
+		}
+		else
 		{
 			return false
 		}

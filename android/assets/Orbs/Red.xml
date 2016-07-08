@@ -7,6 +7,6 @@
 
     <Death>
         <Name>EffectSprites/Splatter/Splatter</Name>
-        <UpdateRate>0.1</UpdateRate>
+        <UpdateRate>0.06</UpdateRate>
     </Death>
 </Orb>

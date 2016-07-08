@@ -14,7 +14,15 @@ class Tile(x: Int, y: Int) : Point(x, y)
 {
 	lateinit var sprite: SpriteWrapper
 
-	var orb: Orb? = null
+	var orb: Orb?
+		get() = contents as? Orb
+		set(value) { contents = value }
+
+	var block: Block?
+		get() = contents as? Block
+		set(value) { contents = value }
+
+	var contents: Any? = null
 
 	var connectedTo: Tile? = null
 	var canSink: Boolean = false

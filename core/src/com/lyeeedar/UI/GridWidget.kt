@@ -76,6 +76,7 @@ class GridWidget() : Widget()
 			{
 				val tile = grid!!.grid[x, y]
 				val orb = tile.orb
+				val block = tile.block
 
 				val tileHeight = if (y == 0) SpaceSlot.OVERHANG else SpaceSlot.TILE
 
@@ -117,6 +118,12 @@ class GridWidget() : Widget()
 						renderer.queueSprite(orb.explosion!!.icon, x.toFloat(), (height-1) - y.toFloat(), this.x.toFloat(), this.y.toFloat(), SpaceSlot.ORB, 2)
 					}
 				}
+
+				if (block != null)
+				{
+					renderer.queueSprite(block.sprite, x.toFloat(), (height-1) - y.toFloat(), this.x.toFloat(), this.y.toFloat(), SpaceSlot.ORB, 1)
+				}
+
 				if (tile.isSelected)
 				{
 					renderer.queueSprite(frame, x.toFloat(), (height-1) - y.toFloat(), this.x.toFloat(), this.y.toFloat(), SpaceSlot.ORB, 0)
