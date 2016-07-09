@@ -45,10 +45,28 @@ class Grid(val width: Int, val height: Int)
 
 	init
 	{
-		validOrbs.add(OrbDesc.load("Red"))
-		validOrbs.add(OrbDesc.load("Green"))
-		validOrbs.add(OrbDesc.load("Yellow"))
-		validOrbs.add(OrbDesc.load("Blue"))
+		val xml = XmlReader().parse(Gdx.files.internal("Orbs/Orbs.xml"))
+
+		val template = xml.getChildByName("Template")
+		val baseSprite = AssetManager.loadSprite(template.getChildByName("Sprite"))
+		val deathSprite = AssetManager.loadSprite(template.getChildByName("Death"))
+
+		val types = xml.getChildByName("Types")
+		for (i in 0..types.childCount-1)
+		{
+			val type = types.getChild(i)
+			val name = type.name
+			val colour = AssetManager.loadColour(type.getChildByName("Colour"))
+
+			val orbDesc = OrbDesc()
+			orbDesc.sprite = baseSprite.copy()
+			orbDesc.sprite.colour = colour
+
+			orbDesc.death = deathSprite
+			orbDesc.death.colour = colour
+
+			validOrbs.add(orbDesc)
+		}
 	}
 
 	fun getExplosion(count:Int, dir: Direction): Explosion?
@@ -91,6 +109,7 @@ class Grid(val width: Int, val height: Int)
 
 				val oldOrb = oldTile.orb ?: return
 				val newOrb = newTile.orb ?: return
+				if (oldOrb.sealed || newOrb.sealed) return
 
 				oldTile.orb = newOrb
 				newTile.orb = oldOrb
@@ -159,7 +178,8 @@ class Grid(val width: Int, val height: Int)
 					val stile = grid[x, searchY]
 					if (stile.orb != null)
 					{
-						if (!stile.orb!!.armed) found = stile
+						val orb = stile.orb!!
+						if (!orb.armed && !orb.sealed) found = stile
 						break
 					}
 					else if (stile.canSpawn)
@@ -240,8 +260,8 @@ class Grid(val width: Int, val height: Int)
 					val diagL = tile(x - 1, currentY - 1)
 					val diagR = tile(x + 1, currentY - 1)
 
-					val diagLValid = diagL != null && diagL.orb != null && diagL.orb!!.sprite.spriteAnimation == null && !diagL.orb!!.armed
-					val diagRValid = diagR != null && diagR.orb != null && diagR.orb!!.sprite.spriteAnimation == null && !diagR.orb!!.armed
+					val diagLValid = diagL != null && diagL.orb != null && diagL.orb!!.sprite.spriteAnimation == null && !diagL.orb!!.armed && !diagL.orb!!.sealed
+					val diagRValid = diagR != null && diagR.orb != null && diagR.orb!!.sprite.spriteAnimation == null && !diagR.orb!!.armed && !diagR.orb!!.sealed
 
 					if (diagLValid || diagRValid)
 					{
@@ -498,6 +518,11 @@ class Grid(val width: Int, val height: Int)
 					val desc = valid.random()
 					val orb = Orb(desc)
 					grid[x, y].orb = orb
+
+					if (MathUtils.random(5) == 0)
+					{
+						orb.sealed = true
+					}
 				}
 			}
 		}
@@ -505,11 +530,35 @@ class Grid(val width: Int, val height: Int)
 
 	fun findMatches() : Array<Pair<Point, Point>>
 	{
-		val matches = Array<Pair<Point, Point>>()
+		val matches = Array<Pair<Point, Point>>(false, 16)
 
 		matches.addAll(findMatches(3))
 		matches.addAll(findMatches(4))
 		matches.addAll(findMatches(5))
+
+		// clear duplicates
+		var i = 0
+		while (i < matches.size)
+		{
+			val pair = matches[i]
+
+			var ii = i+1
+			while (ii < matches.size)
+			{
+				val opair = matches[ii]
+
+				if (opair.equals(pair))
+				{
+					matches.removeIndex(ii)
+				}
+				else
+				{
+					ii++
+				}
+			}
+
+			i++
+		}
 
 		return matches
 	}
@@ -523,7 +572,19 @@ class Grid(val width: Int, val height: Int)
 			val dst = p1.dist(p2)
 			if (dst >= length-1)
 			{
-				matches.add(Pair(p1, p2))
+				// check not already added
+				var found = false
+
+				for (pair in matches)
+				{
+					if (pair.first == p1 && pair.second == p2)
+					{
+						found = true
+						break
+					}
+				}
+
+				if (!found) matches.add(Pair(p1, p2))
 			}
 		}
 
@@ -631,6 +692,8 @@ class Grid(val width: Int, val height: Int)
 
 			val middle = tile(match.first.x + xdiff / 2, match.first.y + ydiff / 2)
 
+			val coreTiles = Array<Tile>()
+
 			for (i in 0..diff)
 			{
 				val x = match.first.x + (xstep * i).toInt()
@@ -638,12 +701,41 @@ class Grid(val width: Int, val height: Int)
 
 				pop(x, y, 0f)
 
+				coreTiles.add(grid[x, y])
+
 				if (diff > 2 && desc != null)
 				{
 					val sprite = desc.sprite.copy()
 					sprite.spriteAnimation = MoveAnimation.obtain().set(animSpeed, middle!!.getPosDiff(x, y), MoveAnimation.MoveEquation.SMOOTHSTEP)
 
 					middle.effects.add(sprite)
+				}
+			}
+
+			// build border list
+			val borderTiles = Array<Tile>()
+			for (tile in coreTiles)
+			{
+				for (dir in Direction.CardinalValues)
+				{
+					val t = tile(tile.x + dir.x, tile.y + dir.y) ?: continue
+					if (!coreTiles.contains(t, true) && !borderTiles.contains(t, true))
+					{
+						borderTiles.add(t)
+					}
+				}
+			}
+
+			// pop all borders
+			for (t in borderTiles)
+			{
+				if (t.block != null)
+				{
+					t.block!!.count--
+				}
+				if (t.orb?.sealed != null)
+				{
+					t.orb?.sealed = false
 				}
 			}
 
@@ -672,6 +764,12 @@ class Grid(val width: Int, val height: Int)
 		val orb = tile.orb ?: return
 		if (orb.markedForDeletion) return // already completed, dont do it again
 
+		if (orb.sealed)
+		{
+			orb.sealed = false
+			return
+		}
+
 		orb.sprite.visible = false
 		orb.markedForDeletion = true
 
@@ -682,15 +780,6 @@ class Grid(val width: Int, val height: Int)
 		tile.effects.add(sprite)
 
 		if (orb.explosion != null) orb.armed = true
-
-		for (dir in Direction.CardinalValues)
-		{
-			val t = tile(x + dir.x, y + dir.y) ?: continue
-			if (t.block != null)
-			{
-				t.block!!.count--
-			}
-		}
 	}
 
 	fun tile(point: Point): Tile? = tile(point.x, point.y)

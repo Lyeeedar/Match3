@@ -22,7 +22,8 @@ class Orb(val desc: OrbDesc)
 
 	var markedForDeletion: Boolean = false
 
-	var fallCount = 0
+	val sealSprite = AssetManager.loadSprite("Oryx/uf_split/uf_items/shield_vorpal_buckler")
+	var sealed = false
 
 	val key: Int
 		get() = desc.key
@@ -41,11 +42,6 @@ class OrbDesc
 	lateinit var death: Sprite
 	var key: Int = -1
 
-	var canSink: Boolean = false
-	var canMove: Boolean = true
-	var isWildCard: Boolean = false
-	var destroyOnNeighbourMatch: Boolean = false
-
 	init
 	{
 		key = KeyCounter++
@@ -54,18 +50,6 @@ class OrbDesc
 	companion object
 	{
 		var KeyCounter = 0
-
-		fun load(name: String) : OrbDesc
-		{
-			val xml = XmlReader().parse(Gdx.files.internal("Orbs/$name.xml"))
-
-			val orb = OrbDesc()
-
-			orb.sprite = AssetManager.loadSprite(xml.getChildByName("Sprite"))
-			orb.death = AssetManager.loadSprite(xml.getChildByName("Death"))
-
-			return orb
-		}
 	}
 }
 

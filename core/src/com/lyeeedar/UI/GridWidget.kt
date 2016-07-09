@@ -117,6 +117,11 @@ class GridWidget() : Widget()
 					{
 						renderer.queueSprite(orb.explosion!!.icon, x.toFloat(), (height-1) - y.toFloat(), this.x.toFloat(), this.y.toFloat(), SpaceSlot.ORB, 2)
 					}
+
+					if (orb.sealed)
+					{
+						renderer.queueSprite(orb.sealSprite, x.toFloat(), (height-1) - y.toFloat(), this.x.toFloat(), this.y.toFloat(), SpaceSlot.ORB, 4)
+					}
 				}
 
 				if (block != null)

@@ -10,4 +10,9 @@ class Block
 {
 	val sprite = AssetManager.loadSprite("Oryx/uf_split/uf_terrain/crate")
 	var count = 1
+
+	init
+	{
+		sprite.drawActualSize = true
+	}
 }

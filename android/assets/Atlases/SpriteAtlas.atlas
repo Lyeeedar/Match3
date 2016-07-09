@@ -6,112 +6,112 @@ filter: MipMapLinearLinear,MipMapLinearLinear
 repeat: none
 EffectSprites/IceBurst/IceBurst_0
   rotate: false
-  xy: 618, 18
+  xy: 670, 18
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/IceBurst/IceBurst_1
   rotate: false
-  xy: 654, 18
+  xy: 706, 18
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/IceBurst/IceBurst_2
   rotate: false
-  xy: 690, 18
+  xy: 742, 18
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/IceBurst/IceBurst_3
   rotate: false
-  xy: 726, 18
+  xy: 778, 18
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/IceBurst/IceBurst_4
   rotate: false
-  xy: 762, 18
+  xy: 814, 18
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/IceBurst/IceBurst_5
   rotate: false
-  xy: 798, 18
+  xy: 850, 18
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/IceBurst/IceBurst_6
   rotate: false
-  xy: 834, 18
+  xy: 886, 18
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/Splatter/Splatter_0
   rotate: false
-  xy: 366, 18
+  xy: 418, 18
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/Splatter/Splatter_1
   rotate: false
-  xy: 402, 18
+  xy: 454, 18
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/Splatter/Splatter_2
   rotate: false
-  xy: 438, 18
+  xy: 490, 18
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/Splatter/Splatter_3
   rotate: false
-  xy: 474, 18
+  xy: 526, 18
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/Splatter/Splatter_4
   rotate: false
-  xy: 510, 18
+  xy: 562, 18
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/Splatter/Splatter_5
   rotate: false
-  xy: 546, 18
+  xy: 598, 18
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/Splatter/Splatter_6
   rotate: false
-  xy: 582, 18
+  xy: 634, 18
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 GUI/frame_0
   rotate: false
-  xy: 870, 18
+  xy: 922, 18
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 GUI/frame_1
   rotate: false
-  xy: 906, 18
+  xy: 958, 18
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -126,6 +126,13 @@ Oryx/uf_split/uf_items/crystal_cloud
 Oryx/uf_split/uf_items/key_silver
   rotate: false
   xy: 262, 2
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+Oryx/uf_split/uf_items/shield_vorpal_buckler
+  rotate: false
+  xy: 366, 2
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
