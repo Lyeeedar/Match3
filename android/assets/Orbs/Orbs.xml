@@ -40,6 +40,13 @@
             <Colour><RGB>165,35,212</RGB></Colour>
         </Purple>
 
+        <Pink>
+            <Colour><RGB>255,153,200</RGB></Colour>
+        </Pink>
+
+        <Orange>
+            <Colour><RGB>153,76,0</RGB></Colour>
+        </Orange>
     </Types>
 
 </Orbs>

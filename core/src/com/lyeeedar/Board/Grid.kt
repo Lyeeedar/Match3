@@ -251,7 +251,7 @@ class Grid(val width: Int, val height: Int)
 				}
 				else if (tile.orb != null)
 				{
-					break
+					lookingForOrb = 0
 				}
 
 				if (lookingForOrb == 1)
@@ -353,6 +353,11 @@ class Grid(val width: Int, val height: Int)
 				if (detonateComplete)
 				{
 					val matchComplete = match()
+
+					if (matchComplete && !checkIfHasValidMoves())
+					{
+						refill()
+					}
 				}
 			}
 		}
@@ -403,6 +408,53 @@ class Grid(val width: Int, val height: Int)
 		clearMatches(match3)
 
 		return match5.size == 0 && match4.size == 0 && match3.size == 0
+	}
+
+	fun checkIfHasValidMoves() : Boolean
+	{
+		// find all 2 matches
+		val matches = findMatches(2)
+
+		// if none then no valid
+		if (matches.size == 0) return false
+
+		for (match in matches)
+		{
+			// check the 3 tiles around each end to see if it contains one of the correct colours
+			val dir = Direction.getDirection(match.first, match.second)
+			val key = grid[match.first].orb!!.key
+
+			fun checkSurrounding(point: Point, dir: Direction, key: Int): Boolean
+			{
+				val targetTile = tile(point)
+				if (targetTile == null || targetTile.block != null || targetTile.orb?.sealed ?: false || !targetTile.canHaveOrb) return false
+
+				fun canMatch(point: Point): Boolean
+				{
+					val tile = tile(point) ?: return false
+					val orb = tile.orb ?: return false
+					return orb.key == key
+				}
+
+				// check + dir
+				if (canMatch(point + dir)) return true
+				if (canMatch(point + dir.clockwise.clockwise)) return true
+				if (canMatch(point + dir.anticlockwise.anticlockwise)) return true
+
+				return false
+			}
+
+			// the one before first is at first-dir
+			val beforeFirst = match.first + dir.opposite
+			if (checkSurrounding(beforeFirst, dir.opposite, key)) return true
+
+			val afterSecond = match.second + dir
+			if (checkSurrounding(afterSecond, dir, key)) return true
+		}
+
+		// else no valid
+
+		return false
 	}
 
 	fun detonate(): Boolean
@@ -492,6 +544,34 @@ class Grid(val width: Int, val height: Int)
 		return complete
 	}
 
+	fun refill()
+	{
+		val tempgrid: Array2D<Tile> = Array2D(width, height ){ x, y -> Tile(x, y) }
+		for (x in 0..width-1)
+		{
+			for (y in 0..height - 1)
+			{
+				tempgrid[x, y].contents = grid[x, y].contents
+			}
+		}
+
+		fill()
+
+		for (x in 0..width-1)
+		{
+			for (y in 0..height - 1)
+			{
+				val oldorb = tempgrid[x, y].orb
+				if (oldorb == null) grid[x, y].contents = tempgrid[x, y].contents
+				else
+				{
+					if (oldorb.explosion != null) grid[x, y].orb?.explosion = oldorb.explosion
+					if (oldorb.sealed) grid[x, y].orb?.sealed = true
+				}
+			}
+		}
+	}
+
 	fun fill()
 	{
 		for (x in 0..width-1)
@@ -521,7 +601,7 @@ class Grid(val width: Int, val height: Int)
 
 					if (MathUtils.random(5) == 0)
 					{
-						orb.sealed = true
+						//orb.sealed = true
 					}
 				}
 			}
@@ -761,6 +841,13 @@ class Grid(val width: Int, val height: Int)
 	fun pop(x: Int, y: Int, delay: Float)
 	{
 		val tile = tile(x, y) ?: return
+
+		if (tile.block != null)
+		{
+			tile.block!!.count--
+			return
+		}
+
 		val orb = tile.orb ?: return
 		if (orb.markedForDeletion) return // already completed, dont do it again
 
