@@ -18,12 +18,21 @@ class Orb(val desc: OrbDesc)
 {
 	//val properties: Array<OrbProperty> = Array()
 	var armed: Boolean = false
+		set(value)
+		{
+			field = value
+		}
+
 	var explosion: Explosion? = null
 
 	var markedForDeletion: Boolean = false
 
 	val sealSprite = AssetManager.loadSprite("Oryx/uf_split/uf_items/shield_vorpal_buckler")
+	val sealBreak = AssetManager.loadSprite("EffectSprites/Aegis/Aegis", 0.1f, Color(0.2f, 0f, 0.2f, 1f), Sprite.AnimationMode.TEXTURE, null, false, true)
 	var sealed = false
+
+	val sinkable: Boolean
+		get() = desc.sinkable
 
 	val key: Int
 		get() = desc.key
@@ -40,6 +49,7 @@ class OrbDesc
 {
 	lateinit var sprite: Sprite
 	lateinit var death: Sprite
+	var sinkable = false
 	var key: Int = -1
 
 	init

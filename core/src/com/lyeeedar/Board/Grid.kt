@@ -29,6 +29,8 @@ class Grid(val width: Int, val height: Int)
 {
 	val grid: Array2D<Tile> = Array2D(width, height ){ x, y -> Tile(x, y) }
 
+	val refillSprite = AssetManager.loadSprite("EffectSprites/Heal/Heal", 0.1f)
+
 	val validOrbs: Array<OrbDesc> = Array()
 
 	val specialOrbs: Array<Explosion> = Array()
@@ -390,6 +392,7 @@ class Grid(val width: Int, val height: Int)
 					if (block.count <= 0)
 					{
 						tile.block = null
+						tile.effects.add(block.death.copy())
 					}
 				}
 			}
@@ -398,13 +401,13 @@ class Grid(val width: Int, val height: Int)
 
 	fun match(): Boolean
 	{
-		val match5 = findMatches(5)
+		val match5 = findMatches(5, true)
 		clearMatches(match5)
 
-		val match4 = findMatches(4)
+		val match4 = findMatches(4, true)
 		clearMatches(match4)
 
-		val match3 = findMatches(3)
+		val match3 = findMatches(3, true)
 		clearMatches(match3)
 
 		return match5.size == 0 && match4.size == 0 && match3.size == 0
@@ -433,6 +436,7 @@ class Grid(val width: Int, val height: Int)
 				{
 					val tile = tile(point) ?: return false
 					val orb = tile.orb ?: return false
+					if (orb.sealed) return false
 					return orb.key == key
 				}
 
@@ -529,7 +533,7 @@ class Grid(val width: Int, val height: Int)
 			{
 				val tile = grid[x, y]
 				val orb = tile.orb
-				if (tile.canSink && orb != null)
+				if (tile.canSink && orb != null && orb.sinkable)
 				{
 					tile.orb = null
 					var count = sunkCount[orb.key, 0]
@@ -565,8 +569,21 @@ class Grid(val width: Int, val height: Int)
 				if (oldorb == null) grid[x, y].contents = tempgrid[x, y].contents
 				else
 				{
-					if (oldorb.explosion != null) grid[x, y].orb?.explosion = oldorb.explosion
-					if (oldorb.sealed) grid[x, y].orb?.sealed = true
+					val orb = grid[x, y].orb!!
+
+					if (oldorb.explosion != null) orb.explosion = oldorb.explosion
+					if (oldorb.sealed) orb.sealed = true
+
+					val delay = grid[x, y].taxiDist(Point.ZERO).toFloat() * 0.1f
+					orb.sprite.renderDelay = delay + 0.2f
+					orb.sprite.showBeforeRender = false
+
+					val sprite = refillSprite.copy()
+					sprite.colour = orb.sprite.colour
+					sprite.renderDelay = delay
+					sprite.showBeforeRender = false
+
+					grid[x, y].effects.add(sprite)
 				}
 			}
 		}
@@ -601,7 +618,7 @@ class Grid(val width: Int, val height: Int)
 
 					if (MathUtils.random(5) == 0)
 					{
-						//orb.sealed = true
+						orb.sealed = true
 					}
 				}
 			}
@@ -643,14 +660,20 @@ class Grid(val width: Int, val height: Int)
 		return matches
 	}
 
-	fun findMatches(length: Int) : Array<Pair<Point, Point>>
+	fun findMatches(length: Int, exact: Boolean = false) : Array<Pair<Point, Point>>
 	{
 		val matches = Array<Pair<Point, Point>>()
 
 		fun addMatch(p1: Point, p2: Point)
 		{
+			fun check(dst: Int): Boolean
+			{
+				if (exact) return dst == length-1
+				else return dst >= length-1
+			}
+
 			val dst = p1.dist(p2)
-			if (dst >= length-1)
+			if (check(dst))
 			{
 				// check not already added
 				var found = false
@@ -786,6 +809,7 @@ class Grid(val width: Int, val height: Int)
 				if (diff > 2 && desc != null)
 				{
 					val sprite = desc.sprite.copy()
+					sprite.drawActualSize = false
 					sprite.spriteAnimation = MoveAnimation.obtain().set(animSpeed, middle!!.getPosDiff(x, y), MoveAnimation.MoveEquation.SMOOTHSTEP)
 
 					middle.effects.add(sprite)
@@ -813,9 +837,10 @@ class Grid(val width: Int, val height: Int)
 				{
 					t.block!!.count--
 				}
-				if (t.orb?.sealed != null)
+				if (t.orb != null && t.orb!!.sealed)
 				{
-					t.orb?.sealed = false
+					t.orb!!.sealed = false
+					t.effects.add(t.orb!!.sealBreak)
 				}
 			}
 
@@ -850,10 +875,13 @@ class Grid(val width: Int, val height: Int)
 
 		val orb = tile.orb ?: return
 		if (orb.markedForDeletion) return // already completed, dont do it again
+		if (orb.sinkable) return
 
 		if (orb.sealed)
 		{
 			orb.sealed = false
+			orb.sealBreak.renderDelay = delay
+			tile.effects.add(orb.sealBreak)
 			return
 		}
 

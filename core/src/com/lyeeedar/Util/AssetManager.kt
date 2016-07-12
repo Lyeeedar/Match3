@@ -154,7 +154,12 @@ class AssetManager
 			return loadSprite(name, updateTime, Color(1f, 1f, 1f, 1f), Sprite.AnimationMode.TEXTURE, SoundInstance.getSound(sound), false)
 		}
 
-		@JvmOverloads fun loadSprite(name: String, updateTime: Float = 0.5f, colour: Color = Color(1f, 1f, 1f, 1f), mode: Sprite.AnimationMode = Sprite.AnimationMode.TEXTURE, sound: SoundInstance? = null, drawActualSize: Boolean = false): Sprite
+		fun loadSprite(name: String, updateTime: Float, reverse: Boolean): Sprite
+		{
+			return loadSprite(name, updateTime, Color(1f, 1f, 1f, 1f), Sprite.AnimationMode.TEXTURE, null, false, reverse)
+		}
+
+		@JvmOverloads fun loadSprite(name: String, updateTime: Float = 0.5f, colour: Color = Color(1f, 1f, 1f, 1f), mode: Sprite.AnimationMode = Sprite.AnimationMode.TEXTURE, sound: SoundInstance? = null, drawActualSize: Boolean = false, reverse: Boolean = false): Sprite
 		{
 			var updateTime = updateTime
 			val textures = Array<TextureRegion>(false, 1, TextureRegion::class.java)
@@ -210,6 +215,11 @@ class AssetManager
 			if (textures.size == 0)
 			{
 				throw RuntimeException("Cant find any textures for $name!")
+			}
+
+			if (reverse)
+			{
+				textures.reverse()
 			}
 
 			if (updateTime <= 0)

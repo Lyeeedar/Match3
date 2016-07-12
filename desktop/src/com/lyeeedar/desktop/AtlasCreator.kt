@@ -116,7 +116,7 @@ class AtlasCreator
 	private fun parseCodeFile(file: String)
 	{
 		val contents = File(file).readText()
-		val regex = Regex("AssetManager.loadSprite\\(\".*")//(\".*\")")
+		val regex = Regex("AssetManager.loadSprite\\(\".*\"")//(\".*\")")
 
 		val occurances = regex.findAll(contents)
 
@@ -124,7 +124,7 @@ class AtlasCreator
 		{
 			var path = occurance.value
 			path = path.replace("AssetManager.loadSprite(\"", "")
-			path = path.replace("\")", "")
+			path = path.replace("\"", "")
 
 			processSprite(path)
 		}
