@@ -15,10 +15,7 @@ import com.lyeeedar.Sprite.SpriteAnimation.StretchAnimation
 import com.lyeeedar.Sprite.SpriteRenderer
 import com.lyeeedar.Sprite.SpriteWrapper
 import com.lyeeedar.Sprite.TilingSprite
-import com.lyeeedar.Util.Array2D
-import com.lyeeedar.Util.AssetManager
-import com.lyeeedar.Util.EnumBitflag
-import com.lyeeedar.Util.Point
+import com.lyeeedar.Util.*
 import java.util.*
 
 /**
@@ -31,20 +28,24 @@ class Grid(val width: Int, val height: Int)
 
 	val refillSprite = AssetManager.loadSprite("EffectSprites/Heal/Heal", 0.1f)
 
+	// ----------------------------------------------------------------------
 	val validOrbs: Array<OrbDesc> = Array()
-
 	val specialOrbs: Array<Explosion> = Array()
 
-	val sunkCount: IntIntMap = IntIntMap()
-
+	// ----------------------------------------------------------------------
 	var selected: Point = Point.MINUS_ONE
+	var toSwap: Pair<Point, Point>? = null
 
 	val animSpeed = 0.25f
 
-	lateinit var outerwall: SpriteWrapper
-	lateinit var floor: SpriteWrapper
-	lateinit var innerwall: SpriteWrapper
+	// ----------------------------------------------------------------------
+	val onTurn = Event0Arg()
+	val onTime = Event1Arg<Float>()
+	val onPop = Event1Arg<Orb>()
+	val onSunk = Event1Arg<Orb>()
+	val onDamaged = Event0Arg()
 
+	// ----------------------------------------------------------------------
 	init
 	{
 		val xml = XmlReader().parse(Gdx.files.internal("Orbs/Orbs.xml"))
@@ -63,6 +64,7 @@ class Grid(val width: Int, val height: Int)
 			val orbDesc = OrbDesc()
 			orbDesc.sprite = baseSprite.copy()
 			orbDesc.sprite.colour = colour
+			orbDesc.name = name
 
 			orbDesc.death = deathSprite
 			orbDesc.death.colour = colour
@@ -71,6 +73,7 @@ class Grid(val width: Int, val height: Int)
 		}
 	}
 
+	// ----------------------------------------------------------------------
 	fun getExplosion(count:Int, dir: Direction): Explosion?
 	{
 		var best: Explosion? = null
@@ -93,6 +96,7 @@ class Grid(val width: Int, val height: Int)
 		return best
 	}
 
+	// ----------------------------------------------------------------------
 	fun select(newSelection: Point)
 	{
 		if (hasAnim()) return
@@ -104,31 +108,8 @@ class Grid(val width: Int, val height: Int)
 			// check if within 1
 			if (newSelection.dist(selected) == 1)
 			{
-				val oldTile = tile(selected)!!
-				val newTile = tile(newSelection)!!
-
+				toSwap = Pair(selected, newSelection)
 				selected = Point.MINUS_ONE
-
-				val oldOrb = oldTile.orb ?: return
-				val newOrb = newTile.orb ?: return
-				if (oldOrb.sealed || newOrb.sealed) return
-
-				oldTile.orb = newOrb
-				newTile.orb = oldOrb
-
-				val matches = findMatches()
-				if (matches.size == 0)
-				{
-					oldTile.orb = oldOrb
-					newTile.orb = newOrb
-
-					oldOrb.sprite.spriteAnimation = BumpAnimation.obtain().set(animSpeed, Direction.Companion.getDirection(oldTile, newTile))
-				}
-				else
-				{
-					oldOrb.sprite.spriteAnimation = MoveAnimation.obtain().set(animSpeed, newTile.getPosDiff(oldTile), MoveAnimation.MoveEquation.LINEAR)
-					newOrb.sprite.spriteAnimation = MoveAnimation.obtain().set(animSpeed, oldTile.getPosDiff(newTile), MoveAnimation.MoveEquation.LINEAR)
-				}
 			}
 			else
 			{
@@ -143,6 +124,7 @@ class Grid(val width: Int, val height: Int)
 		}
 	}
 
+	// ----------------------------------------------------------------------
 	fun cascade(): Boolean
 	{
 		var cascadeComplete = true
@@ -158,6 +140,7 @@ class Grid(val width: Int, val height: Int)
 		return cascadeComplete && sunkComplete
 	}
 
+	// ----------------------------------------------------------------------
 	fun cascadeColumn(x: Int) : Boolean
 	{
 		var complete = true
@@ -313,6 +296,7 @@ class Grid(val width: Int, val height: Int)
 		return complete
 	}
 
+	// ----------------------------------------------------------------------
 	fun hasAnim(): Boolean
 	{
 		var hasAnim = false
@@ -339,7 +323,8 @@ class Grid(val width: Int, val height: Int)
 		return hasAnim
 	}
 
-	fun update()
+	// ----------------------------------------------------------------------
+	fun update(delta: Float)
 	{
 		// if in update, do animations
 		cleanup()
@@ -360,15 +345,55 @@ class Grid(val width: Int, val height: Int)
 					{
 						refill()
 					}
+					else
+					{
+						// handle input
+						if (toSwap != null)
+						{
+							val swapSuccess = swap()
+							if (swapSuccess) onTurn()
+						}
+
+						onTime(delta)
+					}
 				}
 			}
 		}
-		// else cascade
-		// else detonate
-		// else match
-		// else wait for input
 	}
 
+	// ----------------------------------------------------------------------
+	fun swap(): Boolean
+	{
+		val oldTile = tile(toSwap!!.first)!!
+		val newTile = tile(toSwap!!.second)!!
+
+		toSwap = null
+
+		val oldOrb = oldTile.orb ?: return false
+		val newOrb = newTile.orb ?: return false
+		if (oldOrb.sealed || newOrb.sealed) return false
+
+		oldTile.orb = newOrb
+		newTile.orb = oldOrb
+
+		val matches = findMatches()
+		if (matches.size == 0)
+		{
+			oldTile.orb = oldOrb
+			newTile.orb = newOrb
+
+			oldOrb.sprite.spriteAnimation = BumpAnimation.obtain().set(animSpeed, Direction.Companion.getDirection(oldTile, newTile))
+			return false
+		}
+		else
+		{
+			oldOrb.sprite.spriteAnimation = MoveAnimation.obtain().set(animSpeed, newTile.getPosDiff(oldTile), MoveAnimation.MoveEquation.LINEAR)
+			newOrb.sprite.spriteAnimation = MoveAnimation.obtain().set(animSpeed, oldTile.getPosDiff(newTile), MoveAnimation.MoveEquation.LINEAR)
+			return true
+		}
+	}
+
+	// ----------------------------------------------------------------------
 	fun cleanup()
 	{
 		for (x in 0..width-1)
@@ -384,6 +409,7 @@ class Grid(val width: Int, val height: Int)
 					if (orb.markedForDeletion && orb.sprite.spriteAnimation == null && !orb.armed)
 					{
 						tile.orb = null
+						onPop(orb)
 					}
 				}
 				else if (tile.block != null)
@@ -399,6 +425,7 @@ class Grid(val width: Int, val height: Int)
 		}
 	}
 
+	// ----------------------------------------------------------------------
 	fun match(): Boolean
 	{
 		val match5 = findMatches(5, true)
@@ -413,6 +440,7 @@ class Grid(val width: Int, val height: Int)
 		return match5.size == 0 && match4.size == 0 && match3.size == 0
 	}
 
+	// ----------------------------------------------------------------------
 	fun checkIfHasValidMoves() : Boolean
 	{
 		// find all 2 matches
@@ -461,6 +489,7 @@ class Grid(val width: Int, val height: Int)
 		return false
 	}
 
+	// ----------------------------------------------------------------------
 	fun detonate(): Boolean
 	{
 		var complete = true
@@ -492,6 +521,7 @@ class Grid(val width: Int, val height: Int)
 		return complete
 	}
 
+	// ----------------------------------------------------------------------
 	fun detonatePattern(x: Int, y: Int, explosion: Explosion)
 	{
 		for (dir in Direction.CardinalValues)
@@ -523,6 +553,7 @@ class Grid(val width: Int, val height: Int)
 		}
 	}
 
+	// ----------------------------------------------------------------------
 	fun processSunk(): Boolean
 	{
 		var complete = true
@@ -536,9 +567,7 @@ class Grid(val width: Int, val height: Int)
 				if (tile.canSink && orb != null && orb.sinkable)
 				{
 					tile.orb = null
-					var count = sunkCount[orb.key, 0]
-					count++
-					sunkCount.put(orb.key, count)
+					onSunk(orb)
 
 					complete = false
 				}
@@ -548,6 +577,7 @@ class Grid(val width: Int, val height: Int)
 		return complete
 	}
 
+	// ----------------------------------------------------------------------
 	fun refill()
 	{
 		val tempgrid: Array2D<Tile> = Array2D(width, height ){ x, y -> Tile(x, y) }
@@ -589,6 +619,7 @@ class Grid(val width: Int, val height: Int)
 		}
 	}
 
+	// ----------------------------------------------------------------------
 	fun fill()
 	{
 		for (x in 0..width-1)
@@ -625,6 +656,7 @@ class Grid(val width: Int, val height: Int)
 		}
 	}
 
+	// ----------------------------------------------------------------------
 	fun findMatches() : Array<Pair<Point, Point>>
 	{
 		val matches = Array<Pair<Point, Point>>(false, 16)
@@ -660,6 +692,7 @@ class Grid(val width: Int, val height: Int)
 		return matches
 	}
 
+	// ----------------------------------------------------------------------
 	fun findMatches(length: Int, exact: Boolean = false) : Array<Pair<Point, Point>>
 	{
 		val matches = Array<Pair<Point, Point>>()
@@ -778,6 +811,7 @@ class Grid(val width: Int, val height: Int)
 		return matches
 	}
 
+	// ----------------------------------------------------------------------
 	fun clearMatches(matches: Array<Pair<Point, Point>>)
 	{
 		for (match in matches)
@@ -863,6 +897,7 @@ class Grid(val width: Int, val height: Int)
 		}
 	}
 
+	// ----------------------------------------------------------------------
 	fun pop(x: Int, y: Int, delay: Float)
 	{
 		val tile = tile(x, y) ?: return
@@ -897,8 +932,10 @@ class Grid(val width: Int, val height: Int)
 		if (orb.explosion != null) orb.armed = true
 	}
 
+	// ----------------------------------------------------------------------
 	fun tile(point: Point): Tile? = tile(point.x, point.y)
 
+	// ----------------------------------------------------------------------
 	fun tile(x: Int, y:Int): Tile?
 	{
 		if (x >= 0 && y >= 0 && x < width && y < height) return grid[x, y]
@@ -924,6 +961,7 @@ class Grid(val width: Int, val height: Int)
 		}
 	}
 
+	// ----------------------------------------------------------------------
 	fun loadSpecials()
 	{
 		val xml = XmlReader().parse(Gdx.files.internal("Orbs/Specials.xml"))
@@ -945,64 +983,6 @@ class Grid(val width: Int, val height: Int)
 
 				specialOrbs.add(explosion)
 			}
-		}
-	}
-
-	companion object
-	{
-		fun load(path: String) : Grid
-		{
-			val xml = XmlReader().parse(Gdx.files.internal("Boards/$path.xml"))
-
-			val rows = xml.getChildByName("Rows")
-			val width = rows.getChild(0).text.length
-			val height = rows.childCount
-
-			val grid = Grid(width, height)
-
-			grid.outerwall = SpriteWrapper.load(xml.getChildByName("OuterWall"))
-			grid.innerwall = SpriteWrapper.load(xml.getChildByName("InnerWall"))
-			grid.floor = SpriteWrapper.load(xml.getChildByName("Floor"))
-
-			for (x in 0..width-1)
-			{
-				for (y in 0..height-1)
-				{
-					val tile = grid.tile(x, y)!!
-					val char = rows.getChild(y).text[x]
-
-					if (char == '#')
-					{
-						tile.canHaveOrb = false
-						tile.sprite = grid.outerwall.copy()
-					}
-					else if (char == 's')
-					{
-						tile.canSpawn = true
-						tile.sprite = grid.floor.copy()
-					}
-					else if (char == 'v')
-					{
-						tile.canSink = true
-						tile.sprite = grid.floor.copy()
-					}
-					else if (char == '=')
-					{
-						tile.canHaveOrb = true
-						tile.sprite = grid.floor.copy()
-						tile.block = Block()
-					}
-					else
-					{
-						tile.sprite = grid.floor.copy()
-					}
-				}
-			}
-
-			grid.loadSpecials()
-			grid.fill()
-
-			return grid
 		}
 	}
 }

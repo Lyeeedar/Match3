@@ -51,16 +51,12 @@ class OrbDesc
 	lateinit var death: Sprite
 	var sinkable = false
 	var key: Int = -1
-
-	init
-	{
-		key = KeyCounter++
-	}
-
-	companion object
-	{
-		var KeyCounter = 0
-	}
+	var name: String = ""
+		set(value)
+		{
+			field = value
+			key = value.hashCode()
+		}
 }
 
 class Explosion
