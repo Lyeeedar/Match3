@@ -22,7 +22,7 @@ import java.util.*
  * Created by Philip on 04-Jul-16.
  */
 
-class Grid(val width: Int, val height: Int)
+class Grid(val width: Int, val height: Int, val level: Level)
 {
 	val grid: Array2D<Tile> = Array2D(width, height ){ x, y -> Tile(x, y) }
 
@@ -358,6 +358,15 @@ class Grid(val width: Int, val height: Int)
 					}
 				}
 			}
+		}
+
+		if (level.victory.isVictory())
+		{
+			// victory stuff
+		}
+		else if (level.defeat.isDefeated())
+		{
+			// defeat stuff
 		}
 	}
 

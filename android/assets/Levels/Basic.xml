@@ -1,0 +1,22 @@
+<Level>
+    <Rows>
+        <Row>##########</Row>
+        <Row>#s##ss##s#</Row>
+        <Row>#........#</Row>
+        <Row>#........#</Row>
+        <Row>#........#</Row>
+        <Row>#========#</Row>
+        <Row>#........#</Row>
+        <Row>#........#</Row>
+        <Row>##......##</Row>
+        <Row>###vvvv###</Row>
+    </Rows>
+    <Victory>
+        <Match>
+            <Red>20</Red>
+        </Match>
+    </Victory>
+    <Defeat>
+        <Turns>30</Turns>
+    </Defeat>
+</Level>

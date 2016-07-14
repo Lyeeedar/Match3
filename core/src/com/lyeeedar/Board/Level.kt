@@ -1,7 +1,10 @@
 package com.lyeeedar.Board
 
+import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Board.DefeatCondition.AbstractDefeatCondition
 import com.lyeeedar.Board.VictoryCondition.AbstractVictoryCondition
+import com.lyeeedar.Sprite.SpriteWrapper
 import com.lyeeedar.Util.Array2D
 
 /**
@@ -11,7 +14,6 @@ import com.lyeeedar.Util.Array2D
 class Level
 {
 	lateinit var grid: Grid
-	var difficulty: Int = 0
 	lateinit var defeat: AbstractDefeatCondition
 	lateinit var victory: AbstractVictoryCondition
 	lateinit var theme: LevelTheme
@@ -19,7 +21,7 @@ class Level
 
 	fun create()
 	{
-		grid = Grid(charGrid.xSize, charGrid.ySize)
+		grid = Grid(charGrid.xSize, charGrid.ySize, this)
 
 		for (x in 0..charGrid.xSize-1)
 		{
@@ -58,5 +60,29 @@ class Level
 
 		grid.loadSpecials()
 		grid.fill()
+
+		defeat.attachHandlers(grid)
+		victory.attachHandlers(grid)
+	}
+
+	companion object
+	{
+		fun load(path: String, theme: LevelTheme): Level
+		{
+			val xml = XmlReader().parse(Gdx.files.internal("Levels/$path.xml"))
+
+			val rows = xml.getChildByName("Rows")
+			val width = rows.getChild(0).text.length
+			val height = rows.childCount
+
+			val level = Level()
+
+			level.charGrid = Array2D<Char>(width, height) { x, y -> rows.getChild(y).text[x] }
+			level.defeat = AbstractDefeatCondition.load(xml.getChildByName("Defeat").getChild(0))
+			level.victory = AbstractVictoryCondition.load(xml.getChildByName("Victory").getChild(0))
+			level.theme = theme
+
+			return level
+		}
 	}
 }

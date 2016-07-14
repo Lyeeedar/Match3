@@ -128,6 +128,19 @@ class AtlasCreator
 
 			processSprite(path)
 		}
+
+		val regex2 = Regex("AssetManager.loadTextureRegion\\(\".*\"")//(\".*\")")
+
+		val occurances2 = regex2.findAll(contents)
+
+		for (occurance in occurances2)
+		{
+			var path = occurance.value
+			path = path.replace("AssetManager.loadTextureRegion(\"", "")
+			path = path.replace("\"", "")
+
+			processSprite(path)
+		}
 	}
 
 	private fun parseXml(file: String)
@@ -337,7 +350,9 @@ class AtlasCreator
 
 	private fun tryPackSprite(name: String): Boolean
 	{
-		val path = "Sprites/$name.png"
+		var path = name
+		if (!path.startsWith("Sprites/")) path = "Sprites/" + path
+		if (!path.endsWith(".png")) path += ".png"
 
 		if (packedPaths.contains(path))
 		{

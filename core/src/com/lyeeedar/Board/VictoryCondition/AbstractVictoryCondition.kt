@@ -1,5 +1,7 @@
 package com.lyeeedar.Board.VictoryCondition
 
+import com.badlogic.gdx.scenes.scene2d.ui.Skin
+import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.utils.XmlReader
 import com.badlogic.gdx.utils.reflect.ClassReflection
 import com.lyeeedar.Board.Grid
@@ -13,6 +15,7 @@ abstract class AbstractVictoryCondition
 	abstract fun attachHandlers(grid: Grid)
 	abstract fun isVictory(): Boolean
 	abstract fun parse(xml: XmlReader.Element)
+	abstract fun createTable(skin: Skin): Table
 
 	companion object
 	{
