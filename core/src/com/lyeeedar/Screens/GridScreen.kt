@@ -13,10 +13,12 @@ import com.lyeeedar.Board.Grid
 import com.lyeeedar.Board.Level
 import com.lyeeedar.Board.LevelTheme
 import com.lyeeedar.Global
+import com.lyeeedar.Player.Player
 
 import com.lyeeedar.Sprite.SpriteAnimation.MoveAnimation
 import com.lyeeedar.Sprite.SpriteRenderer
 import com.lyeeedar.UI.GridWidget
+import com.lyeeedar.Util.AssetManager
 import java.awt.event.MouseListener
 
 /**
@@ -28,10 +30,16 @@ class GridScreen(): AbstractScreen()
 	// ----------------------------------------------------------------------
 	override fun create()
 	{
+		val player = Player()
+		player.sprite = AssetManager.loadSprite("Oryx/Custom/heroes/Merc")
+		val playerWidget = player.createTable(Global.skin)
+
 		val theme = LevelTheme.load("Dungeon")
 		val level = Level.load("Basic", theme)
 		level.create()
 		grid = level.grid
+
+		player.attachHandlers(grid)
 
 		val widget = GridWidget()
 		widget.grid = grid
@@ -49,6 +57,8 @@ class GridScreen(): AbstractScreen()
 		table.background = TiledDrawable(background).tint(Color.DARK_GRAY)
 
 		table.add(defeatWidget).left()
+		table.row()
+		table.add(playerWidget)
 		table.row()
 		table.add(widget).expand()
 		table.row()

@@ -1,6 +1,7 @@
 package com.lyeeedar.Sprite
 
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.utils.BinaryHeap
@@ -51,6 +52,8 @@ class SpriteRenderer
 			offsetx += Math.sin( screenShakeAngle.toDouble() ).toFloat() * screenShakeRadius
 			offsety += Math.cos( screenShakeAngle.toDouble() ).toFloat() * screenShakeRadius
 		}
+
+		batch.color = Color.WHITE
 
 		while (heap.size > 0)
 		{

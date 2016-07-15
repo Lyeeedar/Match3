@@ -7,11 +7,13 @@ package com.lyeeedar.Util
 class Event0Arg {
 	private val handlers = arrayListOf<(Event0Arg.() -> Unit)>()
 	operator fun plusAssign(handler: Event0Arg.() -> Unit) { handlers.add(handler) }
+	operator fun minusAssign(handler: Event0Arg.() -> Unit) { handlers.remove(handler) }
 	operator fun invoke() { for (handler in handlers) handler() }
 }
 
 class Event1Arg<T> {
 	private val handlers = arrayListOf<(Event1Arg<T>.(T) -> Unit)>()
 	operator fun plusAssign(handler: Event1Arg<T>.(T) -> Unit) { handlers.add(handler) }
+	operator fun minusAssign(handler: Event1Arg<T>.(T) -> Unit) { handlers.remove(handler) }
 	operator fun invoke(value: T) { for (handler in handlers) handler(value) }
 }

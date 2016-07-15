@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Board.DefeatCondition.AbstractDefeatCondition
 import com.lyeeedar.Board.VictoryCondition.AbstractVictoryCondition
+import com.lyeeedar.Direction
 import com.lyeeedar.Sprite.SpriteWrapper
 import com.lyeeedar.Util.Array2D
 
@@ -60,6 +61,29 @@ class Level
 
 		grid.loadSpecials()
 		grid.fill()
+
+		for (x in 0..charGrid.xSize-1)
+		{
+			for (y in 0..charGrid.ySize-1)
+			{
+				val tile = grid.grid[x, y]
+				val orb = tile.orb
+				val char = charGrid[x, y]
+
+				if (char == '|')
+				{
+					orb!!.explosion = grid.specialOrbs.filter { it.dir == Direction.NORTH && it.count == 4 }.first()
+				}
+				else if (char == '-')
+				{
+					orb!!.explosion = grid.specialOrbs.filter { it.dir == Direction.EAST && it.count == 4 }.first()
+				}
+				else if (char == '@')
+				{
+					orb!!.sealed = true
+				}
+			}
+		}
 
 		defeat.attachHandlers(grid)
 		victory.attachHandlers(grid)

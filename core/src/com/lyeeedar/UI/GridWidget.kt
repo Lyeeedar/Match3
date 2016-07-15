@@ -133,6 +133,14 @@ class GridWidget() : Widget()
 				{
 					renderer.queueSprite(frame, x.toFloat(), (height-1) - y.toFloat(), this.x.toFloat(), this.y.toFloat(), SpaceSlot.ORB, 0)
 				}
+
+				if (grid!!.noMatchTimer > 5f && grid!!.matchHint != null)
+				{
+					if (tile == grid!!.matchHint!!.first || tile == grid!!.matchHint!!.second)
+					{
+						renderer.queueSprite(frame, x.toFloat(), (height-1) - y.toFloat(), this.x.toFloat(), this.y.toFloat(), SpaceSlot.ORB, 0)
+					}
+				}
 			}
 		}
 

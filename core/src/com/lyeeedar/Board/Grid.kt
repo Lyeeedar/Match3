@@ -46,6 +46,10 @@ class Grid(val width: Int, val height: Int, val level: Level)
 	val onDamaged = Event0Arg()
 
 	// ----------------------------------------------------------------------
+	var noMatchTimer = 0f
+	var matchHint: Pair<Point, Point>? = null
+
+	// ----------------------------------------------------------------------
 	init
 	{
 		val xml = XmlReader().parse(Gdx.files.internal("Orbs/Orbs.xml"))
@@ -256,7 +260,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 							t.orb = null
 
 							tile.orb = orb
-							orb.sprite.spriteAnimation = MoveAnimation.obtain().set(animSpeed * 0.25f, tile.getPosDiff(t), MoveAnimation.MoveEquation.EXPONENTIAL)
+							orb.sprite.spriteAnimation = MoveAnimation.obtain().set(animSpeed * 0.5f, tile.getPosDiff(t), MoveAnimation.MoveEquation.SMOOTHSTEP)
 							//orb.sprite.renderDelay = delay
 
 							complete = false
@@ -340,18 +344,23 @@ class Grid(val width: Int, val height: Int, val level: Level)
 				if (detonateComplete)
 				{
 					val matchComplete = match()
+					matchHint = findValidMove()
 
-					if (matchComplete && !checkIfHasValidMoves())
+					if (matchComplete && matchHint == null)
 					{
 						refill()
 					}
 					else
 					{
+						noMatchTimer += delta
+
 						// handle input
 						if (toSwap != null)
 						{
 							val swapSuccess = swap()
 							if (swapSuccess) onTurn()
+
+							noMatchTimer = 0f
 						}
 
 						onTime(delta)
@@ -450,13 +459,13 @@ class Grid(val width: Int, val height: Int, val level: Level)
 	}
 
 	// ----------------------------------------------------------------------
-	fun checkIfHasValidMoves() : Boolean
+	fun findValidMove() : Pair<Point, Point>?
 	{
 		// find all 2 matches
 		val matches = findMatches(2)
 
 		// if none then no valid
-		if (matches.size == 0) return false
+		if (matches.size == 0) return null
 
 		for (match in matches)
 		{
@@ -464,10 +473,10 @@ class Grid(val width: Int, val height: Int, val level: Level)
 			val dir = Direction.getDirection(match.first, match.second)
 			val key = grid[match.first].orb!!.key
 
-			fun checkSurrounding(point: Point, dir: Direction, key: Int): Boolean
+			fun checkSurrounding(point: Point, dir: Direction, key: Int): Pair<Point, Point>?
 			{
 				val targetTile = tile(point)
-				if (targetTile == null || targetTile.block != null || targetTile.orb?.sealed ?: false || !targetTile.canHaveOrb) return false
+				if (targetTile == null || targetTile.block != null || targetTile.orb?.sealed ?: false || !targetTile.canHaveOrb) return null
 
 				fun canMatch(point: Point): Boolean
 				{
@@ -478,24 +487,26 @@ class Grid(val width: Int, val height: Int, val level: Level)
 				}
 
 				// check + dir
-				if (canMatch(point + dir)) return true
-				if (canMatch(point + dir.clockwise.clockwise)) return true
-				if (canMatch(point + dir.anticlockwise.anticlockwise)) return true
+				if (canMatch(point + dir)) return Pair(point, point+dir)
+				if (canMatch(point + dir.clockwise.clockwise)) return Pair(point, point+dir.clockwise.clockwise)
+				if (canMatch(point + dir.anticlockwise.anticlockwise)) return Pair(point, point+dir.anticlockwise.anticlockwise)
 
-				return false
+				return null
 			}
 
 			// the one before first is at first-dir
 			val beforeFirst = match.first + dir.opposite
-			if (checkSurrounding(beforeFirst, dir.opposite, key)) return true
+			val beforeFirstPair = checkSurrounding(beforeFirst, dir.opposite, key)
+			if (beforeFirstPair != null) return beforeFirstPair
 
 			val afterSecond = match.second + dir
-			if (checkSurrounding(afterSecond, dir, key)) return true
+			val afterSecondPair = checkSurrounding(afterSecond, dir, key)
+			if (afterSecondPair != null) return afterSecondPair
 		}
 
 		// else no valid
 
-		return false
+		return null
 	}
 
 	// ----------------------------------------------------------------------
@@ -655,11 +666,6 @@ class Grid(val width: Int, val height: Int, val level: Level)
 					val desc = valid.random()
 					val orb = Orb(desc)
 					grid[x, y].orb = orb
-
-					if (MathUtils.random(5) == 0)
-					{
-						orb.sealed = true
-					}
 				}
 			}
 		}
