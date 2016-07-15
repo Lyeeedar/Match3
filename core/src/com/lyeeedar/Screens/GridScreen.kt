@@ -30,6 +30,8 @@ class GridScreen(): AbstractScreen()
 	// ----------------------------------------------------------------------
 	override fun create()
 	{
+		Global.stage = stage
+
 		val player = Player()
 		player.sprite = AssetManager.loadSprite("Oryx/Custom/heroes/Merc")
 		val playerWidget = player.createTable(Global.skin)
@@ -41,8 +43,7 @@ class GridScreen(): AbstractScreen()
 
 		player.attachHandlers(grid)
 
-		val widget = GridWidget()
-		widget.grid = grid
+		val widget = GridWidget(grid, player)
 
 		val defeatWidget = level.defeat.createTable(Global.skin)
 		val victoryWidget = level.victory.createTable(Global.skin)

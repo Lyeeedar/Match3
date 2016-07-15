@@ -55,14 +55,13 @@ class Player
 
 	// abilities and stuff
 
+	lateinit var portrait: SpriteWidget
 	lateinit var hpBar: ProgressBar
 	lateinit var powerBar: ProgressBar
 
 	fun attachHandlers(grid: Grid)
 	{
-		grid.onPop += {
-			power++
-		}
+
 	}
 
 	fun createTable(skin: Skin) : Table
@@ -76,12 +75,14 @@ class Player
 		powerBar.value = power.toFloat()
 		powerBar.color = Color.CYAN
 
+		portrait = SpriteWidget(sprite, 32, 32)
+
 		val barTable = Table()
 		barTable.add(hpBar)
 		barTable.row()
 		barTable.add(powerBar)
 
-		table.add(SpriteWidget(sprite, 32, 32))
+		table.add(portrait)
 		table.add(barTable).expand()
 
 		return table

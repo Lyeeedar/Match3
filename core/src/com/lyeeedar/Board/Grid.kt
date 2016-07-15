@@ -15,6 +15,7 @@ import com.lyeeedar.Sprite.SpriteAnimation.StretchAnimation
 import com.lyeeedar.Sprite.SpriteRenderer
 import com.lyeeedar.Sprite.SpriteWrapper
 import com.lyeeedar.Sprite.TilingSprite
+import com.lyeeedar.UI.FullscreenMessage
 import com.lyeeedar.Util.*
 import java.util.*
 
@@ -48,6 +49,9 @@ class Grid(val width: Int, val height: Int, val level: Level)
 	// ----------------------------------------------------------------------
 	var noMatchTimer = 0f
 	var matchHint: Pair<Point, Point>? = null
+
+	// ----------------------------------------------------------------------
+	val motes: Array<Mote> = Array(false, 16)
 
 	// ----------------------------------------------------------------------
 	init
@@ -333,7 +337,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 		// if in update, do animations
 		cleanup()
 
-		if (!hasAnim())
+		if (!hasAnim() && FullscreenMessage.instance == null)
 		{
 			val cascadeComplete = cascade()
 
@@ -348,7 +352,11 @@ class Grid(val width: Int, val height: Int, val level: Level)
 
 					if (matchComplete && matchHint == null)
 					{
-						refill()
+						val message = "Power Lock! Repopulating!"
+						val widget = FullscreenMessage(message, "", { refill() })
+						widget.setFillParent(true)
+
+						Global.stage.addActor(widget)
 					}
 					else
 					{
@@ -369,14 +377,12 @@ class Grid(val width: Int, val height: Int, val level: Level)
 			}
 		}
 
-		if (level.victory.isVictory())
+		for (mote in motes)
 		{
-			// victory stuff
+			mote.update(delta)
 		}
-		else if (level.defeat.isDefeated())
-		{
-			// defeat stuff
-		}
+
+		//motes.removeAll{ it.done }
 	}
 
 	// ----------------------------------------------------------------------
@@ -423,6 +429,8 @@ class Grid(val width: Int, val height: Int, val level: Level)
 				if (tile.orb != null)
 				{
 					val orb = tile.orb!!
+					orb.x = x
+					orb.y = y
 
 					if (orb.markedForDeletion && orb.sprite.spriteAnimation == null && !orb.armed)
 					{
@@ -482,7 +490,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 				{
 					val tile = tile(point) ?: return false
 					val orb = tile.orb ?: return false
-					if (orb.sealed) return false
+					if (orb.sealed || orb.markedForDeletion) return false
 					return orb.key == key
 				}
 
@@ -502,6 +510,51 @@ class Grid(val width: Int, val height: Int, val level: Level)
 			val afterSecond = match.second + dir
 			val afterSecondPair = checkSurrounding(afterSecond, dir, key)
 			if (afterSecondPair != null) return afterSecondPair
+		}
+
+		// check diamond pattern
+		val countMap = IntIntMap()
+		for (x in 0..width-1)
+		{
+			for (y in 0..height - 1)
+			{
+				countMap.clear()
+
+				for (dir in Direction.CardinalValues)
+				{
+					val tile = tile(x + dir.x, y + dir.y) ?: continue
+					val orb = tile.orb ?: continue
+					if (orb.sealed || orb.markedForDeletion) continue
+
+					if (!countMap.containsKey(orb.key))
+					{
+						countMap[orb.key] = 1
+					}
+					else
+					{
+						var count = countMap[orb.key]
+						count++
+						countMap[orb.key] = count
+					}
+				}
+
+				for (entry in countMap)
+				{
+					if (entry.value >= 3)
+					{
+						var point = Point.ZERO
+						for (dir in Direction.CardinalValues)
+						{
+							val tile = tile(x + dir.x, y + dir.y) ?: continue
+							val orb = tile.orb ?: continue
+							point = tile
+							break
+						}
+
+						return Pair(Point(x, y), point)
+					}
+				}
+			}
 		}
 
 		// else no valid
@@ -905,6 +958,12 @@ class Grid(val width: Int, val height: Int, val level: Level)
 						val orb = Orb(desc)
 						orb.explosion = special
 
+						if (middle != null && middle.orb != null)
+						{
+							middle.orb!!.x = middle.x
+							middle.orb!!.y = middle.y
+							onPop(middle.orb!!)
+						}
 						middle?.orb = orb
 					}
 				}
@@ -935,16 +994,22 @@ class Grid(val width: Int, val height: Int, val level: Level)
 			return
 		}
 
-		orb.sprite.visible = false
 		orb.markedForDeletion = true
 
-		val sprite = orb.desc.death.copy()
-		sprite.colour = orb.sprite.colour
-		sprite.renderDelay = delay
+		if (orb.explosion == null)
+		{
+			orb.sprite.visible = false
 
-		tile.effects.add(sprite)
+			val sprite = orb.desc.death.copy()
+			sprite.colour = orb.sprite.colour
+			sprite.renderDelay = delay
 
-		if (orb.explosion != null) orb.armed = true
+			tile.effects.add(sprite)
+		}
+		else
+		{
+			orb.armed = true
+		}
 	}
 
 	// ----------------------------------------------------------------------

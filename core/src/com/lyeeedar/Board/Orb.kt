@@ -24,6 +24,18 @@ class Orb(val desc: OrbDesc)
 		}
 
 	var explosion: Explosion? = null
+		set(value)
+		{
+			field = value
+
+			if (value != null)
+			{
+				val nsprite = value.icon.copy()
+				nsprite.colour = sprite.colour
+
+				sprite = nsprite
+			}
+		}
 
 	var markedForDeletion: Boolean = false
 
@@ -37,7 +49,10 @@ class Orb(val desc: OrbDesc)
 	val key: Int
 		get() = desc.key
 
-	val sprite: Sprite = desc.sprite.copy()
+	var sprite: Sprite = desc.sprite.copy()
+
+	var x: Int = 0
+	var y: Int = 0
 
 	override fun toString(): String
 	{

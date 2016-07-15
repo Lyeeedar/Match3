@@ -245,8 +245,9 @@ enum class SpaceSlot
 {
 	TILE,
 	ORB,
-	PROPERTIES,
-	OVERHANG;
+	EFFECT,
+	OVERHANG,
+	MOTE;
 
 
 	companion object
