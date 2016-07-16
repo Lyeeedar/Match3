@@ -58,7 +58,8 @@ class GridWidget(val grid: Grid, val player: Player) : Widget()
 		}
 	}
 
-	val frame: Sprite = AssetManager.loadSprite("GUI/border", colour = Color(0.6f, 0.9f, 0.6f, 0.6f))
+	val frame: Sprite = AssetManager.loadSprite("GUI/frame", colour = Color(0.6f, 0.7f, 0.9f, 0.6f))
+	val border: Sprite = AssetManager.loadSprite("GUI/border", colour = Color(0.6f, 0.9f, 0.6f, 0.6f))
 	val renderer: SpriteRenderer = SpriteRenderer()
 	val bitflag: EnumBitflag<Direction> = EnumBitflag()
 
@@ -143,7 +144,7 @@ class GridWidget(val grid: Grid, val player: Player) : Widget()
 				{
 					if (tile == grid.matchHint!!.first || tile == grid.matchHint!!.second)
 					{
-						renderer.queueSprite(frame, x.toFloat(), (height-1) - y.toFloat(), this.x.toFloat(), this.y.toFloat(), SpaceSlot.ORB, 0)
+						renderer.queueSprite(border, x.toFloat(), (height-1) - y.toFloat(), this.x.toFloat(), this.y.toFloat(), SpaceSlot.ORB, 0)
 					}
 				}
 			}
