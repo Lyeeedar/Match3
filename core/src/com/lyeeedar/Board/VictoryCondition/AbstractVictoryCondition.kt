@@ -16,6 +16,7 @@ abstract class AbstractVictoryCondition
 	abstract fun isVictory(): Boolean
 	abstract fun parse(xml: XmlReader.Element)
 	abstract fun createTable(skin: Skin): Table
+	abstract fun getTextDescription(): String
 
 	companion object
 	{

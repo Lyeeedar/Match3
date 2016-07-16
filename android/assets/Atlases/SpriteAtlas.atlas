@@ -202,21 +202,21 @@ EffectSprites/Splatter/Splatter_6
   index: -1
 GUI/Button
   rotate: false
-  xy: 886, 50
+  xy: 810, 34
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 GUI/Checked
   rotate: false
-  xy: 850, 50
-  size: 32, 32
-  orig: 32, 32
+  xy: 886, 58
+  size: 24, 24
+  orig: 24, 24
   offset: 0, 0
   index: -1
 GUI/ProgressIndicator
   rotate: false
-  xy: 994, 94
+  xy: 914, 58
   size: 24, 24
   orig: 24, 24
   offset: 0, 0
@@ -230,7 +230,7 @@ GUI/SeperatorHorizontal
   index: -1
 GUI/SeperatorVertical
   rotate: false
-  xy: 994, 58
+  xy: 942, 50
   size: 6, 32
   orig: 6, 32
   offset: 0, 0
@@ -249,23 +249,23 @@ GUI/Tooltip
   orig: 64, 64
   offset: 0, 0
   index: -1
+GUI/PanelHorizontal
+  rotate: false
+  xy: 2, 54
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
 GUI/Unchecked
   rotate: false
-  xy: 810, 34
-  size: 32, 32
-  orig: 32, 32
+  xy: 994, 94
+  size: 24, 24
+  orig: 24, 24
   offset: 0, 0
   index: -1
-GUI/frame_0
+GUI/border
   rotate: false
-  xy: 922, 50
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-GUI/frame_1
-  rotate: false
-  xy: 958, 50
+  xy: 850, 50
   size: 32, 32
   orig: 32, 32
   offset: 0, 0

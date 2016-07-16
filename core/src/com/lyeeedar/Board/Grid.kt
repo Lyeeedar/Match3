@@ -512,46 +512,35 @@ class Grid(val width: Int, val height: Int, val level: Level)
 			if (afterSecondPair != null) return afterSecondPair
 		}
 
+		fun getTileKey(x: Int, y: Int): Int
+		{
+			val tile = tile(x, y) ?: return -1
+			val orb = tile.orb ?: return -1
+			if (orb.sealed || orb.markedForDeletion) return -1
+
+			return orb.key
+		}
+
 		// check diamond pattern
-		val countMap = IntIntMap()
 		for (x in 0..width-1)
 		{
 			for (y in 0..height - 1)
 			{
-				countMap.clear()
-
 				for (dir in Direction.CardinalValues)
 				{
-					val tile = tile(x + dir.x, y + dir.y) ?: continue
-					val orb = tile.orb ?: continue
-					if (orb.sealed || orb.markedForDeletion) continue
+					val key = getTileKey(x + dir.x, y + dir.y)
+					if (key != -1)
+					{
+						val d1 = dir.clockwise.clockwise
+						val k1 = getTileKey(x + d1.x, y + d1.y)
 
-					if (!countMap.containsKey(orb.key))
-					{
-						countMap[orb.key] = 1
-					}
-					else
-					{
-						var count = countMap[orb.key]
-						count++
-						countMap[orb.key] = count
-					}
-				}
+						val d2 = dir.anticlockwise.anticlockwise
+						val k2 = getTileKey(x + d2.x, y + d2.y)
 
-				for (entry in countMap)
-				{
-					if (entry.value >= 3)
-					{
-						var point = Point.ZERO
-						for (dir in Direction.CardinalValues)
+						if (key == k1 && key == k2)
 						{
-							val tile = tile(x + dir.x, y + dir.y) ?: continue
-							val orb = tile.orb ?: continue
-							point = tile
-							break
+							return Pair(Point(x, y), Point(x + dir.x, y + dir.y))
 						}
-
-						return Pair(Point(x, y), point)
 					}
 				}
 			}
@@ -1031,12 +1020,9 @@ class Grid(val width: Int, val height: Int, val level: Level)
 		{
 			val tile = tile( x - dir.x, y - dir.y )
 
-			if (tile != null)
+			if (tile == null || tile.sprite.tilingSprite == null || tile.sprite.tilingSprite?.checkID != id)
 			{
-				if (tile.sprite.tilingSprite == null || tile.sprite.tilingSprite?.checkID != id)
-				{
-					bitflag.setBit(dir)
-				}
+				bitflag.setBit(dir)
 			}
 		}
 	}

@@ -19,4 +19,8 @@
     <Defeat>
         <Turns>30</Turns>
     </Defeat>
+
+    <EntryMessage>You clamber into the chamber, wrinkling your nose at the sour stench of damp. Water drips from the ceiling, echoing ominously around the cold stone walls.</EntryMessage>
+    <VictoryMessage>You win, crushing your opponents before you. You may hear the lamentations of some women.</VictoryMessage>
+    <DefeatMessage>You lose, dieing a dogs death. Your body collapsed and discarded on the floor, to become the food of the native rat population.</DefeatMessage>
 </Level>

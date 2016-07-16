@@ -16,6 +16,8 @@ class DefeatConditionTurns(): AbstractDefeatCondition()
 
 	lateinit var label: Label
 
+	override fun getTextDescription(): String = "Run out of turns"
+
 	override fun createTable(skin: Skin): Table
 	{
 		label = Label("$turnCount", skin)

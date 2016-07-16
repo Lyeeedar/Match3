@@ -20,6 +20,10 @@ class Level
 	lateinit var theme: LevelTheme
 	lateinit var charGrid: Array2D<Char>
 
+	lateinit var entryMessage: String
+	lateinit var victoryMessage: String
+	lateinit var defeatMessage: String
+
 	fun create()
 	{
 		grid = Grid(charGrid.xSize, charGrid.ySize, this)
@@ -105,6 +109,10 @@ class Level
 			level.defeat = AbstractDefeatCondition.load(xml.getChildByName("Defeat").getChild(0))
 			level.victory = AbstractVictoryCondition.load(xml.getChildByName("Victory").getChild(0))
 			level.theme = theme
+
+			level.entryMessage = xml.get("EntryMessage")
+			level.victoryMessage = xml.get("VictoryMessage")
+			level.defeatMessage = xml.get("DefeatMessage")
 
 			return level
 		}

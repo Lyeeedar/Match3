@@ -58,7 +58,7 @@ class GridWidget(val grid: Grid, val player: Player) : Widget()
 		}
 	}
 
-	val frame: Sprite = AssetManager.loadSprite("GUI/frame")
+	val frame: Sprite = AssetManager.loadSprite("GUI/border", colour = Color(0.6f, 0.9f, 0.6f, 0.6f))
 	val renderer: SpriteRenderer = SpriteRenderer()
 	val bitflag: EnumBitflag<Direction> = EnumBitflag()
 

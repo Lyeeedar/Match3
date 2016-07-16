@@ -17,6 +17,7 @@ import com.lyeeedar.Player.Player
 
 import com.lyeeedar.Sprite.SpriteAnimation.MoveAnimation
 import com.lyeeedar.Sprite.SpriteRenderer
+import com.lyeeedar.UI.FullscreenMessage
 import com.lyeeedar.UI.GridWidget
 import com.lyeeedar.Util.AssetManager
 import java.awt.event.MouseListener
@@ -64,12 +65,23 @@ class GridScreen(): AbstractScreen()
 		table.add(widget).expand()
 		table.row()
 		table.add(victoryWidget).left()
+
+		var message = level.entryMessage
+		message += "\n\nVictory Condition: " + level.victory.getTextDescription()
+		message += "\n\nDefeat Condition: " + level.defeat.getTextDescription()
+
+		val fswidget = FullscreenMessage(message, "", { val i = 9 })
+		fswidget.setFillParent(true)
+
+		Global.stage.addActor(fswidget)
 	}
 
 	// ----------------------------------------------------------------------
 	override fun doRender(delta: Float)
 	{
 		grid.update(delta)
+
+		FullscreenMessage.instance?.update(delta)
 	}
 
 	lateinit var grid: Grid

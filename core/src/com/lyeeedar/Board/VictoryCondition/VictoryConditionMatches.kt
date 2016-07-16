@@ -23,6 +23,8 @@ class VictoryConditionMatches(): AbstractVictoryCondition()
 	val sprites = IntMap<Sprite>()
 	val table = Table()
 
+	override fun getTextDescription(): String = "Match the orbs"
+
 	override fun createTable(skin: Skin): Table
 	{
 		rebuildWidget()
