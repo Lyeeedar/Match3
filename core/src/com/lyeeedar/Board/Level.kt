@@ -6,6 +6,7 @@ import com.lyeeedar.Board.DefeatCondition.AbstractDefeatCondition
 import com.lyeeedar.Board.VictoryCondition.AbstractVictoryCondition
 import com.lyeeedar.Direction
 import com.lyeeedar.Sprite.SpriteWrapper
+import com.lyeeedar.UI.FullscreenMessage
 import com.lyeeedar.Util.Array2D
 
 /**
@@ -91,6 +92,20 @@ class Level
 
 		defeat.attachHandlers(grid)
 		victory.attachHandlers(grid)
+	}
+
+	fun update(delta: Float)
+	{
+		grid.update(delta)
+
+		if (victory.isVictory())
+		{
+			FullscreenMessage(victoryMessage, "", { val i = 0 }).show()
+		}
+		else if (defeat.isDefeated())
+		{
+			FullscreenMessage(defeatMessage, "", { val i = 0 }).show()
+		}
 	}
 
 	companion object

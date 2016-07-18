@@ -16,7 +16,10 @@ class MainGame : Game()
 
 	enum class ScreenEnum
 	{
-		GRID
+		GRID,
+		LEVELSELECT,
+		TOWN,
+		SKILLSHOP
 	}
 
 	private val screens = HashMap<ScreenEnum, AbstractScreen>()

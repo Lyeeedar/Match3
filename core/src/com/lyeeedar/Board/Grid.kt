@@ -352,11 +352,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 
 					if (matchComplete && matchHint == null)
 					{
-						val message = "Power Lock! Repopulating!"
-						val widget = FullscreenMessage(message, "", { refill() })
-						widget.setFillParent(true)
-
-						Global.stage.addActor(widget)
+						FullscreenMessage("Power Lock! Repopulating!", "", { refill() }).show()
 					}
 					else
 					{

@@ -11,6 +11,7 @@
 
             <Icon>
                 <Name>Oryx/Custom/items/orb_hori</Name>
+                <DrawActualSize>true</DrawActualSize>
             </Icon>
 
             <Sprite>
@@ -28,6 +29,7 @@
 
             <Icon>
                 <Name>Oryx/Custom/items/orb_vert</Name>
+                <DrawActualSize>true</DrawActualSize>
             </Icon>
 
             <Sprite>

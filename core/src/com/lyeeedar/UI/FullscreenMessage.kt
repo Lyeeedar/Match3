@@ -59,6 +59,12 @@ class FullscreenMessage(val text: String, val style: String, val function: () ->
 		})
 	}
 
+	fun show()
+	{
+		setFillParent(true)
+		Global.stage.addActor(this)
+	}
+
 	fun update(delta: Float)
 	{
 		if (letterCount >= text.length) return

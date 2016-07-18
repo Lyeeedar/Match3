@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.scenes.scene2d.InputEvent
+import com.badlogic.gdx.scenes.scene2d.InputListener
 import com.badlogic.gdx.scenes.scene2d.Touchable
 import com.badlogic.gdx.scenes.scene2d.actions.Actions
 import com.badlogic.gdx.scenes.scene2d.ui.Widget
@@ -32,14 +33,32 @@ class GridWidget(val grid: Grid, val player: Player) : Widget()
 	{
 		touchable = Touchable.enabled
 
-		addListener(object : ClickListener()
+		addListener(object : InputListener()
 		{
-			override fun clicked(event: InputEvent?, x: Float, y: Float)
+			override fun touchDown(event: InputEvent?, x: Float, y: Float, pointer: Int, button: Int): Boolean
 			{
 				val sx = (x / Global.tileSize).toInt()
 				val sy = (height-1) - (y / Global.tileSize).toInt()
 
 				grid.select(Point(sx, sy))
+
+				return true
+			}
+
+			override fun touchDragged (event: InputEvent?, x: Float, y: Float, pointer: Int)
+			{
+				if (grid.selected != Point.MINUS_ONE)
+				{
+					val sx = (x / Global.tileSize).toInt()
+					val sy = (height - 1) - (y / Global.tileSize).toInt()
+
+					val point = Point(sx, sy)
+
+					if (point != grid.selected)
+					{
+						grid.select(point)
+					}
+				}
 			}
 		})
 

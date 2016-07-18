@@ -35,32 +35,39 @@ class GridScreen(): AbstractScreen()
 
 		val player = Player()
 		player.sprite = AssetManager.loadSprite("Oryx/Custom/heroes/Merc")
-		val playerWidget = player.createTable(Global.skin)
 
 		val theme = LevelTheme.load("Dungeon")
-		val level = Level.load("Basic", theme)
+		level = Level.load("Basic", theme)
 		level.create()
-		grid = level.grid
+		val grid = level.grid
 
 		player.attachHandlers(grid)
 
-		val widget = GridWidget(grid, player)
+		updateLevel(level, player)
+	}
+
+	// ----------------------------------------------------------------------
+	fun updateLevel(level: Level, player: Player)
+	{
+		this.level = level
+
+		val widget = GridWidget(level.grid, player)
+		val playerWidget = player.createTable(Global.skin)
 
 		val defeatWidget = level.defeat.createTable(Global.skin)
 		val victoryWidget = level.victory.createTable(Global.skin)
 
-		val table = Table()
-		table.isVisible = true
-		table.setFillParent(true)
-		stage.addActor(table)
-		//table.debug()
+		mainTable.clear()
+		val table = mainTable
 
-		val background = TextureRegionDrawable(theme.floor.sprite!!.currentTexture)
+		table.defaults().pad(10f)
+
+		val background = TextureRegionDrawable(level.theme.floor.sprite!!.currentTexture)
 		table.background = TiledDrawable(background).tint(Color.DARK_GRAY)
 
 		table.add(defeatWidget).left()
 		table.row()
-		table.add(playerWidget)
+		table.add(playerWidget).left()
 		table.row()
 		table.add(widget).expand()
 		table.row()
@@ -79,10 +86,10 @@ class GridScreen(): AbstractScreen()
 	// ----------------------------------------------------------------------
 	override fun doRender(delta: Float)
 	{
-		grid.update(delta)
+		level.update(delta)
 
 		FullscreenMessage.instance?.update(delta)
 	}
 
-	lateinit var grid: Grid
+	lateinit var level: Level
 }

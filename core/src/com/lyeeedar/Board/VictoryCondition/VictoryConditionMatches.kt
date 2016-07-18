@@ -1,8 +1,10 @@
 package com.lyeeedar.Board.VictoryCondition
 
+import com.badlogic.gdx.graphics.g2d.NinePatch
 import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.badlogic.gdx.scenes.scene2d.ui.Skin
 import com.badlogic.gdx.scenes.scene2d.ui.Table
+import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable
 import com.badlogic.gdx.utils.IntIntMap
 import com.badlogic.gdx.utils.IntMap
 import com.badlogic.gdx.utils.XmlReader
@@ -10,6 +12,7 @@ import com.lyeeedar.Board.Grid
 import com.lyeeedar.Global
 import com.lyeeedar.Sprite.Sprite
 import com.lyeeedar.UI.SpriteWidget
+import com.lyeeedar.Util.AssetManager
 import com.lyeeedar.Util.set
 import com.lyeeedar.Util.get
 
@@ -35,6 +38,10 @@ class VictoryConditionMatches(): AbstractVictoryCondition()
 	fun rebuildWidget()
 	{
 		table.clear()
+
+		table.defaults().pad(10f)
+
+		table.background = NinePatchDrawable(NinePatch(AssetManager.loadTextureRegion("GUI/TilePanel"), 6, 6, 6, 6))
 
 		for (entry in toBeMatched.entries())
 		{
