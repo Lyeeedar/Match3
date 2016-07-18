@@ -23,7 +23,7 @@ class Global
 	{
 		lateinit var skin: Skin
 		var fps = 60
-		val tileSize = 32f
+		var tileSize = 32f
 		var android = false
 		var release = false
 		lateinit var game: MainGame

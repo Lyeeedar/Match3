@@ -37,8 +37,10 @@ class GridWidget(val grid: Grid, val player: Player) : Widget()
 		{
 			override fun touchDown(event: InputEvent?, x: Float, y: Float, pointer: Int, button: Int): Boolean
 			{
-				val sx = (x / Global.tileSize).toInt()
-				val sy = (height-1) - (y / Global.tileSize).toInt()
+				val xp = x + ((grid.width * Global.tileSize) / 2f) - (width.toFloat() / 2f)
+
+				val sx = (xp / Global.tileSize).toInt()
+				val sy = (grid.height-1) - (y / Global.tileSize).toInt()
 
 				grid.select(Point(sx, sy))
 
@@ -49,8 +51,10 @@ class GridWidget(val grid: Grid, val player: Player) : Widget()
 			{
 				if (grid.selected != Point.MINUS_ONE)
 				{
-					val sx = (x / Global.tileSize).toInt()
-					val sy = (height - 1) - (y / Global.tileSize).toInt()
+					val xp = x + ((grid.width * Global.tileSize) / 2f) - (width.toFloat() / 2f)
+
+					val sx = (xp / Global.tileSize).toInt()
+					val sy = (grid.height - 1) - (y / Global.tileSize).toInt()
 
 					val point = Point(sx, sy)
 
@@ -63,7 +67,9 @@ class GridWidget(val grid: Grid, val player: Player) : Widget()
 		})
 
 		grid.onPop += {
-			val actualx = it.x * Global.tileSize + x
+			val xp = x.toFloat() + (width.toFloat() / 2f) - ((grid.width * Global.tileSize) / 2f)
+
+			val actualx = it.x * Global.tileSize + xp
 			val actualy = ((height-1) - it.y) * Global.tileSize + y
 
 			val pos = Vector2(actualx, actualy)
@@ -82,48 +88,56 @@ class GridWidget(val grid: Grid, val player: Player) : Widget()
 	val renderer: SpriteRenderer = SpriteRenderer()
 	val bitflag: EnumBitflag<Direction> = EnumBitflag()
 
-	val width: Int
-		get() = grid.width
+//	override fun getPrefHeight(): Float
+//	{
+//		return grid.height.toFloat() * Global.tileSize
+//	}
+//
+//	override fun getPrefWidth(): Float
+//	{
+//		return grid.width.toFloat() * Global.tileSize
+//	}
 
-	val height: Int
-		get() = grid.height
-
-	override fun getPrefHeight(): Float
+	override fun invalidate()
 	{
-		return height.toFloat() * Global.tileSize
-	}
+		super.invalidate()
 
-	override fun getPrefWidth(): Float
-	{
-		return width.toFloat() * Global.tileSize
+		val w = width.toFloat() / grid.width.toFloat()
+		val h = (height.toFloat() - 16f) / grid.height.toFloat()
+
+		Global.tileSize = Math.min(w, h)
 	}
 
 	override fun draw(batch: Batch?, parentAlpha: Float)
 	{
-		for (x in 0..width-1)
+		val xp = this.x.toFloat() + (this.width.toFloat() / 2f) - ((grid.width * Global.tileSize) / 2f)
+		val yp = this.y.toFloat()
+
+		for (x in 0..grid.width-1)
 		{
-			for (y in 0..height-1)
+			for (y in 0..grid.height-1)
 			{
 				val tile = grid.grid[x, y]
 				val orb = tile.orb
 				val block = tile.block
 
-				val tileHeight = if (y == 0) SpaceSlot.OVERHANG else SpaceSlot.TILE
+				val xi = x.toFloat()
+				val yi = (grid.height-1) - y.toFloat()
 
 				if (tile.sprite.sprite != null)
 				{
-					renderer.queueSprite(tile.sprite.sprite!!, x.toFloat(), (height-1) - y.toFloat(), this.x.toFloat(), this.y.toFloat(), tileHeight, 0)
+					renderer.queueSprite(tile.sprite.sprite!!, xi, yi, xp, yp, SpaceSlot.TILE, 0)
 				}
 				if (tile.sprite.tilingSprite != null)
 				{
 					val tiling = tile.sprite.tilingSprite!!
 					grid.buildTilingBitflag(bitflag, x, y, tiling.checkID)
 					val sprite = tiling.getSprite( bitflag )
-					renderer.queueSprite(sprite, x.toFloat(), (height-1) - y.toFloat(), this.x.toFloat(), this.y.toFloat(), tileHeight, 0)
+					renderer.queueSprite(sprite, xi, yi, xp, yp, SpaceSlot.TILE, 0)
 
 					if (tiling.overhang != null && bitflag.contains(Direction.NORTH))
 					{
-						renderer.queueSprite(tiling.overhang!!, x.toFloat(), (height) - y.toFloat(), this.x.toFloat(), this.y.toFloat(), SpaceSlot.OVERHANG, 0)
+						renderer.queueSprite(tiling.overhang!!, xi, (grid.height) - y.toFloat(), xp, yp, SpaceSlot.OVERHANG, 0)
 					}
 				}
 
@@ -135,35 +149,35 @@ class GridWidget(val grid: Grid, val player: Player) : Widget()
 					}
 					else
 					{
-						renderer.queueSprite(sprite, x.toFloat(), (height-1) - y.toFloat(), this.x.toFloat(), this.y.toFloat(), SpaceSlot.EFFECT, 0)
+						renderer.queueSprite(sprite, xi, yi, xp, yp, SpaceSlot.EFFECT, 0)
 					}
 				}
 
 				if (orb != null)
 				{
-					renderer.queueSprite(orb.sprite, x.toFloat(), (height-1) - y.toFloat(), this.x.toFloat(), this.y.toFloat(), SpaceSlot.ORB, 1)
+					renderer.queueSprite(orb.sprite, xi, yi, xp, yp, SpaceSlot.ORB, 1)
 
 					if (orb.sealed)
 					{
-						renderer.queueSprite(orb.sealSprite, x.toFloat(), (height-1) - y.toFloat(), this.x.toFloat(), this.y.toFloat(), SpaceSlot.ORB, 2)
+						renderer.queueSprite(orb.sealSprite, xi, yi, xp, yp, SpaceSlot.ORB, 2)
 					}
 				}
 
 				if (block != null)
 				{
-					renderer.queueSprite(block.sprite, x.toFloat(), (height-1) - y.toFloat(), this.x.toFloat(), this.y.toFloat(), SpaceSlot.ORB, 1)
+					renderer.queueSprite(block.sprite, xi, yi, xp, yp, SpaceSlot.ORB, 1)
 				}
 
 				if (tile.isSelected)
 				{
-					renderer.queueSprite(frame, x.toFloat(), (height-1) - y.toFloat(), this.x.toFloat(), this.y.toFloat(), SpaceSlot.ORB, 0)
+					renderer.queueSprite(frame, xi, yi, xp, yp, SpaceSlot.ORB, 0)
 				}
 
 				if (grid.noMatchTimer > 5f && grid.matchHint != null)
 				{
 					if (tile == grid.matchHint!!.first || tile == grid.matchHint!!.second)
 					{
-						renderer.queueSprite(border, x.toFloat(), (height-1) - y.toFloat(), this.x.toFloat(), this.y.toFloat(), SpaceSlot.ORB, 0)
+						renderer.queueSprite(border, xi, yi, xp, yp, SpaceSlot.ORB, 0)
 					}
 				}
 			}

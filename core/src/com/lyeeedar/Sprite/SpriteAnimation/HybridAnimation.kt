@@ -38,7 +38,10 @@ class HybridAnimation(): AbstractSpriteAnimation()
 	override fun free()
 	{
 		offset?.free()
+		offset = null
+
 		scale?.free()
+		scale = null
 	}
 
 	override fun copy(): AbstractSpriteAnimation

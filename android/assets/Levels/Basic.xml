@@ -1,15 +1,15 @@
 <Level>
     <Rows>
-        <Row>##########</Row>
-        <Row>#s##ss##s#</Row>
+        <Row>#.##..##.#</Row>
         <Row>#@......@#</Row>
+        <Row>#........#</Row>
         <Row>#........#</Row>
         <Row>#........#</Row>
         <Row>#========#</Row>
         <Row>#........#</Row>
         <Row>#........#</Row>
         <Row>##@@@@@@##</Row>
-        <Row>###vvvv###</Row>
+        <Row>###....###</Row>
     </Rows>
     <Victory>
         <Match>

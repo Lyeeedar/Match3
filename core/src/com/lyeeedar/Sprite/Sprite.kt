@@ -56,25 +56,23 @@ class Sprite(var fileName: String, var animationDelay: Float, var textures: Arra
 		{
 			if (value != null && field != null)
 			{
-				var hybrid: HybridAnimation
-				if (field is HybridAnimation)
+				val hybrid = field as? HybridAnimation ?: HybridAnimation()
+
+				fun merge(anim: AbstractSpriteAnimation)
 				{
-					hybrid = field as HybridAnimation
-				}
-				else
-				{
-					hybrid = HybridAnimation()
+					if (anim is MoveAnimation || anim is BumpAnimation)
+					{
+						hybrid.offset = anim
+					}
+					else if (anim is StretchAnimation)
+					{
+						hybrid.scale = anim
+					}
+					else throw RuntimeException("No entry for sprite anim type")
 				}
 
-				if (value is MoveAnimation || value is BumpAnimation)
-				{
-					hybrid.offset = value
-				}
-				else if (value is StretchAnimation)
-				{
-					hybrid.scale = value
-				}
-				else throw RuntimeException("No entry for sprite anim type")
+				merge(field!!)
+				merge(value)
 
 				field = hybrid
 			}

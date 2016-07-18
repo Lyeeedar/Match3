@@ -1,7 +1,5 @@
 <Layout>
     <Rows>
-        <Row>###########</Row>
-        <Row>#sssssssss#</Row>
         <Row>#.........#</Row>
         <Row>#.........#</Row>
         <Row>#.........#</Row>
@@ -9,6 +7,7 @@
         <Row>#.........#</Row>
         <Row>#.........#</Row>
         <Row>#.........#</Row>
-        <Row>#vvvvvvvvv#</Row>
+        <Row>#.........#</Row>
+        <Row>#.........#</Row>
     </Rows>
 </Layout>

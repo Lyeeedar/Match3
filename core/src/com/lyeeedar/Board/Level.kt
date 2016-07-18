@@ -5,6 +5,8 @@ import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Board.DefeatCondition.AbstractDefeatCondition
 import com.lyeeedar.Board.VictoryCondition.AbstractVictoryCondition
 import com.lyeeedar.Direction
+import com.lyeeedar.Global
+import com.lyeeedar.MainGame
 import com.lyeeedar.Sprite.SpriteWrapper
 import com.lyeeedar.UI.FullscreenMessage
 import com.lyeeedar.Util.Array2D
@@ -25,6 +27,8 @@ class Level
 	lateinit var victoryMessage: String
 	lateinit var defeatMessage: String
 
+	var completed = false
+
 	fun create()
 	{
 		grid = Grid(charGrid.xSize, charGrid.ySize, this)
@@ -40,16 +44,6 @@ class Level
 				{
 					tile.canHaveOrb = false
 					tile.sprite = theme.wall.copy()
-				}
-				else if (char == 's')
-				{
-					tile.canSpawn = true
-					tile.sprite = theme.floor.copy()
-				}
-				else if (char == 'v')
-				{
-					tile.canSink = true
-					tile.sprite = theme.floor.copy()
 				}
 				else if (char == '=')
 				{
@@ -98,13 +92,18 @@ class Level
 	{
 		grid.update(delta)
 
-		if (victory.isVictory())
+		if (!completed)
 		{
-			FullscreenMessage(victoryMessage, "", { val i = 0 }).show()
-		}
-		else if (defeat.isDefeated())
-		{
-			FullscreenMessage(defeatMessage, "", { val i = 0 }).show()
+			if (victory.isVictory())
+			{
+				FullscreenMessage(victoryMessage, "", { Global.game.switchScreen(MainGame.ScreenEnum.LEVELSELECT) }).show()
+				completed = true
+			}
+			else if (defeat.isDefeated())
+			{
+				FullscreenMessage(defeatMessage, "", { Global.game.switchScreen(MainGame.ScreenEnum.LEVELSELECT) }).show()
+				completed = true
+			}
 		}
 	}
 

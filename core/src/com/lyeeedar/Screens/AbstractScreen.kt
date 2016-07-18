@@ -28,8 +28,15 @@ abstract class AbstractScreen() : Screen, InputProcessor
     //############################################################################
     //region Screen
 
+	// ----------------------------------------------------------------------
+	fun swapTo()
+	{
+		Global.game.switchScreen(this)
+	}
+
     // ----------------------------------------------------------------------
-    override fun show() {
+    override fun show()
+	{
         if ( !created )
 		{
             baseCreate()

@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.files.FileHandle
 import com.lyeeedar.Screens.AbstractScreen
 import com.lyeeedar.Screens.GridScreen
+import com.lyeeedar.Screens.LevelSelectScreen
 
 import javax.swing.*
 import java.io.PrintWriter
@@ -50,8 +51,14 @@ class MainGame : Game()
 		}
 
 		screens.put(ScreenEnum.GRID, GridScreen())
+		screens.put(ScreenEnum.LEVELSELECT, LevelSelectScreen())
 
-		switchScreen(ScreenEnum.GRID)
+		switchScreen(ScreenEnum.LEVELSELECT)
+	}
+
+	fun switchScreen(screen: AbstractScreen)
+	{
+		this.setScreen(screen)
 	}
 
 	fun switchScreen(screen: ScreenEnum)

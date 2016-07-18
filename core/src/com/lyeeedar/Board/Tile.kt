@@ -25,8 +25,6 @@ class Tile(x: Int, y: Int) : Point(x, y)
 	var contents: Any? = null
 
 	var connectedTo: Tile? = null
-	var canSink: Boolean = false
-	var canSpawn: Boolean = false
 	var canHaveOrb: Boolean = true
 
 	var isSelected: Boolean = false

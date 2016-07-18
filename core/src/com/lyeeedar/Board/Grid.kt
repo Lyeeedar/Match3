@@ -107,7 +107,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 	// ----------------------------------------------------------------------
 	fun select(newSelection: Point)
 	{
-		if (hasAnim()) return
+		if (hasAnim() || level.completed) return
 
 		tile(selected)?.isSelected = false
 
@@ -166,18 +166,18 @@ class Grid(val width: Int, val height: Int, val level: Level)
 				// if gap found read up until solid / spawner
 				var found: Tile? = null
 
-				for (searchY in currentY downTo 0)
+				for (searchY in currentY downTo -1)
 				{
-					val stile = grid[x, searchY]
-					if (stile.orb != null)
+					val stile = if (searchY >= 0) grid[x, searchY] else null
+					if (stile == null)
+					{
+						found = tile
+						break
+					}
+					else if (stile.orb != null)
 					{
 						val orb = stile.orb!!
 						if (!orb.armed && !orb.sealed) found = stile
-						break
-					}
-					else if (stile.canSpawn)
-					{
-						found = stile
 						break
 					}
 					else if (!stile.canHaveOrb)
@@ -196,21 +196,22 @@ class Grid(val width: Int, val height: Int, val level: Level)
 					var orb: Orb
 					var spawned = false
 
-					if (found.orb != null)
+					if (found == tile)
+					{
+						spawned = true
+						orb = Orb(validOrbs.random())
+						orb.sprite.spriteAnimation = StretchAnimation.obtain().set(animSpeed, null, animSpeed * 0.5f, StretchAnimation.StretchEquation.EXPAND)
+					}
+					else
 					{
 						orb = found.orb!!
 						found.orb = null
 					}
-					else
-					{
-						spawned = true
-						orb = Orb(validOrbs.random())
-					}
 
 					tile.orb = orb
-					orb.sprite.spriteAnimation = MoveAnimation.obtain().set(animSpeed, tile.getPosDiff(found.x, if (spawned) found.y - 1 else found.y), MoveAnimation.MoveEquation.EXPONENTIAL)
+					orb.sprite.spriteAnimation = MoveAnimation.obtain().set(animSpeed, tile.getPosDiff(found.x, if (spawned) -1 else found.y), MoveAnimation.MoveEquation.EXPONENTIAL)
 					orb.sprite.renderDelay = delay
-					orb.sprite.showBeforeRender = true
+					orb.sprite.showBeforeRender = !spawned
 
 					delay += 0.06f
 
@@ -348,26 +349,29 @@ class Grid(val width: Int, val height: Int, val level: Level)
 				if (detonateComplete)
 				{
 					val matchComplete = match()
-					matchHint = findValidMove()
 
-					if (matchComplete && matchHint == null)
+					if (!level.completed)
 					{
-						FullscreenMessage("Power Lock! Repopulating!", "", { refill() }).show()
-					}
-					else
-					{
-						noMatchTimer += delta
+						matchHint = findValidMove()
 
-						// handle input
-						if (toSwap != null)
+						if (matchComplete && matchHint == null)
 						{
-							val swapSuccess = swap()
-							if (swapSuccess) onTurn()
+							FullscreenMessage("No valid moves. Randomising.", "", { refill() }).show()
+						} else
+						{
+							noMatchTimer += delta
 
-							noMatchTimer = 0f
+							// handle input
+							if (toSwap != null)
+							{
+								val swapSuccess = swap()
+								if (swapSuccess) onTurn()
+
+								noMatchTimer = 0f
+							}
+
+							onTime(delta)
 						}
-
-						onTime(delta)
 					}
 				}
 			}
@@ -378,16 +382,18 @@ class Grid(val width: Int, val height: Int, val level: Level)
 			mote.update(delta)
 		}
 
-		//motes.removeAll{ it.done }
+		motes.removeAll{ it.done }
 	}
 
 	// ----------------------------------------------------------------------
 	fun swap(): Boolean
 	{
-		val oldTile = tile(toSwap!!.first)!!
-		val newTile = tile(toSwap!!.second)!!
+		val oldTile = tile(toSwap!!.first)
+		val newTile = tile(toSwap!!.second)
 
 		toSwap = null
+
+		if (oldTile == null || newTile == null) return false
 
 		val oldOrb = oldTile.orb ?: return false
 		val newOrb = newTile.orb ?: return false
@@ -618,17 +624,14 @@ class Grid(val width: Int, val height: Int, val level: Level)
 
 		for (x in 0..width-1)
 		{
-			for (y in 0..height-1)
+			val tile = grid[x, height-1]
+			val orb = tile.orb
+			if (orb != null && orb.sinkable)
 			{
-				val tile = grid[x, y]
-				val orb = tile.orb
-				if (tile.canSink && orb != null && orb.sinkable)
-				{
-					tile.orb = null
-					onSunk(orb)
+				tile.orb = null
+				onSunk(orb)
 
-					complete = false
-				}
+				complete = false
 			}
 		}
 

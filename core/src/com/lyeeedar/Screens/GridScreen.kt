@@ -29,26 +29,28 @@ import java.awt.event.MouseListener
 class GridScreen(): AbstractScreen()
 {
 	// ----------------------------------------------------------------------
+	init
+	{
+		instance = this
+	}
+
+	// ----------------------------------------------------------------------
 	override fun create()
 	{
 		Global.stage = stage
-
-		val player = Player()
-		player.sprite = AssetManager.loadSprite("Oryx/Custom/heroes/Merc")
-
-		val theme = LevelTheme.load("Dungeon")
-		level = Level.load("Basic", theme)
-		level.create()
-		val grid = level.grid
-
-		player.attachHandlers(grid)
-
-		updateLevel(level, player)
 	}
 
 	// ----------------------------------------------------------------------
 	fun updateLevel(level: Level, player: Player)
 	{
+		if (!created)
+		{
+			baseCreate()
+			created = true
+		}
+
+		player.attachHandlers(level.grid)
+
 		this.level = level
 
 		val widget = GridWidget(level.grid, player)
@@ -69,7 +71,7 @@ class GridScreen(): AbstractScreen()
 		table.row()
 		table.add(playerWidget).left()
 		table.row()
-		table.add(widget).expand()
+		table.add(widget).expand().fill()
 		table.row()
 		table.add(victoryWidget).left()
 
@@ -92,4 +94,10 @@ class GridScreen(): AbstractScreen()
 	}
 
 	lateinit var level: Level
+
+	// ----------------------------------------------------------------------
+	companion object
+	{
+		lateinit var instance: GridScreen
+	}
 }
