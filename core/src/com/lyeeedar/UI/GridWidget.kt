@@ -89,7 +89,11 @@ class GridWidget(val grid: Grid) : Widget()
 	val glow: Sprite = AssetManager.loadSprite("glow")
 	val frame: Sprite = AssetManager.loadSprite("GUI/frame", colour = Color(0.6f, 0.7f, 0.9f, 0.6f))
 	val border: Sprite = AssetManager.loadSprite("GUI/border", colour = Color(0.6f, 0.9f, 0.6f, 0.6f))
-	val renderer: SpriteRenderer = SpriteRenderer()
+
+	val background: SpriteRenderer = SpriteRenderer()
+	val foreground: SpriteRenderer = SpriteRenderer()
+	val floating: SpriteRenderer = SpriteRenderer()
+
 	val bitflag: EnumBitflag<Direction> = EnumBitflag()
 
 //	override fun getPrefHeight(): Float
@@ -130,18 +134,18 @@ class GridWidget(val grid: Grid) : Widget()
 
 				if (tile.sprite.sprite != null)
 				{
-					renderer.queueSprite(tile.sprite.sprite!!, xi, yi, xp, yp, SpaceSlot.TILE, 0)
+					background.queueSprite(tile.sprite.sprite!!, xi, yi, xp, yp, SpaceSlot.TILE, 0)
 				}
 				if (tile.sprite.tilingSprite != null)
 				{
 					val tiling = tile.sprite.tilingSprite!!
 					grid.buildTilingBitflag(bitflag, x, y, tiling.checkID)
 					val sprite = tiling.getSprite( bitflag )
-					renderer.queueSprite(sprite, xi, yi, xp, yp, SpaceSlot.TILE, 0)
+					background.queueSprite(sprite, xi, yi, xp, yp, SpaceSlot.TILE, 0)
 
 					if (tiling.overhang != null && bitflag.contains(Direction.NORTH))
 					{
-						renderer.queueSprite(tiling.overhang!!, xi, (grid.height) - y.toFloat(), xp, yp, SpaceSlot.OVERHANG, 0)
+						foreground.queueSprite(tiling.overhang!!, xi, (grid.height) - y.toFloat(), xp, yp, SpaceSlot.OVERHANG, 0)
 					}
 				}
 
@@ -153,55 +157,55 @@ class GridWidget(val grid: Grid) : Widget()
 					}
 					else
 					{
-						renderer.queueSprite(sprite, xi, yi, xp, yp, SpaceSlot.EFFECT, 0)
+						foreground.queueSprite(sprite, xi, yi, xp, yp, SpaceSlot.EFFECT, 0)
 					}
 				}
 
 				if (orb != null)
 				{
-					renderer.queueSprite(orb.sprite, xi, yi, xp, yp, SpaceSlot.ORB, 1)
+					foreground.queueSprite(orb.sprite, xi, yi, xp, yp, SpaceSlot.ORB, 1)
 
 					if (orb.sealed)
 					{
-						renderer.queueSprite(orb.sealSprite, xi, yi, xp, yp, SpaceSlot.ORB, 2)
+						foreground.queueSprite(orb.sealSprite, xi, yi, xp, yp, SpaceSlot.ORB, 2)
 					}
 
 					if (orb.armed)
 					{
-						renderer.queueSprite(glow, xi, yi, xp, yp, SpaceSlot.ORB, 0)
+						foreground.queueSprite(glow, xi, yi, xp, yp, SpaceSlot.ORB, 0)
 					}
 				}
 
 				if (block != null)
 				{
-					renderer.queueSprite(block.sprite, xi, yi, xp, yp, SpaceSlot.ORB, 1)
+					foreground.queueSprite(block.sprite, xi, yi, xp, yp, SpaceSlot.ORB, 1)
 				}
 
 				if (tile.isSelected)
 				{
-					renderer.queueSprite(frame, xi, yi, xp, yp, SpaceSlot.ORB, 0)
+					foreground.queueSprite(frame, xi, yi, xp, yp, SpaceSlot.ORB, 0)
 				}
 
 				if (grid.noMatchTimer > 5f && grid.matchHint != null)
 				{
 					if (tile == grid.matchHint!!.first || tile == grid.matchHint!!.second)
 					{
-						renderer.queueSprite(border, xi, yi, xp, yp, SpaceSlot.ORB, 0)
+						foreground.queueSprite(border, xi, yi, xp, yp, SpaceSlot.ORB, 0)
 					}
 				}
 			}
 		}
 
-		renderer.flush(Gdx.app.graphics.deltaTime, batch as SpriteBatch)
-
 		for (mote in grid.motes)
 		{
 			if (!mote.done)
 			{
-				renderer.queueSprite(mote.sprite, mote.pos.x / Global.tileSize, mote.pos.y / Global.tileSize, 0f, 0f, SpaceSlot.MOTE, 0)
+				floating.queueSprite(mote.sprite, mote.pos.x / Global.tileSize, mote.pos.y / Global.tileSize, 0f, 0f, SpaceSlot.MOTE, 0)
 			}
 		}
 
-		renderer.flush(Gdx.app.graphics.deltaTime, batch)
+		background.flush(Gdx.app.graphics.deltaTime, batch as SpriteBatch)
+		foreground.flush(Gdx.app.graphics.deltaTime, batch as SpriteBatch)
+		floating.flush(Gdx.app.graphics.deltaTime, batch as SpriteBatch)
 	}
 }

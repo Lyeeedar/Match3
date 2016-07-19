@@ -10,6 +10,7 @@ import com.lyeeedar.MainGame
 import com.lyeeedar.Sprite.SpriteWrapper
 import com.lyeeedar.UI.FullscreenMessage
 import com.lyeeedar.Util.Array2D
+import com.lyeeedar.Util.ranChild
 
 /**
  * Created by Philip on 13-Jul-16.
@@ -17,15 +18,19 @@ import com.lyeeedar.Util.Array2D
 
 class Level
 {
+	enum class LevelType
+	{
+		TRAP,
+		TREASURE,
+		ENCOUNTER
+	}
+
 	lateinit var grid: Grid
 	lateinit var defeat: AbstractDefeatCondition
 	lateinit var victory: AbstractVictoryCondition
 	lateinit var theme: LevelTheme
 	lateinit var charGrid: Array2D<Char>
-
-	lateinit var entryMessage: String
-	lateinit var victoryMessage: String
-	lateinit var defeatMessage: String
+	lateinit var type: LevelType
 
 	var completed = false
 
@@ -96,12 +101,28 @@ class Level
 		{
 			if (victory.isVictory())
 			{
-				FullscreenMessage(victoryMessage, "", { Global.game.switchScreen(MainGame.ScreenEnum.LEVELSELECT) }).show()
+				val message: String = when(type)
+				{
+					LevelType.TRAP -> "You narrowly escaped the deadly trap"
+					LevelType.TREASURE -> "You managed to acquire the treasure"
+					LevelType.ENCOUNTER -> "You defeated the monster"
+					else -> ""
+				}
+
+				FullscreenMessage(message, "", { Global.game.switchScreen(MainGame.ScreenEnum.LEVELSELECT) }).show()
 				completed = true
 			}
 			else if (defeat.isDefeated())
 			{
-				FullscreenMessage(defeatMessage, "", { Global.game.switchScreen(MainGame.ScreenEnum.LEVELSELECT) }).show()
+				val message: String = when(type)
+				{
+					LevelType.TRAP -> "You failed to escape the trap"
+					LevelType.TREASURE -> "The treasure slipped from your fingers"
+					LevelType.ENCOUNTER -> "You died"
+					else -> ""
+				}
+
+				FullscreenMessage(message, "", { Global.game.switchScreen(MainGame.ScreenEnum.LEVELSELECT) }).show()
 				completed = true
 			}
 		}
@@ -109,7 +130,7 @@ class Level
 
 	companion object
 	{
-		fun load(path: String, theme: LevelTheme): Level
+		fun load(path: String, theme: LevelTheme, type: LevelType): Level
 		{
 			val xml = XmlReader().parse(Gdx.files.internal("Levels/$path.xml"))
 
@@ -120,13 +141,10 @@ class Level
 			val level = Level()
 
 			level.charGrid = Array2D<Char>(width, height) { x, y -> rows.getChild(y).text[x] }
-			level.defeat = AbstractDefeatCondition.load(xml.getChildByName("Defeat").getChild(0))
-			level.victory = AbstractVictoryCondition.load(xml.getChildByName("Victory").getChild(0))
+			level.defeat = AbstractDefeatCondition.load(xml.getChildByName("AllowedDefeats").ranChild())
+			level.victory = AbstractVictoryCondition.load(xml.getChildByName("AllowedVictories").ranChild())
 			level.theme = theme
-
-			level.entryMessage = xml.get("EntryMessage")
-			level.victoryMessage = xml.get("VictoryMessage")
-			level.defeatMessage = xml.get("DefeatMessage")
+			level.type = type
 
 			return level
 		}

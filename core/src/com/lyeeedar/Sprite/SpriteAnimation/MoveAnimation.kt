@@ -1,6 +1,9 @@
 package com.lyeeedar.Sprite.SpriteAnimation
 
+import com.badlogic.gdx.math.Interpolation
 import com.badlogic.gdx.math.MathUtils
+import com.badlogic.gdx.math.Path
+import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.Pool
 import com.badlogic.gdx.utils.Pools
 import com.badlogic.gdx.utils.XmlReader.Element
@@ -8,11 +11,6 @@ import com.lyeeedar.Util.Point
 
 class MoveAnimation : AbstractSpriteAnimation
 {
-	enum class MoveEquation
-	{
-		LINEAR, SMOOTHSTEP, EXPONENTIAL, LEAP
-	}
-
 	override fun duration(): Float = duration
 
 	override fun time(): Float = time
@@ -21,14 +19,13 @@ class MoveAnimation : AbstractSpriteAnimation
 
 	override fun renderScale(): FloatArray? = null
 
-	private var diff: FloatArray? = null
-	private var eqn: MoveEquation? = null
-
-	var leapHeight = 3f
+	private lateinit var path: Path<Vector2>
+	private var eqn: Interpolation? = null
 
 	private var duration: Float = 0f
 	private var time: Float = 0f
 
+	private val temp = Vector2()
 	private val offset = floatArrayOf(0f, 0f)
 
 	constructor()
@@ -36,10 +33,10 @@ class MoveAnimation : AbstractSpriteAnimation
 
 	}
 
-	fun set(duration: Float, diff: FloatArray, eqn: MoveEquation): MoveAnimation
+	fun set(duration: Float, path: Path<Vector2>, eqn: Interpolation): MoveAnimation
 	{
 		this.duration = duration
-		this.diff = diff
+		this.path = path
 		this.eqn = eqn
 
 		time = 0f
@@ -53,50 +50,34 @@ class MoveAnimation : AbstractSpriteAnimation
 	{
 		time += delta
 
-		var alpha = MathUtils.clamp((duration - time) / duration, 0f, 1f)
+		val a = 1f - MathUtils.clamp((duration - time) / duration, 0f, 1f)
 
-		if (eqn == MoveEquation.SMOOTHSTEP)
-		{
-			alpha = (alpha * alpha * (3f - 2f * alpha)) // smoothstep
-		}
-		else if (eqn == MoveEquation.EXPONENTIAL)
-		{
-			alpha = 1f - (1f - alpha) * (1f - alpha) * (1f - alpha) * (1f - alpha)
-		}
+		val alpha = eqn!!.apply(a)
+		path.valueAt(temp, alpha)
 
-		offset[0] = (diff!![0] * alpha).toFloat()
-		offset[1] = (diff!![1] * alpha).toFloat()
-
-		if (eqn == MoveEquation.LEAP)
-		{
-			// B2(t) = (1 - t) * (1 - t) * p0 + 2 * (1-t) * t * p1 + t*t*p2
-			alpha = (1f - alpha) * (1f - alpha) * 0f + 2f * (1f - alpha) * alpha * 1f + alpha * alpha * 0f
-			offset[1] += 32 * leapHeight * alpha
-		}
+		offset[0] = temp.x
+		offset[1] = temp.y
 
 		return time > duration
 	}
 
-	override fun set(duration: Float, diff: FloatArray)
+	fun set(duration: Float, path: Path<Vector2>)
 	{
 		this.duration = duration
 		this.time = 0f
-		this.diff = diff
+		this.path = path
 	}
 
 	override fun parse(xml: Element)
 	{
-		eqn = MoveEquation.valueOf(xml.get("Equation", "SmoothStep").toUpperCase())
-		leapHeight = xml.getFloat("LeapHeight", leapHeight)
 	}
 
 	override fun copy(): AbstractSpriteAnimation
 	{
 		val anim = MoveAnimation()
 		anim.eqn = eqn
-		anim.leapHeight = leapHeight
 		anim.duration = duration
-		anim.diff = diff
+		anim.path = path
 
 		return anim
 	}

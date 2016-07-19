@@ -55,6 +55,8 @@ class VictoryConditionMatches(): AbstractVictoryCondition()
 
 	override fun attachHandlers(grid: Grid)
 	{
+		toBeMatched[grid.validOrbs[0].key] = 30
+
 		grid.onPop += {
 			if (toBeMatched.containsKey(it.key))
 			{
@@ -89,14 +91,14 @@ class VictoryConditionMatches(): AbstractVictoryCondition()
 
 	override fun parse(xml: XmlReader.Element)
 	{
-		for (i in 0..xml.childCount-1)
-		{
-			val el = xml.getChild(i)
-			val name = el.name
-			val key = name.hashCode()
-			val count = el.text.toInt()
-
-			toBeMatched[key] = count
-		}
+//		for (i in 0..xml.childCount-1)
+//		{
+//			val el = xml.getChild(i)
+//			val name = el.name
+//			val key = name.hashCode()
+//			val count = el.text.toInt()
+//
+//			toBeMatched[key] = count
+//		}
 	}
 }

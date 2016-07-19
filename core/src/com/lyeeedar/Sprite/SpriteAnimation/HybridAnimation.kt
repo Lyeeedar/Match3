@@ -11,12 +11,6 @@ class HybridAnimation(): AbstractSpriteAnimation()
 	var offset: AbstractSpriteAnimation? = null
 	var scale: AbstractSpriteAnimation? = null
 
-	override fun set(duration: Float, diff: FloatArray)
-	{
-		offset?.set(duration, diff)
-		scale?.set(duration, diff)
-	}
-
 	override fun duration(): Float = Math.max(offset?.duration() ?: 0f, scale?.duration() ?: 0f)
 	override fun time(): Float = Math.min(offset?.time() ?: duration(), scale?.time() ?: duration())
 

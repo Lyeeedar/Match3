@@ -85,7 +85,7 @@ class StretchAnimation : AbstractSpriteAnimation
 		return time > duration
 	}
 
-	override fun set(duration: Float, diff: FloatArray)
+	fun set(duration: Float, diff: FloatArray)
 	{
 		var duration = duration
 		duration = (duration * animSpeed)

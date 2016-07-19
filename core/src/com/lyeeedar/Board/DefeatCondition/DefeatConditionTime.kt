@@ -13,17 +13,18 @@ import com.lyeeedar.Util.AssetManager
  * Created by Philip on 13-Jul-16.
  */
 
-class DefeatConditionTurns(): AbstractDefeatCondition()
+class DefeatConditionTime(): AbstractDefeatCondition()
 {
-	var turnCount: Int = 30
+	var time: Float = 60f
 
 	lateinit var label: Label
 
-	override fun getTextDescription(): String = "Run out of turns"
+	override fun getTextDescription(): String = "Run out of time"
 
 	override fun createTable(skin: Skin): Table
 	{
-		label = Label("$turnCount", skin)
+		val t = time.toInt()
+		label = Label("$t", skin)
 
 		val table = Table()
 		table.defaults().pad(10f)
@@ -36,17 +37,18 @@ class DefeatConditionTurns(): AbstractDefeatCondition()
 
 	override fun parse(xml: XmlReader.Element)
 	{
-		//turnCount = xml.text.toInt()
+		//time = xml.text.toFloat()
 	}
 
 	override fun attachHandlers(grid: Grid)
 	{
-		grid.onTurn +=
+		grid.onTime +=
 				{
-					turnCount--
-					label.setText("$turnCount")
+					time -= it
+					val t = time.toInt()
+					label.setText("$t")
 				}
 	}
 
-	override fun isDefeated(): Boolean = turnCount <= 0
+	override fun isDefeated(): Boolean = time <= 0
 }

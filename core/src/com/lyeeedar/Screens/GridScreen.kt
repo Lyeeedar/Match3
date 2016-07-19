@@ -78,7 +78,7 @@ class GridScreen(): AbstractScreen()
 		table.row()
 		table.add(victoryWidget).left()
 
-		var message = level.entryMessage
+		var message = ""
 		message += "\n\nVictory Condition: " + level.victory.getTextDescription()
 		message += "\n\nDefeat Condition: " + level.defeat.getTextDescription()
 

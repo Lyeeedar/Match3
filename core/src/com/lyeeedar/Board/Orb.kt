@@ -54,6 +54,9 @@ class Orb(val desc: OrbDesc)
 	var x: Int = 0
 	var y: Int = 0
 
+	val movePoints = Array<Point>()
+	var spawnCount = 0
+
 	override fun toString(): String
 	{
 		return desc.key.toString()

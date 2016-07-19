@@ -42,6 +42,7 @@ abstract class AbstractDefeatCondition
 		{
 			val type = when(name) {
 				"TURN", "TURNS" -> DefeatConditionTurns::class.java
+				"TIME" -> DefeatConditionTime::class.java
 
 			// ARGH everything broke
 				else -> throw RuntimeException("Invalid defeat type: $name")

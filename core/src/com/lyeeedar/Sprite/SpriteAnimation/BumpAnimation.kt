@@ -49,7 +49,7 @@ class BumpAnimation : AbstractSpriteAnimation
 		return time > duration
 	}
 
-	override fun set(duration: Float, diff: FloatArray)
+	fun set(duration: Float, diff: FloatArray)
 	{
 		this.duration = duration
 		this.direction = Direction.getDirection(diff)

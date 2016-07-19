@@ -1,5 +1,6 @@
 package com.lyeeedar.Board
 
+import com.badlogic.gdx.math.Vector2
 import com.lyeeedar.Global
 import com.lyeeedar.Sprite.Sprite
 import com.lyeeedar.Sprite.SpriteWrapper
@@ -36,12 +37,15 @@ class Tile(x: Int, y: Int) : Point(x, y)
 		return orb?.toString() ?: " "
 	}
 
-	fun getPosDiff(p: Point): FloatArray = getPosDiff(p.x, p.y)
-	fun getPosDiff(px: Int, py: Int): FloatArray
+	fun getPosDiff(p: Point): kotlin.Array<Vector2> = getPosDiff(p.x, p.y)
+	fun getPosDiff(px: Int, py: Int): kotlin.Array<Vector2>
 	{
-		val oldPos = floatArrayOf(px * Global.tileSize, py * Global.tileSize)
-		val newPos = floatArrayOf(x * Global.tileSize, y * Global.tileSize)
+		val oldPos = Vector2(px * Global.tileSize, py * Global.tileSize)
+		val newPos = Vector2(x * Global.tileSize, y * Global.tileSize)
 
-		return floatArrayOf(oldPos[0]-newPos[0], (oldPos[1]-newPos[1]) * -1f)
+		val diff = newPos.sub(oldPos)
+		diff.x *= -1
+
+		return arrayOf(diff, Vector2())
 	}
 }

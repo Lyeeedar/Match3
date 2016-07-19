@@ -9,8 +9,6 @@ import com.badlogic.gdx.utils.reflect.ReflectionException
 
 abstract class AbstractSpriteAnimation
 {
-	abstract operator fun set(duration: Float, diff: FloatArray)
-
 	abstract fun duration(): Float
 
 	abstract fun time(): Float

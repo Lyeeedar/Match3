@@ -3,6 +3,7 @@ package com.lyeeedar.Util
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.utils.IntIntMap
 import com.badlogic.gdx.utils.IntMap
+import com.badlogic.gdx.utils.XmlReader
 import java.util.*
 
 /**
@@ -27,3 +28,5 @@ fun String.neaten() = this.substring(0, 1).toUpperCase() + this.substring(1).toL
 
 operator fun IntIntMap.get(key: Int) = this.get(key, 0)
 operator fun IntIntMap.set(key: Int, value: Int) = this.put(key, value)
+
+fun XmlReader.Element.ranChild() = this.getChild(MathUtils.random(this.childCount-1))

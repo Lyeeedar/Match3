@@ -35,7 +35,7 @@ class LevelSelectScreen(): AbstractScreen()
 			override fun clicked(event: InputEvent?, x: Float, y: Float)
 			{
 				val theme = LevelTheme.load("Dungeon")
-				val level = Level.load("Basic", theme)
+				val level = Level.load("Trap/Diamond", theme, Level.LevelType.TRAP)
 				level.create()
 
 				GridScreen.instance.updateLevel(level, player)
