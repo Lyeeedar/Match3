@@ -19,6 +19,7 @@ import com.lyeeedar.Sprite.SpriteAnimation.MoveAnimation
 import com.lyeeedar.Sprite.SpriteRenderer
 import com.lyeeedar.UI.FullscreenMessage
 import com.lyeeedar.UI.GridWidget
+import com.lyeeedar.UI.PowerBar
 import com.lyeeedar.Util.AssetManager
 import java.awt.event.MouseListener
 
@@ -53,8 +54,10 @@ class GridScreen(): AbstractScreen()
 
 		this.level = level
 
-		val widget = GridWidget(level.grid, player)
+		val widget = GridWidget(level.grid)
 		val playerWidget = player.createTable(Global.skin)
+
+		val powerBar = PowerBar()
 
 		val defeatWidget = level.defeat.createTable(Global.skin)
 		val victoryWidget = level.victory.createTable(Global.skin)
@@ -69,7 +72,7 @@ class GridScreen(): AbstractScreen()
 
 		table.add(defeatWidget).left()
 		table.row()
-		table.add(playerWidget).left()
+		table.add(powerBar).expandX().height(25f).fill()
 		table.row()
 		table.add(widget).expand().fill()
 		table.row()

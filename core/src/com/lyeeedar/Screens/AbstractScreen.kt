@@ -8,6 +8,9 @@ import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.ui.Table
+import com.badlogic.gdx.utils.Scaling
+import com.badlogic.gdx.utils.viewport.ExtendViewport
+import com.badlogic.gdx.utils.viewport.ScalingViewport
 import com.badlogic.gdx.utils.viewport.ScreenViewport
 import com.lyeeedar.Global
 import com.lyeeedar.Util.Point
@@ -49,7 +52,7 @@ abstract class AbstractScreen() : Screen, InputProcessor
     // ----------------------------------------------------------------------
     override fun resize(width: Int, height: Int)
 	{
-        stage.viewport.update(width, height)
+        stage.viewport.update(width, height, true)
     }
 
     // ----------------------------------------------------------------------
@@ -116,6 +119,7 @@ abstract class AbstractScreen() : Screen, InputProcessor
     fun baseCreate()
 	{
         stage = Stage()
+		stage.viewport = ScalingViewport(Scaling.fit, 360f, 640f)
 
         mainTable = Table()
         mainTable.setFillParent(true)

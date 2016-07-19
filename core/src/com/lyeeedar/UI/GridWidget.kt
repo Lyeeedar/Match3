@@ -27,7 +27,7 @@ import com.lyeeedar.Util.Point
  * Created by Philip on 05-Jul-16.
  */
 
-class GridWidget(val grid: Grid, val player: Player) : Widget()
+class GridWidget(val grid: Grid) : Widget()
 {
 	init
 	{
@@ -70,19 +70,23 @@ class GridWidget(val grid: Grid, val player: Player) : Widget()
 			val xp = x.toFloat() + (width.toFloat() / 2f) - ((grid.width * Global.tileSize) / 2f)
 
 			val actualx = it.x * Global.tileSize + xp
-			val actualy = ((height-1) - it.y) * Global.tileSize + y
+			val actualy = ((grid.height-1) - it.y) * Global.tileSize + y
 
 			val pos = Vector2(actualx, actualy)
-			val dst = player.portrait.localToStageCoordinates(Vector2())
+			val dst = PowerBar.instance.getOrbDest()
 			val dir = Vector2().setToRandomDirection()
 			val sprite = AssetManager.loadSprite("Oryx/uf_split/uf_items/crystal_cloud")
 			sprite.colour = Color.CYAN
 
-			val mote = Mote(pos, dst, dir, sprite, grid, { player.power++ })
-			grid.motes.add(mote)
+			if (dst != null)
+			{
+				val mote = Mote(pos, dst, dir, sprite, grid, { PowerBar.instance.power++ })
+				grid.motes.add(mote)
+			}
 		}
 	}
 
+	val glow: Sprite = AssetManager.loadSprite("glow")
 	val frame: Sprite = AssetManager.loadSprite("GUI/frame", colour = Color(0.6f, 0.7f, 0.9f, 0.6f))
 	val border: Sprite = AssetManager.loadSprite("GUI/border", colour = Color(0.6f, 0.9f, 0.6f, 0.6f))
 	val renderer: SpriteRenderer = SpriteRenderer()
@@ -160,6 +164,11 @@ class GridWidget(val grid: Grid, val player: Player) : Widget()
 					if (orb.sealed)
 					{
 						renderer.queueSprite(orb.sealSprite, xi, yi, xp, yp, SpaceSlot.ORB, 2)
+					}
+
+					if (orb.armed)
+					{
+						renderer.queueSprite(glow, xi, yi, xp, yp, SpaceSlot.ORB, 0)
 					}
 				}
 

@@ -99,8 +99,8 @@ class AndroidApplicationChanger : AbstractApplicationChanger(Gdx.app.getPreferen
 		prefs.putFloat("ambientVolume", 1f)
 		prefs.putFloat("effectVolume", 1f)
 
-		prefs.putInteger("resolutionX", 480)
-		prefs.putInteger("resolutionY", 360)
+		prefs.putInteger("resolutionX", 360)
+		prefs.putInteger("resolutionY", 640)
 		prefs.putInteger("fps", 30)
 		prefs.putFloat("animspeed", 1f)
 	}

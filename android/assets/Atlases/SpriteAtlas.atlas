@@ -216,7 +216,7 @@ GUI/Checked
   index: -1
 GUI/ProgressIndicator
   rotate: false
-  xy: 90, 10
+  xy: 126, 10
   size: 24, 24
   orig: 24, 24
   offset: 0, 0
@@ -230,7 +230,7 @@ GUI/SeperatorHorizontal
   index: -1
 GUI/SeperatorVertical
   rotate: false
-  xy: 138, 2
+  xy: 174, 2
   size: 6, 32
   orig: 6, 32
   offset: 0, 0
@@ -272,21 +272,21 @@ GUI/Unchecked
   index: -1
 GUI/border
   rotate: false
-  xy: 958, 54
+  xy: 90, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 GUI/frame_0
   rotate: false
-  xy: 886, 54
+  xy: 922, 54
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 GUI/frame_1
   rotate: false
-  xy: 922, 54
+  xy: 958, 54
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -382,9 +382,16 @@ Oryx/uf_split/uf_terrain/wall_dungeon_7
   orig: 48, 48
   offset: 0, 0
   index: -1
+glow
+  rotate: false
+  xy: 886, 54
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
 white
   rotate: false
-  xy: 118, 18
+  xy: 154, 18
   size: 16, 16
   orig: 16, 16
   offset: 0, 0

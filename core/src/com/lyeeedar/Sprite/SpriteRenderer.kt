@@ -84,7 +84,7 @@ class SpriteRenderer
 			}
 		}
 
-		val rs = RenderSprite.obtain().set( sprite, x, y, slot, index )
+		val rs = RenderSprite.obtain().set( sprite, x, y, offsetx, offsety, slot, index )
 
 		heap.add( rs, rs.comparisonVal )
 	}
@@ -98,14 +98,14 @@ class RenderSprite : BinaryHeap.Node(0f)
 
 	var comparisonVal: Float = 0f
 
-	operator fun set(sprite: Sprite, x: Float, y: Float, slot: SpaceSlot, index: Int): RenderSprite
+	operator fun set(sprite: Sprite, x: Float, y: Float, offsetx: Float, offsety: Float, slot: SpaceSlot, index: Int): RenderSprite
 	{
 		this.sprite = sprite
 		this.x = x
 		this.y = y
 
-		val bx = x / Global.tileSize
-		val by = y / Global.tileSize
+		val bx = (x - offsetx).toFloat() / Global.tileSize
+		val by = (y - offsety).toFloat() / Global.tileSize
 
 		val sx = bx.toInt()
 		val sy = by.toInt()

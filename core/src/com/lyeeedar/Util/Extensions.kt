@@ -1,5 +1,6 @@
 package com.lyeeedar.Util
 
+import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.utils.IntIntMap
 import com.badlogic.gdx.utils.IntMap
 import java.util.*
@@ -19,6 +20,8 @@ fun <T> com.badlogic.gdx.utils.Array<T>.removeRan(ran: Random): T
 }
 
 fun Float.abs() = Math.abs(this)
+fun Float.ciel() = MathUtils.ceil(this)
+fun Float.floor() = MathUtils.floor(this)
 
 fun String.neaten() = this.substring(0, 1).toUpperCase() + this.substring(1).toLowerCase()
 

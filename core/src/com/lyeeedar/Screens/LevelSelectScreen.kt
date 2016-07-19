@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener
 import com.lyeeedar.Board.Level
 import com.lyeeedar.Board.LevelTheme
 import com.lyeeedar.Global
+import com.lyeeedar.MainGame
 import com.lyeeedar.Player.Player
 import com.lyeeedar.Util.AssetManager
 
@@ -38,7 +39,7 @@ class LevelSelectScreen(): AbstractScreen()
 				level.create()
 
 				GridScreen.instance.updateLevel(level, player)
-				GridScreen.instance.swapTo()
+				Global.game.switchScreen(MainGame.ScreenEnum.GRID)
 			}
 		})
 

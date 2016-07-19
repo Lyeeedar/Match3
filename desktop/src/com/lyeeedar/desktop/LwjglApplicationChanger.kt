@@ -27,8 +27,8 @@ class LwjglApplicationChanger : AbstractApplicationChanger(LwjglPreferences("gam
 		val cfg = LwjglApplicationConfiguration()
 
 		cfg.title = "A Skin of Others"
-		cfg.width = pref.getInteger("resolutionX")
-		cfg.height = pref.getInteger("resolutionY")
+		cfg.width = 360
+		cfg.height = 640
 		cfg.fullscreen = pref.getBoolean("fullscreen")
 		cfg.vSyncEnabled = pref.getBoolean("vSync")
 		cfg.foregroundFPS = 0
@@ -121,8 +121,8 @@ class LwjglApplicationChanger : AbstractApplicationChanger(LwjglPreferences("gam
 		prefs.putFloat("ambientVolume", 1f)
 		prefs.putFloat("effectVolume", 1f)
 
-		prefs.putInteger("resolutionX", 800)
-		prefs.putInteger("resolutionY", 600)
+		prefs.putInteger("resolutionX", 360)
+		prefs.putInteger("resolutionY", 640)
 		prefs.putBoolean("fullscreen", false)
 		prefs.putBoolean("borderless", false)
 		prefs.putBoolean("vSync", true)
