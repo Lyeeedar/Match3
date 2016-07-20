@@ -387,12 +387,14 @@ class Grid(val width: Int, val height: Int, val level: Level)
 	}
 
 	// ----------------------------------------------------------------------
-	fun update(delta: Float)
+	fun update(delta: Float): Boolean
 	{
+		var done = true
+
 		// if in update, do animations
 		cleanup()
 
-		if (!hasAnim() && FullscreenMessage.instance == null)
+		if (!hasAnim())
 		{
 			val cascadeComplete = cascade()
 
@@ -404,31 +406,42 @@ class Grid(val width: Int, val height: Int, val level: Level)
 				{
 					val detonateComplete = detonate()
 
-					if (!level.completed)
+					if (detonateComplete)
 					{
-						matchHint = findValidMove()
-
-						if (detonateComplete && matchHint == null)
+						if (!level.completed && FullscreenMessage.instance == null)
 						{
-							FullscreenMessage("No valid moves. Randomising.", "", { refill() }).show()
-						}
-						else
-						{
-							noMatchTimer += delta
+							matchHint = findValidMove()
 
-							// handle input
-							if (toSwap != null)
+							if (matchHint == null)
 							{
-								val swapSuccess = swap()
-								if (swapSuccess) onTurn()
-
-								noMatchTimer = 0f
+								FullscreenMessage("No valid moves. Randomising.", "", { refill() }).show()
 							}
+							else
+							{
+								noMatchTimer += delta
 
-							onTime(delta)
+								// handle input
+								if (toSwap != null)
+								{
+									val swapSuccess = swap()
+									if (swapSuccess) onTurn()
+
+									noMatchTimer = 0f
+								}
+
+								onTime(delta)
+							}
 						}
 					}
 				}
+				else
+				{
+					done = false
+				}
+			}
+			else
+			{
+				done = false
 			}
 		}
 
@@ -438,6 +451,8 @@ class Grid(val width: Int, val height: Int, val level: Level)
 		}
 
 		motes.removeAll{ it.done }
+
+		return done
 	}
 
 	// ----------------------------------------------------------------------

@@ -95,9 +95,9 @@ class Level
 
 	fun update(delta: Float)
 	{
-		grid.update(delta)
+		val done = grid.update(delta)
 
-		if (!completed)
+		if (!completed && done)
 		{
 			if (victory.isVictory())
 			{

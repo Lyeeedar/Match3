@@ -65,8 +65,10 @@ class FullscreenMessage(val text: String, val style: String, val function: () ->
 		Global.stage.addActor(this)
 	}
 
-	fun update(delta: Float)
+	override fun act(delta: Float)
 	{
+		super.act(delta)
+
 		if (letterCount >= text.length) return
 
 		timeAccumulator += delta

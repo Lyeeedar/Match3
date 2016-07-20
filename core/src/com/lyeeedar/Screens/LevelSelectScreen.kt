@@ -8,6 +8,7 @@ import com.lyeeedar.Board.Level
 import com.lyeeedar.Board.LevelTheme
 import com.lyeeedar.Global
 import com.lyeeedar.MainGame
+import com.lyeeedar.Player.Ability.Ability
 import com.lyeeedar.Player.Player
 import com.lyeeedar.Util.AssetManager
 
@@ -27,7 +28,9 @@ class LevelSelectScreen(): AbstractScreen()
 	override fun create()
 	{
 		val player = Player()
-		player.sprite = AssetManager.loadSprite("Oryx/Custom/heroes/Merc")
+		player.portrait = AssetManager.loadSprite("Oryx/Custom/heroes/Merc")
+		player.abilities[0] = Ability(AssetManager.loadSprite("Icons/Aim"), 2, false)
+		player.abilities[1] = Ability(AssetManager.loadSprite("Icons/Bash"), 6, false)
 
 		val trapButton = TextButton("Create Trap Level", Global.skin)
 		trapButton.addListener(object : ClickListener()

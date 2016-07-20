@@ -17,6 +17,7 @@ import com.lyeeedar.Player.Player
 
 import com.lyeeedar.Sprite.SpriteAnimation.MoveAnimation
 import com.lyeeedar.Sprite.SpriteRenderer
+import com.lyeeedar.UI.AbilityWidget
 import com.lyeeedar.UI.FullscreenMessage
 import com.lyeeedar.UI.GridWidget
 import com.lyeeedar.UI.PowerBar
@@ -50,17 +51,24 @@ class GridScreen(): AbstractScreen()
 			created = true
 		}
 
-		player.attachHandlers(level.grid)
-
 		this.level = level
 
-		val widget = GridWidget(level.grid)
-		val playerWidget = player.createTable(Global.skin)
+		val gridWidget = GridWidget(level.grid)
 
 		val powerBar = PowerBar()
 
 		val defeatWidget = level.defeat.createTable(Global.skin)
 		val victoryWidget = level.victory.createTable(Global.skin)
+
+		val abilityTable = Table()
+		for (ability in player.abilities)
+		{
+			if (ability != null)
+			{
+				val widget = AbilityWidget(ability, 64, 64)
+				abilityTable.add(widget)
+			}
+		}
 
 		mainTable.clear()
 		val table = mainTable
@@ -70,13 +78,19 @@ class GridScreen(): AbstractScreen()
 		val background = TextureRegionDrawable(level.theme.floor.sprite!!.currentTexture)
 		table.background = TiledDrawable(background).tint(Color.DARK_GRAY)
 
-		table.add(defeatWidget).left()
+		table.add(abilityTable).expandX().fillX()
 		table.row()
-		table.add(powerBar).expandX().height(25f).fill()
+		table.add(powerBar).expandX().height(25f).fillX()
 		table.row()
-		table.add(widget).expand().fill()
+		table.add(gridWidget).expand().fill()
 		table.row()
-		table.add(victoryWidget).left()
+
+		val vdtable = Table()
+		table.add(vdtable).expandX().fillX()
+
+		vdtable.add(victoryWidget).left()
+		vdtable.add(Table()).expand().fill()
+		vdtable.add(defeatWidget).right()
 
 		var message = ""
 		message += "\n\nVictory Condition: " + level.victory.getTextDescription()
@@ -92,8 +106,6 @@ class GridScreen(): AbstractScreen()
 	override fun doRender(delta: Float)
 	{
 		level.update(delta)
-
-		FullscreenMessage.instance?.update(delta)
 	}
 
 	lateinit var level: Level

@@ -4,10 +4,7 @@ import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.scenes.scene2d.ui.Widget
-import com.lyeeedar.Util.AssetManager
-import com.lyeeedar.Util.Point
-import com.lyeeedar.Util.ciel
-import com.lyeeedar.Util.floor
+import com.lyeeedar.Util.*
 
 /**
  * Created by Philip on 19-Jul-16.
@@ -19,6 +16,8 @@ class PowerBar() : Widget()
 	{
 		instance = this
 	}
+
+	val powerChanged = Event0Arg()
 
 	val blank = AssetManager.loadTextureRegion("white")
 
@@ -37,6 +36,9 @@ class PowerBar() : Widget()
 
 	var tempPower = 0
 
+	val pips: Int
+		get() = (power.toFloat() / powerPerPip.toFloat()).toInt()
+
 	var power = 0
 		set(value)
 		{
@@ -50,6 +52,8 @@ class PowerBar() : Widget()
 			{
 				field = maxPower
 			}
+
+			powerChanged()
 		}
 
 	fun getOrbDest(): Vector2?
