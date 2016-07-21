@@ -53,12 +53,11 @@ class SpriteRenderer
 			offsety += Math.cos( screenShakeAngle.toDouble() ).toFloat() * screenShakeRadius
 		}
 
-		batch.color = Color.WHITE
-
 		while (heap.size > 0)
 		{
 			val rs = heap.pop()
 
+			batch.color = rs.colour
 			rs.sprite.render(batch, rs.x + offsetx, rs.y + offsety, Global.tileSize, Global.tileSize )
 
 			rs.free()
@@ -66,7 +65,7 @@ class SpriteRenderer
 	}
 
 	// ----------------------------------------------------------------------
-	fun queueSprite(sprite: Sprite, ix: Float, iy: Float, offsetx: Float, offsety: Float, slot: SpaceSlot, index: Int)
+	fun queueSprite(sprite: Sprite, ix: Float, iy: Float, offsetx: Float, offsety: Float, slot: SpaceSlot, index: Int, colour: Color = Color.WHITE)
 	{
 		sprite.update(Gdx.app.graphics.deltaTime)
 
@@ -84,7 +83,7 @@ class SpriteRenderer
 			}
 		}
 
-		val rs = RenderSprite.obtain().set( sprite, x, y, offsetx, offsety, slot, index )
+		val rs = RenderSprite.obtain().set( sprite, x, y, offsetx, offsety, slot, index, colour )
 
 		heap.add( rs, rs.comparisonVal )
 	}
@@ -92,14 +91,16 @@ class SpriteRenderer
 
 class RenderSprite : BinaryHeap.Node(0f)
 {
+	val colour: Color = Color(1f, 1f, 1f, 1f)
 	lateinit var sprite: Sprite
 	var x: Float = 0f
 	var y: Float = 0f
 
 	var comparisonVal: Float = 0f
 
-	operator fun set(sprite: Sprite, x: Float, y: Float, offsetx: Float, offsety: Float, slot: SpaceSlot, index: Int): RenderSprite
+	operator fun set(sprite: Sprite, x: Float, y: Float, offsetx: Float, offsety: Float, slot: SpaceSlot, index: Int, colour: Color): RenderSprite
 	{
+		this.colour.set(colour)
 		this.sprite = sprite
 		this.x = x
 		this.y = y

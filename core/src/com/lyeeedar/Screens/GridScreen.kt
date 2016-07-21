@@ -65,7 +65,7 @@ class GridScreen(): AbstractScreen()
 		{
 			if (ability != null)
 			{
-				val widget = AbilityWidget(ability, 64, 64)
+				val widget = AbilityWidget(ability, 64, 64, level.grid)
 				abilityTable.add(widget)
 			}
 		}

@@ -36,7 +36,15 @@ class PowerBar() : Widget()
 
 	var tempPower = 0
 
-	val pips: Int
+	var pips: Int
+		set(value)
+		{
+			val oldCount = pips
+			val diff = oldCount - value
+			val asPower = diff * powerPerPip
+
+			power -= asPower
+		}
 		get() = (power.toFloat() / powerPerPip.toFloat()).toInt()
 
 	var power = 0

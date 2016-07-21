@@ -1,411 +1,481 @@
 
 SpriteAtlas.png
-size: 1024,128
+size: 2048,128
 format: RGBA8888
 filter: MipMapLinearLinear,MipMapLinearLinear
 repeat: none
 EffectSprites/Aegis/Aegis_0
   rotate: false
-  xy: 666, 38
+  xy: 162, 34
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/Aegis/Aegis_1
   rotate: false
-  xy: 702, 38
+  xy: 198, 34
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/Aegis/Aegis_2
   rotate: false
-  xy: 738, 38
+  xy: 234, 34
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/Aegis/Aegis_3
   rotate: false
-  xy: 774, 38
+  xy: 270, 34
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
+EffectSprites/Explosion/Explosion_0
+  rotate: false
+  xy: 694, 70
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+EffectSprites/Explosion/Explosion_1
+  rotate: false
+  xy: 746, 70
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+EffectSprites/Explosion/Explosion_2
+  rotate: false
+  xy: 798, 70
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+EffectSprites/Explosion/Explosion_3
+  rotate: false
+  xy: 850, 70
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+EffectSprites/Explosion/Explosion_4
+  rotate: false
+  xy: 902, 70
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+EffectSprites/Explosion/Explosion_5
+  rotate: false
+  xy: 954, 70
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+EffectSprites/Explosion/Explosion_6
+  rotate: false
+  xy: 1006, 70
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+EffectSprites/Explosion/Explosion_7
+  rotate: false
+  xy: 1058, 70
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+EffectSprites/Explosion/Explosion_8
+  rotate: false
+  xy: 1110, 70
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+EffectSprites/Explosion/Explosion_9
+  rotate: false
+  xy: 1162, 70
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
 EffectSprites/Heal/Heal_0
   rotate: false
-  xy: 450, 38
+  xy: 1910, 86
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/Heal/Heal_1
   rotate: false
-  xy: 486, 38
+  xy: 1946, 86
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/Heal/Heal_2
   rotate: false
-  xy: 522, 38
+  xy: 1982, 86
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/Heal/Heal_3
   rotate: false
-  xy: 558, 38
+  xy: 54, 18
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/Heal/Heal_4
   rotate: false
-  xy: 594, 38
+  xy: 90, 34
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/Heal/Heal_5
   rotate: false
-  xy: 630, 38
+  xy: 126, 34
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/Hit/Hit_1
   rotate: false
-  xy: 434, 74
+  xy: 434, 70
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 EffectSprites/Hit/Hit_2
   rotate: false
-  xy: 486, 74
+  xy: 486, 70
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 EffectSprites/Hit/Hit_3
   rotate: false
-  xy: 538, 74
+  xy: 538, 70
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 EffectSprites/Hit/Hit_4
   rotate: false
-  xy: 590, 74
+  xy: 590, 70
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 EffectSprites/IceBurst/IceBurst_0
   rotate: false
-  xy: 162, 38
+  xy: 1622, 86
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/IceBurst/IceBurst_1
   rotate: false
-  xy: 198, 38
+  xy: 1658, 86
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/IceBurst/IceBurst_2
   rotate: false
-  xy: 234, 38
+  xy: 1694, 86
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/IceBurst/IceBurst_3
   rotate: false
-  xy: 270, 38
+  xy: 1730, 86
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/IceBurst/IceBurst_4
   rotate: false
-  xy: 306, 38
+  xy: 1766, 86
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/IceBurst/IceBurst_5
   rotate: false
-  xy: 342, 38
+  xy: 1802, 86
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/IceBurst/IceBurst_6
   rotate: false
-  xy: 378, 38
+  xy: 1838, 86
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/Splatter/Splatter_0
   rotate: false
-  xy: 850, 90
+  xy: 1370, 86
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/Splatter/Splatter_1
   rotate: false
-  xy: 886, 90
+  xy: 1406, 86
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/Splatter/Splatter_2
   rotate: false
-  xy: 922, 90
+  xy: 1442, 86
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/Splatter/Splatter_3
   rotate: false
-  xy: 958, 90
+  xy: 1478, 86
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/Splatter/Splatter_4
   rotate: false
-  xy: 54, 22
+  xy: 1514, 86
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/Splatter/Splatter_5
   rotate: false
-  xy: 90, 38
+  xy: 1550, 86
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/Splatter/Splatter_6
   rotate: false
-  xy: 126, 38
+  xy: 1586, 86
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 GUI/Button
   rotate: false
-  xy: 850, 54
+  xy: 342, 34
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 GUI/Checked
   rotate: false
-  xy: 994, 70
+  xy: 594, 42
   size: 24, 24
   orig: 24, 24
   offset: 0, 0
   index: -1
 GUI/ProgressIndicator
   rotate: false
-  xy: 198, 10
+  xy: 622, 42
   size: 24, 24
   orig: 24, 24
   offset: 0, 0
   index: -1
 GUI/SeperatorHorizontal
   rotate: false
-  xy: 54, 12
+  xy: 1370, 76
   size: 32, 6
   orig: 32, 6
   offset: 0, 0
   index: -1
 GUI/SeperatorVertical
   rotate: false
-  xy: 246, 2
+  xy: 670, 34
   size: 6, 32
   orig: 6, 32
   offset: 0, 0
   index: -1
 GUI/TextField
   rotate: false
-  xy: 810, 38
+  xy: 306, 34
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 GUI/TilePanel
   rotate: false
-  xy: 414, 38
+  xy: 1874, 86
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 GUI/Tooltip
   rotate: false
-  xy: 2, 58
+  xy: 2, 54
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 GUI/PanelHorizontal
   rotate: false
-  xy: 2, 58
+  xy: 2, 54
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 GUI/Unchecked
   rotate: false
-  xy: 994, 98
+  xy: 2018, 94
   size: 24, 24
   orig: 24, 24
   offset: 0, 0
   index: -1
 GUI/border
   rotate: false
-  xy: 162, 2
+  xy: 558, 34
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 GUI/frame_0
   rotate: false
-  xy: 90, 2
+  xy: 486, 34
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 GUI/frame_1
   rotate: false
-  xy: 126, 2
+  xy: 522, 34
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Icons/Aim
   rotate: false
-  xy: 886, 54
+  xy: 378, 34
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Icons/Bash
   rotate: false
-  xy: 922, 54
+  xy: 414, 34
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Oryx/Custom/heroes/Merc_1
   rotate: false
-  xy: 694, 74
+  xy: 1214, 70
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/Custom/heroes/Merc_2
   rotate: false
-  xy: 746, 74
+  xy: 1266, 70
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/Custom/heroes/Merc_4
   rotate: false
-  xy: 746, 74
+  xy: 1266, 70
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/Custom/heroes/Merc_3
   rotate: false
-  xy: 798, 74
+  xy: 1318, 70
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/Custom/items/orb_hori
   rotate: false
-  xy: 70, 74
+  xy: 70, 70
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/Custom/items/orb_vert
   rotate: false
-  xy: 122, 74
+  xy: 122, 70
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/uf_split/uf_items/crystal_cloud
   rotate: false
-  xy: 2, 6
+  xy: 2, 2
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/uf_split/uf_items/shield_vorpal_buckler
   rotate: false
-  xy: 642, 74
+  xy: 642, 70
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/uf_split/uf_terrain/crate
   rotate: false
-  xy: 382, 74
+  xy: 382, 70
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/uf_split/uf_terrain/floor_extra_8
   rotate: false
-  xy: 174, 74
+  xy: 174, 70
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/uf_split/uf_terrain/wall_dungeon_1
   rotate: false
-  xy: 330, 74
+  xy: 330, 70
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/uf_split/uf_terrain/wall_dungeon_14
   rotate: false
-  xy: 278, 74
+  xy: 278, 70
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/uf_split/uf_terrain/wall_dungeon_7
   rotate: false
-  xy: 226, 74
+  xy: 226, 70
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 glow
   rotate: false
-  xy: 958, 54
+  xy: 450, 34
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 white
   rotate: false
-  xy: 226, 18
+  xy: 650, 50
   size: 16, 16
   orig: 16, 16
   offset: 0, 0

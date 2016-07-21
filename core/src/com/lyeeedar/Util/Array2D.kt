@@ -4,7 +4,7 @@ package com.lyeeedar.Util
  * Created by Philip on 08-Apr-16.
  */
 
-class Array2D<T> (val xSize: Int, val ySize: Int, val array: Array<Array<T>>) {
+class Array2D<T> (val xSize: Int, val ySize: Int, val array: Array<Array<T>>): Sequence<T> {
 
 	companion object {
 
@@ -45,8 +45,28 @@ class Array2D<T> (val xSize: Int, val ySize: Int, val array: Array<Array<T>>) {
 		array.forEachIndexed { x, p -> p.forEachIndexed { y, t -> operation.invoke(x, y, t) } }
 	}
 
-	fun iterator()
+	override operator fun iterator(): Iterator<T> =  Array2DIterator(this)
+
+	class Array2DIterator<T>(val array: Array2D<T>): Iterator<T>
 	{
+		var x = 0
+		var y = 0
+
+		override fun hasNext(): Boolean = x < array.xSize
+
+		override fun next(): T
+		{
+			val el = array[x, y]
+
+			y++
+			if (y == array.ySize)
+			{
+				y = 0
+				x++
+			}
+
+			return el
+		}
 
 	}
 

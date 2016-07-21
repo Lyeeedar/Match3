@@ -15,6 +15,7 @@ import com.lyeeedar.Board.Grid
 import com.lyeeedar.Board.Mote
 import com.lyeeedar.Direction
 import com.lyeeedar.Global
+import com.lyeeedar.Player.Ability.Targetter
 import com.lyeeedar.Player.Player
 import com.lyeeedar.SpaceSlot
 import com.lyeeedar.Sprite.Sprite
@@ -121,6 +122,11 @@ class GridWidget(val grid: Grid) : Widget()
 		val xp = this.x.toFloat() + (this.width.toFloat() / 2f) - ((grid.width * Global.tileSize) / 2f)
 		val yp = this.y.toFloat()
 
+		if (grid.activeAbility == null)
+		{
+			batch!!.color = Color.WHITE
+		}
+
 		for (x in 0..grid.width-1)
 		{
 			for (y in 0..grid.height-1)
@@ -129,23 +135,72 @@ class GridWidget(val grid: Grid) : Widget()
 				val orb = tile.orb
 				val block = tile.block
 
+				var tileColour = Color.WHITE
+				var orbColour = Color.WHITE
+				var blockColour = Color.WHITE
+
+				if (grid.activeAbility != null)
+				{
+					if (grid.activeAbility!!.targetter.isValid(tile))
+					{
+						if (grid.activeAbility!!.targetter.type == Targetter.Type.ORB)
+						{
+							tileColour = Color.DARK_GRAY
+							orbColour = Color.WHITE
+							blockColour = Color.DARK_GRAY
+						}
+						else if (grid.activeAbility!!.targetter.type == Targetter.Type.BLOCK)
+						{
+							tileColour = Color.DARK_GRAY
+							orbColour = Color.DARK_GRAY
+							blockColour = Color.WHITE
+						}
+						else if (grid.activeAbility!!.targetter.type == Targetter.Type.EMPTY)
+						{
+							tileColour = Color.WHITE
+							orbColour = Color.DARK_GRAY
+							blockColour = Color.DARK_GRAY
+						}
+						else if (grid.activeAbility!!.targetter.type == Targetter.Type.TILE)
+						{
+							val col = if (tile.canHaveOrb) Color.WHITE else Color.DARK_GRAY
+
+							tileColour = col
+							orbColour = col
+							blockColour = col
+						}
+						else if (grid.activeAbility!!.targetter.type == Targetter.Type.SEALED)
+						{
+							tileColour = Color.DARK_GRAY
+							orbColour = if (orb != null && orb.sealed) Color.WHITE else Color.DARK_GRAY
+							blockColour = Color.DARK_GRAY
+						}
+					}
+					else
+					{
+						tileColour = Color.DARK_GRAY
+						orbColour = Color.DARK_GRAY
+						blockColour = Color.DARK_GRAY
+					}
+				}
+
 				val xi = x.toFloat()
 				val yi = (grid.height-1) - y.toFloat()
 
 				if (tile.sprite.sprite != null)
 				{
-					background.queueSprite(tile.sprite.sprite!!, xi, yi, xp, yp, SpaceSlot.TILE, 0)
+					background.queueSprite(tile.sprite.sprite!!, xi, yi, xp, yp, SpaceSlot.TILE, 0, tileColour)
 				}
 				if (tile.sprite.tilingSprite != null)
 				{
 					val tiling = tile.sprite.tilingSprite!!
 					grid.buildTilingBitflag(bitflag, x, y, tiling.checkID)
 					val sprite = tiling.getSprite( bitflag )
-					background.queueSprite(sprite, xi, yi, xp, yp, SpaceSlot.TILE, 0)
+					background.queueSprite(sprite, xi, yi, xp, yp, SpaceSlot.TILE, 0, tileColour)
 
 					if (tiling.overhang != null && bitflag.contains(Direction.NORTH))
 					{
-						foreground.queueSprite(tiling.overhang!!, xi, (grid.height) - y.toFloat(), xp, yp, SpaceSlot.OVERHANG, 0)
+						foreground.queueSprite(tiling.overhang!!, xi, (grid.height) - y.toFloat(), xp, yp, SpaceSlot.OVERHANG, 0, tileColour)
 					}
 				}
 
@@ -163,11 +218,11 @@ class GridWidget(val grid: Grid) : Widget()
 
 				if (orb != null)
 				{
-					foreground.queueSprite(orb.sprite, xi, yi, xp, yp, SpaceSlot.ORB, 1)
+					foreground.queueSprite(orb.sprite, xi, yi, xp, yp, SpaceSlot.ORB, 1, orbColour)
 
 					if (orb.sealed)
 					{
-						foreground.queueSprite(orb.sealSprite, xi, yi, xp, yp, SpaceSlot.ORB, 2)
+						foreground.queueSprite(orb.sealSprite, xi, yi, xp, yp, SpaceSlot.ORB, 2, orbColour)
 					}
 
 					if (orb.armed)
@@ -178,7 +233,7 @@ class GridWidget(val grid: Grid) : Widget()
 
 				if (block != null)
 				{
-					foreground.queueSprite(block.sprite, xi, yi, xp, yp, SpaceSlot.ORB, 1)
+					foreground.queueSprite(block.sprite, xi, yi, xp, yp, SpaceSlot.ORB, 1, blockColour)
 				}
 
 				if (tile.isSelected)

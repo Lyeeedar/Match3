@@ -9,6 +9,7 @@ import com.badlogic.gdx.utils.IntIntMap
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Direction
 import com.lyeeedar.Global
+import com.lyeeedar.Player.Ability.Ability
 import com.lyeeedar.SpaceSlot
 import com.lyeeedar.Sprite.Sprite
 import com.lyeeedar.Sprite.SpriteAnimation.BumpAnimation
@@ -55,6 +56,26 @@ class Grid(val width: Int, val height: Int, val level: Level)
 
 	// ----------------------------------------------------------------------
 	val motes: Array<Mote> = Array(false, 16)
+
+	// ----------------------------------------------------------------------
+	var activeAbility: Ability? = null
+		set(value)
+		{
+			field = value
+
+			if (value == null)
+			{
+				for (tile in grid)
+				{
+					tile.isSelected = false
+				}
+			}
+			else
+			{
+				tile(selected)?.isSelected = false
+				selected = Point.MINUS_ONE
+			}
+		}
 
 	// ----------------------------------------------------------------------
 	init
@@ -112,26 +133,51 @@ class Grid(val width: Int, val height: Int, val level: Level)
 	{
 		if (hasAnim() || level.completed) return
 
-		tile(selected)?.isSelected = false
-
-		if (selected != Point.MINUS_ONE && newSelection != Point.MINUS_ONE)
+		if (activeAbility != null)
 		{
-			// check if within 1
-			if (newSelection.dist(selected) == 1)
+			val newTile = tile(newSelection) ?: return
+			if (!activeAbility!!.targetter.isValid(newTile)) return
+
+			if (newTile.isSelected)
 			{
-				toSwap = Pair(selected, newSelection)
-				selected = Point.MINUS_ONE
+				newTile.isSelected = false
+				activeAbility!!.selectedTargets.removeValue(newTile, true)
+			}
+			else
+			{
+				newTile.isSelected = true
+				activeAbility!!.selectedTargets.add(newTile)
+			}
+
+			if (activeAbility!!.selectedTargets.size >= activeAbility!!.targets)
+			{
+				activeAbility!!.activate(this)
+				activeAbility = null
+			}
+		}
+		else
+		{
+			tile(selected)?.isSelected = false
+
+			if (selected != Point.MINUS_ONE && newSelection != Point.MINUS_ONE)
+			{
+				// check if within 1
+				if (newSelection.dist(selected) == 1)
+				{
+					toSwap = Pair(selected, newSelection)
+					selected = Point.MINUS_ONE
+				}
+				else
+				{
+					selected = newSelection
+					tile(selected)?.isSelected = true
+				}
 			}
 			else
 			{
 				selected = newSelection
 				tile(selected)?.isSelected = true
 			}
-		}
-		else
-		{
-			selected = newSelection
-			tile(selected)?.isSelected = true
 		}
 	}
 
@@ -410,15 +456,14 @@ class Grid(val width: Int, val height: Int, val level: Level)
 					{
 						if (!level.completed && FullscreenMessage.instance == null)
 						{
-							matchHint = findValidMove()
-
-							if (matchHint == null)
+							if (activeAbility == null) matchHint = findValidMove()
+							if (activeAbility == null && matchHint == null)
 							{
 								FullscreenMessage("No valid moves. Randomising.", "", { refill() }).show()
 							}
 							else
 							{
-								noMatchTimer += delta
+								if (activeAbility == null) noMatchTimer += delta
 
 								// handle input
 								if (toSwap != null)
@@ -1027,6 +1072,12 @@ class Grid(val width: Int, val height: Int, val level: Level)
 				}
 			}
 		}
+	}
+
+	// ----------------------------------------------------------------------
+	fun pop(point: Point, delay: Float)
+	{
+		pop(point.x, point.y , delay)
 	}
 
 	// ----------------------------------------------------------------------
