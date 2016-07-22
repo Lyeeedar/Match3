@@ -29,7 +29,7 @@ import java.util.*
 class Grid(val width: Int, val height: Int, val level: Level)
 {
 	val grid: Array2D<Tile> = Array2D(width, height ){ x, y -> Tile(x, y) }
-	val spawnCount: IntArray = IntArray(width)
+	val spawnCount: Array2D<Int> = Array2D<Int>(width, height+1){ x, y -> 0 }
 
 	val refillSprite = AssetManager.loadSprite("EffectSprites/Heal/Heal", 0.1f)
 
@@ -49,6 +49,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 	val onPop = Event1Arg<Orb>()
 	val onSunk = Event1Arg<Orb>()
 	val onDamaged = Event0Arg()
+	val onSpawn = Event1Arg<Orb>()
 
 	// ----------------------------------------------------------------------
 	var noMatchTimer = 0f
@@ -184,7 +185,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 	// ----------------------------------------------------------------------
 	fun cascade(): Boolean
 	{
-		for (x in 0..width - 1) spawnCount[x] = 0
+		for (x in 0..width - 1) for (y in 0..height -1 ) spawnCount[x, y] = 0
 
 		var cascadeComplete = false
 
@@ -201,7 +202,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 
 		cascadeComplete = makeAnimations()
 
-		val sunkComplete = processSunk()
+		val sunkComplete = if (cascadeComplete) processSunk() else false
 
 		return cascadeComplete && sunkComplete
 	}
@@ -236,6 +237,11 @@ class Grid(val width: Int, val height: Int, val level: Level)
 						if (!orb.armed && !orb.sealed) found = stile
 						break
 					}
+					else if (stile.chest != null)
+					{
+						found = stile
+						break
+					}
 					else if (!stile.canHaveOrb)
 					{
 						break
@@ -249,15 +255,31 @@ class Grid(val width: Int, val height: Int, val level: Level)
 				// pull solid / spawn new down
 				if (found != null)
 				{
-					var orb: Orb
+					var orb: Orb? = null
 
 					if (found == tile)
 					{
 						orb = Orb(validOrbs.random())
 						orb.movePoints.add(Point(x, -1))
-						orb.spawnCount = spawnCount[x]
+						orb.spawnCount = spawnCount[x, 0]
 
-						spawnCount[x]++
+						spawnCount[x, 0]++
+
+						onSpawn(orb)
+					}
+					else if (found.chest != null)
+					{
+						val o = found.chest!!.spawn(this)
+						if (o != null)
+						{
+							orb = o
+							orb.movePoints.add(Point(x, found.y))
+							orb.spawnCount = spawnCount[x, found.y + 1]
+
+							spawnCount[x, found.y + 1]++
+
+							onSpawn(orb)
+						}
 					}
 					else
 					{
@@ -266,10 +288,13 @@ class Grid(val width: Int, val height: Int, val level: Level)
 						if (orb.movePoints.size == 0) orb.movePoints.add(found)
 					}
 
-					orb.movePoints.add(tile)
-					tile.orb = orb
+					if (orb != null)
+					{
+						orb.movePoints.add(tile)
+						tile.orb = orb
 
-					complete = false
+						complete = false
+					}
 				}
 			}
 
@@ -374,7 +399,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 
 				if (orb.movePoints.size > 0)
 				{
-					val firstIsNull = orb.movePoints[0].y == -1
+					val firstIsNull = orb.spawnCount >= 0
 
 					val pathPoints = Array(orb.movePoints.size){ i -> Vector2(orb.movePoints[i].x * Global.tileSize, orb.movePoints[i].y * Global.tileSize) }
 					for (point in pathPoints)
@@ -387,7 +412,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 
 					orb.sprite.spriteAnimation = MoveAnimation.obtain().set(0.1f + pathPoints.size * animSpeed, path, Interpolation.exp5In)
 					orb.sprite.renderDelay = orb.spawnCount * 0.1f
-					orb.spawnCount = 0
+					orb.spawnCount = -1
 
 					if (firstIsNull)
 					{
@@ -772,7 +797,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 			for (y in 0..height - 1)
 			{
 				val oldorb = tempgrid[x, y].orb
-				if (oldorb == null) grid[x, y].contents = tempgrid[x, y].contents
+				if (oldorb == null || oldorb.sinkable) grid[x, y].contents = tempgrid[x, y].contents
 				else
 				{
 					val orb = grid[x, y].orb!!

@@ -56,6 +56,20 @@ class Level
 					tile.sprite = theme.floor.copy()
 					tile.block = Block()
 				}
+				else if (char == '$')
+				{
+					tile.canHaveOrb = false
+					tile.sprite = theme.floor.copy()
+					tile.chest = Chest()
+					tile.chest!!.attachHandlers(grid)
+				}
+				else if (char == '£')
+				{
+					tile.canHaveOrb = false
+					tile.sprite = theme.floor.copy()
+					tile.chest = Chest(false)
+					tile.chest!!.attachHandlers(grid)
+				}
 				else
 				{
 					tile.sprite = theme.floor.copy()

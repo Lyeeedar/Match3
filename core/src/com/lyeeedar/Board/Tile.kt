@@ -23,6 +23,10 @@ class Tile(x: Int, y: Int) : Point(x, y)
 		get() = contents as? Block
 		set(value) { contents = value }
 
+	var chest: Chest?
+		get() = contents as? Chest
+		set(value) { contents = value }
+
 	var contents: Any? = null
 
 	var connectedTo: Tile? = null

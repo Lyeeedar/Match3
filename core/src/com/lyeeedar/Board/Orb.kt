@@ -14,7 +14,7 @@ import com.lyeeedar.Util.Point
  * Created by Philip on 04-Jul-16.
  */
 
-class Orb(val desc: OrbDesc)
+class Orb(val desc: OrbDesc): Point()
 {
 	//val properties: Array<OrbProperty> = Array()
 	var armed: Boolean = false
@@ -26,6 +26,8 @@ class Orb(val desc: OrbDesc)
 	var explosion: Explosion? = null
 		set(value)
 		{
+			if (sinkable) return
+
 			field = value
 
 			if (value != null)
@@ -51,11 +53,8 @@ class Orb(val desc: OrbDesc)
 
 	var sprite: Sprite = desc.sprite.copy()
 
-	var x: Int = 0
-	var y: Int = 0
-
 	val movePoints = Array<Point>()
-	var spawnCount = 0
+	var spawnCount = -1
 
 	override fun toString(): String
 	{
@@ -63,8 +62,17 @@ class Orb(val desc: OrbDesc)
 	}
 }
 
-class OrbDesc
+class OrbDesc()
 {
+	constructor(sprite: Sprite, death: Sprite, sinkable: Boolean, key: Int, name: String) : this()
+	{
+		this.sprite = sprite
+		this.death = death
+		this.sinkable = sinkable
+		this.name = name
+		this.key = key
+	}
+
 	lateinit var sprite: Sprite
 	lateinit var death: Sprite
 	var sinkable = false

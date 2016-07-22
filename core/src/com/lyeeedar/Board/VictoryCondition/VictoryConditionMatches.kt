@@ -61,7 +61,7 @@ class VictoryConditionMatches(): AbstractVictoryCondition()
 			if (toBeMatched.containsKey(it.key))
 			{
 				var count = toBeMatched[it.key]
-				count--
+				if (count > 0) count--
 				toBeMatched[it.key] = count
 
 				rebuildWidget()

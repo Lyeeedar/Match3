@@ -47,6 +47,18 @@ class LevelSelectScreen(): AbstractScreen()
 		})
 
 		val treasureButton = TextButton("Create Treasure Level", Global.skin)
+		treasureButton.addListener(object : ClickListener()
+		{
+			override fun clicked(event: InputEvent?, x: Float, y: Float)
+			{
+				val theme = LevelTheme.load("Dungeon")
+				val level = Level.load("Treasure/Box", theme, Level.LevelType.TREASURE)
+				level.create()
+
+				GridScreen.instance.updateLevel(level, player)
+				Global.game.switchScreen(MainGame.ScreenEnum.GRID)
+			}
+		})
 
 		mainTable.add(trapButton)
 		mainTable.row()

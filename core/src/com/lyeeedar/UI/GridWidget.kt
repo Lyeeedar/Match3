@@ -32,6 +32,8 @@ class GridWidget(val grid: Grid) : Widget()
 {
 	init
 	{
+		instance = this
+
 		touchable = Touchable.enabled
 
 		addListener(object : InputListener()
@@ -68,20 +70,15 @@ class GridWidget(val grid: Grid) : Widget()
 		})
 
 		grid.onPop += {
-			val xp = x.toFloat() + (width.toFloat() / 2f) - ((grid.width * Global.tileSize) / 2f)
 
-			val actualx = it.x * Global.tileSize + xp
-			val actualy = ((grid.height-1) - it.y) * Global.tileSize + y
-
-			val pos = Vector2(actualx, actualy)
+			val pos = pointToScreenspace(it)
 			val dst = PowerBar.instance.getOrbDest()
-			val dir = Vector2().setToRandomDirection()
 			val sprite = AssetManager.loadSprite("Oryx/uf_split/uf_items/crystal_cloud")
 			sprite.colour = Color.CYAN
 
 			if (dst != null)
 			{
-				val mote = Mote(pos, dst, dir, sprite, grid, { PowerBar.instance.power++ })
+				val mote = Mote(pos, dst, sprite, grid, { PowerBar.instance.power++ })
 				grid.motes.add(mote)
 			}
 		}
@@ -97,15 +94,15 @@ class GridWidget(val grid: Grid) : Widget()
 
 	val bitflag: EnumBitflag<Direction> = EnumBitflag()
 
-//	override fun getPrefHeight(): Float
-//	{
-//		return grid.height.toFloat() * Global.tileSize
-//	}
-//
-//	override fun getPrefWidth(): Float
-//	{
-//		return grid.width.toFloat() * Global.tileSize
-//	}
+	fun pointToScreenspace(point: Point): Vector2
+	{
+		val xp = x.toFloat() + (width.toFloat() / 2f) - ((grid.width * Global.tileSize) / 2f)
+
+		val actualx = point.x * Global.tileSize + xp
+		val actualy = ((grid.height-1) - point.y) * Global.tileSize + y
+
+		return Vector2(actualx, actualy)
+	}
 
 	override fun invalidate()
 	{
@@ -134,6 +131,7 @@ class GridWidget(val grid: Grid) : Widget()
 				val tile = grid.grid[x, y]
 				val orb = tile.orb
 				val block = tile.block
+				val chest = tile.chest
 
 				var tileColour = Color.WHITE
 				var orbColour = Color.WHITE
@@ -204,6 +202,11 @@ class GridWidget(val grid: Grid) : Widget()
 					}
 				}
 
+				if (chest != null)
+				{
+					background.queueSprite(chest.sprite, xi, yi, xp, yp, SpaceSlot.TILE, 1, tileColour)
+				}
+
 				for (sprite in tile.effects)
 				{
 					if (sprite.completed)
@@ -262,5 +265,10 @@ class GridWidget(val grid: Grid) : Widget()
 		background.flush(Gdx.app.graphics.deltaTime, batch as SpriteBatch)
 		foreground.flush(Gdx.app.graphics.deltaTime, batch as SpriteBatch)
 		floating.flush(Gdx.app.graphics.deltaTime, batch as SpriteBatch)
+	}
+
+	companion object
+	{
+		lateinit var instance: GridWidget
 	}
 }

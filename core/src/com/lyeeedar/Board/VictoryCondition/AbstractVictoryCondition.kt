@@ -41,6 +41,8 @@ abstract class AbstractVictoryCondition
 		{
 			val type = when(name) {
 				"MATCH", "MATCHES" -> VictoryConditionMatches::class.java
+				"SINK" -> VictoryConditionSink::class.java
+				"LOOT" -> VictoryConditionLoot::class.java
 
 			// ARGH everything broke
 				else -> throw RuntimeException("Invalid victory type: $name")

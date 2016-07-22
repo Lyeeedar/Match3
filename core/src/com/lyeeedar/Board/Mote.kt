@@ -11,10 +11,12 @@ import com.lyeeedar.Sprite.SpriteRenderer
  * Created by Philip on 15-Jul-16.
  */
 
-class Mote(val pos: Vector2, val dst: Vector2, val dir: Vector2, val sprite: Sprite, val grid: Grid, val function: () -> Unit)
+class Mote(val pos: Vector2, val dst: Vector2, val sprite: Sprite, val grid: Grid, val function: () -> Unit)
 {
 	var time = 0f
 	var duration = 1.5f
+
+	val dir = Vector2().setToRandomDirection()
 
 	var done = false
 

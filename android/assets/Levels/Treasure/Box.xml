@@ -10,4 +10,12 @@
         <Row>#.........#</Row>
         <Row>#.........#</Row>
     </Rows>
+
+    <AllowedVictories>
+        <Sink />
+        <Loot />
+    </AllowedVictories>
+    <AllowedDefeats>
+        <Turns />
+    </AllowedDefeats>
 </Layout>
