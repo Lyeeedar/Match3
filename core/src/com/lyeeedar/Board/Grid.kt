@@ -50,7 +50,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 	val onSunk = Event1Arg<Orb>()
 	val onDamaged = Event1Arg<Monster>()
 	val onSpawn = Event1Arg<Orb>()
-	val onAttacked = Event1Arg<Int>()
+	val onAttacked = Event1Arg<Orb>()
 
 	// ----------------------------------------------------------------------
 	var noMatchTimer = 0f
@@ -104,6 +104,29 @@ class Grid(val width: Int, val height: Int, val level: Level)
 			orbDesc.death.colour = colour
 
 			validOrbs.add(orbDesc)
+		}
+
+		onTurn += {
+
+			for (tile in grid)
+			{
+				val orb = tile.orb
+				if (orb != null)
+				{
+					// Process attacks
+					if (orb.hasAttack)
+					{
+						orb.attackTimer--
+					}
+				}
+
+				// process monsters
+				val monster = tile.monster
+				if (monster != null && tile == monster.tiles[0, 0])
+				{
+					monster.onTurn(this@Grid)
+				}
+			}
 		}
 	}
 
@@ -557,7 +580,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 			oldTile.orb = oldOrb
 			newTile.orb = newOrb
 
-			oldOrb.sprite.spriteAnimation = BumpAnimation.obtain().set(animSpeed * 2f, Direction.Companion.getDirection(oldTile, newTile))
+			oldOrb.sprite.spriteAnimation = BumpAnimation.obtain().set(animSpeed, Direction.Companion.getDirection(oldTile, newTile))
 			return false
 		}
 		else
@@ -587,6 +610,11 @@ class Grid(val width: Int, val height: Int, val level: Level)
 					{
 						tile.orb = null
 						onPop(orb)
+					}
+					else if (orb.hasAttack && orb.attackTimer == 0 && orb.sprite.spriteAnimation == null)
+					{
+						onAttacked(orb)
+						orb.hasAttack = false
 					}
 				}
 				else if (tile.block != null)

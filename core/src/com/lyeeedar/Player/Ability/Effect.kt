@@ -23,7 +23,7 @@ class Effect(val type: Type)
 		apply = when(type)
 		{
 			Type.POP -> fun (tile: Tile, grid: Grid, delay: Float) { grid.pop(tile, delay) }
-			Type.RANDOMISE -> fun (tile: Tile, grid: Grid, delay: Float) { tile.orb = Orb(grid.validOrbs.random()) }
+			Type.RANDOMISE -> fun (tile: Tile, grid: Grid, delay: Float) { val orb = tile.orb ?: return; tile.orb = Orb(grid.validOrbs.random()); tile.orb!!.setAttributes(orb) }
 			else -> throw Exception("Invalid effect type $type")
 		}
 	}

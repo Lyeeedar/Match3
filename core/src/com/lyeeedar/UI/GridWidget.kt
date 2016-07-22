@@ -30,6 +30,19 @@ import com.lyeeedar.Util.Point
 
 class GridWidget(val grid: Grid) : Widget()
 {
+	val glow: Sprite = AssetManager.loadSprite("glow")
+	val frame: Sprite = AssetManager.loadSprite("GUI/frame", colour = Color(0.6f, 0.7f, 0.9f, 0.6f))
+	val border: Sprite = AssetManager.loadSprite("GUI/border", colour = Color(0.6f, 0.9f, 0.6f, 0.6f))
+	val circle: Sprite = AssetManager.loadSprite("borderedcircle")
+
+	val background: SpriteRenderer = SpriteRenderer()
+	val foreground: SpriteRenderer = SpriteRenderer()
+	val floating: SpriteRenderer = SpriteRenderer()
+
+	val bitflag: EnumBitflag<Direction> = EnumBitflag()
+
+	val tempCol = Color()
+
 	init
 	{
 		instance = this
@@ -73,8 +86,7 @@ class GridWidget(val grid: Grid) : Widget()
 
 			val pos = pointToScreenspace(it)
 			val dst = PowerBar.instance.getOrbDest()
-			val sprite = AssetManager.loadSprite("Oryx/uf_split/uf_items/crystal_cloud")
-			sprite.colour = Color.CYAN
+			val sprite = AssetManager.loadSprite("Oryx/uf_split/uf_items/crystal_sky")
 
 			if (dst != null)
 			{
@@ -82,17 +94,9 @@ class GridWidget(val grid: Grid) : Widget()
 				grid.motes.add(mote)
 			}
 		}
+
+		circle.baseScale = floatArrayOf(0.14f, 0.14f)
 	}
-
-	val glow: Sprite = AssetManager.loadSprite("glow")
-	val frame: Sprite = AssetManager.loadSprite("GUI/frame", colour = Color(0.6f, 0.7f, 0.9f, 0.6f))
-	val border: Sprite = AssetManager.loadSprite("GUI/border", colour = Color(0.6f, 0.9f, 0.6f, 0.6f))
-
-	val background: SpriteRenderer = SpriteRenderer()
-	val foreground: SpriteRenderer = SpriteRenderer()
-	val floating: SpriteRenderer = SpriteRenderer()
-
-	val bitflag: EnumBitflag<Direction> = EnumBitflag()
 
 	fun pointToScreenspace(point: Point): Vector2
 	{
@@ -171,6 +175,13 @@ class GridWidget(val grid: Grid) : Widget()
 							blockColour = Color.DARK_GRAY
 							monsterColour = Color.WHITE
 						}
+						else if (grid.activeAbility!!.targetter.type == Targetter.Type.ATTACK)
+						{
+							tileColour = Color.DARK_GRAY
+							orbColour = Color.WHITE
+							blockColour = Color.DARK_GRAY
+							monsterColour = Color.DARK_GRAY
+						}
 						else if (grid.activeAbility!!.targetter.type == Targetter.Type.TILE)
 						{
 							val col = if (tile.canHaveOrb) Color.WHITE else Color.DARK_GRAY
@@ -246,6 +257,28 @@ class GridWidget(val grid: Grid) : Widget()
 					if (orb.armed)
 					{
 						foreground.queueSprite(glow, xi, yi, xp, yp, SpaceSlot.ORB, 0)
+					}
+
+					if (orb.hasAttack)
+					{
+						val cx = xi
+						val cy = yi + 0.225f
+
+						val currentPoint = Vector2(0f, 0.4f)
+
+						val maxdots = 10
+						val degreesStep = 360f / maxdots
+						for (i in 0..maxdots-1)
+						{
+							val circleCol = if (i < orb.attackTimer) Color.RED else Color.LIGHT_GRAY
+							tempCol.set(orbColour).mul(circleCol)
+
+							floating.queueSprite(circle, cx + currentPoint.x, cy + currentPoint.y, xp, yp, SpaceSlot.ORB, 2, tempCol)
+
+							currentPoint.rotate(degreesStep)
+						}
+
+						//foreground.queueSprite(orb.attackIcon, xi, yi, xp, yp, SpaceSlot.ORB, 2, orbColour)
 					}
 				}
 

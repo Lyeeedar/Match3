@@ -2,13 +2,16 @@ package com.lyeeedar.Board.DefeatCondition
 
 import com.badlogic.gdx.graphics.g2d.NinePatch
 import com.badlogic.gdx.graphics.g2d.Sprite
+import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.badlogic.gdx.scenes.scene2d.ui.Skin
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Board.Grid
+import com.lyeeedar.Board.Mote
 import com.lyeeedar.Player.Player
+import com.lyeeedar.UI.GridWidget
 import com.lyeeedar.UI.SpriteWidget
 import com.lyeeedar.Util.AssetManager
 
@@ -26,12 +29,20 @@ class DefeatConditionDeath() : AbstractDefeatCondition()
 		player = grid.level.player
 
 		grid.onAttacked += {
-			player.hp -= it
 
-			val hp = player.hp
-			val max = player.maxhp
+			val sprite = AssetManager.loadSprite("Oryx/uf_split/uf_items/crystal_blood")
+			val dst = label.localToStageCoordinates(Vector2())
+			val src = GridWidget.instance.pointToScreenspace(it)
 
-			label.setText("$hp/$max")
+			val mote = Mote(src, dst, sprite, grid, {
+				player.hp -= 1
+
+				val hp = player.hp
+				val max = player.maxhp
+
+				label.setText("$hp/$max")
+			})
+			grid.motes.add(mote)
 		}
 	}
 

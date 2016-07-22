@@ -1,6 +1,7 @@
 package com.lyeeedar
 
 import com.badlogic.gdx.math.MathUtils
+import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.ObjectFloatMap
 import com.badlogic.gdx.utils.XmlReader
@@ -112,6 +113,14 @@ enum class Direction private constructor(val x: Int, val y: Int, val identifier:
 		fun getDirection(point: Point): Direction
 		{
 			return getDirection(point.x, point.y)
+		}
+
+		fun getDirection(path: kotlin.Array<Vector2>): Direction
+		{
+			val x = path.last().x - path.first().x
+			val y = path.last().y - path.first().y
+
+			return getDirection(x.toInt(), y.toInt())
 		}
 
 		fun getDirection(dir: FloatArray): Direction

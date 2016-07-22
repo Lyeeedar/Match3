@@ -30,3 +30,5 @@ operator fun IntIntMap.get(key: Int) = this.get(key, 0)
 operator fun IntIntMap.set(key: Int, value: Int) = this.put(key, value)
 
 fun XmlReader.Element.ranChild() = this.getChild(MathUtils.random(this.childCount-1))!!
+
+fun <T> Sequence<T>.random() = if (this.count() > 0) this.elementAt(MathUtils.random(this.count()-1)) else null

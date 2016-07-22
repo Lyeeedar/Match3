@@ -1,10 +1,12 @@
 package com.lyeeedar.Sprite.SpriteAnimation
 
 import com.badlogic.gdx.math.MathUtils
+import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.Pool
 import com.badlogic.gdx.utils.Pools
 import com.badlogic.gdx.utils.XmlReader.Element
 import com.lyeeedar.Direction
+import com.lyeeedar.Global
 
 class BumpAnimation : AbstractSpriteAnimation
 {
@@ -41,19 +43,30 @@ class BumpAnimation : AbstractSpriteAnimation
 	{
 		time += delta
 
-		val alpha = MathUtils.clamp(Math.abs((time - duration / 2) / (duration / 2)), 0f, 1f)
+		val alpha = 1f - MathUtils.clamp(Math.abs((time - duration / 2) / (duration / 2)), 0f, 1f)
 
-		offset[0] = (32 / 3 * alpha * direction!!.x.toFloat()).toInt().toFloat()
-		offset[1] = (32 / 3 * alpha * direction!!.y.toFloat()).toInt().toFloat()
+		offset[0] = (Global.tileSize / 2 * alpha * direction!!.x.toFloat()).toInt().toFloat()
+		offset[1] = (Global.tileSize / 2 * alpha * direction!!.y.toFloat() * -1f).toInt().toFloat()
 
 		return time > duration
 	}
 
-	fun set(duration: Float, diff: FloatArray)
+	fun set(duration: Float, path: kotlin.Array<Vector2>): BumpAnimation
+	{
+		this.duration = duration
+		this.direction = Direction.getDirection(path)
+		this.time = 0f
+
+		return this
+	}
+
+	fun set(duration: Float, diff: FloatArray): BumpAnimation
 	{
 		this.duration = duration
 		this.direction = Direction.getDirection(diff)
 		this.time = 0f
+
+		return this
 	}
 
 	override fun parse(xml: Element)

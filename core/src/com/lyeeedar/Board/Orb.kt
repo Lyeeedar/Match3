@@ -16,7 +16,6 @@ import com.lyeeedar.Util.Point
 
 class Orb(val desc: OrbDesc): Point()
 {
-	//val properties: Array<OrbProperty> = Array()
 	var armed: Boolean = false
 		set(value)
 		{
@@ -45,6 +44,10 @@ class Orb(val desc: OrbDesc): Point()
 	val sealBreak = AssetManager.loadSprite("EffectSprites/Aegis/Aegis", 0.1f, Color(0.2f, 0f, 0.2f, 1f), Sprite.AnimationMode.TEXTURE, null, false, true)
 	var sealed = false
 
+	var hasAttack: Boolean = false
+	var attackTimer = 0
+	var attackIcon = AssetManager.loadSprite("Oryx/uf_split/uf_items/weapon_magic_sword_hellfire", drawActualSize = true)
+
 	val sinkable: Boolean
 		get() = desc.sinkable
 
@@ -59,6 +62,14 @@ class Orb(val desc: OrbDesc): Point()
 	override fun toString(): String
 	{
 		return desc.key.toString()
+	}
+
+	fun setAttributes(orb: Orb)
+	{
+		sealed = orb.sealed
+		hasAttack = orb.hasAttack
+		attackTimer = orb.attackTimer
+		explosion = orb.explosion
 	}
 }
 
