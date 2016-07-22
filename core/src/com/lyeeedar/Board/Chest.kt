@@ -20,7 +20,7 @@ class Chest(val spawnOrbs: Boolean = true)
 	val fullSprite = AssetManager.loadSprite("Oryx/uf_split/uf_items/chest_silver_open", drawActualSize = true)
 	val emptySprite = AssetManager.loadSprite("Oryx/uf_split/uf_items/chest_silver_empty", drawActualSize = true)
 
-	val coinDesc = OrbDesc(AssetManager.loadSprite("Oryx/uf_split/uf_items/coin_gold", drawActualSize = true), AssetManager.loadSprite("white"), true, -1, "Coin")
+	val coinDesc = OrbDesc(AssetManager.loadSprite("Oryx/uf_split/uf_items/coin_gold", drawActualSize = true), AssetManager.loadSprite("blank"), true, -1, "Coin")
 
 	fun attachHandlers(grid: Grid)
 	{

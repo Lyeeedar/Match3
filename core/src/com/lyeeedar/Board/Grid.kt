@@ -519,6 +519,10 @@ class Grid(val width: Int, val height: Int, val level: Level)
 				done = false
 			}
 		}
+		else
+		{
+			done = false
+		}
 
 		for (mote in motes)
 		{

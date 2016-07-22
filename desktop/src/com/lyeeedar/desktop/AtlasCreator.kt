@@ -116,7 +116,7 @@ class AtlasCreator
 	private fun parseCodeFile(file: String)
 	{
 		val contents = File(file).readText()
-		val regex = Regex("AssetManager.loadSprite\\(\".*\"")//(\".*\")")
+		val regex = Regex("AssetManager.loadSprite\\(\".*?\"")//(\".*\")")
 
 		val occurances = regex.findAll(contents)
 
@@ -129,7 +129,7 @@ class AtlasCreator
 			processSprite(path)
 		}
 
-		val regex2 = Regex("AssetManager.loadTextureRegion\\(\".*\"")//(\".*\")")
+		val regex2 = Regex("AssetManager.loadTextureRegion\\(\".*?\"")//(\".*\")")
 
 		val occurances2 = regex2.findAll(contents)
 
