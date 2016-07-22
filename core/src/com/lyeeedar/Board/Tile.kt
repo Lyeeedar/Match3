@@ -27,6 +27,10 @@ class Tile(x: Int, y: Int) : Point(x, y)
 		get() = contents as? Chest
 		set(value) { contents = value }
 
+	var monster: Monster?
+		get() = contents as? Monster
+		set(value) { contents = value }
+
 	var contents: Any? = null
 
 	var connectedTo: Tile? = null
@@ -38,7 +42,12 @@ class Tile(x: Int, y: Int) : Point(x, y)
 
 	override fun toString(): String
 	{
-		return orb?.toString() ?: " "
+		if (orb != null) return "o"
+		if (block != null) return "="
+		if (monster != null) return "!"
+		if (chest != null) return "£"
+
+		return " "
 	}
 
 	fun getPosDiff(p: Point): kotlin.Array<Vector2> = getPosDiff(p.x, p.y)

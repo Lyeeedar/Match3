@@ -34,6 +34,7 @@ class Sprite(var fileName: String, var animationDelay: Float, var textures: Arra
 	}
 
 	var colour = Color(1f,1f,1f,1f)
+	var colourAnimation: ColourAnimation? = null
 
 	var renderDelay = -1f
 	var showBeforeRender = false
@@ -181,6 +182,16 @@ class Sprite(var fileName: String, var animationDelay: Float, var textures: Arra
 			}
 		}
 
+		if (colourAnimation != null)
+		{
+			looped = colourAnimation!!.update(delta, colour)
+			if (looped && colourAnimation!!.oneTime)
+			{
+				colourAnimation!!.free()
+				colourAnimation = null
+			}
+		}
+
 		if (looped)
 		{
 			animationStage = AnimationStage.END
@@ -210,6 +221,8 @@ class Sprite(var fileName: String, var animationDelay: Float, var textures: Arra
 
 	fun render(batch: SpriteBatch, x: Float, y: Float, width: Float, height: Float, scaleX: Float, scaleY: Float, animationState: AnimationState)
 	{
+		val colour = if (colourAnimation != null) colourAnimation!!.colour else this.colour
+
 		var oldCol: Color? = null
 		if (colour.a == 0f)
 		{
@@ -243,6 +256,9 @@ class Sprite(var fileName: String, var animationDelay: Float, var textures: Arra
 			return
 		}
 
+		width *= size[0]
+		height *= size[1]
+
 		if (drawActualSize)
 		{
 			val widthRatio = width / 32.0f
@@ -257,9 +273,6 @@ class Sprite(var fileName: String, var animationDelay: Float, var textures: Arra
 			width = trueWidth
 			height = trueHeight
 		}
-
-		width *= size[0]
-		height *= size[1]
 
 		if (animationState.mode == AnimationMode.SHRINK && animationState.isShrunk)
 		{

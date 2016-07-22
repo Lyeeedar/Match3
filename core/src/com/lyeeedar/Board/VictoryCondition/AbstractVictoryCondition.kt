@@ -43,6 +43,7 @@ abstract class AbstractVictoryCondition
 				"MATCH", "MATCHES" -> VictoryConditionMatches::class.java
 				"SINK" -> VictoryConditionSink::class.java
 				"LOOT" -> VictoryConditionLoot::class.java
+				"KILL" -> VictoryConditionKill::class.java
 
 			// ARGH everything broke
 				else -> throw RuntimeException("Invalid victory type: $name")

@@ -38,7 +38,7 @@ class LevelSelectScreen(): AbstractScreen()
 			override fun clicked(event: InputEvent?, x: Float, y: Float)
 			{
 				val theme = LevelTheme.load("Dungeon")
-				val level = Level.load("Trap/Diamond", theme, Level.LevelType.TRAP)
+				val level = Level.load("Trap/Diamond", theme, Level.LevelType.TRAP, player)
 				level.create()
 
 				GridScreen.instance.updateLevel(level, player)
@@ -52,7 +52,21 @@ class LevelSelectScreen(): AbstractScreen()
 			override fun clicked(event: InputEvent?, x: Float, y: Float)
 			{
 				val theme = LevelTheme.load("Dungeon")
-				val level = Level.load("Treasure/Box", theme, Level.LevelType.TREASURE)
+				val level = Level.load("Treasure/SingleChest", theme, Level.LevelType.TREASURE, player)
+				level.create()
+
+				GridScreen.instance.updateLevel(level, player)
+				Global.game.switchScreen(MainGame.ScreenEnum.GRID)
+			}
+		})
+
+		val fightButton = TextButton("Create ENCOUNTER Level", Global.skin)
+		fightButton.addListener(object : ClickListener()
+		{
+			override fun clicked(event: InputEvent?, x: Float, y: Float)
+			{
+				val theme = LevelTheme.load("Dungeon")
+				val level = Level.load("Fight/Box", theme, Level.LevelType.ENCOUNTER, player)
 				level.create()
 
 				GridScreen.instance.updateLevel(level, player)
@@ -63,6 +77,8 @@ class LevelSelectScreen(): AbstractScreen()
 		mainTable.add(trapButton)
 		mainTable.row()
 		mainTable.add(treasureButton)
+		mainTable.row()
+		mainTable.add(fightButton)
 	}
 
 	// ----------------------------------------------------------------------

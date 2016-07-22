@@ -48,8 +48,9 @@ class Grid(val width: Int, val height: Int, val level: Level)
 	val onTime = Event1Arg<Float>()
 	val onPop = Event1Arg<Orb>()
 	val onSunk = Event1Arg<Orb>()
-	val onDamaged = Event0Arg()
+	val onDamaged = Event1Arg<Monster>()
 	val onSpawn = Event1Arg<Orb>()
+	val onAttacked = Event1Arg<Int>()
 
 	// ----------------------------------------------------------------------
 	var noMatchTimer = 0f
@@ -218,7 +219,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 			val tile = grid[x, currentY]
 
 			// read up column, find first gap
-			if (tile.canHaveOrb && tile.orb == null)
+			if (tile.canHaveOrb && tile.orb == null && tile.monster == null)
 			{
 				// if gap found read up until solid / spawner
 				var found: Tile? = null
@@ -247,6 +248,10 @@ class Grid(val width: Int, val height: Int, val level: Level)
 						break
 					}
 					else if (stile.block != null)
+					{
+						break
+					}
+					else if (stile.monster != null)
 					{
 						break
 					}
@@ -311,14 +316,14 @@ class Grid(val width: Int, val height: Int, val level: Level)
 			while (currentY < height)
 			{
 				val tile = grid[x, currentY]
-				if (tile.canHaveOrb && tile.orb == null && tile.block == null)
+				if (tile.canHaveOrb && tile.orb == null && tile.block == null && tile.monster == null)
 				{
 					if (lookingForOrb == 0)
 					{
 						lookingForOrb = 1
 					}
 				}
-				else if (!tile.canHaveOrb || lookingForOrb == 2 || tile.block != null)
+				else if (!tile.canHaveOrb || lookingForOrb == 2 || tile.block != null || tile.monster != null)
 				{
 					lookingForOrb = 0
 				}
@@ -589,6 +594,17 @@ class Grid(val width: Int, val height: Int, val level: Level)
 						tile.effects.add(block.death.copy())
 					}
 				}
+				else if (tile.monster != null)
+				{
+					val monster = tile.monster!!
+					if (monster.hp <= 0)
+					{
+						for (t in monster.tiles)
+						{
+							t.monster = null
+						}
+					}
+				}
 			}
 		}
 	}
@@ -827,7 +843,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 		{
 			for (y in 0..height-1)
 			{
-				if (grid[x, y].canHaveOrb && grid[x, y].block == null)
+				if (grid[x, y].canHaveOrb && grid[x, y].block == null && grid[x, y].monster == null)
 				{
 					val valid = Array(validOrbs)
 					val l1 = tile(x-1, y)
@@ -1072,6 +1088,11 @@ class Grid(val width: Int, val height: Int, val level: Level)
 					t.orb!!.sealed = false
 					t.effects.add(t.orb!!.sealBreak)
 				}
+				if (t.monster != null)
+				{
+					t.monster!!.hp--
+					onDamaged(t.monster!!)
+				}
 			}
 
 			// if 4 or 5 match then spawn new orb
@@ -1113,6 +1134,13 @@ class Grid(val width: Int, val height: Int, val level: Level)
 		if (tile.block != null)
 		{
 			tile.block!!.count--
+			return
+		}
+
+		if (tile.monster != null)
+		{
+			tile.monster!!.hp--
+			onDamaged(tile.monster!!)
 			return
 		}
 

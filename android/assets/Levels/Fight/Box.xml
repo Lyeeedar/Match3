@@ -1,0 +1,21 @@
+<Layout>
+    <Rows>
+        <Row>#.........#</Row>
+        <Row>#.........#</Row>
+        <Row>#.........#</Row>
+        <Row>#.........#</Row>
+        <Row>#...!!....#</Row>
+        <Row>#...!!....#</Row>
+        <Row>#.........#</Row>
+        <Row>#.........#</Row>
+        <Row>#.........#</Row>
+    </Rows>
+
+    <AllowedVictories>
+        <Kill />
+    </AllowedVictories>
+
+    <AllowedDefeats>
+        <Death />
+    </AllowedDefeats>
+</Layout>

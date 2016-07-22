@@ -132,10 +132,12 @@ class GridWidget(val grid: Grid) : Widget()
 				val orb = tile.orb
 				val block = tile.block
 				val chest = tile.chest
+				val monster = tile.monster
 
 				var tileColour = Color.WHITE
 				var orbColour = Color.WHITE
 				var blockColour = Color.WHITE
+				var monsterColour = Color.WHITE
 
 				if (grid.activeAbility != null)
 				{
@@ -146,18 +148,28 @@ class GridWidget(val grid: Grid) : Widget()
 							tileColour = Color.DARK_GRAY
 							orbColour = Color.WHITE
 							blockColour = Color.DARK_GRAY
+							monsterColour = Color.DARK_GRAY
 						}
 						else if (grid.activeAbility!!.targetter.type == Targetter.Type.BLOCK)
 						{
 							tileColour = Color.DARK_GRAY
 							orbColour = Color.DARK_GRAY
 							blockColour = Color.WHITE
+							monsterColour = Color.DARK_GRAY
 						}
 						else if (grid.activeAbility!!.targetter.type == Targetter.Type.EMPTY)
 						{
 							tileColour = Color.WHITE
 							orbColour = Color.DARK_GRAY
 							blockColour = Color.DARK_GRAY
+							monsterColour = Color.DARK_GRAY
+						}
+						else if (grid.activeAbility!!.targetter.type == Targetter.Type.MONSTER)
+						{
+							tileColour = Color.DARK_GRAY
+							orbColour = Color.DARK_GRAY
+							blockColour = Color.DARK_GRAY
+							monsterColour = Color.WHITE
 						}
 						else if (grid.activeAbility!!.targetter.type == Targetter.Type.TILE)
 						{
@@ -166,12 +178,14 @@ class GridWidget(val grid: Grid) : Widget()
 							tileColour = col
 							orbColour = col
 							blockColour = col
+							monsterColour = col
 						}
 						else if (grid.activeAbility!!.targetter.type == Targetter.Type.SEALED)
 						{
 							tileColour = Color.DARK_GRAY
 							orbColour = if (orb != null && orb.sealed) Color.WHITE else Color.DARK_GRAY
 							blockColour = Color.DARK_GRAY
+							monsterColour = Color.DARK_GRAY
 						}
 					}
 					else
@@ -179,6 +193,7 @@ class GridWidget(val grid: Grid) : Widget()
 						tileColour = Color.DARK_GRAY
 						orbColour = Color.DARK_GRAY
 						blockColour = Color.DARK_GRAY
+						monsterColour = Color.DARK_GRAY
 					}
 				}
 
@@ -232,6 +247,13 @@ class GridWidget(val grid: Grid) : Widget()
 					{
 						foreground.queueSprite(glow, xi, yi, xp, yp, SpaceSlot.ORB, 0)
 					}
+				}
+
+				if (monster != null && tile == monster.tiles[0, monster.size-1])
+				{
+					monster.sprite.size[0] = monster.size
+					monster.sprite.size[1] = monster.size
+					foreground.queueSprite(monster.sprite, xi, yi, xp, yp, SpaceSlot.ORB, 1, monsterColour)
 				}
 
 				if (block != null)

@@ -1,12 +1,14 @@
 package com.lyeeedar.Board
 
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Board.DefeatCondition.AbstractDefeatCondition
 import com.lyeeedar.Board.VictoryCondition.AbstractVictoryCondition
 import com.lyeeedar.Direction
 import com.lyeeedar.Global
 import com.lyeeedar.MainGame
+import com.lyeeedar.Player.Player
 import com.lyeeedar.Sprite.SpriteWrapper
 import com.lyeeedar.UI.FullscreenMessage
 import com.lyeeedar.Util.Array2D
@@ -31,12 +33,15 @@ class Level
 	lateinit var theme: LevelTheme
 	lateinit var charGrid: Array2D<Char>
 	lateinit var type: LevelType
+	lateinit var player: Player
 
 	var completed = false
 
 	fun create()
 	{
 		grid = Grid(charGrid.xSize, charGrid.ySize, this)
+
+		var hasMonster = false
 
 		for (x in 0..charGrid.xSize-1)
 		{
@@ -70,9 +75,94 @@ class Level
 					tile.chest = Chest(false)
 					tile.chest!!.attachHandlers(grid)
 				}
+				else if (char == '!')
+				{
+					tile.canHaveOrb = true
+					tile.sprite = theme.floor.copy()
+
+					hasMonster = true
+				}
 				else
 				{
 					tile.sprite = theme.floor.copy()
+				}
+			}
+		}
+
+		if (hasMonster)
+		{
+			// iterate through and find groups
+			val blocks = Array<Array<Tile>>()
+
+			for (x in 0..charGrid.xSize-1)
+			{
+				for (y in 0..charGrid.ySize - 1)
+				{
+					if (charGrid[x, y] == '!')
+					{
+						val tile = grid.grid[x, y]
+
+						var found = false
+						for (block in blocks)
+						{
+							for (testtile in block)
+							{
+								if (testtile.dist(tile) == 1)
+								{
+									block.add(tile)
+									found = true
+									break
+								}
+							}
+						}
+
+						if (!found)
+						{
+							val newArray = Array<Tile>()
+							newArray.add(tile)
+							blocks.add(newArray)
+						}
+					}
+				}
+			}
+
+			// convet groups into x by x arrays
+			for (block in blocks)
+			{
+				var minx = block[0].x
+				var miny = block[0].y
+				var maxx = block[0].x
+				var maxy = block[0].y
+
+				for (tile in block)
+				{
+					if (tile.x < minx) minx = tile.x
+					if (tile.y < miny) miny = tile.y
+					if (tile.x > maxx) maxx = tile.x
+					if (tile.y > maxy) maxy = tile.y
+				}
+
+				val w = (maxx - minx) + 1
+				val h = (maxy - miny) + 1
+
+				if (w != h) throw Exception("Non-square monster!")
+
+				val size = w
+				val monster = Monster() // this should be a lookup thing, but ignore that for now
+				monster.size = size
+
+				for (x in 0..size-1)
+				{
+					for (y in 0..size-1)
+					{
+						val gx = minx + x
+						val gy = miny + y
+
+						val tile = grid.grid[gx, gy]
+
+						tile.monster = monster
+						monster.tiles[x, y] = tile
+					}
 				}
 			}
 		}
@@ -144,7 +234,7 @@ class Level
 
 	companion object
 	{
-		fun load(path: String, theme: LevelTheme, type: LevelType): Level
+		fun load(path: String, theme: LevelTheme, type: LevelType, player: Player): Level
 		{
 			val xml = XmlReader().parse(Gdx.files.internal("Levels/$path.xml"))
 
@@ -159,6 +249,7 @@ class Level
 			level.victory = AbstractVictoryCondition.load(xml.getChildByName("AllowedVictories").ranChild())
 			level.theme = theme
 			level.type = type
+			level.player = player
 
 			return level
 		}
