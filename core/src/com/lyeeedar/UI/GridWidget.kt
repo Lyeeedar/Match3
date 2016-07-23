@@ -261,8 +261,8 @@ class GridWidget(val grid: Grid) : Widget()
 
 					if (orb.hasAttack)
 					{
-						val cx = xi
-						val cy = yi + 0.225f
+						val cx = xi + (orb.sprite.spriteAnimation?.renderOffset()?.get(0) ?: 0f) / Global.tileSize
+						val cy = yi + 0.225f + (orb.sprite.spriteAnimation?.renderOffset()?.get(1) ?: 0f) / Global.tileSize
 
 						val currentPoint = Vector2(0f, 0.4f)
 

@@ -11,7 +11,7 @@ import com.lyeeedar.Direction
  * Created by Philip on 20-Mar-16.
  */
 
-open class Point : Pool.Poolable
+open class Point : Pool.Poolable, Comparable<Point>
 {
 	var locked: Boolean = false
 	var fromPool: Boolean = false
@@ -95,6 +95,59 @@ open class Point : Pool.Poolable
 	fun euclideanDist2(other: Point) = Vector2.dst2(x.toFloat(), y.toFloat(), other.x.toFloat(), other.y.toFloat())
 	fun euclideanDist2(ox: Float, oy:Float) = Vector2.dst2(x.toFloat(), y.toFloat(), ox, oy)
 
+	fun liesBetween(p1: Point, p2: Point): Boolean
+	{
+		// early out
+		if (p1 == p2) return this == p1
+
+		if (p1.x == p2.x)
+		{
+			// if on same line then we can continue
+			if (x == p1.x)
+			{
+				var miny = p1.y
+				var maxy = p2.y
+
+				// swap if in wrong order
+				if (maxy < miny)
+				{
+					val temp = maxy
+					maxy = miny
+					miny = temp
+				}
+
+				return y >= miny && y <= maxy
+			}
+		}
+		else if (p1.y == p2.y)
+		{
+			// if on same line then we can continue
+			if (y == p1.y)
+			{
+				var minx = p1.x
+				var maxx = p2.x
+
+				// swap if in wrong order
+				if (maxx < minx)
+				{
+					val temp = maxx
+					maxx = minx
+					minx = temp
+				}
+
+				return x >= minx && x <= maxx
+			}
+		}
+		else
+		{
+			// cant determine if at an angle
+			return false
+		}
+
+		// failed to find
+		return false
+	}
+
 	operator fun times(other: Int) = obtain().set(x * other, y * other)
 
 	operator fun times(other: Matrix3): Point
@@ -132,7 +185,7 @@ open class Point : Pool.Poolable
 		return other.x == x && other.y == y
 	}
 
-	operator fun compareTo(other: Point): Int
+	override operator fun compareTo(other: Point): Int
 	{
 		val compX = x.compareTo(other.x)
 		if (compX != 0) return compX
@@ -140,6 +193,8 @@ open class Point : Pool.Poolable
 		val compY = y.compareTo(other.y)
 		return compY
 	}
+
+	operator fun rangeTo(other: Point): PointRange = PointRange(this, other)
 
 	override fun toString(): String
 	{
@@ -155,4 +210,53 @@ open class Point : Pool.Poolable
     {
 
     }
+}
+
+class PointRange(override val endInclusive: Point, override val start: Point) : ClosedRange<Point>, PointProgression(start, endInclusive)
+{
+	override fun contains(value: Point): Boolean
+	{
+		return value.liesBetween(start, endInclusive)
+	}
+
+	override fun isEmpty(): Boolean = start == endInclusive
+}
+
+open class PointProgression
+	internal constructor(start: Point, end: Point): Iterable<Point>
+{
+	val first: Point = start
+	val last: Point = end
+
+	override fun iterator(): Iterator<Point> = PointIterator(first, last)
+}
+
+class PointIterator(val start: Point, val end: Point): Iterator<Point>
+{
+	var xstep: Float = 0f
+	var ystep: Float = 0f
+	var steps: Int = 0
+	var i: Int = 0
+
+	init
+	{
+		val xdiff = end.x - start.x
+		val ydiff = end.y - start.y
+
+		steps = Math.max(Math.abs(xdiff), Math.abs(ydiff))
+
+		xstep = xdiff.toFloat() / steps.toFloat()
+		ystep = ydiff.toFloat() / steps.toFloat()
+	}
+
+	override fun hasNext(): Boolean = i <= steps
+
+	override fun next(): Point
+	{
+		val x = start.x + Math.round(xstep * i.toFloat()).toInt()
+		val y = start.y + Math.round(ystep * i.toFloat()).toInt()
+		i++
+
+		return Point.obtain().set(x, y)
+	}
 }

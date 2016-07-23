@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.IntIntMap
+import com.badlogic.gdx.utils.ObjectSet
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Direction
 import com.lyeeedar.Global
@@ -40,6 +41,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 	// ----------------------------------------------------------------------
 	var selected: Point = Point.MINUS_ONE
 	var toSwap: Pair<Point, Point>? = null
+	var lastSwapped: Point = Point.MINUS_ONE
 
 	val animSpeed = 0.15f
 
@@ -585,6 +587,8 @@ class Grid(val width: Int, val height: Int, val level: Level)
 		}
 		else
 		{
+			lastSwapped = newTile
+
 			oldOrb.sprite.spriteAnimation = MoveAnimation.obtain().set(animSpeed, UnsmoothedPath(newTile.getPosDiff(oldTile)), Interpolation.linear)
 			newOrb.sprite.spriteAnimation = MoveAnimation.obtain().set(animSpeed, UnsmoothedPath(oldTile.getPosDiff(newTile)), Interpolation.linear)
 			return true
@@ -652,6 +656,8 @@ class Grid(val width: Int, val height: Int, val level: Level)
 
 		val match3 = findMatches(3, true)
 		clearMatches(match3)
+
+		lastSwapped = Point.MINUS_ONE
 
 		return match5.size == 0 && match4.size == 0 && match3.size == 0
 	}
@@ -1060,48 +1066,54 @@ class Grid(val width: Int, val height: Int, val level: Level)
 	{
 		for (match in matches)
 		{
-			val xdiff = match.second.x - match.first.x
-			val ydiff = match.second.y - match.first.y
-
-			val diff = Math.max(xdiff, ydiff)
-
-			val xstep = xdiff.toFloat() / diff.toFloat()
-			val ystep = ydiff.toFloat() / diff.toFloat()
-
 			val dir = Direction.getDirection(match.first, match.second)
 			val desc = tile(match.first)?.orb?.desc
 
-			val middle = tile(match.first.x + xdiff / 2, match.first.y + ydiff / 2)
+			val diff = match.first.dist(match.second)
+			val points = match.first.rangeTo(match.second)
+
+			val middle: Tile
+
+			if (lastSwapped != Point.MINUS_ONE && lastSwapped.liesBetween(match.first, match.second))
+			{
+				middle = grid[lastSwapped]
+			}
+			else
+			{
+				val p = points.asSequence().filter { tile(it)?.orb?.explosion == null }.random()
+				if (p != null) middle = tile(p)!!
+				else
+				{
+					middle = tile(points.asSequence().random()!!)!!
+				}
+			}
 
 			val coreTiles = Array<Tile>()
 
-			for (i in 0..diff)
+			for (point in points)
 			{
-				val x = match.first.x + (xstep * i).toInt()
-				val y = match.first.y + (ystep * i).toInt()
+				pop(point.x, point.y, 0f)
 
-				pop(x, y, 0f)
-
-				coreTiles.add(grid[x, y])
+				coreTiles.add(grid[point])
 
 				if (diff > 2 && desc != null)
 				{
 					val sprite = desc.sprite.copy()
 					sprite.drawActualSize = false
-					sprite.spriteAnimation = MoveAnimation.obtain().set(animSpeed, UnsmoothedPath(middle!!.getPosDiff(x, y)), Interpolation.linear)
+					sprite.spriteAnimation = MoveAnimation.obtain().set(animSpeed, UnsmoothedPath(middle.getPosDiff(point)), Interpolation.linear)
 
 					middle.effects.add(sprite)
 				}
 			}
 
 			// build border list
-			val borderTiles = Array<Tile>()
+			val borderTiles = ObjectSet<Tile>()
 			for (tile in coreTiles)
 			{
-				for (dir in Direction.CardinalValues)
+				for (d in Direction.CardinalValues)
 				{
-					val t = tile(tile.x + dir.x, tile.y + dir.y) ?: continue
-					if (!coreTiles.contains(t, true) && !borderTiles.contains(t, true))
+					val t = tile(tile.x + d.x, tile.y + d.y) ?: continue
+					if (!coreTiles.contains(t, true))
 					{
 						borderTiles.add(t)
 					}
@@ -1130,7 +1142,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 			// if 4 or 5 match then spawn new orb
 			if (diff > 2 && desc != null)
 			{
-				if (middle?.orb?.explosion == null)
+				if (middle.orb?.explosion == null)
 				{
 					val special = getExplosion(diff+1, dir)
 
@@ -1139,13 +1151,13 @@ class Grid(val width: Int, val height: Int, val level: Level)
 						val orb = Orb(desc)
 						orb.explosion = special
 
-						if (middle != null && middle.orb != null)
+						if (middle.orb != null)
 						{
 							middle.orb!!.x = middle.x
 							middle.orb!!.y = middle.y
 							onPop(middle.orb!!)
 						}
-						middle?.orb = orb
+						middle.orb = orb
 					}
 				}
 			}
