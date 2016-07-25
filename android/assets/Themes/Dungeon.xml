@@ -40,4 +40,9 @@
             </Overhang>
         </TilingSprite>
     </Pit>
+
+    <Map>
+        <Room><DirectedSprite>Oryx/Custom/dungeonmap/stone_room</DirectedSprite></Room>
+        <Corridor><DirectedSprite>Oryx/Custom/dungeonmap/stone_corridor</DirectedSprite></Corridor>
+    </Map>
 </Theme>

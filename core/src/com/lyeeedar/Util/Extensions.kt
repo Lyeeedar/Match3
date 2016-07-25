@@ -3,6 +3,7 @@ package com.lyeeedar.Util
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.utils.IntIntMap
 import com.badlogic.gdx.utils.IntMap
+import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.XmlReader
 import java.util.*
 
@@ -10,8 +11,8 @@ import java.util.*
  * Created by Philip on 04-Jul-16.
  */
 
-fun <T> com.badlogic.gdx.utils.Array<T>.ran(ran: Random): T = this[ran.nextInt(this.size)]
-fun <T> com.badlogic.gdx.utils.Array<T>.removeRan(ran: Random): T
+fun <T> com.badlogic.gdx.utils.Array<T>.random(ran: Random): T = this[ran.nextInt(this.size)]
+fun <T> com.badlogic.gdx.utils.Array<T>.removeRandom(ran: Random): T
 {
 	val index = ran.nextInt(this.size)
 	val item = this[index]
@@ -28,7 +29,9 @@ fun String.neaten() = this.substring(0, 1).toUpperCase() + this.substring(1).toL
 
 operator fun IntIntMap.get(key: Int) = this.get(key, 0)
 operator fun IntIntMap.set(key: Int, value: Int) = this.put(key, value)
+operator fun <K, V> ObjectMap<K, V>.set(key: K, value: V) = this.put(key, value)
 
 fun XmlReader.Element.ranChild() = this.getChild(MathUtils.random(this.childCount-1))!!
 
 fun <T> Sequence<T>.random() = if (this.count() > 0) this.elementAt(MathUtils.random(this.count()-1)) else null
+fun <T> Sequence<T>.random(ran: Random) = if (this.count() > 0) this.elementAt(ran.nextInt(this.count())) else null

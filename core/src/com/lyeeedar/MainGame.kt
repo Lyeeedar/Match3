@@ -6,6 +6,7 @@ import com.badlogic.gdx.files.FileHandle
 import com.lyeeedar.Screens.AbstractScreen
 import com.lyeeedar.Screens.GridScreen
 import com.lyeeedar.Screens.LevelSelectScreen
+import com.lyeeedar.Screens.MapScreen
 
 import javax.swing.*
 import java.io.PrintWriter
@@ -19,6 +20,7 @@ class MainGame : Game()
 	{
 		GRID,
 		LEVELSELECT,
+		MAP,
 		TOWN,
 		SKILLSHOP
 	}
@@ -52,8 +54,9 @@ class MainGame : Game()
 
 		screens.put(ScreenEnum.GRID, GridScreen())
 		screens.put(ScreenEnum.LEVELSELECT, LevelSelectScreen())
+		screens.put(ScreenEnum.MAP, MapScreen())
 
-		switchScreen(ScreenEnum.LEVELSELECT)
+		switchScreen(ScreenEnum.MAP)
 	}
 
 	fun switchScreen(screen: AbstractScreen)

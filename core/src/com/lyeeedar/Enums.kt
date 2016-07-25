@@ -56,6 +56,11 @@ enum class Direction private constructor(val x: Int, val y: Int, val identifier:
 	var isCardinal = false
 		private set
 
+	val cardinalClockwise: Direction
+			get() = clockwise.clockwise
+	val cardinalAnticlockwise: Direction
+			get() = anticlockwise.anticlockwise
+
 	init
 	{
 		// basis vector = 0, 1
