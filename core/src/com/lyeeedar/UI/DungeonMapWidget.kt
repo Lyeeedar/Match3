@@ -3,7 +3,9 @@ package com.lyeeedar.UI
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
+import com.badlogic.gdx.scenes.scene2d.InputEvent
 import com.badlogic.gdx.scenes.scene2d.ui.Widget
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener
 import com.lyeeedar.Direction
 import com.lyeeedar.Global
 import com.lyeeedar.Map.DungeonMap
@@ -23,6 +25,25 @@ class DungeonMapWidget(val map: DungeonMap, val player: Player): Widget()
 	init
 	{
 		instance = this
+
+		addListener( object : ClickListener()
+		{
+			override fun clicked(event: InputEvent?, x: Float, y: Float)
+			{
+				val offsetx = (width / 2) - map.playerPos.x * Global.tileSize
+				val offsety = (height / 2) - map.playerPos.y * Global.tileSize
+
+				val lx = x - offsetx
+				val ly = y - offsety
+
+				val ix = (lx / Global.tileSize).toInt()
+				val iy = (ly / Global.tileSize).toInt()
+
+				System.out.println("x:$x, ox:$offsetx, lx:$lx, ix:$ix")
+
+				map.playerPos.set(ix, iy)
+			}
+		} )
 	}
 
 	val renderer = SpriteRenderer()

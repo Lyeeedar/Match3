@@ -40,11 +40,6 @@ class HubGenerator
 	fun expand(map: DungeonMap, point: Point, dir: Direction, corridorCount: Int = 0, depth: Int = 0): Boolean
 	{
 		if (!map.isFree(point)) return false
-		val tempRoom = DungeonMapEntry()
-		tempRoom.depth = depth
-		tempRoom.connections[dir.opposite] = map.map[point + dir.opposite]
-		map.map[point] = tempRoom
-		System.out.println("adding room at $point")
 
 		val freeDirections = Array<Direction>()
 		if (map.isFree(point + dir)) { freeDirections.add(dir); freeDirections.add(dir); freeDirections.add(dir) } // weight going forward more
@@ -67,6 +62,11 @@ class HubGenerator
 		{
 			makeRoom = false
 		}
+
+		val tempRoom = DungeonMapEntry()
+		tempRoom.depth = depth
+		tempRoom.connections[dir.opposite] = map.map[point + dir.opposite]
+		map.map[point] = tempRoom
 
 		if (!makeRoom)
 		{
@@ -104,7 +104,7 @@ class HubGenerator
 					{
 						val newDir = freeDirections.removeRandom(ran)
 
-						val placed = expand(map, point + newDir, newDir, corridorCount+1, depth+1)
+						val placed = expand(map, point + newDir, newDir, 0, depth+1)
 						if (placed)
 						{
 							tempRoom.connections[newDir] = map.map[point + newDir]
