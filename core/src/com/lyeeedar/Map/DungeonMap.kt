@@ -19,6 +19,7 @@ class DungeonMap
 	val map: ObjectMap<Point, DungeonMapEntry> = ObjectMap()
 
 	fun isFree(point: Point): Boolean = !map.containsKey(point)
+	fun get(point: Point): DungeonMapEntry? = map[point]
 }
 
 class DungeonMapEntry
@@ -30,6 +31,7 @@ class DungeonMapEntry
 		BAD
 	}
 
+	var seen = false
 	var isCompleted = false
 	var isRoom: Boolean = false
 	var depth = 0

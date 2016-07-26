@@ -606,6 +606,13 @@ Oryx/Custom/items/orb_vert
   orig: 48, 48
   offset: 0, 0
   index: -1
+Oryx/Custom/ui/arrow
+  rotate: false
+  xy: 1790, 178
+  size: 24, 24
+  orig: 24, 24
+  offset: 0, 0
+  index: -1
 Oryx/uf_split/uf_heroes/rat_giant_1
   rotate: false
   xy: 854, 206
@@ -748,7 +755,7 @@ glow
   index: -1
 white
   rotate: false
-  xy: 1790, 186
+  xy: 1818, 186
   size: 16, 16
   orig: 16, 16
   offset: 0, 0

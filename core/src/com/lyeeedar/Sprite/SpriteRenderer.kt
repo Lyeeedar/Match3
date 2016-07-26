@@ -65,9 +65,9 @@ class SpriteRenderer
 	}
 
 	// ----------------------------------------------------------------------
-	fun queueSprite(sprite: Sprite, ix: Float, iy: Float, offsetx: Float, offsety: Float, slot: SpaceSlot, index: Int, colour: Color = Color.WHITE)
+	fun queueSprite(sprite: Sprite, ix: Float, iy: Float, offsetx: Float, offsety: Float, slot: SpaceSlot, index: Int, colour: Color = Color.WHITE, update: Boolean = true)
 	{
-		sprite.update(Gdx.app.graphics.deltaTime)
+		if (update) sprite.update(Gdx.app.graphics.deltaTime)
 
 		var x = ix * Global.tileSize + offsetx
 		var y = iy * Global.tileSize + offsety

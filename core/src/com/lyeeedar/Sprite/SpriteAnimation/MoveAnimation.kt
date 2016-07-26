@@ -7,7 +7,9 @@ import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.Pool
 import com.badlogic.gdx.utils.Pools
 import com.badlogic.gdx.utils.XmlReader.Element
+import com.lyeeedar.Global
 import com.lyeeedar.Util.Point
+import com.lyeeedar.Util.UnsmoothedPath
 
 class MoveAnimation : AbstractSpriteAnimation
 {
@@ -61,11 +63,36 @@ class MoveAnimation : AbstractSpriteAnimation
 		return time > duration
 	}
 
-	fun set(duration: Float, path: Path<Vector2>)
+	fun set(duration: Float, path: Path<Vector2>): MoveAnimation
 	{
 		this.duration = duration
 		this.time = 0f
 		this.path = path
+		this.eqn = Interpolation.linear
+
+		time = 0f
+
+		update(0f)
+
+		return this
+	}
+
+	fun set(p1: Point, p2: Point, duration: Float = 0.5f, eqn: Interpolation = Interpolation.linear): MoveAnimation
+	{
+		val v1 = Vector2((p2.x - p1.x).toFloat(), (p2.y - p1.y).toFloat())
+		v1.scl(Global.tileSize)
+
+		path = UnsmoothedPath(arrayOf(v1, Vector2()))
+
+		this.duration = duration
+		this.time = 0f
+		this.eqn = eqn
+
+		time = 0f
+
+		update(0f)
+
+		return this
 	}
 
 	override fun parse(xml: Element)

@@ -5,6 +5,7 @@ import com.lyeeedar.Global
 import com.lyeeedar.Map.Generators.HubGenerator
 import com.lyeeedar.Player.Player
 import com.lyeeedar.UI.DungeonMapWidget
+import com.lyeeedar.Util.AssetManager
 
 /**
  * Created by Philip on 25-Jul-16.
@@ -20,6 +21,7 @@ class MapScreen(): AbstractScreen()
 		val map = generator.generate()
 		map.theme = LevelTheme.load("Dungeon")
 		val player = Player()
+		player.portrait = AssetManager.loadSprite("Oryx/Custom/heroes/Merc")
 
 		val widget = DungeonMapWidget(map, player)
 
