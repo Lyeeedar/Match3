@@ -11,6 +11,7 @@ import com.lyeeedar.Direction
 import com.lyeeedar.Global
 import com.lyeeedar.SpaceSlot
 import com.lyeeedar.Util.EnumBitflag
+import java.util.*
 
 /**
  * Created by Philip on 04-Jul-16.
@@ -18,6 +19,7 @@ import com.lyeeedar.Util.EnumBitflag
 
 class SpriteRenderer
 {
+	var batchID: Int = 0
 
 	val heap: BinaryHeap<RenderSprite> = BinaryHeap<RenderSprite>()
 
@@ -62,12 +64,18 @@ class SpriteRenderer
 
 			rs.free()
 		}
+
+		batchID = random.nextInt()
 	}
 
 	// ----------------------------------------------------------------------
 	fun queueSprite(sprite: Sprite, ix: Float, iy: Float, offsetx: Float, offsety: Float, slot: SpaceSlot, index: Int, colour: Color = Color.WHITE, update: Boolean = true)
 	{
-		if (update) sprite.update(Gdx.app.graphics.deltaTime)
+		if (update)
+		{
+			if (sprite.batchID != batchID) sprite.update(Gdx.app.graphics.deltaTime)
+		}
+		sprite.batchID = batchID
 
 		var x = ix * Global.tileSize + offsetx
 		var y = iy * Global.tileSize + offsety
@@ -86,6 +94,11 @@ class SpriteRenderer
 		val rs = RenderSprite.obtain().set( sprite, x, y, offsetx, offsety, slot, index, colour )
 
 		heap.add( rs, rs.comparisonVal )
+	}
+
+	companion object
+	{
+		val random = Random()
 	}
 }
 

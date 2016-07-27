@@ -142,6 +142,18 @@ class AtlasCreator
 
 			processSprite(path)
 		}
+
+		val tilingRegex = Regex("TilingSprite\\(\".*?\", \".*?\", \".*?\"")
+		val occurances3 = tilingRegex.findAll(contents)
+
+		for (occurance in occurances3)
+		{
+			val split = occurance.value.split("\", \"")
+			val baseName = split[1]
+			val maskName = split[2].subSequence(0, split[2].length-1).toString()
+
+			processTilingSprite(baseName, maskName, false)
+		}
 	}
 
 	private fun parseXml(file: String)

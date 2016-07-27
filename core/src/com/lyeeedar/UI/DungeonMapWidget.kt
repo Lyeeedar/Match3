@@ -1,6 +1,7 @@
 package com.lyeeedar.UI
 
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.math.Vector2
@@ -15,6 +16,7 @@ import com.lyeeedar.SpaceSlot
 import com.lyeeedar.Sprite.Sprite
 import com.lyeeedar.Sprite.SpriteAnimation.MoveAnimation
 import com.lyeeedar.Sprite.SpriteRenderer
+import com.lyeeedar.Sprite.TilingSprite
 import com.lyeeedar.Util.AssetManager
 import com.lyeeedar.Util.EnumBitflag
 import com.lyeeedar.Util.Point
@@ -29,10 +31,14 @@ class DungeonMapWidget(val map: DungeonMap, val player: Player): Widget()
 	var moveFrom: Point? = null
 	var moveTo: Point? = null
 
-	var upArrow = AssetManager.loadSprite("Oryx/Custom/ui/arrow")
-	var downArrow = AssetManager.loadSprite("Oryx/Custom/ui/arrow")
-	var leftArrow = AssetManager.loadSprite("Oryx/Custom/ui/arrow")
-	var rightArrow = AssetManager.loadSprite("Oryx/Custom/ui/arrow")
+	val upArrow = AssetManager.loadSprite("Oryx/Custom/ui/arrow")
+	val downArrow = AssetManager.loadSprite("Oryx/Custom/ui/arrow")
+	val leftArrow = AssetManager.loadSprite("Oryx/Custom/ui/arrow")
+	val rightArrow = AssetManager.loadSprite("Oryx/Custom/ui/arrow")
+
+	val fog = TilingSprite("fog", "Masks/fog", "Masks/fog")
+
+	val tempPoint = Point()
 
 	lateinit var playerSprite: Sprite
 
@@ -125,11 +131,13 @@ class DungeonMapWidget(val map: DungeonMap, val player: Player): Widget()
 
 		playerSprite.update(delta)
 
+		map.get(map.playerPos)!!.seen = true
+
 		if (moveTo != null && playerSprite.spriteAnimation == null)
 		{
 			map.playerPos.set(moveTo!!)
 
-			playerSprite.spriteAnimation = MoveAnimation.obtain().set(moveTo!!, moveFrom!!)
+			playerSprite.spriteAnimation = MoveAnimation.obtain().set(moveTo!!, moveFrom!!, 0.3f)
 
 			val room = map.get(moveTo!!) ?: throw RuntimeException("Tried to move to invalid location")
 
@@ -166,8 +174,8 @@ class DungeonMapWidget(val map: DungeonMap, val player: Player): Widget()
 
 		super.draw(batch, parentAlpha)
 
-		var offsetx = (x + width / 2) - map.playerPos.x * Global.tileSize
-		var offsety = (y + height / 2) - map.playerPos.y * Global.tileSize
+		var offsetx = (x + width / 2) - map.playerPos.x * Global.tileSize - Global.tileSize*0.5f
+		var offsety = (y + height / 2) - map.playerPos.y * Global.tileSize - Global.tileSize*0.5f
 
 		if (playerSprite.spriteAnimation != null)
 		{
@@ -176,7 +184,7 @@ class DungeonMapWidget(val map: DungeonMap, val player: Player): Widget()
 			offsety -= offset[1]
 		}
 
-		detailRenderer.queueSprite(playerSprite, map.playerPos.x.toFloat(), map.playerPos.y.toFloat(), offsetx, offsety, SpaceSlot.TILE, 1, update = false)
+		detailRenderer.queueSprite(playerSprite, map.playerPos.x.toFloat(), map.playerPos.y.toFloat() + 0.2f, offsetx, offsety, SpaceSlot.TILE, 1, update = false)
 
 		for (entry in map.map)
 		{
@@ -205,30 +213,66 @@ class DungeonMapWidget(val map: DungeonMap, val player: Player): Widget()
 				baseRenderer.queueSprite(sprite, entry.key.x.toFloat(), entry.key.y.toFloat(), offsetx, offsety, SpaceSlot.TILE, 0)
 			}
 
+			if (entry.value.isRoom)
+			{
+				if (entry.value.isCompleted)
+				{
+					if (entry.value.completesprite != null) baseRenderer.queueSprite(entry.value.completesprite!!, entry.key.x.toFloat(), entry.key.y.toFloat(), offsetx, offsety, SpaceSlot.TILE, 1)
+				}
+				else
+				{
+					if (entry.value.uncompletesprite != null) baseRenderer.queueSprite(entry.value.uncompletesprite!!, entry.key.x.toFloat(), entry.key.y.toFloat(), offsetx, offsety, SpaceSlot.TILE, 1)
+				}
+			}
+
+			if (!entry.value.seen)
+			{
+				buildTilingBitflag(bitflag, entry.key)
+				val fsprite = fog.getSprite(bitflag)
+				baseRenderer.queueSprite(fsprite, entry.key.x.toFloat(), entry.key.y.toFloat(), offsetx, offsety, SpaceSlot.EFFECT, 0, colour = Color.BLACK)
+			}
+
 			if (entry.key == map.playerPos && moveTo == null && playerSprite.spriteAnimation == null)
 			{
 				// add arrows
 				if (entry.value.connections.containsKey(Direction.NORTH))
 				{
-					baseRenderer.queueSprite(upArrow, entry.key.x.toFloat() + Direction.NORTH.x, entry.key.y.toFloat() + Direction.NORTH.y, offsetx, offsety, SpaceSlot.TILE, 1)
+					baseRenderer.queueSprite(upArrow, entry.key.x.toFloat() + Direction.NORTH.x, entry.key.y.toFloat() + Direction.NORTH.y, offsetx, offsety, SpaceSlot.EFFECT, 1)
 				}
 				if (entry.value.connections.containsKey(Direction.SOUTH))
 				{
-					baseRenderer.queueSprite(downArrow, entry.key.x.toFloat() + Direction.SOUTH.x, entry.key.y.toFloat() + Direction.SOUTH.y, offsetx, offsety, SpaceSlot.TILE, 1)
+					baseRenderer.queueSprite(downArrow, entry.key.x.toFloat() + Direction.SOUTH.x, entry.key.y.toFloat() + Direction.SOUTH.y, offsetx, offsety, SpaceSlot.EFFECT, 1)
 				}
 				if (entry.value.connections.containsKey(Direction.WEST))
 				{
-					baseRenderer.queueSprite(leftArrow, entry.key.x.toFloat() + Direction.WEST.x, entry.key.y.toFloat() + Direction.WEST.y, offsetx, offsety, SpaceSlot.TILE, 1)
+					baseRenderer.queueSprite(leftArrow, entry.key.x.toFloat() + Direction.WEST.x, entry.key.y.toFloat() + Direction.WEST.y, offsetx, offsety, SpaceSlot.EFFECT, 1)
 				}
 				if (entry.value.connections.containsKey(Direction.EAST))
 				{
-					baseRenderer.queueSprite(rightArrow, entry.key.x.toFloat() + Direction.EAST.x, entry.key.y.toFloat() + Direction.EAST.y, offsetx, offsety, SpaceSlot.TILE, 1)
+					baseRenderer.queueSprite(rightArrow, entry.key.x.toFloat() + Direction.EAST.x, entry.key.y.toFloat() + Direction.EAST.y, offsetx, offsety, SpaceSlot.EFFECT, 1)
 				}
 			}
 		}
 
 		baseRenderer.flush(Gdx.app.graphics.deltaTime, batch as SpriteBatch)
 		detailRenderer.flush(Gdx.app.graphics.deltaTime, batch as SpriteBatch)
+	}
+
+	// ----------------------------------------------------------------------
+	fun buildTilingBitflag(bitflag: EnumBitflag<Direction>, p: Point)
+	{
+		// Build bitflag of surrounding tiles
+		bitflag.clear()
+		for (dir in Direction.Values)
+		{
+			val point = tempPoint.set(p.x + dir.x, p.y + dir.y)
+			val room = map.get(point)
+
+			if (room != null && room.seen)
+			{
+				bitflag.setBit(dir)
+			}
+		}
 	}
 
 	companion object

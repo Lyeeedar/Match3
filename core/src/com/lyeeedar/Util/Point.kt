@@ -3,6 +3,7 @@ package com.lyeeedar.Util
 import com.badlogic.gdx.math.Matrix3
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.math.Vector3
+import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.Pool
 import com.badlogic.gdx.utils.Pools
 import com.lyeeedar.Direction
@@ -48,8 +49,28 @@ open class Point : Pool.Poolable, Comparable<Point>
 	}
     constructor( other: Point ) : this(other.x, other.y)
 
+	lateinit var obtainPath: String
+	protected fun finalize()
+	{
+		if (obtained)
+		{
+			if (leakMap.containsKey(obtainPath))
+			{
+				var oldVal = leakMap[obtainPath]
+				oldVal++
+				leakMap[obtainPath] = oldVal
+			}
+			else
+			{
+				leakMap[obtainPath] = 1
+			}
+		}
+	}
+
     companion object
     {
+		private val leakMap = ObjectMap<String, Long>()
+
 		@JvmField val ZERO = Point(0, 0, true)
 		@JvmField val ONE = Point(1, 1, true)
 		@JvmField val MINUS_ONE = Point(-1, -1, true)
@@ -65,6 +86,7 @@ open class Point : Pool.Poolable, Comparable<Point>
 
 			if (point.obtained) throw RuntimeException()
 
+			point.obtainPath = Thread.currentThread().stackTrace.joinToString(separator = "\n") { it.toString() }
 			point.obtained = true
 			return point
 		}
@@ -83,9 +105,9 @@ open class Point : Pool.Poolable, Comparable<Point>
 
     fun set(other: Point) = set(other.x, other.y)
 
-    fun copy() = Point.obtain().set(this);
+    fun copy() = Point.obtain().set(this)
 
-    fun free() { if (obtained) { Point.pool.free(this); obtained = false } }
+    fun free() { if (obtained) { Point.pool.free(this); obtained = false; obtainPath = "" } }
 
 	fun taxiDist(other: Point) = Math.max( Math.abs(other.x - x), Math.abs(other.y - y) )
 	fun dist(other: Point) = Math.abs(other.x - x) + Math.abs(other.y - y)

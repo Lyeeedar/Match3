@@ -306,7 +306,7 @@ class AssetManager
 				}
 			}
 
-			val sprite = Sprite(xml.get("Name", null),
+			val sprite = Sprite(xml.get("Name", ""),
 					updateTime,
 					textures,
 					colour,

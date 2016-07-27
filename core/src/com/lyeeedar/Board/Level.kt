@@ -22,6 +22,7 @@ class Level
 {
 	enum class LevelType
 	{
+		NONE,
 		TRAP,
 		TREASURE,
 		ENCOUNTER

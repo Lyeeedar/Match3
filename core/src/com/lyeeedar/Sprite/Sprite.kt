@@ -33,6 +33,8 @@ class Sprite(var fileName: String, var animationDelay: Float, var textures: Arra
 		NONE, TEXTURE, SHRINK, SINE
 	}
 
+	var batchID: Int = 0
+
 	var colour = Color(1f,1f,1f,1f)
 	var colourAnimation: ColourAnimation? = null
 
