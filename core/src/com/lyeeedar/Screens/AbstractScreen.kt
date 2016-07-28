@@ -13,6 +13,7 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport
 import com.badlogic.gdx.utils.viewport.ScalingViewport
 import com.badlogic.gdx.utils.viewport.ScreenViewport
 import com.lyeeedar.Global
+import com.lyeeedar.Util.Future
 import com.lyeeedar.Util.Point
 
 /**
@@ -59,6 +60,7 @@ abstract class AbstractScreen() : Screen, InputProcessor
     override fun render(delta: Float)
 	{
         stage.act()
+		Future.update(delta)
 
         Gdx.gl.glClearColor(0f, 0f, 0f, 0f)
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)

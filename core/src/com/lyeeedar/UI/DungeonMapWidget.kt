@@ -19,10 +19,7 @@ import com.lyeeedar.Sprite.Sprite
 import com.lyeeedar.Sprite.SpriteAnimation.MoveAnimation
 import com.lyeeedar.Sprite.SpriteRenderer
 import com.lyeeedar.Sprite.TilingSprite
-import com.lyeeedar.Util.AssetManager
-import com.lyeeedar.Util.EnumBitflag
-import com.lyeeedar.Util.Point
-import com.lyeeedar.Util.UnsmoothedPath
+import com.lyeeedar.Util.*
 import sun.applet.Main
 
 /**
@@ -127,12 +124,15 @@ class DungeonMapWidget(val map: DungeonMap, val player: Player): Widget()
 	val baseRenderer = SpriteRenderer()
 	val detailRenderer = SpriteRenderer()
 	val bitflag = EnumBitflag<Direction>()
+	var waitingOnTransition: Boolean = false
 
 	override fun act(delta: Float)
 	{
 		super.act(delta)
 
 		playerSprite.update(delta)
+
+		if (waitingOnTransition) return
 
 		val playerRoom = map.get(map.playerPos)!!
 		playerRoom.seen = true
@@ -142,10 +142,17 @@ class DungeonMapWidget(val map: DungeonMap, val player: Player): Widget()
 			moveTo = null
 			moveFrom = null
 
-			playerRoom.level!!.create(map.theme, player)
+			waitingOnTransition = true
+			Future.call(
+					{
+						FullscreenMessage(playerRoom.level!!.entryText, "",
+								{
+									playerRoom.level!!.create(map.theme, player)
+									waitingOnTransition = false; Global.game.switchScreen(MainGame.ScreenEnum.GRID)
+									GridScreen.instance.updateLevel(playerRoom.level!!, player)
+								}).show()
+					}, 0.5f)
 
-			GridScreen.instance.updateLevel(playerRoom.level!!, player)
-			Global.game.switchScreen(MainGame.ScreenEnum.GRID)
 		}
 		else if (moveTo != null && playerSprite.spriteAnimation == null)
 		{
@@ -246,7 +253,7 @@ class DungeonMapWidget(val map: DungeonMap, val player: Player): Widget()
 				baseRenderer.queueSprite(fsprite, entry.key.x.toFloat(), entry.key.y.toFloat(), offsetx, offsety, SpaceSlot.EFFECT, 0, colour = Color.BLACK)
 			}
 
-			if (entry.key == map.playerPos && moveTo == null && playerSprite.spriteAnimation == null)
+			if (entry.key == map.playerPos && moveTo == null && playerSprite.spriteAnimation == null && !waitingOnTransition)
 			{
 				// add arrows
 				if (entry.value.connections.containsKey(Direction.NORTH))

@@ -15,8 +15,6 @@ class MapScreen(): AbstractScreen()
 {
 	override fun create()
 	{
-		Global.stage = stage
-
 		val generator = HubGenerator()
 		val map = generator.generate()
 		map.theme = LevelTheme.load("Dungeon")

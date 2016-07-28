@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.ui.*
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable
+import com.lyeeedar.Screens.AbstractScreen
 import com.lyeeedar.UI.Seperator
 import com.lyeeedar.UI.TabPanel
 import com.lyeeedar.UI.Tooltip
@@ -29,7 +30,8 @@ class Global
 		lateinit var game: MainGame
 		lateinit var applicationChanger: AbstractApplicationChanger
 
-		lateinit var stage: Stage
+		val stage: Stage
+			get() = (game.screen as AbstractScreen).stage
 
 		fun setup()
 		{

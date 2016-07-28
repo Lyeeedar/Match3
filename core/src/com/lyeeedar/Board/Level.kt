@@ -15,10 +15,7 @@ import com.lyeeedar.Sprite.Sprite
 import com.lyeeedar.Sprite.SpriteWrapper
 import com.lyeeedar.UI.DungeonMapWidget
 import com.lyeeedar.UI.FullscreenMessage
-import com.lyeeedar.Util.Array2D
-import com.lyeeedar.Util.AssetManager
-import com.lyeeedar.Util.FastEnumMap
-import com.lyeeedar.Util.ranChild
+import com.lyeeedar.Util.*
 
 /**
  * Created by Philip on 13-Jul-16.
@@ -53,7 +50,7 @@ class Level(val loadPath: String)
 	lateinit var grid: Grid
 	lateinit var player: Player
 	var completed = false
-	var entered = false
+	var completeFun: () -> Unit = {}
 
 	fun create(theme: LevelTheme, player: Player)
 	{
@@ -220,30 +217,34 @@ class Level(val loadPath: String)
 
 	fun update(delta: Float)
 	{
-		if (!entered)
-		{
-			FullscreenMessage(entryText, "", { }).show()
-		}
-		entered = true
-
 		val done = grid.update(delta)
 
 		if (!completed && done)
 		{
 			if (victory.isCompleted())
 			{
-				FullscreenMessage(victoryText, "", { Global.game.switchScreen(MainGame.ScreenEnum.MAP); victoryActions.forEach { it.apply() } }).show()
+				completeFun = {FullscreenMessage(victoryText, "", { Global.game.switchScreen(MainGame.ScreenEnum.MAP); victoryActions.forEach { it.apply() } }).show()}
 				completed = true
 			}
 			else if (defeat.isCompleted())
 			{
-				FullscreenMessage(defeatText, "", { Global.game.switchScreen(MainGame.ScreenEnum.MAP); defeatActions.forEach { it.apply() } }).show()
+				completeFun = {FullscreenMessage(defeatText, "", { Global.game.switchScreen(MainGame.ScreenEnum.MAP); defeatActions.forEach { it.apply() } }).show()}
 				completed = true
 			}
+
+			if (completed)
+			{
+				Future.call(completeFun, 0.5f, this)
+			}
+		}
+
+		if (completed && !done)
+		{
+			Future.call(completeFun, 0.5f, this)
 		}
 	}
 
-	fun copy()= Level.load(loadPath)
+	fun copy() = Level.load(loadPath)
 
 	companion object
 	{
@@ -272,7 +273,7 @@ class Level(val loadPath: String)
 
 			level.defeatText = xml.get("DefeatText", "You defeated")
 			level.victoryText = xml.get("VictoryText", "You win!")
-			level.entryText = xml.get("EntryText", "")
+			level.entryText = xml.get("EntryText", "Oh noes! You've encountered a thing!")
 
 			val victoryActionsEl = xml.getChildByName("VictoryActions")
 			if (victoryActionsEl != null)
