@@ -1,4 +1,4 @@
-package com.lyeeedar.Board.VictoryCondition
+package com.lyeeedar.Board.CompletionCondition
 
 import com.badlogic.gdx.graphics.g2d.NinePatch
 import com.badlogic.gdx.math.Vector2
@@ -18,7 +18,7 @@ import com.lyeeedar.Util.AssetManager
  * Created by Philip on 22-Jul-16.
  */
 
-class VictoryConditionSink() : AbstractVictoryCondition()
+class CompletionConditionSink() : AbstractCompletionCondition()
 {
 	var count = 5
 
@@ -37,7 +37,7 @@ class VictoryConditionSink() : AbstractVictoryCondition()
 		}
 	}
 
-	override fun isVictory(): Boolean = count == 0
+	override fun isCompleted(): Boolean = count == 0
 
 	override fun parse(xml: XmlReader.Element)
 	{

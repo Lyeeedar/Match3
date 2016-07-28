@@ -1,4 +1,4 @@
-package com.lyeeedar.Board.DefeatCondition
+package com.lyeeedar.Board.CompletionCondition
 
 import com.badlogic.gdx.graphics.g2d.NinePatch
 import com.badlogic.gdx.scenes.scene2d.ui.Label
@@ -13,18 +13,17 @@ import com.lyeeedar.Util.AssetManager
  * Created by Philip on 13-Jul-16.
  */
 
-class DefeatConditionTime(): AbstractDefeatCondition()
+class CompletionConditionTurns(): AbstractCompletionCondition()
 {
-	var time: Float = 60f
+	var turnCount: Int = 30
 
 	lateinit var label: Label
 
-	override fun getTextDescription(): String = "Run out of time"
+	override fun getTextDescription(): String = "Run out of turns"
 
 	override fun createTable(skin: Skin): Table
 	{
-		val t = time.toInt()
-		label = Label("$t", skin)
+		label = Label("$turnCount", skin)
 
 		val table = Table()
 		table.defaults().pad(10f)
@@ -37,18 +36,17 @@ class DefeatConditionTime(): AbstractDefeatCondition()
 
 	override fun parse(xml: XmlReader.Element)
 	{
-		//time = xml.text.toFloat()
+		//turnCount = xml.text.toInt()
 	}
 
 	override fun attachHandlers(grid: Grid)
 	{
-		grid.onTime +=
+		grid.onTurn +=
 				{
-					time -= it
-					val t = time.toInt()
-					label.setText("$t")
+					turnCount--
+					label.setText("$turnCount")
 				}
 	}
 
-	override fun isDefeated(): Boolean = time <= 0
+	override fun isCompleted(): Boolean = turnCount <= 0
 }

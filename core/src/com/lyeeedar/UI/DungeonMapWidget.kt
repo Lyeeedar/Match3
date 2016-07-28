@@ -217,11 +217,11 @@ class DungeonMapWidget(val map: DungeonMap, val player: Player): Widget()
 			{
 				if (entry.value.isCompleted)
 				{
-					if (entry.value.completesprite != null) baseRenderer.queueSprite(entry.value.completesprite!!, entry.key.x.toFloat(), entry.key.y.toFloat(), offsetx, offsety, SpaceSlot.TILE, 1)
+					if (entry.value.completedSprite != null) baseRenderer.queueSprite(entry.value.completedSprite!!, entry.key.x.toFloat(), entry.key.y.toFloat(), offsetx, offsety, SpaceSlot.TILE, 1)
 				}
 				else
 				{
-					if (entry.value.uncompletesprite != null) baseRenderer.queueSprite(entry.value.uncompletesprite!!, entry.key.x.toFloat(), entry.key.y.toFloat(), offsetx, offsety, SpaceSlot.TILE, 1)
+					if (entry.value.uncompletedSprite != null) baseRenderer.queueSprite(entry.value.uncompletedSprite!!, entry.key.x.toFloat(), entry.key.y.toFloat(), offsetx, offsety, SpaceSlot.TILE, 1)
 				}
 			}
 

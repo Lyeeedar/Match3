@@ -30,18 +30,23 @@ class DungeonMapEntry
 	{
 		EMPTY,
 		GOOD,
-		BAD
+		BAD,
+		BOSS
 	}
 
-	var uncompletesprite: Sprite? = null
-	var completesprite: Sprite? = null
+	val connections: FastEnumMap<Direction, DungeonMapEntry> = FastEnumMap(Direction::class.java)
 
-	var seen = false
-	var isCompleted = false
 	var isRoom: Boolean = false
 	var depth = 0
 	var type: Type = Type.EMPTY
-	var levelType: Level.LevelType = Level.LevelType.NONE
+	var seen = false
+	var level: Level? = null
 
-	val connections: FastEnumMap<Direction, DungeonMapEntry> = FastEnumMap(Direction::class.java)
+
+	val isCompleted: Boolean
+		get() = level?.completed ?: true
+	val completedSprite: Sprite?
+		get() = level?.completedMapSprite
+	val uncompletedSprite: Sprite?
+		get() = level?.uncompletedMapSprite
 }

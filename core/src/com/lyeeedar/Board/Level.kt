@@ -3,15 +3,21 @@ package com.lyeeedar.Board
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.XmlReader
-import com.lyeeedar.Board.DefeatCondition.AbstractDefeatCondition
-import com.lyeeedar.Board.VictoryCondition.AbstractVictoryCondition
+import com.lyeeedar.Board.CompletionAction.AbstractCompletionAction
+import com.lyeeedar.Board.CompletionCondition.AbstractCompletionCondition
 import com.lyeeedar.Direction
 import com.lyeeedar.Global
 import com.lyeeedar.MainGame
+import com.lyeeedar.Map.DungeonMapEntry
 import com.lyeeedar.Player.Player
+import com.lyeeedar.Rarity
+import com.lyeeedar.Sprite.Sprite
 import com.lyeeedar.Sprite.SpriteWrapper
+import com.lyeeedar.UI.DungeonMapWidget
 import com.lyeeedar.UI.FullscreenMessage
 import com.lyeeedar.Util.Array2D
+import com.lyeeedar.Util.AssetManager
+import com.lyeeedar.Util.FastEnumMap
 import com.lyeeedar.Util.ranChild
 
 /**
@@ -20,26 +26,41 @@ import com.lyeeedar.Util.ranChild
 
 class Level
 {
-	enum class LevelType
-	{
-		NONE,
-		TRAP,
-		TREASURE,
-		ENCOUNTER
-	}
-
-	lateinit var grid: Grid
-	lateinit var defeat: AbstractDefeatCondition
-	lateinit var victory: AbstractVictoryCondition
-	lateinit var theme: LevelTheme
+	// Load Data
 	lateinit var charGrid: Array2D<Char>
-	lateinit var type: LevelType
+
+	lateinit var defeat: AbstractCompletionCondition
+	lateinit var victory: AbstractCompletionCondition
+
+	lateinit var defeatText: String
+	lateinit var victoryText: String
+	lateinit var entryText: String
+
+	val defeatActions: Array<AbstractCompletionAction> = Array()
+	val victoryActions: Array<AbstractCompletionAction> = Array()
+
+	lateinit var rarity: Rarity
+	lateinit var type: DungeonMapEntry.Type
+	var maxCountPerMap: Int = Int.MAX_VALUE
+	var minDepth: Int = 0
+	var maxDepth: Int = Int.MAX_VALUE
+
+	var uncompletedMapSprite: Sprite? = null
+	var completedMapSprite: Sprite? = null
+
+	lateinit var theme: LevelTheme
+
+	// Active state data
+	lateinit var grid: Grid
 	lateinit var player: Player
-
 	var completed = false
+	var entered = false
 
-	fun create()
+	fun create(theme: LevelTheme, player: Player)
 	{
+		this.theme = theme
+		this.player = player
+
 		grid = Grid(charGrid.xSize, charGrid.ySize, this)
 
 		var hasMonster = false
@@ -200,34 +221,24 @@ class Level
 
 	fun update(delta: Float)
 	{
+		if (!entered)
+		{
+			FullscreenMessage(entryText, "", { }).show()
+		}
+		entered = true
+
 		val done = grid.update(delta)
 
 		if (!completed && done)
 		{
-			if (victory.isVictory())
+			if (victory.isCompleted())
 			{
-				val message: String = when(type)
-				{
-					LevelType.TRAP -> "You narrowly escaped the deadly trap"
-					LevelType.TREASURE -> "You managed to acquire the treasure"
-					LevelType.ENCOUNTER -> "You defeated the monster"
-					else -> ""
-				}
-
-				FullscreenMessage(message, "", { Global.game.switchScreen(MainGame.ScreenEnum.LEVELSELECT) }).show()
+				FullscreenMessage(victoryText, "", { Global.game.switchScreen(MainGame.ScreenEnum.LEVELSELECT); victoryActions.forEach { it.apply() } }).show()
 				completed = true
 			}
-			else if (defeat.isDefeated())
+			else if (defeat.isCompleted())
 			{
-				val message: String = when(type)
-				{
-					LevelType.TRAP -> "You failed to escape the trap"
-					LevelType.TREASURE -> "The treasure slipped from your fingers"
-					LevelType.ENCOUNTER -> "You died"
-					else -> ""
-				}
-
-				FullscreenMessage(message, "", { Global.game.switchScreen(MainGame.ScreenEnum.LEVELSELECT) }).show()
+				FullscreenMessage(defeatText, "", { Global.game.switchScreen(MainGame.ScreenEnum.LEVELSELECT); defeatActions.forEach { it.apply() } }).show()
 				completed = true
 			}
 		}
@@ -235,24 +246,83 @@ class Level
 
 	companion object
 	{
-		fun load(path: String, theme: LevelTheme, type: LevelType, player: Player): Level
+		fun load(path: String): Level
 		{
 			val xml = XmlReader().parse(Gdx.files.internal("Levels/$path.xml"))
 
-			val rows = xml.getChildByName("Rows")
-			val width = rows.getChild(0).text.length
-			val height = rows.childCount
-
 			val level = Level()
 
+			var rows = xml.getChildByName("Rows")
+
+			if (rows == null)
+			{
+				// We are importing from another file
+				val gridPath = xml.getChildByName("Grid").text
+				val gridxml = XmlReader().parse(Gdx.files.internal(gridPath+".xml"))
+				rows = gridxml.getChildByName("Rows")
+			}
+
+			val width = rows.getChild(0).text.length
+			val height = rows.childCount
 			level.charGrid = Array2D<Char>(width, height) { x, y -> rows.getChild(y).text[x] }
-			level.defeat = AbstractDefeatCondition.load(xml.getChildByName("AllowedDefeats").ranChild())
-			level.victory = AbstractVictoryCondition.load(xml.getChildByName("AllowedVictories").ranChild())
-			level.theme = theme
-			level.type = type
-			level.player = player
+
+			level.defeat = AbstractCompletionCondition.load(xml.getChildByName("AllowedDefeats").ranChild())
+			level.victory = AbstractCompletionCondition.load(xml.getChildByName("AllowedVictories").ranChild())
+
+			level.defeatText = xml.get("DefeatText", "You defeated")
+			level.victoryText = xml.get("VictoryText", "You win!")
+			level.entryText = xml.get("EntryText", "")
+
+			val victoryActionsEl = xml.getChildByName("VictoryActions")
+			if (victoryActionsEl != null)
+			{
+				for (i in 0..victoryActionsEl.childCount-1)
+				{
+					val el = victoryActionsEl.getChild(i)
+					val action = AbstractCompletionAction.load(el)
+					level.victoryActions.add(action)
+				}
+			}
+
+			val defeatActionsEl = xml.getChildByName("DefeatActions")
+			if (defeatActionsEl != null)
+			{
+				for (i in 0..defeatActionsEl.childCount-1)
+				{
+					val el = defeatActionsEl.getChild(i)
+					val action = AbstractCompletionAction.load(el)
+					level.defeatActions.add(action)
+				}
+			}
+
+			level.rarity = Rarity.valueOf(xml.get("Rarity", "COMMON").toUpperCase())
+			level.type = DungeonMapEntry.Type.valueOf(xml.get("Type").toUpperCase())
+			level.maxCountPerMap = xml.getInt("MaxCountPerMap", level.maxCountPerMap)
+			level.minDepth = xml.getInt("MinDepth", level.minDepth)
+			level.maxDepth = xml.getInt("MaxDepth", level.maxDepth)
+
+			level.uncompletedMapSprite = AssetManager.tryLoadSprite(xml.getChildByName("UncompletedMapSprite"))
+			level.completedMapSprite = AssetManager.tryLoadSprite(xml.getChildByName("CompletedMapSprite"))
 
 			return level
+		}
+
+		fun loadAll(): FastEnumMap<DungeonMapEntry.Type, Array<Level>>
+		{
+			val levels = FastEnumMap<DungeonMapEntry.Type, Array<Level>>(DungeonMapEntry.Type::class.java)
+			for (type in DungeonMapEntry.Type.values()) levels[type] = Array()
+
+			val xml = XmlReader().parse(Gdx.files.internal("Levels/LevelList.xml"))
+			for (i in 0..xml.childCount-1)
+			{
+				val el = xml.getChild(i)
+				val path = el.text
+				val level = load(path)
+
+				levels[level.type].add(level)
+			}
+
+			return levels
 		}
 	}
 }

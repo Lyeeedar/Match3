@@ -1,4 +1,4 @@
-<Layout>
+<Level>
     <Rows>
         <Row>#..##£##..#</Row>
         <Row>#...#.#...#</Row>
@@ -13,9 +13,18 @@
 
     <AllowedVictories>
         <Sink />
-        <Loot />
     </AllowedVictories>
     <AllowedDefeats>
         <Turns />
     </AllowedDefeats>
-</Layout>
+
+    <Type>Good</Type>
+
+    <UncompletedMapSprite>
+        <Name>Oryx/Custom/dungeonmap/treasure</Name>
+    </UncompletedMapSprite>
+
+    <CompletedMapSprite>
+        <Name>Oryx/Custom/dungeonmap/treasure_complete</Name>
+    </CompletedMapSprite>
+</Level>

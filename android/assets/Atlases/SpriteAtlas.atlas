@@ -321,14 +321,14 @@ GUI/TilePanel
   index: -1
 GUI/Tooltip
   rotate: false
-  xy: 546, 122
+  xy: 886, 190
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 GUI/PanelHorizontal
   rotate: false
-  xy: 546, 122
+  xy: 886, 190
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
@@ -342,35 +342,21 @@ GUI/Unchecked
   index: -1
 GUI/border
   rotate: false
-  xy: 1010, 30
+  xy: 938, 30
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 GUI/frame_0
   rotate: false
-  xy: 938, 30
+  xy: 1482, 66
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 GUI/frame_1
   rotate: false
-  xy: 974, 30
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-Icons/Aim
-  rotate: false
-  xy: 1446, 66
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-Icons/Bash
-  rotate: false
-  xy: 1482, 66
+  xy: 1518, 66
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -391,42 +377,42 @@ Masks/fog_Masks/fog_false
   index: -1
 Masks/fog_Masks/fog_DNE_DNW_DSE_DSW_false
   rotate: false
-  xy: 1942, 154
+  xy: 1202, 102
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Masks/fog_Masks/fog_DNE_DNW_DSE_false
   rotate: false
-  xy: 1890, 154
+  xy: 1786, 154
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Masks/fog_Masks/fog_DNE_DNW_DSW_false
   rotate: false
-  xy: 1358, 102
+  xy: 1306, 102
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Masks/fog_Masks/fog_DNE_DNW_false
   rotate: false
-  xy: 1994, 154
+  xy: 1318, 154
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Masks/fog_Masks/fog_DNE_DSE_DSW_false
   rotate: false
-  xy: 1254, 102
+  xy: 1682, 154
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Masks/fog_Masks/fog_DNE_DSE_false
   rotate: false
-  xy: 1098, 102
+  xy: 1046, 102
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
@@ -440,56 +426,56 @@ Masks/fog_Masks/fog_DNE_DSW_false
   index: -1
 Masks/fog_Masks/fog_DNE_false
   rotate: false
-  xy: 1150, 102
+  xy: 1098, 102
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Masks/fog_Masks/fog_DNW_DSE_DSW_false
   rotate: false
-  xy: 954, 154
+  xy: 1838, 154
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Masks/fog_Masks/fog_DNW_DSE_false
   rotate: false
-  xy: 1202, 102
+  xy: 782, 34
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Masks/fog_Masks/fog_DNW_DSW_false
   rotate: false
-  xy: 994, 102
+  xy: 1358, 102
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Masks/fog_Masks/fog_DNW_false
   rotate: false
-  xy: 1162, 154
+  xy: 994, 102
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Masks/fog_Masks/fog_DSE_DSW_false
   rotate: false
-  xy: 1838, 154
+  xy: 1150, 102
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Masks/fog_Masks/fog_DSE_false
   rotate: false
-  xy: 1462, 102
+  xy: 1254, 102
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Masks/fog_Masks/fog_DSW_false
   rotate: false
-  xy: 1578, 154
+  xy: 1462, 102
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
@@ -503,105 +489,105 @@ Masks/fog_Masks/fog_E_DNW_DSW_false
   index: -1
 Masks/fog_Masks/fog_E_DNW_false
   rotate: false
-  xy: 886, 34
+  xy: 1630, 154
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Masks/fog_Masks/fog_E_DSW_false
   rotate: false
-  xy: 1046, 102
+  xy: 1942, 154
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Masks/fog_Masks/fog_E_W_false
   rotate: false
-  xy: 1838, 206
+  xy: 1630, 206
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Masks/fog_Masks/fog_E_false
   rotate: false
-  xy: 1474, 154
+  xy: 834, 34
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Masks/fog_Masks/fog_NE_DSW_false
   rotate: false
-  xy: 1058, 154
+  xy: 886, 34
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Masks/fog_Masks/fog_NE_NW_SE_SW_false
   rotate: false
-  xy: 1682, 206
+  xy: 730, 34
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Masks/fog_Masks/fog_NE_NW_false
   rotate: false
-  xy: 1786, 206
+  xy: 1006, 154
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Masks/fog_Masks/fog_NE_SE_false
   rotate: false
-  xy: 1006, 154
+  xy: 1994, 206
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Masks/fog_Masks/fog_NE_false
   rotate: false
-  xy: 1630, 206
+  xy: 1058, 154
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Masks/fog_Masks/fog_NW_DSE_false
   rotate: false
-  xy: 1890, 206
+  xy: 1786, 206
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Masks/fog_Masks/fog_NW_SW_false
   rotate: false
-  xy: 1318, 154
+  xy: 1734, 206
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Masks/fog_Masks/fog_NW_false
   rotate: false
-  xy: 1734, 206
+  xy: 1526, 154
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Masks/fog_Masks/fog_N_DSE_DSW_false
   rotate: false
-  xy: 782, 34
+  xy: 954, 154
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Masks/fog_Masks/fog_N_DSE_false
   rotate: false
-  xy: 1734, 154
+  xy: 1890, 154
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Masks/fog_Masks/fog_N_DSW_false
   rotate: false
-  xy: 1786, 154
+  xy: 1838, 206
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
@@ -615,35 +601,35 @@ Masks/fog_Masks/fog_N_S_false
   index: -1
 Masks/fog_Masks/fog_N_false
   rotate: false
-  xy: 834, 34
+  xy: 1994, 154
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Masks/fog_Masks/fog_SE_DNW_false
   rotate: false
-  xy: 1682, 154
+  xy: 1890, 206
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Masks/fog_Masks/fog_SE_SW_false
   rotate: false
-  xy: 730, 34
+  xy: 1526, 206
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Masks/fog_Masks/fog_SE_false
   rotate: false
-  xy: 1578, 206
+  xy: 1578, 154
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Masks/fog_Masks/fog_SW_DNE_false
   rotate: false
-  xy: 1370, 154
+  xy: 1578, 206
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
@@ -657,7 +643,7 @@ Masks/fog_Masks/fog_SW_false
   index: -1
 Masks/fog_Masks/fog_S_DNE_DNW_false
   rotate: false
-  xy: 1526, 206
+  xy: 942, 102
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
@@ -671,273 +657,273 @@ Masks/fog_Masks/fog_S_DNE_false
   index: -1
 Masks/fog_Masks/fog_S_DNW_false
   rotate: false
-  xy: 1630, 154
+  xy: 1682, 206
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Masks/fog_Masks/fog_S_false
   rotate: false
-  xy: 1422, 154
+  xy: 1162, 154
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Masks/fog_Masks/fog_W_DNE_DSE_false
   rotate: false
-  xy: 1526, 154
+  xy: 1422, 154
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Masks/fog_Masks/fog_W_DNE_false
   rotate: false
-  xy: 1994, 206
+  xy: 1734, 154
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Masks/fog_Masks/fog_W_DSE_false
   rotate: false
-  xy: 1306, 102
+  xy: 1474, 154
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Masks/fog_Masks/fog_W_false
   rotate: false
-  xy: 942, 102
+  xy: 1370, 154
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/Custom/dungeonmap/combat
   rotate: false
-  xy: 750, 190
+  xy: 2, 190
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 Oryx/Custom/dungeonmap/combat_complete
   rotate: false
-  xy: 546, 54
+  xy: 2, 122
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 Oryx/Custom/dungeonmap/spiketrap
   rotate: false
-  xy: 818, 190
+  xy: 70, 190
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 Oryx/Custom/dungeonmap/spiketrap_complete
   rotate: false
-  xy: 614, 122
+  xy: 2, 54
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 Oryx/Custom/dungeonmap/stone_corridor_EW
   rotate: false
-  xy: 342, 122
+  xy: 614, 190
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 Oryx/Custom/dungeonmap/stone_corridor_NE
   rotate: false
-  xy: 478, 190
+  xy: 478, 122
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 Oryx/Custom/dungeonmap/stone_corridor_NEW
   rotate: false
-  xy: 410, 54
+  xy: 750, 190
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 Oryx/Custom/dungeonmap/stone_corridor_NS
   rotate: false
-  xy: 274, 54
+  xy: 410, 54
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 Oryx/Custom/dungeonmap/stone_corridor_NSE
   rotate: false
-  xy: 478, 122
+  xy: 818, 190
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 Oryx/Custom/dungeonmap/stone_corridor_NSEW
   rotate: false
-  xy: 478, 54
+  xy: 614, 54
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 Oryx/Custom/dungeonmap/stone_corridor_NSW
   rotate: false
-  xy: 682, 190
+  xy: 614, 122
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 Oryx/Custom/dungeonmap/stone_corridor_NW
   rotate: false
-  xy: 342, 54
+  xy: 682, 190
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 Oryx/Custom/dungeonmap/stone_corridor_SE
   rotate: false
-  xy: 546, 190
+  xy: 478, 54
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 Oryx/Custom/dungeonmap/stone_corridor_SEW
   rotate: false
-  xy: 614, 190
+  xy: 546, 54
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 Oryx/Custom/dungeonmap/stone_corridor_SW
   rotate: false
-  xy: 410, 122
+  xy: 546, 122
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 Oryx/Custom/dungeonmap/stone_room_C
   rotate: false
-  xy: 2, 190
+  xy: 70, 54
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 Oryx/Custom/dungeonmap/stone_room_E
   rotate: false
-  xy: 2, 54
+  xy: 138, 54
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 Oryx/Custom/dungeonmap/stone_room_EW
   rotate: false
-  xy: 70, 54
+  xy: 206, 54
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 Oryx/Custom/dungeonmap/stone_room_N
   rotate: false
-  xy: 2, 122
+  xy: 206, 190
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 Oryx/Custom/dungeonmap/stone_room_NE
   rotate: false
-  xy: 206, 190
+  xy: 342, 190
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 Oryx/Custom/dungeonmap/stone_room_NEW
   rotate: false
-  xy: 206, 122
+  xy: 342, 122
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 Oryx/Custom/dungeonmap/stone_room_NS
   rotate: false
-  xy: 138, 190
+  xy: 206, 122
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 Oryx/Custom/dungeonmap/stone_room_NSE
   rotate: false
-  xy: 342, 190
+  xy: 342, 54
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 Oryx/Custom/dungeonmap/stone_room_NSEW
   rotate: false
-  xy: 410, 190
+  xy: 410, 122
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 Oryx/Custom/dungeonmap/stone_room_NSW
   rotate: false
-  xy: 274, 122
+  xy: 546, 190
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 Oryx/Custom/dungeonmap/stone_room_NW
   rotate: false
-  xy: 138, 122
+  xy: 274, 122
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 Oryx/Custom/dungeonmap/stone_room_S
   rotate: false
-  xy: 70, 190
+  xy: 138, 122
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 Oryx/Custom/dungeonmap/stone_room_SE
   rotate: false
-  xy: 138, 54
+  xy: 410, 190
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 Oryx/Custom/dungeonmap/stone_room_SEW
   rotate: false
-  xy: 206, 54
+  xy: 478, 190
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 Oryx/Custom/dungeonmap/stone_room_SW
   rotate: false
-  xy: 274, 190
+  xy: 274, 54
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 Oryx/Custom/dungeonmap/stone_room_W
   rotate: false
-  xy: 70, 122
+  xy: 274, 190
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 Oryx/Custom/dungeonmap/treasure
   rotate: false
-  xy: 614, 54
+  xy: 70, 122
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 Oryx/Custom/dungeonmap/treasure_complete
   rotate: false
-  xy: 886, 190
+  xy: 138, 190
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
@@ -1119,14 +1105,14 @@ blank
   index: -1
 borderedcircle
   rotate: false
-  xy: 1046, 30
+  xy: 974, 30
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 glow
   rotate: false
-  xy: 1518, 66
+  xy: 1446, 66
   size: 32, 32
   orig: 32, 32
   offset: 0, 0

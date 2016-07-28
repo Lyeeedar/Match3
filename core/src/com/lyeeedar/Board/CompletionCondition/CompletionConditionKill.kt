@@ -1,4 +1,4 @@
-package com.lyeeedar.Board.VictoryCondition
+package com.lyeeedar.Board.CompletionCondition
 
 import com.badlogic.gdx.graphics.g2d.NinePatch
 import com.badlogic.gdx.scenes.scene2d.ui.Label
@@ -13,11 +13,8 @@ import com.lyeeedar.Global
 import com.lyeeedar.UI.SpriteWidget
 import com.lyeeedar.Util.AssetManager
 
-/**
- * Created by Philip on 22-Jul-16.
- */
 
-class VictoryConditionKill() : AbstractVictoryCondition()
+class CompletionConditionKill() : AbstractCompletionCondition()
 {
 	var monsters = Array<Monster>()
 
@@ -42,7 +39,7 @@ class VictoryConditionKill() : AbstractVictoryCondition()
 		}
 	}
 
-	override fun isVictory(): Boolean = monsters.filter { it.hp > 0 }.count() == 0
+	override fun isCompleted(): Boolean = monsters.filter { it.hp > 0 }.count() == 0
 
 	override fun parse(xml: XmlReader.Element)
 	{

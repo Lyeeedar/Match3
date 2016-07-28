@@ -238,6 +238,12 @@ class AssetManager
 			return sprite
 		}
 
+		fun tryLoadSprite(xml: Element?): Sprite?
+		{
+			if (xml == null) return null
+			else return loadSprite(xml)
+		}
+
 		fun loadSprite(xml: Element): Sprite
 		{
 			val colourElement = xml.getChildByName("Colour")

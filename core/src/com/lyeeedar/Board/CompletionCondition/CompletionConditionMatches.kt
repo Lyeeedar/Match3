@@ -1,4 +1,4 @@
-package com.lyeeedar.Board.VictoryCondition
+package com.lyeeedar.Board.CompletionCondition
 
 import com.badlogic.gdx.graphics.g2d.NinePatch
 import com.badlogic.gdx.scenes.scene2d.ui.Label
@@ -20,7 +20,7 @@ import com.lyeeedar.Util.get
  * Created by Philip on 13-Jul-16.
  */
 
-class VictoryConditionMatches(): AbstractVictoryCondition()
+class CompletionConditionMatches(): AbstractCompletionCondition()
 {
 	val toBeMatched = IntIntMap()
 	val sprites = IntMap<Sprite>()
@@ -74,7 +74,7 @@ class VictoryConditionMatches(): AbstractVictoryCondition()
 		}
 	}
 
-	override fun isVictory(): Boolean
+	override fun isCompleted(): Boolean
 	{
 		var done = true
 		for (entry in toBeMatched.entries())

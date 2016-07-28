@@ -1,4 +1,4 @@
-package com.lyeeedar.Board.VictoryCondition
+package com.lyeeedar.Board.CompletionCondition
 
 import com.badlogic.gdx.graphics.g2d.NinePatch
 import com.badlogic.gdx.math.Vector2
@@ -18,7 +18,7 @@ import com.lyeeedar.Util.AssetManager
  * Created by Philip on 22-Jul-16.
  */
 
-class VictoryConditionLoot(): AbstractVictoryCondition()
+class CompletionConditionLoot(): AbstractCompletionCondition()
 {
 	var count = 0
 
@@ -40,7 +40,7 @@ class VictoryConditionLoot(): AbstractVictoryCondition()
 		}
 	}
 
-	override fun isVictory(): Boolean = if (grid.level.defeat.isDefeated()) true else false
+	override fun isCompleted(): Boolean = if (grid.level.defeat.isCompleted()) true else false
 
 	override fun parse(xml: XmlReader.Element)
 	{

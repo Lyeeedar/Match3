@@ -1,6 +1,6 @@
 package com.lyeeedar.Board
 
-import com.lyeeedar.Board.VictoryCondition.VictoryConditionSink
+import com.lyeeedar.Board.CompletionCondition.CompletionConditionSink
 import com.lyeeedar.Sprite.Sprite
 import com.lyeeedar.Util.AssetManager
 
@@ -25,7 +25,7 @@ class Chest(val spawnOrbs: Boolean = true)
 	fun attachHandlers(grid: Grid)
 	{
 		val victory = grid.level.victory
-		if (victory is VictoryConditionSink)
+		if (victory is CompletionConditionSink)
 		{
 			// ensure we dont spawn too many orbs
 			grid.onSpawn += {

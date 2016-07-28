@@ -1,6 +1,7 @@
 package com.lyeeedar.Map.Generators
 
 import com.badlogic.gdx.utils.Array
+import com.badlogic.gdx.utils.ObjectMap
 import com.lyeeedar.Board.Level
 import com.lyeeedar.Direction
 import com.lyeeedar.Map.DungeonMap
@@ -62,13 +63,31 @@ class HubGenerator
 		val good = Math.max(0, (totalCount * 0.2f).toInt() - endOfChainRooms.size)
 		val bad = unfilledRooms.size - (empty + good)
 
+		val emptyRooms = Array<DungeonMapEntry>()
 		val goodRooms = Array<DungeonMapEntry>()
 		val badRooms = Array<DungeonMapEntry>()
+		var bossRoom: DungeonMapEntry? = null
 
 		for (room in endOfChainRooms)
 		{
-			room.type = DungeonMapEntry.Type.GOOD
-			goodRooms.add(room)
+			if (bossRoom == null)
+			{
+				bossRoom = room
+				room.type = DungeonMapEntry.Type.BOSS
+			}
+			else if (room.depth > bossRoom.depth)
+			{
+				goodRooms.add(bossRoom)
+				bossRoom.type = DungeonMapEntry.Type.GOOD
+
+				bossRoom = room
+				room.type = DungeonMapEntry.Type.BOSS
+			}
+			else
+			{
+				room.type = DungeonMapEntry.Type.GOOD
+				goodRooms.add(room)
+			}
 		}
 
 		for (i in 1..good)
@@ -83,52 +102,52 @@ class HubGenerator
 			room.type = DungeonMapEntry.Type.BAD
 			badRooms.add(room)
 		}
-
-		var first = true
-		for (room in badRooms)
+		for (i in 1..empty)
 		{
-			if (first)
+			val room = unfilledRooms.removeRandom(ran)
+			room.type = DungeonMapEntry.Type.EMPTY
+			emptyRooms.add(room)
+		}
+
+		val levels = Level.loadAll()
+		bossRoom!!.level = if (levels[DungeonMapEntry.Type.BOSS].size > 0) levels[DungeonMapEntry.Type.BOSS].random(ran) else null
+
+		fun assignLevels(type: DungeonMapEntry.Type, rooms: Array<DungeonMapEntry>)
+		{
+			val used = ObjectMap<Level, Int>()
+
+			for (room in rooms)
 			{
-				room.levelType = Level.LevelType.ENCOUNTER
-			}
-			else
-			{
-				if (ran.nextBoolean())
+				// build list of valid levels
+				val valid = Array<Level>()
+				for (level in levels[type])
 				{
-					room.levelType = Level.LevelType.ENCOUNTER
+					if (level.minDepth > room.depth || level.maxDepth < room.depth) continue
+
+					val usedCount = used.get(level, 0)
+					if (usedCount >= level.maxCountPerMap) continue
+
+					for (i in 0..level.rarity.ordinal) valid.add(level)
+				}
+
+				if (valid.size > 0)
+				{
+					val level = valid.random(ran)
+					room.level = level
+
+					val usedCount = used.get(level, 0)
+					used[level] = usedCount + 1
 				}
 				else
 				{
-					room.levelType = Level.LevelType.TRAP
+					room.isRoom = false
 				}
 			}
-
-			first = false
 		}
 
-		for (room in goodRooms)
-		{
-			room.levelType = Level.LevelType.TREASURE
-		}
-
-		for (room in map.map)
-		{
-			if (room.value.levelType == Level.LevelType.ENCOUNTER)
-			{
-				room.value.uncompletesprite = AssetManager.loadSprite("Oryx/Custom/dungeonmap/combat")
-				room.value.completesprite = AssetManager.loadSprite("Oryx/Custom/dungeonmap/combat_complete")
-			}
-			else if (room.value.levelType == Level.LevelType.TRAP)
-			{
-				room.value.uncompletesprite = AssetManager.loadSprite("Oryx/Custom/dungeonmap/spiketrap")
-				room.value.completesprite = AssetManager.loadSprite("Oryx/Custom/dungeonmap/spiketrap_complete")
-			}
-			else if (room.value.levelType == Level.LevelType.TREASURE)
-			{
-				room.value.uncompletesprite = AssetManager.loadSprite("Oryx/Custom/dungeonmap/treasure")
-				room.value.completesprite = AssetManager.loadSprite("Oryx/Custom/dungeonmap/treasure_complete")
-			}
-		}
+		assignLevels(DungeonMapEntry.Type.EMPTY, emptyRooms)
+		assignLevels(DungeonMapEntry.Type.GOOD, goodRooms)
+		assignLevels(DungeonMapEntry.Type.BAD, badRooms)
 
 		return map
 	}

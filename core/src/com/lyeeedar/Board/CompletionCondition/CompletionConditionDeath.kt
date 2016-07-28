@@ -1,4 +1,4 @@
-package com.lyeeedar.Board.DefeatCondition
+package com.lyeeedar.Board.CompletionCondition
 
 import com.badlogic.gdx.graphics.g2d.NinePatch
 import com.badlogic.gdx.graphics.g2d.Sprite
@@ -15,11 +15,7 @@ import com.lyeeedar.UI.GridWidget
 import com.lyeeedar.UI.SpriteWidget
 import com.lyeeedar.Util.AssetManager
 
-/**
- * Created by Philip on 22-Jul-16.
- */
-
-class DefeatConditionDeath() : AbstractDefeatCondition()
+class CompletionConditionDeath() : AbstractCompletionCondition()
 {
 	lateinit var label: Label
 	lateinit var player: Player
@@ -46,7 +42,7 @@ class DefeatConditionDeath() : AbstractDefeatCondition()
 		}
 	}
 
-	override fun isDefeated(): Boolean = player.hp <= 0
+	override fun isCompleted(): Boolean = player.hp <= 0
 
 	override fun parse(xml: XmlReader.Element)
 	{

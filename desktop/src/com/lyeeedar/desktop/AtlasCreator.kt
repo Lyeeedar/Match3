@@ -179,6 +179,8 @@ class AtlasCreator
 		spriteElements.addAll(xml.getChildrenByNameRecursively("Sprite"))
 		spriteElements.addAll(xml.getChildrenByNameRecursively("Icon"))
 		spriteElements.addAll(xml.getChildrenByNameRecursively("Death"))
+		spriteElements.addAll(xml.getChildrenByNameRecursively("UncompletedMapSprite"))
+		spriteElements.addAll(xml.getChildrenByNameRecursively("CompletedMapSprite"))
 
 		for (el in spriteElements)
 		{
