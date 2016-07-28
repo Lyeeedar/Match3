@@ -10,8 +10,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Widget
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener
 import com.lyeeedar.Direction
 import com.lyeeedar.Global
+import com.lyeeedar.MainGame
 import com.lyeeedar.Map.DungeonMap
 import com.lyeeedar.Player.Player
+import com.lyeeedar.Screens.GridScreen
 import com.lyeeedar.SpaceSlot
 import com.lyeeedar.Sprite.Sprite
 import com.lyeeedar.Sprite.SpriteAnimation.MoveAnimation
@@ -21,6 +23,7 @@ import com.lyeeedar.Util.AssetManager
 import com.lyeeedar.Util.EnumBitflag
 import com.lyeeedar.Util.Point
 import com.lyeeedar.Util.UnsmoothedPath
+import sun.applet.Main
 
 /**
  * Created by Philip on 24-Jul-16.
@@ -131,9 +134,20 @@ class DungeonMapWidget(val map: DungeonMap, val player: Player): Widget()
 
 		playerSprite.update(delta)
 
-		map.get(map.playerPos)!!.seen = true
+		val playerRoom = map.get(map.playerPos)!!
+		playerRoom.seen = true
 
-		if (moveTo != null && playerSprite.spriteAnimation == null)
+		if (playerSprite.spriteAnimation == null && playerRoom.isRoom && !playerRoom.isCompleted)
+		{
+			moveTo = null
+			moveFrom = null
+
+			playerRoom.level!!.create(map.theme, player)
+
+			GridScreen.instance.updateLevel(playerRoom.level!!, player)
+			Global.game.switchScreen(MainGame.ScreenEnum.GRID)
+		}
+		else if (moveTo != null && playerSprite.spriteAnimation == null)
 		{
 			map.playerPos.set(moveTo!!)
 

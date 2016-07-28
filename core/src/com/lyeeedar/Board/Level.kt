@@ -24,7 +24,7 @@ import com.lyeeedar.Util.ranChild
  * Created by Philip on 13-Jul-16.
  */
 
-class Level
+class Level(val loadPath: String)
 {
 	// Load Data
 	lateinit var charGrid: Array2D<Char>
@@ -48,9 +48,8 @@ class Level
 	var uncompletedMapSprite: Sprite? = null
 	var completedMapSprite: Sprite? = null
 
-	lateinit var theme: LevelTheme
-
 	// Active state data
+	lateinit var theme: LevelTheme
 	lateinit var grid: Grid
 	lateinit var player: Player
 	var completed = false
@@ -233,16 +232,18 @@ class Level
 		{
 			if (victory.isCompleted())
 			{
-				FullscreenMessage(victoryText, "", { Global.game.switchScreen(MainGame.ScreenEnum.LEVELSELECT); victoryActions.forEach { it.apply() } }).show()
+				FullscreenMessage(victoryText, "", { Global.game.switchScreen(MainGame.ScreenEnum.MAP); victoryActions.forEach { it.apply() } }).show()
 				completed = true
 			}
 			else if (defeat.isCompleted())
 			{
-				FullscreenMessage(defeatText, "", { Global.game.switchScreen(MainGame.ScreenEnum.LEVELSELECT); defeatActions.forEach { it.apply() } }).show()
+				FullscreenMessage(defeatText, "", { Global.game.switchScreen(MainGame.ScreenEnum.MAP); defeatActions.forEach { it.apply() } }).show()
 				completed = true
 			}
 		}
 	}
+
+	fun copy()= Level.load(loadPath)
 
 	companion object
 	{
@@ -250,7 +251,7 @@ class Level
 		{
 			val xml = XmlReader().parse(Gdx.files.internal("Levels/$path.xml"))
 
-			val level = Level()
+			val level = Level(path)
 
 			var rows = xml.getChildByName("Rows")
 

@@ -61,8 +61,16 @@ class FullscreenMessage(val text: String, val style: String, val function: () ->
 
 	fun show()
 	{
-		setFillParent(true)
-		Global.stage.addActor(this)
+		if (text.length == 0)
+		{
+			function()
+			instance = null
+		}
+		else
+		{
+			setFillParent(true)
+			Global.stage.addActor(this)
+		}
 	}
 
 	override fun act(delta: Float)

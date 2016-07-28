@@ -133,7 +133,7 @@ class HubGenerator
 				if (valid.size > 0)
 				{
 					val level = valid.random(ran)
-					room.level = level
+					room.level = level.copy()
 
 					val usedCount = used.get(level, 0)
 					used[level] = usedCount + 1

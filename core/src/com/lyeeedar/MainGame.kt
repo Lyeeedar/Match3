@@ -18,7 +18,6 @@ class MainGame : Game()
 	enum class ScreenEnum
 	{
 		GRID,
-		LEVELSELECT,
 		MAP,
 		TOWN,
 		SKILLSHOP
