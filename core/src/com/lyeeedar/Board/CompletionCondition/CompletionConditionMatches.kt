@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.badlogic.gdx.scenes.scene2d.ui.Skin
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable
+import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.IntIntMap
 import com.badlogic.gdx.utils.IntMap
 import com.badlogic.gdx.utils.XmlReader
@@ -55,7 +56,18 @@ class CompletionConditionMatches(): AbstractCompletionCondition()
 
 	override fun attachHandlers(grid: Grid)
 	{
-		toBeMatched[grid.validOrbs[0].key] = 30
+		val entries = toBeMatched.toList()
+		toBeMatched.clear()
+		for (entry in entries)
+		{
+			val valid = Array<Int>()
+			for (orb in grid.validOrbs) if (!toBeMatched.containsKey(orb.key)) valid.add(orb.key)
+
+			if (valid.size > 0)
+			{
+				toBeMatched[valid.random()] = entry.value
+			}
+		}
 
 		grid.onPop += {
 			if (toBeMatched.containsKey(it.key))
@@ -91,14 +103,12 @@ class CompletionConditionMatches(): AbstractCompletionCondition()
 
 	override fun parse(xml: XmlReader.Element)
 	{
-//		for (i in 0..xml.childCount-1)
-//		{
-//			val el = xml.getChild(i)
-//			val name = el.name
-//			val key = name.hashCode()
-//			val count = el.text.toInt()
-//
-//			toBeMatched[key] = count
-//		}
+		for (i in 0..xml.childCount-1)
+		{
+			val el = xml.getChild(i)
+			val count = el.text.toInt()
+
+			toBeMatched[i] = count
+		}
 	}
 }

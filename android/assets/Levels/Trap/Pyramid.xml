@@ -12,7 +12,18 @@
     </Rows>
 
     <AllowedVictories>
-        <Match />
+        <Match >
+            <Orb>30</Orb>
+        </Match>
+        <Match >
+            <Orb>20</Orb>
+            <Orb>20</Orb>
+        </Match>
+        <Match>
+            <Orb>15</Orb>
+            <Orb>20</Orb>
+            <Orb>15</Orb>
+        </Match>
     </AllowedVictories>
 
     <AllowedDefeats>

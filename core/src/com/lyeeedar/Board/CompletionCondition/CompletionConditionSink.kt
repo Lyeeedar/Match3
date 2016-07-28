@@ -41,7 +41,7 @@ class CompletionConditionSink() : AbstractCompletionCondition()
 
 	override fun parse(xml: XmlReader.Element)
 	{
-
+		count = xml.text.toInt()
 	}
 
 	override fun createTable(skin: Skin): Table
