@@ -32,8 +32,7 @@ class Future
 		{
 			if (token != null)
 			{
-				val existing = pendingCalls.firstOrNull { it.token == token }
-				if (existing != null) pendingCalls.removeValue(existing, true)
+				cancel(token)
 			}
 
 			pendingCalls.add(CallData(function, delay, token))
