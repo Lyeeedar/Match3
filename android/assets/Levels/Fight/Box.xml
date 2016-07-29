@@ -21,6 +21,10 @@
 
     <Type>BAD</Type>
 
+    <VictoryActions>
+        <Money>5</Money>
+    </VictoryActions>
+
     <UncompletedMapSprite>
         <Name>Oryx/Custom/dungeonmap/combat</Name>
     </UncompletedMapSprite>

@@ -12,12 +12,16 @@
     </Rows>
 
     <AllowedVictories>
-        <Sink />
+        <Sink>5</Sink>
         <Loot />
     </AllowedVictories>
     <AllowedDefeats>
-        <Turns />
+        <Turns >30</Turns>
     </AllowedDefeats>
+
+    <VictoryActions>
+        <Money>25</Money>
+    </VictoryActions>
 
     <Type>Good</Type>
 

@@ -50,7 +50,8 @@ class Level(val loadPath: String)
 	lateinit var grid: Grid
 	lateinit var player: Player
 	var completed = false
-	var completeFun: () -> Unit = {}
+	var completeFun: (() -> Unit)? = null
+	val onComplete = Event0Arg()
 
 	fun create(theme: LevelTheme, player: Player)
 	{
@@ -223,24 +224,26 @@ class Level(val loadPath: String)
 		{
 			if (victory.isCompleted())
 			{
-				completeFun = {FullscreenMessage(victoryText, "", { Global.game.switchScreen(MainGame.ScreenEnum.MAP); victoryActions.forEach { it.apply() } }).show()}
+				completeFun = {completeFun = null; FullscreenMessage(victoryText, "", { Global.game.switchScreen(MainGame.ScreenEnum.MAP); victoryActions.forEach { it.apply(player) } }).show()}
 				completed = true
+				onComplete()
 			}
 			else if (defeat.isCompleted())
 			{
-				completeFun = {FullscreenMessage(defeatText, "", { Global.game.switchScreen(MainGame.ScreenEnum.MAP); defeatActions.forEach { it.apply() } }).show()}
+				completeFun = {completeFun = null; FullscreenMessage(defeatText, "", { Global.game.switchScreen(MainGame.ScreenEnum.MAP); defeatActions.forEach { it.apply(player) } }).show()}
 				completed = true
+				onComplete()
 			}
 
-			if (completed)
+			if (completed && completeFun != null)
 			{
-				Future.call(completeFun, 0.5f, this)
+				Future.call(completeFun!!, 1.5f, this)
 			}
 		}
 
-		if (completed && !done)
+		if (completed && completeFun != null && !done)
 		{
-			Future.call(completeFun, 0.5f, this)
+			Future.call(completeFun!!, 1.5f, this)
 		}
 	}
 

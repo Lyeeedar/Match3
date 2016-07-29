@@ -90,8 +90,7 @@ class GridWidget(val grid: Grid) : Widget()
 
 			if (dst != null)
 			{
-				val mote = Mote(pos, dst, sprite, grid, { PowerBar.instance.power++ })
-				grid.motes.add(mote)
+				Mote(pos, dst, sprite, { PowerBar.instance.power++ })
 			}
 		}
 
@@ -306,14 +305,6 @@ class GridWidget(val grid: Grid) : Widget()
 						foreground.queueSprite(border, xi, yi, xp, yp, SpaceSlot.ORB, 0)
 					}
 				}
-			}
-		}
-
-		for (mote in grid.motes)
-		{
-			if (!mote.done)
-			{
-				floating.queueSprite(mote.sprite, mote.pos.x / Global.tileSize, mote.pos.y / Global.tileSize, 0f, 0f, SpaceSlot.MOTE, 0)
 			}
 		}
 

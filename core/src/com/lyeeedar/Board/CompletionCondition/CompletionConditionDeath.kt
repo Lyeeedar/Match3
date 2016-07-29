@@ -30,7 +30,7 @@ class CompletionConditionDeath() : AbstractCompletionCondition()
 			val dst = label.localToStageCoordinates(Vector2())
 			val src = GridWidget.instance.pointToScreenspace(it)
 
-			val mote = Mote(src, dst, sprite, grid, {
+			Mote(src, dst, sprite, {
 				player.hp -= 1
 
 				val hp = player.hp
@@ -38,7 +38,6 @@ class CompletionConditionDeath() : AbstractCompletionCondition()
 
 				label.setText("$hp/$max")
 			})
-			grid.motes.add(mote)
 		}
 	}
 

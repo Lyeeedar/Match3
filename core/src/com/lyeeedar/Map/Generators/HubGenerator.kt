@@ -6,6 +6,7 @@ import com.lyeeedar.Board.Level
 import com.lyeeedar.Direction
 import com.lyeeedar.Map.DungeonMap
 import com.lyeeedar.Map.DungeonMapEntry
+import com.lyeeedar.Map.Objective.ObjectiveExplore
 import com.lyeeedar.Util.*
 import java.util.*
 
@@ -22,6 +23,8 @@ class HubGenerator
 	fun generate(): DungeonMap
 	{
 		val map = DungeonMap()
+
+		map.objective = ObjectiveExplore()
 
 		val hub = DungeonMapEntry()
 		hub.isRoom = true
@@ -148,6 +151,9 @@ class HubGenerator
 		assignLevels(DungeonMapEntry.Type.EMPTY, emptyRooms)
 		assignLevels(DungeonMapEntry.Type.GOOD, goodRooms)
 		assignLevels(DungeonMapEntry.Type.BAD, badRooms)
+
+		map.finishSetup()
+		map.objective.update(map, hub)
 
 		return map
 	}

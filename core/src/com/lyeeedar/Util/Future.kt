@@ -22,8 +22,8 @@ class Future
 
 				if (item.delay <= 0f)
 				{
-					item.function.invoke()
 					itr.remove()
+					item.function.invoke()
 				}
 			}
 		}
@@ -36,6 +36,20 @@ class Future
 			}
 
 			pendingCalls.add(CallData(function, delay, token))
+		}
+
+		fun cancel(token: Any)
+		{
+			val itr = pendingCalls.iterator()
+			while (itr.hasNext())
+			{
+				val item = itr.next()
+
+				if (item.token == token)
+				{
+					itr.remove()
+				}
+			}
 		}
 	}
 }

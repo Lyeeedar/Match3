@@ -32,8 +32,7 @@ class CompletionConditionSink() : AbstractCompletionCondition()
 			val dst = label.localToStageCoordinates(Vector2())
 			val src = GridWidget.instance.pointToScreenspace(it)
 
-			val mote = Mote(src, dst, sprite, grid, { if (count > 0) count--; label.setText("$count") })
-			grid.motes.add(mote)
+			Mote(src, dst, sprite, { if (count > 0) count--; label.setText("$count") })
 		}
 	}
 

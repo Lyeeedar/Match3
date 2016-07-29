@@ -1,6 +1,9 @@
 package com.lyeeedar.Board
 
+import com.badlogic.gdx.graphics.g2d.Batch
+import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.math.*
+import com.badlogic.gdx.scenes.scene2d.Actor
 import com.badlogic.gdx.utils.Array
 import com.lyeeedar.Global
 import com.lyeeedar.SpaceSlot
@@ -11,7 +14,7 @@ import com.lyeeedar.Sprite.SpriteRenderer
  * Created by Philip on 15-Jul-16.
  */
 
-class Mote(val pos: Vector2, val dst: Vector2, val sprite: Sprite, val grid: Grid, val function: () -> Unit)
+class Mote(val pos: Vector2, dst: Vector2, val sprite: Sprite, val function: () -> Unit): Actor()
 {
 	var time = 0f
 	var duration = 1.5f
@@ -30,21 +33,33 @@ class Mote(val pos: Vector2, val dst: Vector2, val sprite: Sprite, val grid: Gri
 		val p3 = dst
 
 		path = Bezier(p0, p1, p2, p3)
+
+		Global.stage.addActor(this)
 	}
 
-	fun update(delta: Float)
+	override fun act(delta: Float)
 	{
 		if (done) return
+
+		super.act(delta)
 
 		time += delta
 		if (time >= duration)
 		{
 			done = true
 			function()
+			remove()
 		}
 
 		val alpha = time / duration
 
 		path.valueAt(pos, alpha * alpha * alpha)
+	}
+
+	override fun draw(batch: Batch?, parentAlpha: Float)
+	{
+		super.draw(batch, parentAlpha)
+
+		sprite.render(batch as SpriteBatch, pos.x, pos.y, 32f, 32f)
 	}
 }

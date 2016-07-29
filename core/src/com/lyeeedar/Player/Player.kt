@@ -23,6 +23,8 @@ class Player
 	var startpower: Int = 0
 	var maxpower: Int = 50
 
+	var money: Int = 0
+
 	// abilities and stuff
 	val abilities: Array<Ability?> = Array(4){e -> null}
 }

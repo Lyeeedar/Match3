@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.utils.XmlReader
 import com.badlogic.gdx.utils.reflect.ClassReflection
 import com.lyeeedar.Board.Grid
+import com.lyeeedar.Player.Player
 
 /**
  * Created by Philip on 28-Jul-16.
@@ -12,7 +13,7 @@ import com.lyeeedar.Board.Grid
 
 abstract class AbstractCompletionAction
 {
-	abstract fun apply()
+	abstract fun apply(player: Player)
 	abstract fun parse(xml: XmlReader.Element)
 
 	companion object
@@ -37,6 +38,8 @@ abstract class AbstractCompletionAction
 		private fun getClass(name: String): Class<out AbstractCompletionAction>
 		{
 			val type = when(name) {
+				"HEALTH", "HEAL", "HARM", "HURT" -> CompletionActionHealth::class.java
+				"MONEY" -> CompletionActionMoney::class.java
 
 			// ARGH everything broke
 				else -> throw RuntimeException("Invalid completion action type: $name")

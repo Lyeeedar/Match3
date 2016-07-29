@@ -59,9 +59,6 @@ class Grid(val width: Int, val height: Int, val level: Level)
 	var matchHint: Pair<Point, Point>? = null
 
 	// ----------------------------------------------------------------------
-	val motes: Array<Mote> = Array(false, 16)
-
-	// ----------------------------------------------------------------------
 	var activeAbility: Ability? = null
 		set(value)
 		{
@@ -202,8 +199,12 @@ class Grid(val width: Int, val height: Int, val level: Level)
 			}
 			else
 			{
-				selected = newSelection
-				tile(selected)?.isSelected = true
+				val newTile = tile(newSelection)
+				if (newTile != null && newTile.canHaveOrb)
+				{
+					selected = newSelection
+					newTile.isSelected = true
+				}
 			}
 		}
 	}
@@ -548,13 +549,6 @@ class Grid(val width: Int, val height: Int, val level: Level)
 		{
 			done = false
 		}
-
-		for (mote in motes)
-		{
-			mote.update(delta)
-		}
-
-		motes.removeAll{ it.done }
 
 		return done
 	}

@@ -27,9 +27,13 @@
     </AllowedVictories>
 
     <AllowedDefeats>
-        <Time />
-        <Turns />
+        <Time >60</Time>
+        <Turns >35</Turns>
     </AllowedDefeats>
+
+    <DefeatActions>
+        <Harm>5</Harm>
+    </DefeatActions>
 
     <Type>BAD</Type>
 

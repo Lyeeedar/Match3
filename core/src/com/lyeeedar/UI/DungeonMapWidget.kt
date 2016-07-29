@@ -296,6 +296,9 @@ class DungeonMapWidget(val map: DungeonMap, val player: Player): Widget()
 		}
 	}
 
+	// ----------------------------------------------------------------------
+	fun getCenterInScreenspace(): Vector2 = localToStageCoordinates(Vector2(width/2, height/2))
+
 	companion object
 	{
 		lateinit var instance: DungeonMapWidget
