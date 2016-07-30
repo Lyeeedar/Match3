@@ -21,6 +21,7 @@ import com.lyeeedar.Sprite.SpriteWrapper
 import com.lyeeedar.Sprite.TilingSprite
 import com.lyeeedar.UI.FullscreenMessage
 import com.lyeeedar.Util.*
+import com.sun.org.apache.xpath.internal.operations.Or
 import java.util.*
 
 /**
@@ -36,7 +37,6 @@ class Grid(val width: Int, val height: Int, val level: Level)
 
 	// ----------------------------------------------------------------------
 	val validOrbs: Array<OrbDesc> = Array()
-	val specialOrbs: Array<Explosion> = Array()
 
 	// ----------------------------------------------------------------------
 	var selected: Point = Point.MINUS_ONE
@@ -48,7 +48,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 	// ----------------------------------------------------------------------
 	val onTurn = Event0Arg()
 	val onTime = Event1Arg<Float>()
-	val onPop = Event1Arg<Orb>()
+	val onPop = Event2Arg<Orb, Float>()
 	val onSunk = Event1Arg<Orb>()
 	val onDamaged = Event1Arg<Monster>()
 	val onSpawn = Event1Arg<Orb>()
@@ -130,26 +130,26 @@ class Grid(val width: Int, val height: Int, val level: Level)
 	}
 
 	// ----------------------------------------------------------------------
-	fun getExplosion(count:Int, dir: Direction): Explosion?
+	fun getSpecial(count1: Int, count2: Int, dir: Direction, orb: Orb): Special?
 	{
-		var best: Explosion? = null
-
-		for (special in specialOrbs)
+		if (count1 >= 5 || count2 >= 5)
 		{
-			if (special.count <= count && special.dir == dir)
-			{
-				if (best == null)
-				{
-					best = special
-				}
-				else if (special.count > best.count)
-				{
-					best = special
-				}
-			}
+			return Match5(orb)
+		}
+		else if (count1 > 0 && count2 > 0)
+		{
+			return DualMatch(orb)
+		}
+		else if (dir.y != 0 && count1 == 4)
+		{
+			return Vertical4(orb)
+		}
+		else if (dir.x != 0 && count1 == 4)
+		{
+			return Horizontal4(orb)
 		}
 
-		return best
+		return null
 	}
 
 	// ----------------------------------------------------------------------
@@ -261,7 +261,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 					else if (stile.orb != null)
 					{
 						val orb = stile.orb!!
-						if (!orb.armed && !orb.sealed) found = stile
+						if (orb.armed == null && !orb.sealed) found = stile
 						break
 					}
 					else if (stile.chest != null)
@@ -364,8 +364,8 @@ class Grid(val width: Int, val height: Int, val level: Level)
 					val diagL = tile(x - 1, currentY - 1)
 					val diagR = tile(x + 1, currentY - 1)
 
-					val diagLValid = diagL != null && diagL.orb != null && !diagL.orb!!.armed && !diagL.orb!!.sealed
-					val diagRValid = diagR != null && diagR.orb != null && !diagR.orb!!.armed && !diagR.orb!!.sealed
+					val diagLValid = diagL != null && diagL.orb != null && diagL.orb!!.armed == null && !diagL.orb!!.sealed
+					val diagRValid = diagR != null && diagR.orb != null && diagR.orb!!.armed == null && !diagR.orb!!.sealed
 
 					if (diagLValid || diagRValid)
 					{
@@ -567,6 +567,26 @@ class Grid(val width: Int, val height: Int, val level: Level)
 		val newOrb = newTile.orb ?: return false
 		if (oldOrb.sealed || newOrb.sealed) return false
 
+		// check for merges
+		if (newOrb.special != null || oldOrb.special != null)
+		{
+			val armfun = newOrb.special?.merge(oldOrb) ?: oldOrb.special?.merge(newOrb)
+			if (armfun != null)
+			{
+				val sprite = oldOrb.sprite.copy()
+				sprite.spriteAnimation = MoveAnimation.obtain().set(animSpeed, UnsmoothedPath(newTile.getPosDiff(oldTile)), Interpolation.linear)
+				newTile.effects.add(sprite)
+
+				onPop(oldOrb, 0f)
+				oldTile.orb = null
+
+				newOrb.armed = armfun
+				newOrb.markedForDeletion = true
+
+				return false
+			}
+		}
+
 		oldTile.orb = newOrb
 		newTile.orb = oldOrb
 
@@ -604,10 +624,10 @@ class Grid(val width: Int, val height: Int, val level: Level)
 					orb.x = x
 					orb.y = y
 
-					if (orb.markedForDeletion && orb.sprite.spriteAnimation == null && !orb.armed)
+					if (orb.markedForDeletion && orb.sprite.spriteAnimation == null && orb.armed == null)
 					{
 						tile.orb = null
-						onPop(orb)
+						onPop(orb, orb.deletionEffectDelay)
 					}
 					else if (orb.hasAttack && orb.attackTimer == 0 && orb.sprite.spriteAnimation == null)
 					{
@@ -642,18 +662,12 @@ class Grid(val width: Int, val height: Int, val level: Level)
 	// ----------------------------------------------------------------------
 	fun match(): Boolean
 	{
-		val match5 = findMatches(5, true)
-		clearMatches(match5)
-
-		val match4 = findMatches(4, true)
-		clearMatches(match4)
-
-		val match3 = findMatches(3, true)
-		clearMatches(match3)
+		val matches = findMatches(3)
+		clearMatches(matches)
 
 		lastSwapped = Point.MINUS_ONE
 
-		return match5.size == 0 && match4.size == 0 && match3.size == 0
+		return matches.size == 0
 	}
 
 	// ----------------------------------------------------------------------
@@ -668,8 +682,8 @@ class Grid(val width: Int, val height: Int, val level: Level)
 		for (match in matches)
 		{
 			// check the 3 tiles around each end to see if it contains one of the correct colours
-			val dir = Direction.getDirection(match.first, match.second)
-			val key = grid[match.first].orb!!.key
+			val dir = match.direction()
+			val key = grid[match.p1].orb!!.key
 
 			fun checkSurrounding(point: Point, dir: Direction, key: Int): Pair<Point, Point>?
 			{
@@ -693,11 +707,11 @@ class Grid(val width: Int, val height: Int, val level: Level)
 			}
 
 			// the one before first is at first-dir
-			val beforeFirst = match.first + dir.opposite
+			val beforeFirst = match.p1 + dir.opposite
 			val beforeFirstPair = checkSurrounding(beforeFirst, dir.opposite, key)
 			if (beforeFirstPair != null) return beforeFirstPair
 
-			val afterSecond = match.second + dir
+			val afterSecond = match.p2 + dir
 			val afterSecondPair = checkSurrounding(afterSecond, dir, key)
 			if (afterSecondPair != null) return afterSecondPair
 		}
@@ -755,7 +769,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 				val tile = grid[x, y]
 				val orb = tile.orb ?: continue
 
-				if (orb.armed)
+				if (orb.armed != null)
 				{
 					tilesToDetonate.add(tile)
 				}
@@ -764,45 +778,13 @@ class Grid(val width: Int, val height: Int, val level: Level)
 
 		for (tile in tilesToDetonate)
 		{
-			detonatePattern(tile.x, tile.y, tile.orb!!.explosion!!)
+			tile.orb!!.armed!!.invoke(tile, this)
 
-			tile.orb!!.armed = false
+			tile.orb!!.armed = null
 			complete = false
 		}
 
 		return complete
-	}
-
-	// ----------------------------------------------------------------------
-	fun detonatePattern(x: Int, y: Int, explosion: Explosion)
-	{
-		for (dir in Direction.CardinalValues)
-		{
-			val points = explosion.dirs[dir]
-			for (point in points)
-			{
-				var delay = 0f
-
-				val current = Point(x, y) + point
-
-				while (true)
-				{
-					val tile = tile(current) ?: break
-
-					if (!tile.canHaveOrb) break
-
-					pop(tile.x, tile.y, delay+0.2f)
-
-					val sprite = explosion.sprite.copy()
-					sprite.renderDelay = delay
-					tile.effects.add(sprite)
-
-					delay += 0.1f
-
-					current += dir
-				}
-			}
-		}
 	}
 
 	// ----------------------------------------------------------------------
@@ -850,7 +832,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 				{
 					val orb = grid[x, y].orb!!
 
-					if (oldorb.explosion != null) orb.explosion = oldorb.explosion
+					if (oldorb.special != null) orb.special = oldorb.special!!.copy(orb)
 					if (oldorb.sealed) orb.sealed = true
 
 					val delay = grid[x, y].taxiDist(Point.ZERO).toFloat() * 0.1f
@@ -901,9 +883,9 @@ class Grid(val width: Int, val height: Int, val level: Level)
 	}
 
 	// ----------------------------------------------------------------------
-	fun findMatches() : Array<Pair<Point, Point>>
+	fun findMatches() : Array<Match>
 	{
-		val matches = Array<Pair<Point, Point>>(false, 16)
+		val matches = Array<Match>(false, 16)
 
 		matches.addAll(findMatches(3))
 		matches.addAll(findMatches(4))
@@ -937,9 +919,9 @@ class Grid(val width: Int, val height: Int, val level: Level)
 	}
 
 	// ----------------------------------------------------------------------
-	fun findMatches(length: Int, exact: Boolean = false) : Array<Pair<Point, Point>>
+	fun findMatches(length: Int, exact: Boolean = false) : Array<Match>
 	{
-		val matches = Array<Pair<Point, Point>>()
+		val matches = Array<Match>()
 
 		fun addMatch(p1: Point, p2: Point)
 		{
@@ -953,18 +935,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 			if (check(dst))
 			{
 				// check not already added
-				var found = false
-
-				for (pair in matches)
-				{
-					if (pair.first == p1 && pair.second == p2)
-					{
-						found = true
-						break
-					}
-				}
-
-				if (!found) matches.add(Pair(p1, p2))
+				matches.add(Match(p1, p2))
 			}
 		}
 
@@ -1056,52 +1027,46 @@ class Grid(val width: Int, val height: Int, val level: Level)
 	}
 
 	// ----------------------------------------------------------------------
-	fun clearMatches(matches: Array<Pair<Point, Point>>)
+	fun clearMatches(matches: Array<Match>)
 	{
+		// mark all matched tiles with the matches associated with them
+		for (tile in grid)
+		{
+			tile.associatedMatches[0] = null
+			tile.associatedMatches[1] = null
+		}
+
 		for (match in matches)
 		{
-			val dir = Direction.getDirection(match.first, match.second)
-			val desc = tile(match.first)?.orb?.desc
-
-			val diff = match.first.dist(match.second)
-			val points = match.first.rangeTo(match.second)
-
-			val middle: Tile
-
-			if (lastSwapped != Point.MINUS_ONE && lastSwapped.liesBetween(match.first, match.second))
+			for (point in match.points())
 			{
-				middle = grid[lastSwapped]
-			}
-			else
-			{
-				val p = points.asSequence().filter { tile(it)?.orb?.explosion == null }.random()
-				if (p != null) middle = tile(p)!!
+				val tile = grid[point]
+				if (tile.associatedMatches[0] == null)
+				{
+					tile.associatedMatches[0] = match
+				}
 				else
 				{
-					middle = tile(points.asSequence().random()!!)!!
+					tile.associatedMatches[1] = match
 				}
 			}
+		}
 
-			val coreTiles = Array<Tile>()
+		val coreTiles = Array<Tile>()
+		val borderTiles = ObjectSet<Tile>()
 
-			for (point in points)
+		// remove all orbs, activate all specials
+		for (match in matches)
+		{
+			coreTiles.clear()
+			borderTiles.clear()
+
+			for (point in match.points())
 			{
-				pop(point.x, point.y, 0f)
-
 				coreTiles.add(grid[point])
-
-				if (diff > 2 && desc != null)
-				{
-					val sprite = desc.sprite.copy()
-					sprite.drawActualSize = false
-					sprite.spriteAnimation = MoveAnimation.obtain().set(animSpeed, UnsmoothedPath(middle.getPosDiff(point)), Interpolation.linear)
-
-					middle.effects.add(sprite)
-				}
+				pop(point.x, point.y, 0f)
 			}
 
-			// build border list
-			val borderTiles = ObjectSet<Tile>()
 			for (tile in coreTiles)
 			{
 				for (d in Direction.CardinalValues)
@@ -1121,38 +1086,82 @@ class Grid(val width: Int, val height: Int, val level: Level)
 				{
 					t.block!!.count--
 				}
-				if (t.orb != null && t.orb!!.sealed)
-				{
-					t.orb!!.sealed = false
-					t.effects.add(t.orb!!.sealBreak)
-				}
 				if (t.monster != null)
 				{
 					t.monster!!.hp--
 					onDamaged(t.monster!!)
 				}
 			}
+		}
 
-			// if 4 or 5 match then spawn new orb
-			if (diff > 2 && desc != null)
+		// for each tile with 2 matches spawn the relevant special, and mark the matches as used, if cross point is used them spawn in a neighbouring tile that isnt specialed
+		for (tile in grid)
+		{
+			if (tile.associatedMatches[0] != null && tile.associatedMatches[1] != null)
 			{
-				if (middle.orb?.explosion == null)
+				val orb = Orb(tile.orb!!.desc)
+				val special = getSpecial(tile.associatedMatches[0]!!.length(), tile.associatedMatches[1]!!.length(), Direction.CENTRE, orb) ?: continue
+				orb.special = special
+
+				if (tile.orb != null)
 				{
-					val special = getExplosion(diff+1, dir)
+					tile.orb!!.x = tile.x
+					tile.orb!!.y = tile.y
+					onPop(tile.orb!!, 0f)
+				}
 
-					if (special != null)
-					{
-						val orb = Orb(desc)
-						orb.explosion = special
+				tile.orb = orb
 
-						if (middle.orb != null)
-						{
-							middle.orb!!.x = middle.x
-							middle.orb!!.y = middle.y
-							onPop(middle.orb!!)
-						}
-						middle.orb = orb
-					}
+				tile.associatedMatches[0]!!.used = true
+				tile.associatedMatches[1]!!.used = true
+
+				for (point in tile.associatedMatches[0]!!.points())
+				{
+					val sprite = orb.sprite.copy()
+					sprite.drawActualSize = false
+					sprite.spriteAnimation = MoveAnimation.obtain().set(animSpeed, UnsmoothedPath(tile.getPosDiff(point)), Interpolation.linear)
+
+					tile.effects.add(sprite)
+				}
+
+				for (point in tile.associatedMatches[1]!!.points())
+				{
+					val sprite = orb.sprite.copy()
+					sprite.drawActualSize = false
+					sprite.spriteAnimation = MoveAnimation.obtain().set(animSpeed, UnsmoothedPath(tile.getPosDiff(point)), Interpolation.linear)
+
+					tile.effects.add(sprite)
+				}
+			}
+		}
+
+		// for each unused match spawn the relevant special at the player swap pos, else at the center, else at a random unspecialed tile
+		for (match in matches)
+		{
+			if (!match.used && match.length() > 3)
+			{
+				val tile = grid[(match.p1 + (match.p2 - match.p1)/2)]
+
+				val orb = Orb(tile.orb!!.desc)
+				val special = getSpecial(match.length(), 0, match.direction(), orb) ?: continue
+				orb.special = special
+
+				if (tile.orb != null)
+				{
+					tile.orb!!.x = tile.x
+					tile.orb!!.y = tile.y
+					onPop(tile.orb!!, 0f)
+				}
+
+				tile.orb = orb
+
+				for (point in match.points())
+				{
+					val sprite = orb.sprite.copy()
+					sprite.drawActualSize = false
+					sprite.spriteAnimation = MoveAnimation.obtain().set(animSpeed, UnsmoothedPath(tile.getPosDiff(point)), Interpolation.linear)
+
+					tile.effects.add(sprite)
 				}
 			}
 		}
@@ -1195,8 +1204,9 @@ class Grid(val width: Int, val height: Int, val level: Level)
 		}
 
 		orb.markedForDeletion = true
+		orb.deletionEffectDelay = delay
 
-		if (orb.explosion == null)
+		if (orb.special == null)
 		{
 			orb.sprite.visible = false
 
@@ -1206,9 +1216,13 @@ class Grid(val width: Int, val height: Int, val level: Level)
 
 			tile.effects.add(sprite)
 		}
+		else if (orb.special is Match5)
+		{
+			orb.markedForDeletion = false
+		}
 		else
 		{
-			orb.armed = true
+			orb.armed = orb.special!!.apply()
 		}
 	}
 
@@ -1237,29 +1251,11 @@ class Grid(val width: Int, val height: Int, val level: Level)
 			}
 		}
 	}
+}
 
-	// ----------------------------------------------------------------------
-	fun loadSpecials()
-	{
-		val xml = XmlReader().parse(Gdx.files.internal("Orbs/Specials.xml"))
-
-		for (i in 0..xml.childCount-1)
-		{
-			val match = xml.getChild(i) // name in from matchX
-			val name = match.name.replace("Match", "")
-			val count = name.toInt()
-
-			for (ii in 0..match.childCount-1)
-			{
-				val special = match.getChild(ii)
-				val dir = Direction.valueOf(special.name)
-
-				val explosion = Explosion.load(special)
-				explosion.dir = dir
-				explosion.count = count
-
-				specialOrbs.add(explosion)
-			}
-		}
-	}
+data class Match(val p1: Point, val p2: Point, var used: Boolean = false)
+{
+	fun length() = p1.dist(p2) + 1
+	fun points() = p1.rangeTo(p2)
+	fun direction() = Direction.getDirection(p1, p2)
 }

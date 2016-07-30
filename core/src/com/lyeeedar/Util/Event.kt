@@ -17,3 +17,10 @@ class Event1Arg<T> {
 	operator fun minusAssign(handler: Event1Arg<T>.(T) -> Unit) { handlers.remove(handler) }
 	operator fun invoke(value: T) { for (handler in handlers) handler(value) }
 }
+
+class Event2Arg<T1, T2> {
+	private val handlers = arrayListOf<(Event2Arg<T1, T2>.(T1, T2) -> Unit)>()
+	operator fun plusAssign(handler: Event2Arg<T1, T2>.(T1, T2) -> Unit) { handlers.add(handler) }
+	operator fun minusAssign(handler: Event2Arg<T1, T2>.(T1, T2) -> Unit) { handlers.remove(handler) }
+	operator fun invoke(value1: T1, value2: T2) { for (handler in handlers) handler(value1, value2) }
+}

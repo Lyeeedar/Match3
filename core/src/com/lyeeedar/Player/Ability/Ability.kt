@@ -33,7 +33,7 @@ class Ability()
 	var targets = 1
 	var targetter: Targetter = Targetter(Targetter.Type.ORB)
 	var permuter: Permuter = Permuter(Permuter.Type.SINGLE)
-	var effect: Effect = Effect(Effect.Type.POP)
+	var effect: Effect = Effect(Effect.Type.TEST)
 
 	var flightSprite: Sprite? = null
 	var hitSprite: Sprite = AssetManager.loadSprite("EffectSprites/Explosion/Explosion", updateTime = 0.1f)

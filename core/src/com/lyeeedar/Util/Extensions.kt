@@ -1,10 +1,8 @@
 package com.lyeeedar.Util
 
 import com.badlogic.gdx.math.MathUtils
-import com.badlogic.gdx.utils.IntIntMap
-import com.badlogic.gdx.utils.IntMap
-import com.badlogic.gdx.utils.ObjectMap
-import com.badlogic.gdx.utils.XmlReader
+import com.badlogic.gdx.math.Vector2
+import com.badlogic.gdx.utils.*
 import java.util.*
 
 /**
@@ -20,6 +18,25 @@ fun <T> com.badlogic.gdx.utils.Array<T>.removeRandom(ran: Random): T
 
 	return item
 }
+
+fun getRotation(p1: Point, p2: Point) : Float
+{
+	val vec = Pools.obtain(Vector2::class.java)
+	vec.x = (p2.x - p1.x).toFloat()
+	vec.y = (p2.y - p1.y).toFloat()
+	vec.nor()
+	val x = vec.x
+	val y = vec.y
+	val dot = (0 * x + 1 * y).toDouble() // dot product
+	val det = (0 * y - 1 * x).toDouble() // determinant
+	val angle = Math.atan2(det, dot).toFloat() * MathUtils.radiansToDegrees
+	Pools.free(vec)
+
+	return angle
+}
+
+fun print(message: String) { System.out.println(message) }
+fun error(message: String) { System.err.println(message) }
 
 fun Float.abs() = Math.abs(this)
 fun Float.ciel() = MathUtils.ceil(this)

@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Widget
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener
 import com.lyeeedar.Board.Grid
 import com.lyeeedar.Board.Mote
+import com.lyeeedar.Board.Orb
 import com.lyeeedar.Direction
 import com.lyeeedar.Global
 import com.lyeeedar.Player.Ability.Targetter
@@ -22,6 +23,7 @@ import com.lyeeedar.Sprite.Sprite
 import com.lyeeedar.Sprite.SpriteRenderer
 import com.lyeeedar.Util.AssetManager
 import com.lyeeedar.Util.EnumBitflag
+import com.lyeeedar.Util.Future
 import com.lyeeedar.Util.Point
 
 /**
@@ -82,15 +84,15 @@ class GridWidget(val grid: Grid) : Widget()
 			}
 		})
 
-		grid.onPop += {
+		grid.onPop += fun (orb: Orb, delay: Float) {
 
-			val pos = pointToScreenspace(it)
+			val pos = pointToScreenspace(orb)
 			val dst = PowerBar.instance.getOrbDest()
 			val sprite = AssetManager.loadSprite("Oryx/uf_split/uf_items/crystal_sky")
 
 			if (dst != null)
 			{
-				Mote(pos, dst, sprite, { PowerBar.instance.power++ })
+				Future.call({Mote(pos, dst, sprite, { PowerBar.instance.power++ })}, delay)
 			}
 		}
 
@@ -240,7 +242,7 @@ class GridWidget(val grid: Grid) : Widget()
 					}
 					else
 					{
-						foreground.queueSprite(sprite, xi, yi, xp, yp, SpaceSlot.EFFECT, 0)
+						floating.queueSprite(sprite, xi, yi, xp, yp, SpaceSlot.EFFECT, 0)
 					}
 				}
 
@@ -253,7 +255,7 @@ class GridWidget(val grid: Grid) : Widget()
 						foreground.queueSprite(orb.sealSprite, xi, yi, xp, yp, SpaceSlot.ORB, 2, orbColour)
 					}
 
-					if (orb.armed)
+					if (orb.armed != null)
 					{
 						foreground.queueSprite(glow, xi, yi, xp, yp, SpaceSlot.ORB, 0)
 					}

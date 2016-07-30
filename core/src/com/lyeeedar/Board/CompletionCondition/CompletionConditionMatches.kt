@@ -10,6 +10,7 @@ import com.badlogic.gdx.utils.IntIntMap
 import com.badlogic.gdx.utils.IntMap
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Board.Grid
+import com.lyeeedar.Board.Orb
 import com.lyeeedar.Global
 import com.lyeeedar.Sprite.Sprite
 import com.lyeeedar.UI.SpriteWidget
@@ -69,12 +70,12 @@ class CompletionConditionMatches(): AbstractCompletionCondition()
 			}
 		}
 
-		grid.onPop += {
-			if (toBeMatched.containsKey(it.key))
+		grid.onPop += fun (orb: Orb, delay: Float ) {
+			if (toBeMatched.containsKey(orb.key))
 			{
-				var count = toBeMatched[it.key]
+				var count = toBeMatched[orb.key]
 				if (count > 0) count--
-				toBeMatched[it.key] = count
+				toBeMatched[orb.key] = count
 
 				rebuildWidget()
 			}

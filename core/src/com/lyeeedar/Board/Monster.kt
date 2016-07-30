@@ -52,7 +52,7 @@ class Monster
 			attackTimer = 0
 
 			// do attack
-			val tile = grid.grid.filter { it.orb != null && !it.orb!!.sinkable && it.orb!!.explosion == null }.random()
+			val tile = grid.grid.filter { it.orb != null && !it.orb!!.sinkable && it.orb!!.special == null }.random()
 
 			if (tile != null)
 			{

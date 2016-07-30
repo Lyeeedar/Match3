@@ -186,7 +186,6 @@ class Level(val loadPath: String)
 			}
 		}
 
-		grid.loadSpecials()
 		grid.fill()
 
 		for (x in 0..charGrid.xSize-1)
@@ -199,11 +198,11 @@ class Level(val loadPath: String)
 
 				if (char == '|')
 				{
-					orb!!.explosion = grid.specialOrbs.filter { it.dir == Direction.NORTH && it.count == 4 }.first()
+					orb!!.special = Vertical4(orb)
 				}
 				else if (char == '-')
 				{
-					orb!!.explosion = grid.specialOrbs.filter { it.dir == Direction.EAST && it.count == 4 }.first()
+					orb!!.special = Horizontal4(orb)
 				}
 				else if (char == '@')
 				{
@@ -237,13 +236,13 @@ class Level(val loadPath: String)
 
 			if (completed && completeFun != null)
 			{
-				Future.call(completeFun!!, 1.5f, this)
+				Future.call(completeFun!!, 0.5f, this)
 			}
 		}
 
 		if (completed && completeFun != null && !done)
 		{
-			Future.call(completeFun!!, 1.5f, this)
+			Future.call(completeFun!!, 0.5f, this)
 		}
 	}
 

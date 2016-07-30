@@ -1,6 +1,7 @@
 package com.lyeeedar.Sprite.SpriteAnimation
 
 import com.badlogic.gdx.math.MathUtils
+import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.Pool
 import com.badlogic.gdx.utils.Pools
 import com.badlogic.gdx.utils.XmlReader.Element
@@ -24,7 +25,7 @@ class StretchAnimation : AbstractSpriteAnimation
 	private var time: Float = 0f
 	private var diff: FloatArray? = null
 	private var finalScale: Float = 0.toFloat()
-	private var eqn: StretchEquation? = null
+	private var eqn: StretchEquation = StretchEquation.EXTEND
 	private var trueDuration: Float = 0.toFloat()
 	private var animSpeed = 0.2f
 	private var padding = 0.5f
@@ -37,8 +38,15 @@ class StretchAnimation : AbstractSpriteAnimation
 
 	}
 
-	fun set(duration: Float, diff: FloatArray?, padDuration: Float, eqn: StretchEquation): StretchAnimation
+	fun set(duration: Float, path: kotlin.Array<Vector2>?, padDuration: Float, eqn: StretchEquation): StretchAnimation
 	{
+		if (path != null)
+		{
+			val p1 = path.first()
+			val p2 = path.last()
+			diff = floatArrayOf(p2.x - p1.x, p2.y - p1.y)
+		}
+
 		var padDuration = padDuration
 
 		this.duration = duration + padDuration
@@ -49,7 +57,7 @@ class StretchAnimation : AbstractSpriteAnimation
 
 		if (diff != null)
 		{
-			val dist = Math.sqrt((diff[0] * diff[0] + diff[1] * diff[1]).toDouble()).toFloat() + 32 * 2
+			val dist = Math.sqrt((diff!![0] * diff!![0] + diff!![1] * diff!![1]).toDouble()).toFloat() + 32 * 2
 			finalScale = dist / 32 / 2.0f
 		}
 
@@ -85,8 +93,12 @@ class StretchAnimation : AbstractSpriteAnimation
 		return time > duration
 	}
 
-	fun set(duration: Float, diff: FloatArray)
+	fun set(duration: Float, path: kotlin.Array<Vector2>): StretchAnimation
 	{
+		val p1 = path.first()
+		val p2 = path.last()
+		diff = floatArrayOf(p2.x - p1.x, p2.y - p1.y)
+
 		var duration = duration
 		duration = (duration * animSpeed)
 		this.duration = duration + padding
@@ -94,8 +106,10 @@ class StretchAnimation : AbstractSpriteAnimation
 		this.diff = diff
 		this.time = 0f
 
-		val dist = Math.sqrt((diff[0] * diff[0] + diff[1] * diff[1]).toDouble()).toFloat() + 32 * 2
+		val dist = Math.sqrt((diff!![0] * diff!![0] + diff!![1] * diff!![1]).toDouble()).toFloat() + 32 * 2
 		finalScale = dist / 32 / 2.0f
+
+		return this
 	}
 
 	override fun copy(): AbstractSpriteAnimation

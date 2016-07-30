@@ -1,43 +1,59 @@
 <Specials>
 
+    <Match5>
+        <HitPattern>
+            <Row>.LUR.</Row>
+            <Row>.L@R.</Row>
+            <Row>.LDR.</Row>
+        </HitPattern>
+
+        <Icon>
+            <Name>Oryx/Custom/items/orb_hori</Name>
+            <DrawActualSize>true</DrawActualSize>
+        </Icon>
+
+        <Sprite>
+            <Name>EffectSprites/IceBurst/IceBurst</Name>
+            <UpdateRate>0.1</UpdateRate>
+        </Sprite>
+    </Match5>
+
     <Match4>
+        <HitPattern>
+            <Row>...</Row>
+            <Row>L@R</Row>
+            <Row>...</Row>
+        </HitPattern>
 
-        <NORTH>
-            <HitPattern>
-                <Row>...</Row>
-                <Row>L@R</Row>
-                <Row>...</Row>
-            </HitPattern>
+        <Icon>
+            <Name>Oryx/Custom/items/orb_hori</Name>
+            <DrawActualSize>true</DrawActualSize>
+        </Icon>
 
-            <Icon>
-                <Name>Oryx/Custom/items/orb_hori</Name>
-                <DrawActualSize>true</DrawActualSize>
-            </Icon>
-
-            <Sprite>
-                <Name>EffectSprites/IceBurst/IceBurst</Name>
-                <UpdateRate>0.1</UpdateRate>
-            </Sprite>
-        </NORTH>
-
-        <EAST>
-            <HitPattern>
-                <Row>.U.</Row>
-                <Row>.@.</Row>
-                <Row>.D.</Row>
-            </HitPattern>
-
-            <Icon>
-                <Name>Oryx/Custom/items/orb_vert</Name>
-                <DrawActualSize>true</DrawActualSize>
-            </Icon>
-
-            <Sprite>
-                <Name>EffectSprites/IceBurst/IceBurst</Name>
-                <UpdateRate>0.1</UpdateRate>
-            </Sprite>
-        </EAST>
-
+        <Sprite>
+            <Name>EffectSprites/IceBurst/IceBurst</Name>
+            <UpdateRate>0.1</UpdateRate>
+        </Sprite>
     </Match4>
+
+    <Match3x3>
+        <HitPattern>
+            <Row>..#..</Row>
+            <Row>.###.</Row>
+            <Row>##@##</Row>
+            <Row>.###.</Row>
+            <Row>..#..</Row>
+        </HitPattern>
+
+        <Icon>
+            <Name>Oryx/Custom/items/orb_hori</Name>
+            <DrawActualSize>true</DrawActualSize>
+        </Icon>
+
+        <Sprite>
+            <Name>EffectSprites/IceBurst/IceBurst</Name>
+            <UpdateRate>0.1</UpdateRate>
+        </Sprite>
+    </Match3x3>
 
 </Specials>

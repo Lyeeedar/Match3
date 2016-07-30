@@ -40,6 +40,8 @@ class Tile(x: Int, y: Int) : Point(x, y)
 
 	val effects: Array<Sprite> = Array()
 
+	val associatedMatches = kotlin.Array<Match?>(2) {e -> null}
+
 	override fun toString(): String
 	{
 		if (orb != null) return "o"

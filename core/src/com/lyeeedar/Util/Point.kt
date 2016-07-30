@@ -191,6 +191,7 @@ open class Point : Pool.Poolable, Comparable<Point>
 	operator fun minus(other: Point) = obtain().set(x - other.x, y - other.y)
 	operator fun times(other: Point) = obtain().set(x * other.x, y * other.y)
 	operator fun div(other: Point) = obtain().set(x / other.x, y / other.y)
+	operator fun div(other: Int) = obtain().set(x / other, y / other)
 
 	operator fun timesAssign(other: Int) { x *= other; y *= other; }
 

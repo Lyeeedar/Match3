@@ -23,7 +23,7 @@ class MapScreen(): AbstractScreen()
 		val map = generator.generate()
 		map.theme = LevelTheme.load("Dungeon")
 		val player = Player()
-		player.abilities[0] = Ability(icon = AssetManager.loadSprite("Icons/Action"), cost = 4, elite = false)
+		player.abilities[0] = Ability(icon = AssetManager.loadSprite("Icons/Action"), cost = 1, elite = false)
 		player.portrait = AssetManager.loadSprite("Oryx/Custom/heroes/Merc")
 
 		val dungeonWidget = DungeonMapWidget(map, player)
