@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.utils.Pool
 import com.badlogic.gdx.utils.Pools
 import com.badlogic.gdx.utils.XmlReader
+import com.lyeeedar.Util.fromHSV
 import com.lyeeedar.Util.random
 
 /**
@@ -29,9 +30,7 @@ class ChromaticAnimation() : AbstractColourAnimation()
 
 		val alpha = MathUtils.clamp(time / duration, 0f, 1f)
 
-		val rgb = java.awt.Color.HSBtoRGB(alpha, 1f, 1f)
-		Color.rgb888ToColor(colour, rgb)
-		colour.a = 1f
+		colour.fromHSV(alpha, 1f, 1f)
 
 		if (time >= duration)
 		{

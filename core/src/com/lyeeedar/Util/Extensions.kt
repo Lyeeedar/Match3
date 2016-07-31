@@ -1,5 +1,6 @@
 package com.lyeeedar.Util
 
+import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.*
@@ -52,3 +53,64 @@ fun XmlReader.Element.ranChild() = this.getChild(MathUtils.random(this.childCoun
 
 fun <T> Sequence<T>.random() = if (this.count() > 0) this.elementAt(MathUtils.random(this.count()-1)) else null
 fun <T> Sequence<T>.random(ran: Random) = if (this.count() > 0) this.elementAt(ran.nextInt(this.count())) else null
+
+fun Color.toHSV(out: FloatArray? = null): FloatArray
+{
+	val max = Math.max(this.r, Math.max(this.g, this.b))
+	val min = Math.min(this.r, Math.min(this.g, this.b))
+	val delta = max - min
+
+	val saturation = if (delta == 0f) 0f else delta / max
+	val hue = if (this.r == max) ((this.g - this.b) / delta) % 6
+				else if (this.g == max) 2 + (this.b - this.r) / delta
+					else 4 + (this.r - this.g) / delta
+	val value = max
+
+	val output = if (out != null && out.size >= 3) out else kotlin.FloatArray(3)
+	output[0] = (hue * 60f) / 360f
+	output[1] = saturation
+	output[2] = value
+
+	return output
+}
+
+fun Color.fromHSV(hsv: FloatArray)
+{
+	val hue = hsv[0]
+	val saturation = hsv[1]
+	val value = hsv[2]
+
+	this.fromHSV(hue, saturation, value)
+}
+
+fun Color.fromHSV(hue: Float, saturation: Float, value: Float)
+{
+	if (saturation == 0f)
+	{
+		this.set(value, value, value, 1f)
+		return
+	}
+
+	val h = (hue * 360) / 60f
+
+	val hi = MathUtils.floor(h).toInt()
+	val f = h - hi
+
+	val v = value
+	val p = value * (1f - saturation)
+	val q = value * (1f - f * saturation)
+	val t = value * (1f - (1f - f) * saturation)
+
+	if (hi == 0)
+		this.set(v, t, p, 1f)
+	else if (hi == 1)
+		this.set(q, v, p, 1f)
+	else if (hi == 2)
+		this.set(p, v, t, 1f)
+	else if (hi == 3)
+		this.set(p, q, v, 1f)
+	else if (hi == 4)
+		this.set(t, p, v, 1f)
+	else
+		this.set(v, p, q, 1f)
+}

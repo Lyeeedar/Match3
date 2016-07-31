@@ -6,6 +6,7 @@ import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Direction
 import com.lyeeedar.Sprite.Sprite
+import com.lyeeedar.Sprite.SpriteAnimation.BlinkAnimation
 import com.lyeeedar.Util.AssetManager
 import com.lyeeedar.Util.FastEnumMap
 import com.lyeeedar.Util.Point
@@ -29,6 +30,7 @@ class Orb(val desc: OrbDesc): Point()
 			{
 				val nsprite = value.sprite.copy()
 				nsprite.colour = sprite.colour
+				if (nsprite.colourAnimation == null) nsprite.colourAnimation = BlinkAnimation.obtain().set(nsprite.colour, 0.3f, 2.5f, false)
 
 				sprite = nsprite
 			}

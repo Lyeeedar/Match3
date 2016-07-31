@@ -5,6 +5,8 @@ import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.utils.Pool
 import com.badlogic.gdx.utils.Pools
 import com.badlogic.gdx.utils.XmlReader
+import com.lyeeedar.Util.fromHSV
+import com.lyeeedar.Util.toHSV
 
 /**
  * Created by Philip on 31-Jul-16.
@@ -45,6 +47,22 @@ class BlinkAnimation() : AbstractColourAnimation()
 		this.startColour.set(start)
 		this.duration = duration
 		this.oneTime = oneTime
+
+		this.time = 0f
+		this.colour.set(start)
+
+		return this
+	}
+
+	fun set(start: Color, diff: Float, duration: Float, oneTime: Boolean = true): BlinkAnimation
+	{
+		this.startColour.set(start)
+		this.duration = duration
+		this.oneTime = oneTime
+
+		val hsv = start.toHSV()
+		hsv[2] += diff
+		targetColour.fromHSV(hsv)
 
 		this.time = 0f
 		this.colour.set(start)

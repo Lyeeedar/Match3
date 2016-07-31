@@ -79,9 +79,18 @@ class Grid(val width: Int, val height: Int, val level: Level)
 			}
 		}
 
+	lateinit var updateFuns: kotlin.Array<() -> Boolean>
+
 	// ----------------------------------------------------------------------
 	init
 	{
+		updateFuns = arrayOf(
+				fun() = cascade(),
+				fun() = match(),
+				fun() = sink(),
+				fun() = detonate()
+		)
+
 		val xml = XmlReader().parse(Gdx.files.internal("Orbs/Orbs.xml"))
 
 		val template = xml.getChildByName("Template")
@@ -230,9 +239,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 
 		cascadeComplete = makeAnimations()
 
-		val sunkComplete = if (cascadeComplete) processSunk() else false
-
-		return cascadeComplete && sunkComplete
+		return cascadeComplete
 	}
 
 	// ----------------------------------------------------------------------
@@ -499,51 +506,38 @@ class Grid(val width: Int, val height: Int, val level: Level)
 
 		if (!hasAnim())
 		{
-			val cascadeComplete = cascade()
-
-			if (cascadeComplete)
+			for (f in updateFuns)
 			{
-				val matchComplete = match()
-
-				if (matchComplete)
+				val complete = f()
+				if (!complete)
 				{
-					val detonateComplete = detonate()
+					done = false
+					return done
+				}
+			}
 
-					if (detonateComplete)
-					{
-						if (!level.completed && FullscreenMessage.instance == null)
-						{
-							if (activeAbility == null) matchHint = findValidMove()
-							if (activeAbility == null && matchHint == null)
-							{
-								FullscreenMessage("No valid moves. Randomising.", "", { refill() }).show()
-							}
-							else
-							{
-								if (activeAbility == null) noMatchTimer += delta
-
-								// handle input
-								if (toSwap != null)
-								{
-									val swapSuccess = swap()
-									if (swapSuccess) onTurn()
-
-									noMatchTimer = 0f
-								}
-
-								onTime(delta)
-							}
-						}
-					}
+			if (!level.completed && FullscreenMessage.instance == null)
+			{
+				if (activeAbility == null) matchHint = findValidMove()
+				if (activeAbility == null && matchHint == null)
+				{
+					FullscreenMessage("No valid moves. Randomising.", "", { refill() }).show()
 				}
 				else
 				{
-					done = false
+					if (activeAbility == null) noMatchTimer += delta
+
+					// handle input
+					if (toSwap != null)
+					{
+						val swapSuccess = swap()
+						if (swapSuccess) onTurn()
+
+						noMatchTimer = 0f
+					}
+
+					onTime(delta)
 				}
-			}
-			else
-			{
-				done = false
 			}
 		}
 		else
@@ -798,7 +792,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 	}
 
 	// ----------------------------------------------------------------------
-	fun processSunk(): Boolean
+	fun sink(): Boolean
 	{
 		var complete = true
 

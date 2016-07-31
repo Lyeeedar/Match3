@@ -3,6 +3,7 @@ package com.lyeeedar.Board
 import com.badlogic.gdx.math.Interpolation
 import com.lyeeedar.Global
 import com.lyeeedar.Sprite.Sprite
+import com.lyeeedar.Sprite.SpriteAnimation.BlinkAnimation
 import com.lyeeedar.Sprite.SpriteAnimation.ChromaticAnimation
 import com.lyeeedar.Sprite.SpriteAnimation.MoveAnimation
 import com.lyeeedar.Util.AssetManager
@@ -185,7 +186,7 @@ class Match5(orb: Orb) : Special(orb)
 	init
 	{
 		sprite = AssetManager.loadSprite("Oryx/Custom/items/gem", drawActualSize = true)
-		sprite.colourAnimation = ChromaticAnimation.obtain().set(5f)
+		sprite.colourAnimation = ChromaticAnimation.obtain().set(15f)
 	}
 
 	override fun copy(orb: Orb): Special = Match5(orb)
