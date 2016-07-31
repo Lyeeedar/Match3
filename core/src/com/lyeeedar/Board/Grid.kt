@@ -13,9 +13,10 @@ import com.lyeeedar.Global
 import com.lyeeedar.Player.Ability.Ability
 import com.lyeeedar.SpaceSlot
 import com.lyeeedar.Sprite.Sprite
+import com.lyeeedar.Sprite.SpriteAnimation.AlphaAnimation
 import com.lyeeedar.Sprite.SpriteAnimation.BumpAnimation
+import com.lyeeedar.Sprite.SpriteAnimation.ExpandAnimation
 import com.lyeeedar.Sprite.SpriteAnimation.MoveAnimation
-import com.lyeeedar.Sprite.SpriteAnimation.StretchAnimation
 import com.lyeeedar.Sprite.SpriteRenderer
 import com.lyeeedar.Sprite.SpriteWrapper
 import com.lyeeedar.Sprite.TilingSprite
@@ -447,7 +448,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 
 					if (firstIsNull)
 					{
-						orb.sprite.spriteAnimation = StretchAnimation.obtain().set(animSpeed, null, 0f, StretchAnimation.StretchEquation.EXPAND)
+						orb.sprite.spriteAnimation = ExpandAnimation.obtain().set(animSpeed)
 						orb.sprite.showBeforeRender = false
 					}
 
@@ -628,6 +629,15 @@ class Grid(val width: Int, val height: Int, val level: Level)
 					{
 						tile.orb = null
 						onPop(orb, orb.deletionEffectDelay)
+
+						if (orb.deletionEffectDelay >= 0.2f)
+						{
+							val sprite = orb.sprite.copy()
+							sprite.renderDelay = orb.deletionEffectDelay - 0.2f
+							sprite.showBeforeRender = true
+							sprite.spriteAnimation = AlphaAnimation.obtain().set(floatArrayOf(1f, 0f), sprite.colour, 0.2f)
+							tile.effects.add(sprite)
+						}
 					}
 					else if (orb.hasAttack && orb.attackTimer == 0 && orb.sprite.spriteAnimation == null)
 					{

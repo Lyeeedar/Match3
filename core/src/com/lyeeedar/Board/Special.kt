@@ -3,8 +3,8 @@ package com.lyeeedar.Board
 import com.badlogic.gdx.math.Interpolation
 import com.lyeeedar.Global
 import com.lyeeedar.Sprite.Sprite
+import com.lyeeedar.Sprite.SpriteAnimation.ChromaticAnimation
 import com.lyeeedar.Sprite.SpriteAnimation.MoveAnimation
-import com.lyeeedar.Sprite.SpriteAnimation.StretchAnimation
 import com.lyeeedar.Util.AssetManager
 import com.lyeeedar.Util.Point
 import com.lyeeedar.Util.UnsmoothedPath
@@ -185,12 +185,15 @@ class Match5(orb: Orb) : Special(orb)
 	init
 	{
 		sprite = AssetManager.loadSprite("Oryx/Custom/items/gem", drawActualSize = true)
+		sprite.colourAnimation = ChromaticAnimation.obtain().set(5f)
 	}
 
 	override fun copy(orb: Orb): Special = Match5(orb)
 
 	override fun merge(other: Orb): ((point: Point, grid: Grid) -> Unit)?
 	{
+		if (other.sinkable) return null
+
 		val special = other.special
 		if (special != null)
 		{

@@ -3,8 +3,8 @@ package com.lyeeedar.Board
 import com.badlogic.gdx.graphics.Color
 import com.lyeeedar.Direction
 import com.lyeeedar.Sprite.Sprite
+import com.lyeeedar.Sprite.SpriteAnimation.BlinkAnimation
 import com.lyeeedar.Sprite.SpriteAnimation.BumpAnimation
-import com.lyeeedar.Sprite.SpriteAnimation.ColourAnimation
 import com.lyeeedar.Util.Array2D
 import com.lyeeedar.Util.AssetManager
 import com.lyeeedar.Util.random
@@ -20,7 +20,7 @@ class Monster
 		{
 			if (value < field)
 			{
-				sprite.colourAnimation = ColourAnimation.obtain().set(Color.RED, 0.15f, true)
+				sprite.colourAnimation = BlinkAnimation.obtain().set(Color.RED, sprite.colour, 0.15f, true)
 			}
 
 			field = value

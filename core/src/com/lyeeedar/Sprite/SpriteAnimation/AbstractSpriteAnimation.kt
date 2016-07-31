@@ -1,5 +1,6 @@
 package com.lyeeedar.Sprite.SpriteAnimation
 
+import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.utils.XmlReader
 import java.util.HashMap
 
@@ -9,16 +10,13 @@ import com.badlogic.gdx.utils.reflect.ReflectionException
 
 abstract class AbstractSpriteAnimation
 {
-	abstract fun duration(): Float
-
-	abstract fun time(): Float
-
 	abstract fun renderOffset(): FloatArray?
-
 	abstract fun renderScale(): FloatArray?
+	abstract fun renderColour(): Color?
 
+	abstract fun duration(): Float
+	abstract fun time(): Float
 	abstract fun update(delta: Float): Boolean
-
 	abstract fun parse(xml: Element)
 
 	abstract fun free()
@@ -43,7 +41,7 @@ abstract class AbstractSpriteAnimation
 			val type = when(name) {
 				"MOVE" -> MoveAnimation::class.java
 				"BOUNCE" -> BumpAnimation::class.java
-				"STRETCH" -> StretchAnimation::class.java
+				"BLINK" -> BlinkAnimation::class.java
 
 			// ARGH everything broke
 				else -> throw RuntimeException("Invalid sprite animation type: $name")

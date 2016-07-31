@@ -11,15 +11,13 @@ import com.lyeeedar.Global
 import com.lyeeedar.Util.Point
 import com.lyeeedar.Util.UnsmoothedPath
 
-class MoveAnimation : AbstractSpriteAnimation
+class MoveAnimation : AbstractMoveAnimation
 {
 	override fun duration(): Float = duration
 
 	override fun time(): Float = time
 
 	override fun renderOffset(): FloatArray? = offset
-
-	override fun renderScale(): FloatArray? = null
 
 	private lateinit var path: Path<Vector2>
 	private var eqn: Interpolation? = null
@@ -101,7 +99,7 @@ class MoveAnimation : AbstractSpriteAnimation
 
 	override fun copy(): AbstractSpriteAnimation
 	{
-		val anim = MoveAnimation()
+		val anim = MoveAnimation.obtain()
 		anim.eqn = eqn
 		anim.duration = duration
 		anim.path = path

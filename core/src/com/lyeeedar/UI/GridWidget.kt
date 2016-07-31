@@ -300,7 +300,7 @@ class GridWidget(val grid: Grid) : Widget()
 					foreground.queueSprite(frame, xi, yi, xp, yp, SpaceSlot.ORB, 0)
 				}
 
-				if (grid.noMatchTimer > 5f && grid.matchHint != null)
+				if (grid.noMatchTimer > 10f && grid.matchHint != null)
 				{
 					if (tile == grid.matchHint!!.first || tile == grid.matchHint!!.second)
 					{

@@ -36,7 +36,7 @@ class Sprite(var fileName: String, var animationDelay: Float, var textures: Arra
 	var batchID: Int = 0
 
 	var colour = Color(1f,1f,1f,1f)
-	var colourAnimation: ColourAnimation? = null
+	var colourAnimation: AbstractColourAnimation? = null
 
 	var renderDelay = -1f
 	var showBeforeRender = false
@@ -63,13 +63,17 @@ class Sprite(var fileName: String, var animationDelay: Float, var textures: Arra
 
 				fun merge(anim: AbstractSpriteAnimation)
 				{
-					if (anim is MoveAnimation || anim is BumpAnimation)
+					if (anim is AbstractMoveAnimation)
 					{
 						hybrid.offset = anim
 					}
-					else if (anim is StretchAnimation)
+					else if (anim is AbstractScaleAnimation)
 					{
 						hybrid.scale = anim
+					}
+					else if (anim is AbstractColourAnimation)
+					{
+						hybrid.colour = anim
 					}
 					else throw RuntimeException("No entry for sprite anim type")
 				}
@@ -186,7 +190,7 @@ class Sprite(var fileName: String, var animationDelay: Float, var textures: Arra
 
 		if (colourAnimation != null)
 		{
-			looped = colourAnimation!!.update(delta, colour)
+			val looped = colourAnimation!!.update(delta)
 			if (looped && colourAnimation!!.oneTime)
 			{
 				colourAnimation!!.free()
@@ -223,7 +227,7 @@ class Sprite(var fileName: String, var animationDelay: Float, var textures: Arra
 
 	fun render(batch: SpriteBatch, x: Float, y: Float, width: Float, height: Float, scaleX: Float, scaleY: Float, animationState: AnimationState)
 	{
-		val colour = if (colourAnimation != null) colourAnimation!!.colour else this.colour
+		val colour = if (colourAnimation != null) colourAnimation!!.renderColour()!! else if (spriteAnimation?.renderColour() != null) spriteAnimation!!.renderColour()!! else this.colour
 
 		var oldCol: Color? = null
 		if (colour.a == 0f)
@@ -301,10 +305,8 @@ class Sprite(var fileName: String, var animationDelay: Float, var textures: Arra
 	fun copy(): Sprite
 	{
 		val sprite = Sprite(fileName, animationDelay, textures, colour, animationState.mode, sound, drawActualSize)
-		if (spriteAnimation != null)
-		{
-			sprite.spriteAnimation = spriteAnimation!!.copy()
-		}
+		sprite.spriteAnimation = spriteAnimation?.copy()
+		sprite.colourAnimation = colourAnimation?.copy() as? AbstractColourAnimation
 
 		return sprite
 	}

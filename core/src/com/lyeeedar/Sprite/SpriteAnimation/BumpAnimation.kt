@@ -8,15 +8,13 @@ import com.badlogic.gdx.utils.XmlReader.Element
 import com.lyeeedar.Direction
 import com.lyeeedar.Global
 
-class BumpAnimation : AbstractSpriteAnimation
+class BumpAnimation : AbstractMoveAnimation
 {
 	override fun duration(): Float = duration
 
 	override fun time(): Float = time
 
 	override fun renderOffset(): FloatArray? = offset
-
-	override fun renderScale(): FloatArray? = null
 
 	private var direction: Direction? = null
 
