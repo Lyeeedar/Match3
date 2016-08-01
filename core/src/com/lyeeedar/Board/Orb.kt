@@ -30,7 +30,7 @@ class Orb(val desc: OrbDesc): Point()
 			{
 				val nsprite = value.sprite.copy()
 				nsprite.colour = sprite.colour
-				if (nsprite.colourAnimation == null) nsprite.colourAnimation = BlinkAnimation.obtain().set(nsprite.colour, 0.3f, 2.5f, false)
+				if (nsprite.colourAnimation == null) nsprite.colourAnimation = BlinkAnimation.obtain().set(nsprite.colour, 0.1f, 2.5f, false)
 
 				sprite = nsprite
 			}

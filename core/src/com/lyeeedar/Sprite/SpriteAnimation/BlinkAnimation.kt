@@ -5,8 +5,7 @@ import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.utils.Pool
 import com.badlogic.gdx.utils.Pools
 import com.badlogic.gdx.utils.XmlReader
-import com.lyeeedar.Util.fromHSV
-import com.lyeeedar.Util.toHSV
+import com.lyeeedar.Util.HSLColour
 
 /**
  * Created by Philip on 31-Jul-16.
@@ -17,8 +16,9 @@ class BlinkAnimation() : AbstractColourAnimation()
 	private var duration: Float = 0f
 	private var time: Float = 0f
 	private val colour: Color = Color()
-	private val targetColour: Color = Color()
-	private val startColour: Color = Color()
+	private val targetColour: HSLColour = HSLColour()
+	private val startColour: HSLColour = HSLColour()
+	private val tempColour: HSLColour = HSLColour()
 
 	override fun duration(): Float = duration
 	override fun time(): Float = time
@@ -30,7 +30,8 @@ class BlinkAnimation() : AbstractColourAnimation()
 
 		val alpha = MathUtils.clamp(Math.abs((time - duration / 2) / (duration / 2)), 0f, 1f)
 
-		colour.set(targetColour).lerp(startColour, alpha)
+		tempColour.set(targetColour).lerp(startColour, alpha)
+		tempColour.toRGB(colour)
 
 		if (time >= duration)
 		{
@@ -39,6 +40,19 @@ class BlinkAnimation() : AbstractColourAnimation()
 		}
 
 		return false
+	}
+
+	fun set(target: HSLColour, start: HSLColour, duration: Float, oneTime: Boolean = true): BlinkAnimation
+	{
+		this.targetColour.set(target)
+		this.startColour.set(start)
+		this.duration = duration
+		this.oneTime = oneTime
+
+		this.time = 0f
+		start.toRGB(colour)
+
+		return this
 	}
 
 	fun set(target: Color, start: Color, duration: Float, oneTime: Boolean = true): BlinkAnimation
@@ -60,9 +74,8 @@ class BlinkAnimation() : AbstractColourAnimation()
 		this.duration = duration
 		this.oneTime = oneTime
 
-		val hsv = start.toHSV()
-		hsv[2] += diff
-		targetColour.fromHSV(hsv)
+		targetColour.set(startColour)
+		targetColour.l += diff
 
 		this.time = 0f
 		this.colour.set(start)
