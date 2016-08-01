@@ -14,7 +14,7 @@ import com.lyeeedar.Util.random
  * Created by Philip on 22-Jul-16.
  */
 
-class Monster(desc: MonsterDesc)
+class Monster(val desc: MonsterDesc)
 {
 	var hp: Int = 1
 		set(value)

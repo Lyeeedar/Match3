@@ -44,8 +44,18 @@ class Orb(val desc: OrbDesc): Point()
 	var sealed = false
 
 	var hasAttack: Boolean = false
+		set(value)
+		{
+			if (!field && value)
+			{
+				field = value
+				val nsprite = AssetManager.loadSprite("Oryx/uf_split/uf_items/skull_small", drawActualSize = true)
+				nsprite.colour = sprite.colour
+				sprite = nsprite
+			}
+		}
+
 	var attackTimer = 0
-	var attackIcon = AssetManager.loadSprite("Oryx/uf_split/uf_items/weapon_magic_sword_hellfire", drawActualSize = true)
 
 	val sinkable: Boolean
 		get() = desc.sinkable

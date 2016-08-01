@@ -5,7 +5,7 @@
         <SmallRat>
 
             <Sprite>
-                <Name>Oryx/uf_split/uf_heroes/rat_giant</Name>
+                <Name>Oryx/uf_split/uf_heroes/rat</Name>
                 <DrawActualSize>true</DrawActualSize>
                 <UpdateRate>0.5</UpdateRate>
             </Sprite>

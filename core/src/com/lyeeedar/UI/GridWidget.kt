@@ -36,6 +36,7 @@ class GridWidget(val grid: Grid) : Widget()
 	val frame: Sprite = AssetManager.loadSprite("GUI/frame", colour = Color(0.6f, 0.7f, 0.9f, 0.6f))
 	val border: Sprite = AssetManager.loadSprite("GUI/border", colour = Color(0.6f, 0.9f, 0.6f, 0.6f))
 	val circle: Sprite = AssetManager.loadSprite("borderedcircle")
+	val white: Sprite = AssetManager.loadSprite("white")
 
 	val background: SpriteRenderer = SpriteRenderer()
 	val foreground: SpriteRenderer = SpriteRenderer()
@@ -288,6 +289,20 @@ class GridWidget(val grid: Grid) : Widget()
 					monster.sprite.size[0] = monster.size
 					monster.sprite.size[1] = monster.size
 					foreground.queueSprite(monster.sprite, xi, yi, xp, yp, SpaceSlot.ORB, 1, monsterColour)
+
+					// do hp bar
+					val solidSpaceRatio = 0.12f // 20% free space
+					val space = monster.size.toFloat()
+					val spacePerPip = space / monster.maxhp.toFloat()
+					val spacing = spacePerPip * solidSpaceRatio
+					val solid = spacePerPip - spacing
+
+					for (i in 0..monster.maxhp-1)
+					{
+						val col = tempCol.set(if (i < monster.hp) Color.RED else Color.LIGHT_GRAY)
+						col.a = 0.6f
+						foreground.queueSprite(white, xi+i*spacePerPip, yi, xp, yp, SpaceSlot.ORB, 2, col, width = solid, height = 0.15f)
+					}
 				}
 
 				if (block != null)

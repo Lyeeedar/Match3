@@ -60,7 +60,7 @@ class SpriteRenderer
 			val rs = heap.pop()
 
 			batch.color = rs.colour
-			rs.sprite.render(batch, rs.x + offsetx, rs.y + offsety, Global.tileSize, Global.tileSize )
+			rs.sprite.render(batch, rs.x + offsetx, rs.y + offsety, Global.tileSize * rs.width, Global.tileSize * rs.height )
 
 			rs.free()
 		}
@@ -69,7 +69,7 @@ class SpriteRenderer
 	}
 
 	// ----------------------------------------------------------------------
-	fun queueSprite(sprite: Sprite, ix: Float, iy: Float, offsetx: Float, offsety: Float, slot: SpaceSlot, index: Int, colour: Color = Color.WHITE, update: Boolean = true)
+	fun queueSprite(sprite: Sprite, ix: Float, iy: Float, offsetx: Float, offsety: Float, slot: SpaceSlot, index: Int, colour: Color = Color.WHITE, update: Boolean = true, width: Float = 1f, height: Float = 1f)
 	{
 		if (update)
 		{
@@ -91,7 +91,7 @@ class SpriteRenderer
 			}
 		}
 
-		val rs = RenderSprite.obtain().set( sprite, x, y, offsetx, offsety, slot, index, colour )
+		val rs = RenderSprite.obtain().set( sprite, x, y, offsetx, offsety, slot, index, colour, width, height )
 
 		heap.add( rs, rs.comparisonVal )
 	}
@@ -108,15 +108,19 @@ class RenderSprite : BinaryHeap.Node(0f)
 	lateinit var sprite: Sprite
 	var x: Float = 0f
 	var y: Float = 0f
+	var width: Float = 1f
+	var height: Float = 1f
 
 	var comparisonVal: Float = 0f
 
-	operator fun set(sprite: Sprite, x: Float, y: Float, offsetx: Float, offsety: Float, slot: SpaceSlot, index: Int, colour: Color): RenderSprite
+	operator fun set(sprite: Sprite, x: Float, y: Float, offsetx: Float, offsety: Float, slot: SpaceSlot, index: Int, colour: Color, width: Float, height: Float): RenderSprite
 	{
 		this.colour.set(colour)
 		this.sprite = sprite
 		this.x = x
 		this.y = y
+		this.width = width
+		this.height = height
 
 		val bx = (x - offsetx).toFloat() / Global.tileSize
 		val by = (y - offsety).toFloat() / Global.tileSize

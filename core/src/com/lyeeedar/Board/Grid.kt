@@ -93,6 +93,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 		}
 
 	lateinit var updateFuns: kotlin.Array<() -> Boolean>
+	var inTurn = false
 
 	// ----------------------------------------------------------------------
 	init
@@ -529,6 +530,12 @@ class Grid(val width: Int, val height: Int, val level: Level)
 				}
 			}
 
+			if (inTurn)
+			{
+				onTurn()
+				inTurn = false
+			}
+
 			if (!level.completed && FullscreenMessage.instance == null)
 			{
 				if (queuedAbility != null)
@@ -550,7 +557,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 					if (toSwap != null)
 					{
 						val swapSuccess = swap()
-						if (swapSuccess) onTurn()
+						if (swapSuccess) inTurn = true
 
 						noMatchTimer = 0f
 					}
@@ -655,7 +662,8 @@ class Grid(val width: Int, val height: Int, val level: Level)
 					else if (orb.hasAttack && orb.attackTimer == 0 && orb.sprite.spriteAnimation == null)
 					{
 						onAttacked(orb)
-						orb.hasAttack = false
+						tile.orb = null
+						onPop(orb, orb.deletionEffectDelay)
 					}
 				}
 				else if (tile.block != null)

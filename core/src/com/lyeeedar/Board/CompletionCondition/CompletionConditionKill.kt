@@ -6,17 +6,21 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable
 import com.badlogic.gdx.utils.Array
+import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Board.Grid
 import com.lyeeedar.Board.Monster
+import com.lyeeedar.Board.MonsterDesc
 import com.lyeeedar.Global
 import com.lyeeedar.UI.SpriteWidget
 import com.lyeeedar.Util.AssetManager
+import com.lyeeedar.Util.set
 
 
 class CompletionConditionKill() : AbstractCompletionCondition()
 {
 	var monsters = Array<Monster>()
+	var monsterMap = ObjectMap<MonsterDesc, Int>()
 
 	val table = Table()
 
@@ -60,14 +64,30 @@ class CompletionConditionKill() : AbstractCompletionCondition()
 
 		table.background = NinePatchDrawable(NinePatch(AssetManager.loadTextureRegion("GUI/TilePanel"), 6, 6, 6, 6))
 
+		monsterMap.clear()
+
 		for (monster in monsters)
 		{
-			val sprite = monster.sprite.copy()
-			val hp = monster.hp
-			val max = monster.maxhp
+			if (!monsterMap.containsKey(monster.desc))
+			{
+				monsterMap[monster.desc] = 0
+			}
+
+			var count = monsterMap[monster.desc]
+			if (monster.hp > 0)
+			{
+				count++
+			}
+			monsterMap[monster.desc] = count
+		}
+
+		for (monster in monsterMap)
+		{
+			val sprite = monster.key.sprite.copy()
+			val count = monster.value
 
 			table.add(SpriteWidget(sprite, 24, 24))
-			table.add(Label("$hp/$max", Global.skin))
+			table.add(Label(" x $count", Global.skin))
 		}
 	}
 

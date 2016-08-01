@@ -36,7 +36,6 @@ fun getRotation(p1: Point, p2: Point) : Float
 	return angle
 }
 
-fun print(message: String) { System.out.println(message) }
 fun error(message: String) { System.err.println(message) }
 
 fun Float.abs() = Math.abs(this)
