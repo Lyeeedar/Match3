@@ -35,6 +35,8 @@ class Mote(val pos: Vector2, dst: Vector2, val sprite: Sprite, val function: () 
 		path = Bezier(p0, p1, p2, p3)
 
 		Global.stage.addActor(this)
+
+		moteCount++
 	}
 
 	override fun act(delta: Float)
@@ -49,6 +51,7 @@ class Mote(val pos: Vector2, dst: Vector2, val sprite: Sprite, val function: () 
 			done = true
 			function()
 			remove()
+			moteCount--
 		}
 
 		val alpha = time / duration
@@ -61,5 +64,10 @@ class Mote(val pos: Vector2, dst: Vector2, val sprite: Sprite, val function: () 
 		super.draw(batch, parentAlpha)
 
 		sprite.render(batch as SpriteBatch, pos.x, pos.y, 32f, 32f)
+	}
+
+	companion object
+	{
+		var moteCount = 0
 	}
 }

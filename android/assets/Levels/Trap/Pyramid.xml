@@ -35,7 +35,8 @@
         <Harm>5</Harm>
     </DefeatActions>
 
-    <Type>BAD</Type>
+    <Type>Trap</Type>
+    <Category>BAD</Category>
 
     <UncompletedMapSprite>
         <Name>Oryx/Custom/dungeonmap/spiketrap</Name>

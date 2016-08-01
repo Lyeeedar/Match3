@@ -1,6 +1,7 @@
 package com.lyeeedar.Board
 
 import com.badlogic.gdx.graphics.Color
+import com.badlogic.gdx.math.MathUtils
 import com.lyeeedar.Direction
 import com.lyeeedar.Sprite.Sprite
 import com.lyeeedar.Sprite.SpriteAnimation.BlinkAnimation
@@ -13,9 +14,9 @@ import com.lyeeedar.Util.random
  * Created by Philip on 22-Jul-16.
  */
 
-class Monster
+class Monster(desc: MonsterDesc)
 {
-	var hp = 10
+	var hp: Int = 1
 		set(value)
 		{
 			if (value < field)
@@ -27,7 +28,12 @@ class Monster
 			if (field < 0) field = 0
 		}
 
-	var maxhp = 10
+	var maxhp: Int = 1
+		set(value)
+		{
+			field = value
+			hp = value
+		}
 
 	var size = 2
 		set(value)
@@ -38,18 +44,31 @@ class Monster
 
 	lateinit var tiles: Array2D<Tile>
 
-	var sprite: Sprite = AssetManager.loadSprite("Oryx/uf_split/uf_heroes/rat_giant", updateTime = 0.5f, drawActualSize = true)
+	lateinit var sprite: Sprite
+	lateinit var death: Sprite
 
-	var attackSpeed = 5
-	var attackRate = 1
-	var attackTimer = 0
+	var attackSpeed: Int = 5
+	var attackDelay: Float = 5f
+	var attackAccumulator: Float = 1f
+
+	init
+	{
+		attackSpeed = desc.attackSpeed
+		attackDelay = desc.attackDelay
+		size = desc.size
+		sprite = desc.sprite.copy()
+		death = desc.death.copy()
+		maxhp = desc.hp
+
+		attackAccumulator = MathUtils.random() * attackDelay
+	}
 
 	fun onTurn(grid: Grid)
 	{
-		attackTimer++
-		if (attackTimer == attackRate)
+		attackAccumulator += 1f
+		if (attackAccumulator >= attackDelay)
 		{
-			attackTimer = 0
+			attackAccumulator -= attackDelay
 
 			// do attack
 			val tile = grid.grid.filter { it.orb != null && !it.orb!!.sinkable && it.orb!!.special == null }.random()

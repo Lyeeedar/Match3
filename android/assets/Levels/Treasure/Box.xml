@@ -23,7 +23,8 @@
         <Money>25</Money>
     </VictoryActions>
 
-    <Type>Good</Type>
+    <Type>Treasure</Type>
+    <Category>GOOD</Category>
 
     <UncompletedMapSprite>
         <Name>Oryx/Custom/dungeonmap/treasure</Name>

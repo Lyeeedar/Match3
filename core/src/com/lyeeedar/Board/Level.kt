@@ -37,7 +37,8 @@ class Level(val loadPath: String)
 	val victoryActions: Array<AbstractCompletionAction> = Array()
 
 	lateinit var rarity: Rarity
-	lateinit var type: DungeonMapEntry.Type
+	lateinit var category: DungeonMapEntry.Type
+	lateinit var type: String
 	var maxCountPerMap: Int = Int.MAX_VALUE
 	var minDepth: Int = 0
 	var maxDepth: Int = Int.MAX_VALUE
@@ -110,6 +111,9 @@ class Level(val loadPath: String)
 
 		if (hasMonster)
 		{
+			val chosenFactionName = theme.allowedFactions.random()!!
+			val chosenFaction = Faction.load(chosenFactionName)
+
 			// iterate through and find groups
 			val blocks = Array<Array<Tile>>()
 
@@ -167,7 +171,8 @@ class Level(val loadPath: String)
 				if (w != h) throw Exception("Non-square monster!")
 
 				val size = w
-				val monster = Monster() // this should be a lookup thing, but ignore that for now
+				val monsterDesc = if (size == 1) chosenFaction.size1.random() else chosenFaction.size2.random()
+				val monster =  Monster(monsterDesc)
 				monster.size = size
 
 				for (x in 0..size-1)
@@ -221,15 +226,9 @@ class Level(val loadPath: String)
 
 		if (!completed && done)
 		{
-			if (victory.isCompleted())
+			if (victory.isCompleted() || defeat.isCompleted())
 			{
-				completeFun = {completeFun = null; FullscreenMessage(victoryText, "", { Global.game.switchScreen(MainGame.ScreenEnum.MAP); victoryActions.forEach { it.apply(player) } }).show()}
-				completed = true
-				onComplete()
-			}
-			else if (defeat.isCompleted())
-			{
-				completeFun = {completeFun = null; FullscreenMessage(defeatText, "", { Global.game.switchScreen(MainGame.ScreenEnum.MAP); defeatActions.forEach { it.apply(player) } }).show()}
+				completeFun = {complete()}
 				completed = true
 				onComplete()
 			}
@@ -240,9 +239,22 @@ class Level(val loadPath: String)
 			}
 		}
 
-		if (completed && completeFun != null && !done)
+		if (completed && completeFun != null && (!done || Mote.moteCount > 0))
 		{
 			Future.call(completeFun!!, 0.5f, this)
+		}
+	}
+
+	fun complete()
+	{
+		completeFun = null
+		if (victory.isCompleted())
+		{
+			FullscreenMessage(victoryText, "", { Global.game.switchScreen(MainGame.ScreenEnum.MAP); victoryActions.forEach { it.apply(player) } }).show()
+		}
+		else if (defeat.isCompleted())
+		{
+			FullscreenMessage(defeatText, "", { Global.game.switchScreen(MainGame.ScreenEnum.MAP); defeatActions.forEach { it.apply(player) } }).show()
 		}
 	}
 
@@ -300,7 +312,8 @@ class Level(val loadPath: String)
 			}
 
 			level.rarity = Rarity.valueOf(xml.get("Rarity", "COMMON").toUpperCase())
-			level.type = DungeonMapEntry.Type.valueOf(xml.get("Type").toUpperCase())
+			level.category = DungeonMapEntry.Type.valueOf(xml.get("Category").toUpperCase())
+			level.type = xml.get("Type")
 			level.maxCountPerMap = xml.getInt("MaxCountPerMap", level.maxCountPerMap)
 			level.minDepth = xml.getInt("MinDepth", level.minDepth)
 			level.maxDepth = xml.getInt("MaxDepth", level.maxDepth)
@@ -323,7 +336,7 @@ class Level(val loadPath: String)
 				val path = el.text
 				val level = load(path)
 
-				levels[level.type].add(level)
+				levels[level.category].add(level)
 			}
 
 			return levels

@@ -60,6 +60,9 @@ class Grid(val width: Int, val height: Int, val level: Level)
 	var matchHint: Pair<Point, Point>? = null
 
 	// ----------------------------------------------------------------------
+	val hitSprite = AssetManager.loadSprite("EffectSprites/Hit/Hit", 0.1f)
+
+	// ----------------------------------------------------------------------
 	var activeAbility: Ability? = null
 		set(value)
 		{
@@ -76,6 +79,16 @@ class Grid(val width: Int, val height: Int, val level: Level)
 			{
 				tile(selected)?.isSelected = false
 				selected = Point.MINUS_ONE
+			}
+		}
+	var queuedAbility: Ability? = null
+		set(value)
+		{
+			field = value
+
+			for (tile in grid)
+			{
+				tile.isSelected = false
 			}
 		}
 
@@ -518,6 +531,12 @@ class Grid(val width: Int, val height: Int, val level: Level)
 
 			if (!level.completed && FullscreenMessage.instance == null)
 			{
+				if (queuedAbility != null)
+				{
+					activeAbility = queuedAbility
+					queuedAbility = null
+				}
+
 				if (activeAbility == null) matchHint = findValidMove()
 				if (activeAbility == null && matchHint == null)
 				{
@@ -657,6 +676,12 @@ class Grid(val width: Int, val height: Int, val level: Level)
 						{
 							t.monster = null
 						}
+
+						val death = monster.death
+						death.size[0] = monster.size
+						death.size[1] = monster.size
+
+						tile.effects.add(death)
 					}
 				}
 			}
@@ -1089,11 +1114,15 @@ class Grid(val width: Int, val height: Int, val level: Level)
 				if (t.block != null)
 				{
 					t.block!!.count--
+
+					t.effects.add(hitSprite.copy())
 				}
 				if (t.monster != null)
 				{
 					t.monster!!.hp--
 					onDamaged(t.monster!!)
+
+					t.effects.add(hitSprite.copy())
 				}
 			}
 		}

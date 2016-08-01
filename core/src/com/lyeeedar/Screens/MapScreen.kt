@@ -19,9 +19,9 @@ class MapScreen(): AbstractScreen()
 {
 	override fun create()
 	{
+		val theme = LevelTheme.load("Dungeon")
 		val generator = HubGenerator()
-		val map = generator.generate()
-		map.theme = LevelTheme.load("Dungeon")
+		val map = generator.generate(theme)
 		val player = Player()
 		player.abilities[0] = Ability(icon = AssetManager.loadSprite("Icons/Action"), cost = 1, elite = false)
 		player.portrait = AssetManager.loadSprite("Oryx/Custom/heroes/Merc")

@@ -1,0 +1,53 @@
+<Faction>
+
+    <Monsters>
+
+        <SmallRat>
+
+            <Sprite>
+                <Name>Oryx/uf_split/uf_heroes/rat_giant</Name>
+                <DrawActualSize>true</DrawActualSize>
+                <UpdateRate>0.5</UpdateRate>
+            </Sprite>
+
+            <Death>
+                <Name>EffectSprites/Splatter/Splatter</Name>
+                <UpdateRate>0.1</UpdateRate>
+                <Colour><RGB>133,0,23</RGB></Colour>
+            </Death>
+
+            <AttackDelay>5.5</AttackDelay>
+            <AttackSpeed>6</AttackSpeed>
+
+            <Size>1</Size>
+
+            <HP>10</HP>
+
+        </SmallRat>
+
+        <GiantRat>
+
+            <Sprite>
+                <Name>Oryx/uf_split/uf_heroes/rat_giant</Name>
+                <DrawActualSize>true</DrawActualSize>
+                <UpdateRate>0.5</UpdateRate>
+            </Sprite>
+
+            <Death>
+                <Name>EffectSprites/Splatter/Splatter</Name>
+                <UpdateRate>0.1</UpdateRate>
+                <Colour><RGB>133,0,23</RGB></Colour>
+            </Death>
+
+            <AttackDelay>5</AttackDelay>
+            <AttackSpeed>5</AttackSpeed>
+
+            <Size>2</Size>
+
+            <HP>25</HP>
+
+        </GiantRat>
+
+    </Monsters>
+
+</Faction>

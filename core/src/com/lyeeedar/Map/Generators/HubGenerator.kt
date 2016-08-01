@@ -3,6 +3,7 @@ package com.lyeeedar.Map.Generators
 import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.ObjectMap
 import com.lyeeedar.Board.Level
+import com.lyeeedar.Board.LevelTheme
 import com.lyeeedar.Direction
 import com.lyeeedar.Map.DungeonMap
 import com.lyeeedar.Map.DungeonMapEntry
@@ -20,10 +21,11 @@ class HubGenerator
 	val maxCorridorLength = 4
 	val maxDepth = 10
 
-	fun generate(): DungeonMap
+	fun generate(theme: LevelTheme): DungeonMap
 	{
 		val map = DungeonMap()
 
+		map.theme = theme
 		map.objective = ObjectiveExplore()
 
 		val hub = DungeonMapEntry()
@@ -118,6 +120,7 @@ class HubGenerator
 		fun assignLevels(type: DungeonMapEntry.Type, rooms: Array<DungeonMapEntry>)
 		{
 			val used = ObjectMap<Level, Int>()
+			val weights = theme.roomWeights[type]
 
 			for (room in rooms)
 			{
@@ -129,8 +132,12 @@ class HubGenerator
 
 					val usedCount = used.get(level, 0)
 					if (usedCount >= level.maxCountPerMap) continue
+					val weight = weights[level.type, 1]
 
-					for (i in 0..level.rarity.ordinal) valid.add(level)
+					for (w in 1..weight)
+					{
+						for (i in 0..level.rarity.ordinal) valid.add(level)
+					}
 				}
 
 				if (valid.size > 0)

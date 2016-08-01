@@ -1,11 +1,16 @@
 package com.lyeeedar.Board
 
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.utils.Array
+import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.XmlReader
+import com.lyeeedar.Map.DungeonMapEntry
 import com.lyeeedar.Sprite.DirectedSprite
 import com.lyeeedar.Sprite.Sprite
 import com.lyeeedar.Sprite.SpriteWrapper
 import com.lyeeedar.Util.AssetManager
+import com.lyeeedar.Util.FastEnumMap
+import com.lyeeedar.Util.set
 
 /**
  * Created by Philip on 13-Jul-16.
@@ -19,6 +24,9 @@ class LevelTheme
 
 	lateinit var mapRoom: DirectedSprite
 	lateinit var mapCorridor: DirectedSprite
+
+	val allowedFactions = Array<String>()
+	val roomWeights = FastEnumMap<DungeonMapEntry.Type, ObjectMap<String, Int>>(DungeonMapEntry.Type::class.java)
 
 	companion object
 	{
@@ -34,6 +42,29 @@ class LevelTheme
 			val mapEl = xml.getChildByName("Map")
 			theme.mapRoom = DirectedSprite.load(mapEl.getChildByName("Room").getChild(0))
 			theme.mapCorridor = DirectedSprite.load(mapEl.getChildByName("Corridor").getChild(0))
+
+			val factionsEl = xml.getChildByName("AllowedFactions")
+			for (i in 0..factionsEl.childCount-1)
+			{
+				val el = factionsEl.getChild(i)
+				theme.allowedFactions.add(el.name)
+			}
+
+			val weightsEl = xml.getChildByName("RoomWeights")
+			for (i in 0..weightsEl.childCount-1)
+			{
+				val typeEl = weightsEl.getChild(i)
+				val type = DungeonMapEntry.Type.valueOf(typeEl.name.toUpperCase())
+
+				theme.roomWeights[type] = ObjectMap()
+				val map = theme.roomWeights[type]
+
+				for (ii in 0..typeEl.childCount-1)
+				{
+					val el = typeEl.getChild(ii)
+					map[el.name] = el.text.toInt()
+				}
+			}
 
 			return theme
 		}

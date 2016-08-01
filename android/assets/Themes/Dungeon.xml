@@ -45,4 +45,22 @@
         <Room><DirectedSprite>Oryx/Custom/dungeonmap/stone_room</DirectedSprite></Room>
         <Corridor><DirectedSprite>Oryx/Custom/dungeonmap/stone_corridor</DirectedSprite></Corridor>
     </Map>
+
+    <AllowedFactions>
+        <Rats></Rats>
+    </AllowedFactions>
+
+    <RoomWeights>
+
+        <Good>
+            <Treasure>1</Treasure>
+        </Good>
+
+        <Bad>
+            <Encounter>2</Encounter>
+            <Trap>1</Trap>
+        </Bad>
+
+    </RoomWeights>
+
 </Theme>
