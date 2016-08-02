@@ -264,7 +264,7 @@ class GridWidget(val grid: Grid) : Widget()
 					if (orb.hasAttack)
 					{
 						val cx = xi + (orb.sprite.spriteAnimation?.renderOffset()?.get(0) ?: 0f) / Global.tileSize
-						val cy = yi + 0.225f + (orb.sprite.spriteAnimation?.renderOffset()?.get(1) ?: 0f) / Global.tileSize
+						val cy = yi + 0.15f + (orb.sprite.spriteAnimation?.renderOffset()?.get(1) ?: 0f) / Global.tileSize
 
 						val currentPoint = Vector2(0f, 0.4f)
 
@@ -301,7 +301,7 @@ class GridWidget(val grid: Grid) : Widget()
 					{
 						val col = tempCol.set(if (i < monster.hp) Color.RED else Color.LIGHT_GRAY)
 						col.a = 0.6f
-						foreground.queueSprite(white, xi+i*spacePerPip, yi, xp, yp, SpaceSlot.ORB, 2, col, width = solid, height = 0.15f)
+						foreground.queueSprite(white, xi+i*spacePerPip, yi+0.1f, xp, yp, SpaceSlot.ORB, 2, col, width = solid, height = 0.15f)
 					}
 				}
 

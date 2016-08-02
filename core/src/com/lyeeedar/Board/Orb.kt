@@ -67,6 +67,7 @@ class Orb(val desc: OrbDesc): Point()
 
 	val movePoints = Array<Point>()
 	var spawnCount = -1
+	var cascadeCount = 0
 
 	override fun toString(): String
 	{

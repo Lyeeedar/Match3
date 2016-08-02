@@ -236,9 +236,29 @@ class Grid(val width: Int, val height: Int, val level: Level)
 	// ----------------------------------------------------------------------
 	fun cascade(): Boolean
 	{
-		for (x in 0..width - 1) for (y in 0..height -1 ) spawnCount[x, y] = 0
+		for (x in 0..width - 1) for (y in 0..height -1 )
+		{
+			spawnCount[x, y] = 0
+
+			val tile = grid[x, y]
+			val orb = tile.orb
+
+			if (orb != null)
+			{
+				if (orb.cascadeCount == -1)
+				{
+					orb.cascadeCount = 1
+				}
+				else
+				{
+					orb.cascadeCount = 0
+				}
+			}
+		}
 
 		var cascadeComplete = false
+
+		var cascadeCount = 0
 
 		while (!cascadeComplete)
 		{
@@ -246,9 +266,11 @@ class Grid(val width: Int, val height: Int, val level: Level)
 
 			for (x in 0..width - 1)
 			{
-				val done = cascadeColumn(x)
+				val done = cascadeColumn(x, cascadeCount)
 				if (!done) cascadeComplete = false
 			}
+
+			cascadeCount++
 		}
 
 		cascadeComplete = makeAnimations()
@@ -257,7 +279,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 	}
 
 	// ----------------------------------------------------------------------
-	fun cascadeColumn(x: Int) : Boolean
+	fun cascadeColumn(x: Int, cascadeCount: Int) : Boolean
 	{
 		var complete = true
 
@@ -345,6 +367,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 					{
 						orb.movePoints.add(tile)
 						tile.orb = orb
+						orb.cascadeCount = cascadeCount
 
 						complete = false
 					}
@@ -399,6 +422,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 							if (orb.movePoints.size == 0) orb.movePoints.add(t)
 
 							tile.orb = orb
+							orb.cascadeCount = cascadeCount
 
 							orb.movePoints.add(tile)
 
@@ -587,6 +611,9 @@ class Grid(val width: Int, val height: Int, val level: Level)
 		val oldOrb = oldTile.orb ?: return false
 		val newOrb = newTile.orb ?: return false
 		if (oldOrb.sealed || newOrb.sealed) return false
+
+		oldOrb.cascadeCount = -1
+		newOrb.cascadeCount = -1
 
 		// check for merges
 		if (newOrb.special != null || oldOrb.special != null)
@@ -1146,6 +1173,11 @@ class Grid(val width: Int, val height: Int, val level: Level)
 
 				if (tile.orb != null)
 				{
+					if (tile.orb!!.special != null)
+					{
+						orb.armed = orb.special!!.merge(tile.orb!!) ?: tile.orb!!.special!!.merge(orb)
+					}
+
 					tile.orb!!.x = tile.x
 					tile.orb!!.y = tile.y
 					onPop(tile.orb!!, 0f)
@@ -1181,7 +1213,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 		{
 			if (!match.used && match.length() > 3)
 			{
-				val tile = grid[(match.p1 + (match.p2 - match.p1)/2)]
+				val tile = grid[match.points().maxBy { grid[it].orb?.cascadeCount ?: 0 }!!]
 
 				val orb = Orb(tile.orb!!.desc)
 				val special = getSpecial(match.length(), 0, match.direction(), orb) ?: continue
@@ -1189,6 +1221,11 @@ class Grid(val width: Int, val height: Int, val level: Level)
 
 				if (tile.orb != null)
 				{
+					if (tile.orb!!.special != null)
+					{
+						orb.armed = orb.special!!.merge(tile.orb!!) ?: tile.orb!!.special!!.merge(orb)
+					}
+
 					tile.orb!!.x = tile.x
 					tile.orb!!.y = tile.y
 					onPop(tile.orb!!, 0f)

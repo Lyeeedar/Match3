@@ -120,7 +120,13 @@ class HubGenerator
 		fun assignLevels(type: DungeonMapEntry.Type, rooms: Array<DungeonMapEntry>)
 		{
 			val used = ObjectMap<Level, Int>()
-			val weights = theme.roomWeights[type]
+			val weights = theme.roomWeights[type] ?: return
+			val typeList = Array<String>()
+			for (weight in weights)
+			{
+				for (i in 1..weight.value) typeList.add(weight.key)
+			}
+			val chosenType = typeList.random()
 
 			for (room in rooms)
 			{
@@ -128,16 +134,12 @@ class HubGenerator
 				val valid = Array<Level>()
 				for (level in levels[type])
 				{
-					if (level.minDepth > room.depth || level.maxDepth < room.depth) continue
+					if (level.minDepth > room.depth || level.maxDepth < room.depth || level.type != chosenType) continue
 
 					val usedCount = used.get(level, 0)
 					if (usedCount >= level.maxCountPerMap) continue
-					val weight = weights[level.type, 1]
 
-					for (w in 1..weight)
-					{
-						for (i in 0..level.rarity.ordinal) valid.add(level)
-					}
+					for (i in 0..level.rarity.ordinal) valid.add(level)
 				}
 
 				if (valid.size > 0)
