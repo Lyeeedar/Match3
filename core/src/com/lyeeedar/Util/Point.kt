@@ -77,7 +77,7 @@ open class Point : Pool.Poolable, Comparable<Point>
 		@JvmField val MAX = Point(Int.MAX_VALUE, Int.MAX_VALUE, true)
 		@JvmField val MIN = Point(-Int.MAX_VALUE, -Int.MAX_VALUE, true)
 
-        private val pool: Pool<Point> = Pools.get( Point::class.java, Int.MAX_VALUE )
+        private val pool: Pool<Point> = getPool()
 
         @JvmStatic fun obtain(): Point
 		{

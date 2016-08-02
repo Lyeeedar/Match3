@@ -61,6 +61,53 @@ class MoveAnimation : AbstractMoveAnimation
 		return time > duration
 	}
 
+	fun set(duration: Float, path: Array<Vector2>): MoveAnimation
+	{
+		for (point in path)
+		{
+			point.x -= path.last().x
+			point.y -= path.last().y
+		}
+
+		this.duration = duration
+		this.time = 0f
+		this.path = UnsmoothedPath(path)
+		this.eqn = Interpolation.linear
+
+		time = 0f
+
+		update(0f)
+
+		return this
+	}
+
+	fun set(duration: Float, path: Array<Point>): MoveAnimation
+	{
+		val vectorPath = com.badlogic.gdx.utils.Array<Vector2>()
+
+		for (point in path)
+		{
+			point.x -= path.last().x
+			point.y -= path.last().y
+
+			vectorPath.add(Vector2(point.x * Global.tileSize, point.y * Global.tileSize))
+		}
+
+		val asArray = Array<Vector2>(vectorPath.size) { i -> vectorPath[i] }
+
+		this.duration = duration
+		this.time = 0f
+		this.path = UnsmoothedPath(asArray)
+		this.eqn = Interpolation.linear
+
+		time = 0f
+
+		update(0f)
+
+		return this
+	}
+
+
 	fun set(duration: Float, path: Path<Vector2>): MoveAnimation
 	{
 		this.duration = duration

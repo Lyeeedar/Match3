@@ -6,6 +6,7 @@ import com.badlogic.gdx.files.FileHandle
 import com.lyeeedar.Screens.AbstractScreen
 import com.lyeeedar.Screens.GridScreen
 import com.lyeeedar.Screens.MapScreen
+import com.lyeeedar.Screens.TownScreen
 
 import javax.swing.*
 import java.io.PrintWriter
@@ -19,8 +20,7 @@ class MainGame : Game()
 	{
 		GRID,
 		MAP,
-		TOWN,
-		SKILLSHOP
+		TOWN
 	}
 
 	private val screens = HashMap<ScreenEnum, AbstractScreen>()
@@ -52,8 +52,9 @@ class MainGame : Game()
 
 		screens.put(ScreenEnum.GRID, GridScreen())
 		screens.put(ScreenEnum.MAP, MapScreen())
+		screens.put(ScreenEnum.TOWN, TownScreen())
 
-		switchScreen(ScreenEnum.MAP)
+		switchScreen(ScreenEnum.TOWN)
 	}
 
 	fun switchScreen(screen: AbstractScreen)

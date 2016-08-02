@@ -10,6 +10,8 @@ import java.util.*
  * Created by Philip on 04-Jul-16.
  */
 
+inline fun <reified T : Any> getPool(): Pool<T> = Pools.get(T::class.java, Int.MAX_VALUE)
+
 fun <T> com.badlogic.gdx.utils.Array<T>.random(ran: Random): T = this[ran.nextInt(this.size)]
 fun <T> com.badlogic.gdx.utils.Array<T>.removeRandom(ran: Random): T
 {
