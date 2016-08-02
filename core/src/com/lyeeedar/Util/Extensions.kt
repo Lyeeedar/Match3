@@ -3,6 +3,10 @@ package com.lyeeedar.Util
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Vector2
+import com.badlogic.gdx.scenes.scene2d.Actor
+import com.badlogic.gdx.scenes.scene2d.InputEvent
+import com.badlogic.gdx.scenes.scene2d.ui.Widget
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener
 import com.badlogic.gdx.utils.*
 import java.util.*
 
@@ -11,6 +15,17 @@ import java.util.*
  */
 
 inline fun <reified T : Any> getPool(): Pool<T> = Pools.get(T::class.java, Int.MAX_VALUE)
+
+fun Actor.addClickListener(func: () -> Unit)
+{
+	this.addListener(object : ClickListener() {
+		override fun clicked(event: InputEvent?, x: Float, y: Float)
+		{
+			super.clicked(event, x, y)
+			func()
+		}
+	})
+}
 
 fun <T> com.badlogic.gdx.utils.Array<T>.random(ran: Random): T = this[ran.nextInt(this.size)]
 fun <T> com.badlogic.gdx.utils.Array<T>.removeRandom(ran: Random): T

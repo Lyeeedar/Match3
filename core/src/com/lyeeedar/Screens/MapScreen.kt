@@ -4,6 +4,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Stack
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.lyeeedar.Board.LevelTheme
 import com.lyeeedar.Global
+import com.lyeeedar.Map.DungeonMap
 import com.lyeeedar.Map.Generators.HubGenerator
 import com.lyeeedar.Player.Ability.Ability
 import com.lyeeedar.Player.Player
@@ -17,14 +18,24 @@ import com.lyeeedar.Util.AssetManager
 
 class MapScreen(): AbstractScreen()
 {
+	init
+	{
+		instance = this
+	}
+
 	override fun create()
 	{
-		val theme = LevelTheme.load("Dungeon")
-		val generator = HubGenerator()
-		val map = generator.generate(theme)
-		val player = Player()
-		player.abilities[0] = Ability(icon = AssetManager.loadSprite("Icons/Action"), cost = 1, elite = false)
-		player.portrait = AssetManager.loadSprite("Oryx/Custom/heroes/Merc")
+
+	}
+
+	fun setMap(map: DungeonMap, player: Player)
+	{
+		if (!created){
+			baseCreate()
+			created = true
+		}
+
+		mainTable.clear()
 
 		val dungeonWidget = DungeonMapWidget(map, player)
 		val playerWidget = PlayerWidget(player)
@@ -44,5 +55,10 @@ class MapScreen(): AbstractScreen()
 	override fun doRender(delta: Float)
 	{
 
+	}
+
+	companion object
+	{
+		lateinit var instance: MapScreen
 	}
 }

@@ -79,7 +79,7 @@ class Global
 			skin.add("default", checkButton)
 
 			val textButton = TextButton.TextButtonStyle()
-			textButton.up = NinePatchDrawable(NinePatch(AssetManager.loadTextureRegion("Sprites/GUI/Button.png"), 12, 12, 12, 12))
+			textButton.up = NinePatchDrawable(NinePatch(AssetManager.loadTextureRegion("Sprites/GUI/Button.png"), 6, 6, 6, 6))
 			textButton.font = skin.getFont("default")
 			textButton.fontColor = Color.LIGHT_GRAY
 			textButton.overFontColor = Color.WHITE
@@ -88,7 +88,7 @@ class Global
 			skin.add("default", textButton)
 
 			val bigTextButton = TextButton.TextButtonStyle()
-			bigTextButton.up = NinePatchDrawable(NinePatch(AssetManager.loadTextureRegion("Sprites/GUI/Button.png"), 12, 12, 12, 12))
+			bigTextButton.up = NinePatchDrawable(NinePatch(AssetManager.loadTextureRegion("Sprites/GUI/Button.png"), 6, 6, 6, 6))
 			bigTextButton.font = skin.getFont("title")
 			bigTextButton.fontColor = Color.LIGHT_GRAY
 			bigTextButton.overFontColor = Color.WHITE
@@ -115,7 +115,7 @@ class Global
 			skin.add("default-horizontal", progressBar)
 
 			val buttonStyle = Button.ButtonStyle()
-			buttonStyle.up = NinePatchDrawable(NinePatch(AssetManager.loadTextureRegion("Sprites/GUI/Button.png"), 12, 12, 12, 12))
+			buttonStyle.up = NinePatchDrawable(NinePatch(AssetManager.loadTextureRegion("Sprites/GUI/Button.png"), 6, 6, 6, 6))
 			buttonStyle.over = (buttonStyle.up as NinePatchDrawable).tint(Color(0.9f, 0.9f, 0.9f, 1.0f))
 			skin.add("default", buttonStyle)
 
@@ -133,7 +133,7 @@ class Global
 
 			val scrollPaneStyle = ScrollPane.ScrollPaneStyle()
 			scrollPaneStyle.vScroll = NinePatchDrawable(NinePatch(AssetManager.loadTextureRegion("Sprites/GUI/TextField.png"), 6, 6, 6, 6))
-			scrollPaneStyle.vScrollKnob = NinePatchDrawable(NinePatch(AssetManager.loadTextureRegion("Sprites/GUI/Button.png"), 12, 12, 12, 12))
+			scrollPaneStyle.vScrollKnob = NinePatchDrawable(NinePatch(AssetManager.loadTextureRegion("Sprites/GUI/Button.png"), 6, 6, 6, 6))
 			skin.add("default", scrollPaneStyle)
 
 			val listStyle = com.badlogic.gdx.scenes.scene2d.ui.List.ListStyle()
@@ -153,7 +153,7 @@ class Global
 
 			val sliderStyle = Slider.SliderStyle()
 			sliderStyle.background = NinePatchDrawable(NinePatch(AssetManager.loadTextureRegion("Sprites/GUI/TextField.png"), 6, 6, 6, 6))
-			sliderStyle.knob = NinePatchDrawable(NinePatch(AssetManager.loadTextureRegion("Sprites/GUI/Button.png"), 12, 12, 12, 12))
+			sliderStyle.knob = NinePatchDrawable(NinePatch(AssetManager.loadTextureRegion("Sprites/GUI/Button.png"), 6, 6, 6, 6))
 			sliderStyle.knobOver = (sliderStyle.knob as NinePatchDrawable).tint(Color(0.9f, 0.9f, 0.9f, 1.0f))
 			sliderStyle.knobDown = (sliderStyle.knob as NinePatchDrawable).tint(Color.LIGHT_GRAY)
 			skin.add("default-horizontal", sliderStyle)
@@ -163,7 +163,7 @@ class Global
 			tabPanelStyle.fontColor = Color.LIGHT_GRAY
 			tabPanelStyle.overFontColor = Color.WHITE
 			tabPanelStyle.bodyBackground = NinePatchDrawable(NinePatch(AssetManager.loadTextureRegion("Sprites/GUI/TextField.png"), 6, 6, 6, 6)).tint(Color(1f, 1f, 1f, 0.2f))
-			tabPanelStyle.titleButtonUnselected = NinePatchDrawable(NinePatch(AssetManager.loadTextureRegion("Sprites/GUI/Button.png"), 12, 12, 12, 12))
+			tabPanelStyle.titleButtonUnselected = NinePatchDrawable(NinePatch(AssetManager.loadTextureRegion("Sprites/GUI/Button.png"), 6, 6, 6, 6))
 			tabPanelStyle.titleButtonSelected = (tabPanelStyle.titleButtonUnselected as NinePatchDrawable).tint(Color(0.8f, 0.8f, 0.8f, 1.0f))
 			skin.add("default", tabPanelStyle)
 

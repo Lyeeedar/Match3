@@ -1,0 +1,16 @@
+<Dungeons>
+    <MapImage>Sprites/GUI/map.png</MapImage>
+
+    <Dungeons>
+        <Dungeon>
+            <UnlockedAtStart>true</UnlockedAtStart>
+            <Name>Dungeon Ruins</Name>
+            <Description>The collapsed remains of an ancient fortress. Over the long aeons since its heyday all manner of strange creatures have come to inhabit its dark corridors and damp rooms.</Description>
+            <Location>362,404</Location>
+            <Theme>Dungeon</Theme>
+            <QuestOrder>
+                <Explore></Explore>
+            </QuestOrder>
+        </Dungeon>
+    </Dungeons>
+</Dungeons>

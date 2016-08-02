@@ -96,6 +96,15 @@ open class Point : Pool.Poolable, Comparable<Point>
 
     private var obtained = false
 
+	fun set(string: String): Point
+	{
+		val split = string.split(",")
+		x = split[0].toInt()
+		y = split[1].toInt()
+
+		return this
+	}
+
     fun set(x: Int, y: Int): Point
     {
         this.x = x

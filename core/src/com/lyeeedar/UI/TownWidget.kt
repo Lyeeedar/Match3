@@ -5,10 +5,13 @@ import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.scenes.scene2d.InputEvent
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane
+import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.scenes.scene2d.ui.Widget
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener
 import com.badlogic.gdx.utils.Array
 import com.lyeeedar.Global
+import com.lyeeedar.Map.World
 import com.lyeeedar.Player.Player
 import com.lyeeedar.SpaceSlot
 import com.lyeeedar.Sprite.Sprite
@@ -73,6 +76,21 @@ class TownWidget(val town: Town, val player: Player) : Widget()
 
 					moveTo(hx+1, hy-1)
 				}
+				else if (ix >= 5 && ix < 9 && iy >= tilesHeight-6)
+				{
+					// airship
+					moveTo(tilesWidth/2, tilesHeight - 6)
+
+					val widget = Table()
+					val map = WorldMapWidget(World())
+					val scroll = ScrollPane(map)
+					scroll.setFlingTime(0f)
+					scroll.setOverscroll(false, false)
+					widget.add(scroll).expand().fill()
+
+					widget.setFillParent(true)
+					Global.stage.addActor(widget)
+				}
 				else if (isOnPath(ix, iy))
 				{
 					moveTo(ix, iy)
@@ -86,10 +104,18 @@ class TownWidget(val town: Town, val player: Player) : Widget()
 		val oldPos = Point.obtain().set(playerPos)
 		playerPos.set(x, y)
 
-		if (oldPos.y != y)
+		val cx = tilesWidth / 2
+
+		if (oldPos.x == cx && x == cx)
+		{
+			val dst = oldPos.dist(playerPos)
+			val path = arrayOf(Vector2(0f, (oldPos.y - y) * Global.tileSize), Vector2())
+			playerSprite.spriteAnimation = MoveAnimation.obtain().set(dst * 0.2f, UnsmoothedPath(path))
+		}
+		else if (oldPos.y != y)
 		{
 			// path to center, then on the y, then to the x
-			val path = arrayOf(oldPos, Point(tilesWidth/2, oldPos.y), Point(tilesWidth/2, playerPos.y), playerPos.copy())
+			val path = arrayOf(oldPos, Point(cx, oldPos.y), Point(cx, playerPos.y), playerPos.copy())
 
 			val dst = path.sumBy(fun (p: Point): Int
 			{
@@ -169,8 +195,6 @@ class TownWidget(val town: Town, val player: Player) : Widget()
 			offsety -= offset[1]
 		}
 
-		//renderer.queueSprite(playerSprite, playerPos.x.toFloat(), playerPos.y.toFloat(), offsetx, offsety, SpaceSlot.OVERHANG, 0, update = false)
-
 		// draw grass
 
 		for (x in 0..tilesWidth-1)
@@ -186,21 +210,6 @@ class TownWidget(val town: Town, val player: Player) : Widget()
 		{
 			renderer.queueSprite(path, 6f, y.toFloat(), offsetx, offsety, SpaceSlot.TILE, 1)
 			renderer.queueSprite(path, 7f, y.toFloat(), offsetx, offsety, SpaceSlot.TILE, 1)
-
-			// do side paths
-			if (y < tilesHeight-10 && (y-1)% 6 == 0)
-			{
-				for (x in 2..tilesWidth-3)
-				{
-					renderer.queueSprite(path, x.toFloat(), y.toFloat(), offsetx, offsety, SpaceSlot.TILE, 1)
-				}
-
-				renderer.queueSprite(path, 2f, (y.toFloat()+1), offsetx, offsety, SpaceSlot.TILE, 1)
-				renderer.queueSprite(path, 3f, (y.toFloat()+1), offsetx, offsety, SpaceSlot.TILE, 1)
-
-				renderer.queueSprite(path, tilesWidth - 4f, (y.toFloat()+1), offsetx, offsety, SpaceSlot.TILE, 1)
-				renderer.queueSprite(path, tilesWidth - 3f, (y.toFloat()+1), offsetx, offsety, SpaceSlot.TILE, 1)
-			}
 		}
 
 		airship.size[0] = 4
@@ -217,9 +226,32 @@ class TownWidget(val town: Town, val player: Player) : Widget()
 			house.sprite.size[1] = 4
 
 			renderer.queueSprite(house.sprite, x, y, offsetx, offsety, SpaceSlot.ORB, 0)
+
+			val left = (i % 2) == 0
+
+			if (left)
+			{
+				for (px in x.toInt()..(tilesWidth/2))
+				{
+					renderer.queueSprite(path, px.toFloat(), y.toFloat() - 1f, offsetx, offsety, SpaceSlot.TILE, 1)
+				}
+
+				renderer.queueSprite(path, 2f, (y.toFloat()), offsetx, offsety, SpaceSlot.TILE, 1)
+				renderer.queueSprite(path, 3f, (y.toFloat()), offsetx, offsety, SpaceSlot.TILE, 1)
+			}
+			else
+			{
+				for (px in (tilesWidth/2)..tilesWidth-3)
+				{
+					renderer.queueSprite(path, px.toFloat(), y.toFloat() - 1f, offsetx, offsety, SpaceSlot.TILE, 1)
+				}
+
+				renderer.queueSprite(path, tilesWidth - 4f, (y.toFloat()), offsetx, offsety, SpaceSlot.TILE, 1)
+				renderer.queueSprite(path, tilesWidth - 3f, (y.toFloat()), offsetx, offsety, SpaceSlot.TILE, 1)
+			}
 		}
 
 		renderer.flush(Gdx.app.graphics.deltaTime, batch as SpriteBatch)
-		playerSprite.render(batch, x + width / 2 - Global.tileSize * 0.5f, y + height / 2 - Global.tileSize * 0.5f, Global.tileSize, Global.tileSize)
+		playerSprite.render(batch, x + width / 2 - Global.tileSize * 0.5f, y + height / 2 - Global.tileSize * 0.2f, Global.tileSize, Global.tileSize)
 	}
 }
