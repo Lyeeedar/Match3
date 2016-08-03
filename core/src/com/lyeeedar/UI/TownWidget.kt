@@ -21,10 +21,7 @@ import com.lyeeedar.Sprite.SpriteRenderer
 import com.lyeeedar.Sprite.TilingSprite
 import com.lyeeedar.Town.House
 import com.lyeeedar.Town.Town
-import com.lyeeedar.Util.AssetManager
-import com.lyeeedar.Util.Point
-import com.lyeeedar.Util.UnsmoothedPath
-import com.lyeeedar.Util.addClickListener
+import com.lyeeedar.Util.*
 
 /**
  * Created by Philip on 02-Aug-16.
@@ -80,26 +77,26 @@ class TownWidget(val town: Town, val player: Player) : Widget()
 				}
 				else if (ix >= 5 && ix < 9 && iy >= tilesHeight-4)
 				{
-					// airship
-					moveTo(tilesWidth/2, tilesHeight - 6)
+					// world map
+					moveTo(tilesWidth/2, tilesHeight - 5, {
+						val widget = Table()
+						val map = WorldMapWidget(World())
+						val scroll = ScrollPane(map)
+						scroll.setFlingTime(0f)
+						scroll.setOverscroll(false, false)
+						widget.add(scroll).expand().fill()
 
-					val widget = Table()
-					val map = WorldMapWidget(World())
-					val scroll = ScrollPane(map)
-					scroll.setFlingTime(0f)
-					scroll.setOverscroll(false, false)
-					widget.add(scroll).expand().fill()
+						widget.setFillParent(true)
+						Global.stage.addActor(widget)
 
-					widget.setFillParent(true)
-					Global.stage.addActor(widget)
+						scroll.layout()
+						scroll.scrollTo(map.prefWidth/3, 0f, 1f, 1f, true, true)
 
-					scroll.layout()
-					scroll.scrollTo(map.prefWidth/3, 0f, 1f, 1f, true, true)
-
-					val closeButton = TextButton("X", Global.skin)
-					closeButton.addClickListener({ widget.remove(); closeButton.remove() })
-					Global.stage.addActor(closeButton)
-					closeButton.setPosition(Global.stage.width - 50, Global.stage.height - 50)
+						val closeButton = TextButton("X", Global.skin)
+						closeButton.addClickListener({ widget.remove(); closeButton.remove() })
+						Global.stage.addActor(closeButton)
+						closeButton.setPosition(Global.stage.width - 50, Global.stage.height - 50)
+					})
 				}
 				else if (isOnPath(ix, iy))
 				{
@@ -109,18 +106,20 @@ class TownWidget(val town: Town, val player: Player) : Widget()
 		})
 	}
 
-	fun moveTo(x: Int, y: Int)
+	fun moveTo(x: Int, y: Int, arrivalFun: (() -> Unit)? = null)
 	{
 		val oldPos = Point.obtain().set(playerPos)
 		playerPos.set(x, y)
 
 		val cx = tilesWidth / 2
 
-		if (oldPos.x == cx && x == cx)
+		if ((oldPos.x == cx || oldPos.x == cx-1) && (x == cx || x == cx-1))
 		{
-			val dst = oldPos.dist(playerPos)
-			val path = arrayOf(Vector2(0f, (oldPos.y - y) * Global.tileSize), Vector2())
+			val dst = Math.abs(oldPos.y - y)
+			val path = arrayOf(Vector2((oldPos.x - x) * Global.tileSize, (oldPos.y - y) * Global.tileSize), Vector2())
 			playerSprite.spriteAnimation = MoveAnimation.obtain().set(dst * 0.2f, UnsmoothedPath(path))
+
+			if (arrivalFun != null) Future.call(arrivalFun, dst * 0.2f + 0.3f, this)
 		}
 		else if (oldPos.y != y)
 		{
@@ -135,12 +134,16 @@ class TownWidget(val town: Town, val player: Player) : Widget()
 			})
 
 			playerSprite.spriteAnimation = MoveAnimation.obtain().set(dst * 0.2f, path)
+
+			if (arrivalFun != null) Future.call(arrivalFun, dst * 0.2f + 0.3f, this)
 		}
 		else
 		{
 			val dst = oldPos.dist(playerPos)
 			val path = arrayOf(Vector2((oldPos.x - x) * Global.tileSize, 0f), Vector2())
 			playerSprite.spriteAnimation = MoveAnimation.obtain().set(dst * 0.2f, UnsmoothedPath(path))
+
+			if (arrivalFun != null) Future.call(arrivalFun, dst * 0.2f + 0.3f, this)
 		}
 
 		oldPos.free()
@@ -207,16 +210,16 @@ class TownWidget(val town: Town, val player: Player) : Widget()
 
 		// draw grass
 
-		for (x in -tilesWidth..tilesWidth*2)
+		for (x in 0..tilesWidth)
 		{
-			for (y in -tilesHeight..tilesHeight*2)
+			for (y in 0..tilesHeight)
 			{
 				renderer.queueSprite(grass, x.toFloat(), y.toFloat(), offsetx, offsety, SpaceSlot.TILE, 0)
 			}
 		}
 
 		// draw path
-		for (y in 1..tilesHeight*2)
+		for (y in 1..tilesHeight)
 		{
 			renderer.queueSprite(path, 6f, y.toFloat(), offsetx, offsety, SpaceSlot.TILE, 1)
 			renderer.queueSprite(path, 7f, y.toFloat(), offsetx, offsety, SpaceSlot.TILE, 1)

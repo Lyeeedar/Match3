@@ -39,7 +39,7 @@ class WorldMapWidget(val world: World) : Widget()
 					if (dungeon.location.dist(x.toInt(), y.toInt()) < 25)
 					{
 						// select this dungeon
-						DungeonDescriptionWidget(dungeon)
+						DungeonDescriptionWidget(dungeon, this@WorldMapWidget)
 					}
 				}
 			}

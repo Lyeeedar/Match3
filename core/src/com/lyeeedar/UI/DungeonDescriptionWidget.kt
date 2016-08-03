@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.NinePatch
 import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton
+import com.badlogic.gdx.scenes.scene2d.ui.Widget
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable
 import com.badlogic.gdx.utils.Align
@@ -22,7 +23,7 @@ import com.lyeeedar.Util.addClickListener
  * Created by Philip on 02-Aug-16.
  */
 
-class DungeonDescriptionWidget(val dungeon: WorldDungeon) : FullscreenTable()
+class DungeonDescriptionWidget(val dungeon: WorldDungeon, val parent: Widget) : FullscreenTable()
 {
 	val table = Table()
 
@@ -68,6 +69,7 @@ class DungeonDescriptionWidget(val dungeon: WorldDungeon) : FullscreenTable()
 			Global.game.switchScreen(MainGame.ScreenEnum.MAP)
 
 			remove()
+			parent.remove()
 		}
 		table.add(embarkButton).expandX().center().pad(30f).width(100f)
 

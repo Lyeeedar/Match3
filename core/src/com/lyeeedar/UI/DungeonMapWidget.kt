@@ -125,10 +125,29 @@ class DungeonMapWidget(val map: DungeonMap, val player: Player): Widget()
 	val detailRenderer = SpriteRenderer()
 	val bitflag = EnumBitflag<Direction>()
 	var waitingOnTransition: Boolean = false
+	var ignoredCompletion = false
+
+	fun completeDungeon()
+	{
+		Global.game.switchScreen(MainGame.ScreenEnum.TOWN)
+	}
 
 	override fun act(delta: Float)
 	{
 		super.act(delta)
+
+		if (map.objective.isCompleted() && !ignoredCompletion)
+		{
+			MessageBox("Quest Complete", "You have completed your all your tasks in your quest. Return to town?",
+					Pair("Yes", {completeDungeon()}),
+					Pair("Continue Exploring", {ignoredCompletion = true; val m = MessageBox("Continue Exploration", "You can tap the icon in the top left when you are ready to return to town.", Pair("Okay", {}))})
+			)
+		}
+		else if (!map.objective.isCompleted() && player.hp <= 0)
+		{
+			MessageBox("Out of life!", "You collapse from your wounds, falling unconscious. Some time later you wake up back in town, alive but with your pockets misteriously lighter.",
+					Pair("Okay", {player.money /= 2; completeDungeon()}))
+		}
 
 		playerSprite.update(delta)
 
