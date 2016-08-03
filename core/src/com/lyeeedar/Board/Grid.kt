@@ -677,7 +677,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 						tile.orb = null
 						onPop(orb, orb.deletionEffectDelay)
 
-						if (orb.deletionEffectDelay >= 0.2f)
+						if (orb.deletionEffectDelay >= 0.2f && orb.special == null)
 						{
 							val sprite = orb.sprite.copy()
 							sprite.renderDelay = orb.deletionEffectDelay - 0.2f
@@ -1025,7 +1025,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 				}
 				else
 				{
-					if (orb.key != key)
+					if (orb.key != key || orb.armed != null)
 					{
 						// if we were matching, close matching
 						if (key != -1)
@@ -1067,7 +1067,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 				}
 				else
 				{
-					if (orb.key != key)
+					if (orb.key != key || orb.armed != null)
 					{
 						// if we were matching, close matching
 						if (key != -1)
@@ -1284,7 +1284,11 @@ class Grid(val width: Int, val height: Int, val level: Level)
 		orb.markedForDeletion = true
 		orb.deletionEffectDelay = delay
 
-		if (orb.special == null)
+		if (orb.armed != null)
+		{
+			// dont need to do anything more
+		}
+		else if (orb.special == null)
 		{
 			orb.sprite.visible = false
 

@@ -80,7 +80,9 @@ class TownWidget(val town: Town, val player: Player) : Widget()
 					// world map
 					moveTo(tilesWidth/2, tilesHeight - 5, {
 						val widget = Table()
-						val map = WorldMapWidget(World())
+						val closeButton = TextButton("X", Global.skin)
+
+						val map = WorldMapWidget(World(), widget, closeButton)
 						val scroll = ScrollPane(map)
 						scroll.setFlingTime(0f)
 						scroll.setOverscroll(false, false)
@@ -92,7 +94,6 @@ class TownWidget(val town: Town, val player: Player) : Widget()
 						scroll.layout()
 						scroll.scrollTo(map.prefWidth/3, 0f, 1f, 1f, true, true)
 
-						val closeButton = TextButton("X", Global.skin)
 						closeButton.addClickListener({ widget.remove(); closeButton.remove() })
 						Global.stage.addActor(closeButton)
 						closeButton.setPosition(Global.stage.width - 50, Global.stage.height - 50)
@@ -210,16 +211,16 @@ class TownWidget(val town: Town, val player: Player) : Widget()
 
 		// draw grass
 
-		for (x in 0..tilesWidth)
+		for (x in -tilesWidth..tilesWidth*2)
 		{
-			for (y in 0..tilesHeight)
+			for (y in -tilesHeight..tilesHeight*2)
 			{
 				renderer.queueSprite(grass, x.toFloat(), y.toFloat(), offsetx, offsety, SpaceSlot.TILE, 0)
 			}
 		}
 
 		// draw path
-		for (y in 1..tilesHeight)
+		for (y in 1..tilesHeight*2)
 		{
 			renderer.queueSprite(path, 6f, y.toFloat(), offsetx, offsety, SpaceSlot.TILE, 1)
 			renderer.queueSprite(path, 7f, y.toFloat(), offsetx, offsety, SpaceSlot.TILE, 1)

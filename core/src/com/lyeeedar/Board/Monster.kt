@@ -77,7 +77,9 @@ class Monster(val desc: MonsterDesc)
 			{
 				tile.orb!!.hasAttack = true
 				tile.orb!!.attackTimer = attackSpeed
-				sprite.spriteAnimation = BumpAnimation.obtain().set(0.2f, tile.getPosDiff(tiles[0, 0]))
+				val diff = tile.getPosDiff(tiles[0, 0])
+				diff[0].y *= -1
+				sprite.spriteAnimation = BumpAnimation.obtain().set(0.2f, diff)
 			}
 		}
 	}

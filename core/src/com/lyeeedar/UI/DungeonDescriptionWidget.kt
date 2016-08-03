@@ -1,6 +1,7 @@
 package com.lyeeedar.UI
 
 import com.badlogic.gdx.graphics.g2d.NinePatch
+import com.badlogic.gdx.scenes.scene2d.Actor
 import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton
@@ -23,7 +24,7 @@ import com.lyeeedar.Util.addClickListener
  * Created by Philip on 02-Aug-16.
  */
 
-class DungeonDescriptionWidget(val dungeon: WorldDungeon, val parent: Widget) : FullscreenTable()
+class DungeonDescriptionWidget(val dungeon: WorldDungeon, val mapWidget: Actor, val button: Actor) : FullscreenTable()
 {
 	val table = Table()
 
@@ -69,7 +70,8 @@ class DungeonDescriptionWidget(val dungeon: WorldDungeon, val parent: Widget) : 
 			Global.game.switchScreen(MainGame.ScreenEnum.MAP)
 
 			remove()
-			parent.remove()
+			mapWidget.remove()
+			button.remove()
 		}
 		table.add(embarkButton).expandX().center().pad(30f).width(100f)
 

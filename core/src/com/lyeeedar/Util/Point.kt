@@ -14,6 +14,8 @@ import com.lyeeedar.Direction
 
 open class Point : Pool.Poolable, Comparable<Point>
 {
+	var fastHash = true
+	var dirty = true
 	var locked: Boolean = false
 	var fromPool: Boolean = false
 
@@ -22,7 +24,9 @@ open class Point : Pool.Poolable, Comparable<Point>
 		{
 			if (locked) throw RuntimeException("Tried to edit a locked point")
 			if (fromPool && !obtained) throw RuntimeException("Tried to edit a freed point")
+			if (field != value) dirty = true
 			field = value
+
 		}
 
 	var y: Int = 0
@@ -30,6 +34,7 @@ open class Point : Pool.Poolable, Comparable<Point>
 		{
 			if (locked) throw RuntimeException("Tried to edit a locked point")
 			if (fromPool && !obtained) throw RuntimeException("Tried to edit a freed point")
+			if (field != value) dirty = true
 			field = value
 		}
 
@@ -50,26 +55,26 @@ open class Point : Pool.Poolable, Comparable<Point>
     constructor( other: Point ) : this(other.x, other.y)
 
 	lateinit var obtainPath: String
-	protected fun finalize()
-	{
-		if (obtained)
-		{
-			if (leakMap.containsKey(obtainPath))
-			{
-				var oldVal = leakMap[obtainPath]
-				oldVal++
-				leakMap[obtainPath] = oldVal
-			}
-			else
-			{
-				leakMap[obtainPath] = 1
-			}
-		}
-	}
+//	protected fun finalize()
+//	{
+//		if (obtained)
+//		{
+//			if (leakMap.containsKey(obtainPath))
+//			{
+//				var oldVal = leakMap[obtainPath]
+//				oldVal++
+//				leakMap[obtainPath] = oldVal
+//			}
+//			else
+//			{
+//				leakMap[obtainPath] = 1
+//			}
+//		}
+//	}
 
     companion object
     {
-		private val leakMap = ObjectMap<String, Long>()
+		//private val leakMap = ObjectMap<String, Long>()
 
 		@JvmField val ZERO = Point(0, 0, true)
 		@JvmField val ONE = Point(1, 1, true)
@@ -86,7 +91,7 @@ open class Point : Pool.Poolable, Comparable<Point>
 
 			if (point.obtained) throw RuntimeException()
 
-			point.obtainPath = Thread.currentThread().stackTrace.joinToString(separator = "\n") { it.toString() }
+			//point.obtainPath = Thread.currentThread().stackTrace.joinToString(separator = "\n") { it.toString() }
 			point.obtained = true
 			return point
 		}
@@ -233,9 +238,23 @@ open class Point : Pool.Poolable, Comparable<Point>
 		return "" + x + ", " + y
 	}
 
+	var storedHashCode: Int = 0
 	override fun hashCode(): Int
 	{
-		return toString().hashCode()
+		if (dirty)
+		{
+			if (fastHash)
+			{
+				storedHashCode = x * 10000 + y
+			}
+			else
+			{
+				storedHashCode = toString().hashCode()
+			}
+			dirty = false
+		}
+
+		return storedHashCode
 	}
 
     override fun reset()

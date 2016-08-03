@@ -113,6 +113,7 @@ class SpriteRenderer
 		if (keys == null)
 		{
 			keys = setPool.obtain()
+			keys.clear()
 		}
 		keys.add(rs.tilingSprite!!.checkID)
 		tilingMap[point] = keys

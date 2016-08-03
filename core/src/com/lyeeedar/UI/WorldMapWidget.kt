@@ -3,8 +3,10 @@ package com.lyeeedar.UI
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.Batch
+import com.badlogic.gdx.scenes.scene2d.Actor
 import com.badlogic.gdx.scenes.scene2d.InputEvent
 import com.badlogic.gdx.scenes.scene2d.Touchable
+import com.badlogic.gdx.scenes.scene2d.ui.Button
 import com.badlogic.gdx.scenes.scene2d.ui.Widget
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener
 import com.lyeeedar.Map.World
@@ -14,7 +16,7 @@ import com.lyeeedar.Util.AssetManager
  * Created by Philip on 02-Aug-16.
  */
 
-class WorldMapWidget(val world: World) : Widget()
+class WorldMapWidget(val world: World, val parent: Actor, val closeButton: Actor) : Widget()
 {
 	val white = AssetManager.loadTextureRegion("Sprites/white.png")
 	val notSelected = AssetManager.loadTextureRegion("Sprites/Oryx/uf_split/uf_map/uf_map_263.png")!!
@@ -39,7 +41,7 @@ class WorldMapWidget(val world: World) : Widget()
 					if (dungeon.location.dist(x.toInt(), y.toInt()) < 25)
 					{
 						// select this dungeon
-						DungeonDescriptionWidget(dungeon, this@WorldMapWidget)
+						DungeonDescriptionWidget(dungeon, parent, closeButton)
 					}
 				}
 			}

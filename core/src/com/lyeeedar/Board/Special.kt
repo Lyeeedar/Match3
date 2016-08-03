@@ -225,6 +225,11 @@ class Match5(orb: Orb) : Special(orb)
 							{
 								tile.orb!!.special = special.copy(tile.orb!!)
 							}
+							else
+							{
+								val func = tile.orb!!.special!!.merge(other) ?: special.merge(tile.orb!!)
+								tile.orb!!.armed = func
+							}
 
 							popTile(tile, point, grid, flightTime)
 							val delay = tile.dist(point) * 0.1f

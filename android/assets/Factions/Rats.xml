@@ -17,11 +17,11 @@
             </Death>
 
             <AttackDelay>5.5</AttackDelay>
-            <AttackSpeed>6</AttackSpeed>
+            <AttackSpeed>7</AttackSpeed>
 
             <Size>1</Size>
 
-            <HP>10</HP>
+            <HP>7</HP>
 
         </SmallRat>
 
@@ -39,12 +39,12 @@
                 <Colour><RGB>133,0,23</RGB></Colour>
             </Death>
 
-            <AttackDelay>5</AttackDelay>
-            <AttackSpeed>5</AttackSpeed>
+            <AttackDelay>4</AttackDelay>
+            <AttackSpeed>6</AttackSpeed>
 
             <Size>2</Size>
 
-            <HP>25</HP>
+            <HP>20</HP>
 
         </GiantRat>
 
