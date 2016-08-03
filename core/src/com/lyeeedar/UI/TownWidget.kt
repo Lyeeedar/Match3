@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.scenes.scene2d.InputEvent
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane
 import com.badlogic.gdx.scenes.scene2d.ui.Table
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton
 import com.badlogic.gdx.scenes.scene2d.ui.Widget
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener
 import com.badlogic.gdx.utils.Array
@@ -23,6 +24,7 @@ import com.lyeeedar.Town.Town
 import com.lyeeedar.Util.AssetManager
 import com.lyeeedar.Util.Point
 import com.lyeeedar.Util.UnsmoothedPath
+import com.lyeeedar.Util.addClickListener
 
 /**
  * Created by Philip on 02-Aug-16.
@@ -30,7 +32,7 @@ import com.lyeeedar.Util.UnsmoothedPath
 
 class TownWidget(val town: Town, val player: Player) : Widget()
 {
-	var airship = AssetManager.loadSprite("Oryx/Custom/townmap/airship")
+	var gate = AssetManager.loadSprite("Oryx/Custom/townmap/gate")
 	var grass = AssetManager.loadSprite("Oryx/uf_split/uf_terrain/ground_grass_1")
 	var path = TilingSprite("path", "Oryx/uf_split/uf_terrain/floor_extra_5", "Masks/path")
 
@@ -76,7 +78,7 @@ class TownWidget(val town: Town, val player: Player) : Widget()
 
 					moveTo(hx+1, hy-1)
 				}
-				else if (ix >= 5 && ix < 9 && iy >= tilesHeight-6)
+				else if (ix >= 5 && ix < 9 && iy >= tilesHeight-4)
 				{
 					// airship
 					moveTo(tilesWidth/2, tilesHeight - 6)
@@ -90,6 +92,14 @@ class TownWidget(val town: Town, val player: Player) : Widget()
 
 					widget.setFillParent(true)
 					Global.stage.addActor(widget)
+
+					scroll.layout()
+					scroll.scrollTo(map.prefWidth/3, 0f, 1f, 1f, true, true)
+
+					val closeButton = TextButton("X", Global.skin)
+					closeButton.addClickListener({ widget.remove(); closeButton.remove() })
+					Global.stage.addActor(closeButton)
+					closeButton.setPosition(Global.stage.width - 50, Global.stage.height - 50)
 				}
 				else if (isOnPath(ix, iy))
 				{
@@ -197,24 +207,24 @@ class TownWidget(val town: Town, val player: Player) : Widget()
 
 		// draw grass
 
-		for (x in 0..tilesWidth-1)
+		for (x in -tilesWidth..tilesWidth*2)
 		{
-			for (y in 0..tilesHeight-1)
+			for (y in -tilesHeight..tilesHeight*2)
 			{
 				renderer.queueSprite(grass, x.toFloat(), y.toFloat(), offsetx, offsety, SpaceSlot.TILE, 0)
 			}
 		}
 
 		// draw path
-		for (y in 1..tilesHeight-5)
+		for (y in 1..tilesHeight*2)
 		{
 			renderer.queueSprite(path, 6f, y.toFloat(), offsetx, offsety, SpaceSlot.TILE, 1)
 			renderer.queueSprite(path, 7f, y.toFloat(), offsetx, offsety, SpaceSlot.TILE, 1)
 		}
 
-		airship.size[0] = 4
-		airship.size[1] = 4
-		renderer.queueSprite(airship, 5f, tilesHeight - 5f, offsetx, offsety, SpaceSlot.ORB, 0)
+		gate.size[0] = 4
+		gate.size[1] = 4
+		renderer.queueSprite(gate, 5f, tilesHeight - 5f, offsetx, offsety, SpaceSlot.ORB, 0)
 
 		for (i in 0..town.houses.size-1)
 		{

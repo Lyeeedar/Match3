@@ -998,16 +998,16 @@ Oryx/Custom/items/orb_vert
   orig: 48, 48
   offset: 0, 0
   index: -1
-Oryx/Custom/townmap/airship
+Oryx/Custom/townmap/blacksmith
   rotate: false
-  xy: 2, 118
+  xy: 2, 382
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-Oryx/Custom/townmap/blacksmith
+Oryx/Custom/townmap/gate
   rotate: false
-  xy: 2, 382
+  xy: 2, 118
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
