@@ -6,8 +6,10 @@ import com.lyeeedar.Direction
 import com.lyeeedar.Sprite.Sprite
 import com.lyeeedar.Sprite.SpriteAnimation.BlinkAnimation
 import com.lyeeedar.Sprite.SpriteAnimation.BumpAnimation
+import com.lyeeedar.Sprite.SpriteAnimation.ExtendAnimation
 import com.lyeeedar.Util.Array2D
 import com.lyeeedar.Util.AssetManager
+import com.lyeeedar.Util.getRotation
 import com.lyeeedar.Util.random
 
 /**
@@ -71,7 +73,7 @@ class Monster(val desc: MonsterDesc)
 			attackAccumulator -= attackDelay
 
 			// do attack
-			val tile = grid.grid.filter { it.orb != null && !it.orb!!.sinkable && it.orb!!.special == null }.random()
+			val tile = grid.grid.filter { it.orb != null && !it.orb!!.sinkable && it.orb!!.special == null && !it.orb!!.hasAttack }.random()
 
 			if (tile != null)
 			{
@@ -80,6 +82,12 @@ class Monster(val desc: MonsterDesc)
 				val diff = tile.getPosDiff(tiles[0, 0])
 				diff[0].y *= -1
 				sprite.spriteAnimation = BumpAnimation.obtain().set(0.2f, diff)
+
+				val beam = AssetManager.loadSprite("EffectSprites/Beam/Beam")
+				beam.rotation = getRotation(tiles[0, 0], tile) * -1
+				beam.spriteAnimation = ExtendAnimation.obtain().set(0.25f, tile.getPosDiff(tiles[0, 0]))
+				beam.colour = Color.RED
+				tiles[0, 0].effects.add(beam)
 			}
 		}
 	}

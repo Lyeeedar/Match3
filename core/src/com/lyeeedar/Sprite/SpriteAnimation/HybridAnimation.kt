@@ -17,16 +17,17 @@ class HybridAnimation(): AbstractSpriteAnimation()
 	override fun duration(): Float = Math.max(Math.max(offset?.duration() ?: 0f, scale?.duration() ?: 0f), colour?.duration() ?: 0f)
 	override fun time(): Float = Math.min(Math.min(offset?.time() ?: duration(), scale?.time() ?: duration()), colour?.time() ?: duration())
 
-	override fun renderOffset(): FloatArray? = offset?.renderOffset()
-	override fun renderScale(): FloatArray? = scale?.renderScale()
-	override fun renderColour(): Color? = colour?.renderColour()
+	override fun renderOffset(): FloatArray? = offset?.renderOffset() ?: scale?.renderOffset() ?: colour?.renderOffset()
+	override fun renderScale(): FloatArray? = scale?.renderScale() ?: offset?.renderScale() ?: colour?.renderScale()
+	override fun renderColour(): Color? = colour?.renderColour() ?: offset?.renderColour() ?: scale?.renderColour()
 
 	override fun update(delta: Float): Boolean
 	{
 		if (offset?.update(delta) ?: false) { offset?.free(); offset = null }
 		if (scale?.update(delta) ?: false) { scale?.free(); scale = null }
+		if (colour?.update(delta) ?: false) { colour?.free(); colour = null }
 
-		return offset == null && scale == null
+		return offset == null && scale == null && colour == null
 	}
 
 	override fun parse(xml: XmlReader.Element)

@@ -58,7 +58,7 @@
 
         <Bad>
             <Encounter>2</Encounter>
-            <Trap>0</Trap>
+            <Trap>1</Trap>
         </Bad>
 
     </RoomWeights>

@@ -8,6 +8,7 @@ import com.badlogic.gdx.utils.XmlReader
 import com.exp4j.Helpers.EquationHelper
 import com.lyeeedar.Util.FastEnumMap
 import com.lyeeedar.Util.Point
+import com.lyeeedar.Util.vectorToAngle
 
 // ----------------------------------------------------------------------
 enum class Rarity
@@ -63,10 +64,7 @@ enum class Direction private constructor(val x: Int, val y: Int, val identifier:
 
 	init
 	{
-		// basis vector = 0, 1
-		val dot = (0 * x + 1 * y).toDouble() // dot product
-		val det = (0 * y - 1 * x).toDouble() // determinant
-		angle = Math.atan2(det, dot).toFloat() * MathUtils.radiansToDegrees
+		angle = vectorToAngle(x.toFloat(), y.toFloat())
 	}
 
 	val opposite: Direction

@@ -30,7 +30,7 @@ abstract class Special(val orb: Orb)
 		fun popTile(tile: Tile, point: Point, grid: Grid, offset: Float = 0f)
 		{
 			val delay = tile.dist(point) * 0.1f + offset
-			grid.pop(tile, delay + 0.2f)
+			grid.pop(tile, delay + 0.2f, true)
 
 			val sprite = effect.copy()
 			sprite.renderDelay = delay
@@ -240,6 +240,17 @@ class Match5(orb: Orb) : Special(orb)
 							s.renderDelay = delay
 							tile.effects.add(s)
 						}
+						else if (tile.monster != null)
+						{
+							popTile(tile, point, grid, flightTime)
+							val delay = tile.dist(point) * 0.1f
+
+							val s = sprite.copy()
+							s.drawActualSize = false
+							s.spriteAnimation = MoveAnimation.obtain().set(flightTime, UnsmoothedPath(tile.getPosDiff(point)))
+							s.renderDelay = delay
+							tile.effects.add(s)
+						}
 					}
 				}
 			}
@@ -253,6 +264,17 @@ class Match5(orb: Orb) : Special(orb)
 				for (tile in grid.grid)
 				{
 					if (tile.orb?.key == key)
+					{
+						popTile(tile, point, grid, flightTime)
+						val delay = tile.dist(point) * 0.1f
+
+						val s = sprite.copy()
+						s.drawActualSize = false
+						s.spriteAnimation = MoveAnimation.obtain().set(flightTime, UnsmoothedPath(tile.getPosDiff(point)))
+						s.renderDelay = delay
+						tile.effects.add(s)
+					}
+					else if (tile.monster != null)
 					{
 						popTile(tile, point, grid, flightTime)
 						val delay = tile.dist(point) * 0.1f

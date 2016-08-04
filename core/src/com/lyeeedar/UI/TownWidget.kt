@@ -93,6 +93,7 @@ class TownWidget(val town: Town, val player: Player) : Widget()
 
 						scroll.layout()
 						scroll.scrollTo(map.prefWidth/3, 0f, 1f, 1f, true, true)
+						scroll.act(1f)
 
 						closeButton.addClickListener({ widget.remove(); closeButton.remove() })
 						Global.stage.addActor(closeButton)

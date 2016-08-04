@@ -898,6 +898,11 @@ class Grid(val width: Int, val height: Int, val level: Level)
 
 					if (oldorb.special != null) orb.special = oldorb.special!!.copy(orb)
 					if (oldorb.sealed) orb.sealed = true
+					if (oldorb.hasAttack)
+					{
+						orb.hasAttack = true
+						orb.attackTimer = oldorb.attackTimer
+					}
 
 					val delay = grid[x, y].taxiDist(Point.ZERO).toFloat() * 0.1f
 					orb.sprite.renderDelay = delay + 0.2f
@@ -1246,13 +1251,13 @@ class Grid(val width: Int, val height: Int, val level: Level)
 	}
 
 	// ----------------------------------------------------------------------
-	fun pop(point: Point, delay: Float)
+	fun pop(point: Point, delay: Float, isSpecial: Boolean = false)
 	{
-		pop(point.x, point.y , delay)
+		pop(point.x, point.y , delay, isSpecial)
 	}
 
 	// ----------------------------------------------------------------------
-	fun pop(x: Int, y: Int, delay: Float)
+	fun pop(x: Int, y: Int, delay: Float, isSpecial: Boolean = false)
 	{
 		val tile = tile(x, y) ?: return
 
@@ -1264,7 +1269,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 
 		if (tile.monster != null)
 		{
-			tile.monster!!.hp--
+			tile.monster!!.hp -= if (isSpecial) 2 else 1
 			onDamaged(tile.monster!!)
 			return
 		}
