@@ -30,7 +30,8 @@ class CompletionConditionDeath() : AbstractCompletionCondition()
 
 		grid.onAttacked += {
 
-			val sprite = AssetManager.loadSprite("Oryx/uf_split/uf_items/crystal_blood")
+			val sprite = it.sprite.copy()
+			
 			val dst = label.localToStageCoordinates(Vector2())
 			dst.y = Global.stage.height - dst.y
 			val src = GridWidget.instance.pointToScreenspace(it)
@@ -40,19 +41,17 @@ class CompletionConditionDeath() : AbstractCompletionCondition()
 			diff.x *= -1
 
 			val path = arrayOf(diff, Vector2())
+			sprite.spriteAnimation = LeapAnimation.obtain().set(0.75f, diff, 2f) 
+			
+			SpriteEffectActor(sprite, 32f, 32f, src, 
+			{
+				player.hp -= 1
 
-			val beam = AssetManager.loadSprite("EffectSprites/Beam/Beam")
-			beam.rotation = getRotation(src, dst) * -1
-			beam.spriteAnimation = ExtendAnimation.obtain().set(0.25f, path)
-			beam.colour = Color.RED
-			grid.tile(it)?.effects?.add(beam)
+				val hp = player.hp
+				val max = player.maxhp
 
-			player.hp -= 1
-
-			val hp = player.hp
-			val max = player.maxhp
-
-			label.setText("$hp/$max")
+				label.setText("$hp/$max")
+			})
 		}
 	}
 
