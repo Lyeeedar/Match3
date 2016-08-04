@@ -35,8 +35,8 @@ class MessageBox(val title: String, val message: String, vararg buttons: Pair<St
 		{
 			val b = TextButton(button.first, Global.skin)
 			b.addClickListener{
-				button.second()
 				this@MessageBox.remove()
+				button.second()
 			}
 			buttonTable.add(b).expand()
 		}

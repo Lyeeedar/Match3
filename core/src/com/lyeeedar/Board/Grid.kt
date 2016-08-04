@@ -1181,6 +1181,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 					if (tile.orb!!.special != null)
 					{
 						orb.armed = orb.special!!.merge(tile.orb!!) ?: tile.orb!!.special!!.merge(orb)
+						orb.markedForDeletion = true
 					}
 
 					tile.orb!!.x = tile.x
@@ -1229,6 +1230,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 					if (tile.orb!!.special != null)
 					{
 						orb.armed = orb.special!!.merge(tile.orb!!) ?: tile.orb!!.special!!.merge(orb)
+						orb.markedForDeletion = true
 					}
 
 					tile.orb!!.x = tile.x

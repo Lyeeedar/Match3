@@ -20,9 +20,11 @@ class HubGenerator
 	val ran: Random = Random()
 	val maxCorridorLength = 4
 	val maxDepth = 10
+	var numRoomsToSpawn = 0
 
-	fun generate(theme: LevelTheme): DungeonMap
+	fun generate(theme: LevelTheme, numRooms: Int): DungeonMap
 	{
+		numRoomsToSpawn = numRooms
 		val map = DungeonMap()
 
 		map.theme = theme
@@ -169,6 +171,7 @@ class HubGenerator
 
 	fun expand(map: DungeonMap, point: Point, dir: Direction, corridorCount: Int = 0, depth: Int = 0): Boolean
 	{
+		if (numRoomsToSpawn <= 0) return false
 		if (!map.isFree(point)) return false
 
 		val freeDirections = Array<Direction>()
@@ -216,6 +219,7 @@ class HubGenerator
 		if (makeRoom)
 		{
 			tempRoom.isRoom = true
+			numRoomsToSpawn--
 
 			if (freeDirections.size == 0)
 			{

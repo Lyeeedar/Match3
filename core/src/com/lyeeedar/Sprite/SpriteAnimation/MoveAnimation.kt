@@ -50,7 +50,7 @@ class MoveAnimation : AbstractMoveAnimation
 	{
 		time += delta
 
-		val a = 1f - MathUtils.clamp((duration - time) / duration, 0f, 1f)
+		val a = MathUtils.clamp(time / duration, 0f, 1f)
 
 		val alpha = eqn!!.apply(a)
 		path.valueAt(temp, alpha)

@@ -1,10 +1,19 @@
-open class SpriteEffectActor(val sprite: Sprite, val width: Float, val height: Float val pos: Vector2, val completionFunc: (() -> Unit)? = null): Actor()
+package com.lyeeedar.Sprite
+
+import com.badlogic.gdx.graphics.g2d.Batch
+import com.badlogic.gdx.graphics.g2d.SpriteBatch
+import com.badlogic.gdx.math.Vector2
+import com.badlogic.gdx.scenes.scene2d.Actor
+import com.lyeeedar.Global
+import com.lyeeedar.Sprite.Sprite
+
+open class SpriteEffectActor(val sprite: Sprite, val w: Float, val h: Float, val pos: Vector2, val completionFunc: (() -> Unit)? = null): Actor()
 {
 	init
 	{
 		Global.stage.addActor(this)
 	}
-	
+
 	override fun act(delta: Float)
 	{
 		super.act(delta)
@@ -15,14 +24,14 @@ open class SpriteEffectActor(val sprite: Sprite, val width: Float, val height: F
 			remove()
 		}
 	}
-	
+
 	override fun draw(batch: Batch?, parentAlpha: Float)
 	{
 		super.draw(batch, parentAlpha)
 
 		var x = pos.x
 		var y = pos.y
-		
+
 		if ( sprite.spriteAnimation != null )
 		{
 			val offset = sprite.spriteAnimation?.renderOffset()
@@ -33,7 +42,7 @@ open class SpriteEffectActor(val sprite: Sprite, val width: Float, val height: F
 				y += offset[1]
 			}
 		}
-		
-		sprite.render(batch as SpriteBatch, x, y, width, height)
+
+		sprite.render(batch as SpriteBatch, x, y, w, h)
 	}
 }

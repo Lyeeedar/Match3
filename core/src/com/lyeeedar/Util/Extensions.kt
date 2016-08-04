@@ -1,6 +1,7 @@
 package com.lyeeedar.Util
 
 import com.badlogic.gdx.graphics.Color
+import com.badlogic.gdx.math.Interpolation
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.scenes.scene2d.Actor
@@ -13,6 +14,28 @@ import java.util.*
 /**
  * Created by Philip on 04-Jul-16.
  */
+
+class Smoothstep() : Interpolation()
+{
+	override fun apply(a: Float): Float = a * a * ( 3f - 2f * a )
+}
+val smoothStep = Smoothstep()
+
+class Leap() : Interpolation()
+{
+	override fun apply(a: Float): Float
+	{
+		var t = a
+
+		if (t <= 0.5f) return 2.0f * t * (1.0f - t)
+
+		t -= 0.5f
+
+		return 2.0f * t * t + 0.5f
+	}
+}
+val leap = Leap()
+
 
 inline fun <reified T : Any> getPool(): Pool<T> = Pools.get(T::class.java, Int.MAX_VALUE)
 

@@ -61,7 +61,7 @@ class DungeonDescriptionWidget(val dungeon: WorldDungeon, val mapWidget: Actor, 
 
 			val theme = LevelTheme.load(dungeon.theme)
 			val generator = HubGenerator()
-			val map = generator.generate(theme)
+			val map = generator.generate(theme, 8)
 			val player = Player()
 			player.abilities[0] = Ability(icon = AssetManager.loadSprite("Icons/Action"), cost = 1, elite = false)
 			player.portrait = AssetManager.loadSprite("Oryx/Custom/heroes/Merc")

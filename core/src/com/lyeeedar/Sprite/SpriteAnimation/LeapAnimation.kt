@@ -7,6 +7,7 @@ import com.badlogic.gdx.utils.Pools
 import com.badlogic.gdx.utils.XmlReader.Element
 import com.lyeeedar.Direction
 import com.lyeeedar.Global
+import com.lyeeedar.Util.getPool
 
 class LeapAnimation : AbstractMoveAnimation
 {
@@ -19,8 +20,10 @@ class LeapAnimation : AbstractMoveAnimation
 	private val offset = floatArrayOf(0f, 0f)
 	private var duration: Float = 0f
 	private var time: Float = 0f
-	
-	private val diff: floatArrayOf(0f, 0f)
+
+	private val p1: Vector2 = Vector2()
+	private val p2: Vector2 = Vector2()
+	private val temp = Vector2()
 	private var height: Float = 1f
 
 	constructor()
@@ -33,21 +36,24 @@ class LeapAnimation : AbstractMoveAnimation
 		time += delta
 
 		val alpha = MathUtils.clamp(time / duration, 0f, 1f)
+		val lalpha = 1f - Math.abs(alpha - 0.5f) / 0.5f
 
-		offset[0] = diff[0] * alpha
-		offset[1] = diff[1] * alpha + Global.tileSize * height * alpha
+		temp.set(p1).lerp(p2, alpha)
+
+		offset[0] = temp.x
+		offset[1] = temp.y + Global.tileSize * height * lalpha
 
 		return time >= duration
 	}
-	
+
 	fun set(duration: Float, p1: Vector2, p2: Vector2, height: Float): LeapAnimation
 	{
 		this.duration = duration
-		this.diff[0] = p2.x - p1.x
-		this.diff[1] = p2.y - p1.y
+		this.p1.set(p1)
+		this.p2.set(p2)
 		this.height = height
 		this.time = 0f
-		
+
 		update(0f)
 
 		return this
@@ -56,24 +62,11 @@ class LeapAnimation : AbstractMoveAnimation
 	fun set(duration: Float, path: kotlin.Array<Vector2>, height: Float): LeapAnimation
 	{
 		this.duration = duration
-		this.diff[0] = path.last().x - path.first().x
-		this.diff[1] = path.last().y - path.first().y
+		this.p1.set(path.first())
+		this.p2.set(path.last())
 		this.height = height
 		this.time = 0f
-		
-		update(0f)
 
-		return this
-	}
-
-	fun set(duration: Float, diff: FloatArray, height: Float): LeapAnimation
-	{
-		this.duration = duration
-		this.diff[0] = diff[0]
-		this.diff[1] = diff[1]
-		this.height = height
-		this.time = 0f
-		
 		update(0f)
 
 		return this
@@ -83,7 +76,7 @@ class LeapAnimation : AbstractMoveAnimation
 	{
 	}
 
-	override fun copy(): AbstractSpriteAnimation = obtain().set(duration, diff, height)
+	override fun copy(): AbstractSpriteAnimation = obtain().set(duration, p1, p2, height)
 
 	var obtained: Boolean = false
 	companion object
