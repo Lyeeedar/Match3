@@ -1,0 +1,105 @@
+package com.lyeeedar.Sprite.SpriteAnimation
+
+import com.badlogic.gdx.math.MathUtils
+import com.badlogic.gdx.math.Vector2
+import com.badlogic.gdx.utils.Pool
+import com.badlogic.gdx.utils.Pools
+import com.badlogic.gdx.utils.XmlReader.Element
+import com.lyeeedar.Direction
+import com.lyeeedar.Global
+
+class LeapAnimation : AbstractMoveAnimation
+{
+	override fun duration(): Float = duration
+
+	override fun time(): Float = time
+
+	override fun renderOffset(): FloatArray? = offset
+
+	private val offset = floatArrayOf(0f, 0f)
+	private var duration: Float = 0f
+	private var time: Float = 0f
+	
+	private val diff: floatArrayOf(0f, 0f)
+	private var height: Float = 1f
+
+	constructor()
+	{
+
+	}
+
+	override fun update(delta: Float): Boolean
+	{
+		time += delta
+
+		val alpha = MathUtils.clamp(time / duration, 0f, 1f)
+
+		offset[0] = diff[0] * alpha
+		offset[1] = diff[1] * alpha + Global.tileSize * height * alpha
+
+		return time >= duration
+	}
+	
+	fun set(duration: Float, p1: Vector2, p2: Vector2, height: Float): LeapAnimation
+	{
+		this.duration = duration
+		this.diff[0] = p2.x - p1.x
+		this.diff[1] = p2.y - p1.y
+		this.height = height
+		this.time = 0f
+		
+		update(0f)
+
+		return this
+	}
+
+	fun set(duration: Float, path: kotlin.Array<Vector2>, height: Float): LeapAnimation
+	{
+		this.duration = duration
+		this.diff[0] = path.last().x - path.first().x
+		this.diff[1] = path.last().y - path.first().y
+		this.height = height
+		this.time = 0f
+		
+		update(0f)
+
+		return this
+	}
+
+	fun set(duration: Float, diff: FloatArray, height: Float): LeapAnimation
+	{
+		this.duration = duration
+		this.diff[0] = diff[0]
+		this.diff[1] = diff[1]
+		this.height = height
+		this.time = 0f
+		
+		update(0f)
+
+		return this
+	}
+
+	override fun parse(xml: Element)
+	{
+	}
+
+	override fun copy(): AbstractSpriteAnimation = obtain().set(duration, diff, height)
+
+	var obtained: Boolean = false
+	companion object
+	{
+		private val pool: Pool<LeapAnimation> = getPool()
+
+		@JvmStatic fun obtain(): LeapAnimation
+		{
+			val anim = pool.obtain()
+
+			if (anim.obtained) throw RuntimeException()
+
+			anim.obtained = true
+			anim.time = 0f
+			return anim
+		}
+	}
+	override fun free() { if (obtained) { pool.free(this); obtained = false } }
+}
