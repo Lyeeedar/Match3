@@ -688,7 +688,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 					}
 					else if (orb.hasAttack && orb.attackTimer == 0 && orb.sprite.spriteAnimation == null)
 					{
-						onAttacked(orb)
+						if (!level.completed) onAttacked(orb)
 						tile.orb = null
 						onPop(orb, orb.deletionEffectDelay)
 					}

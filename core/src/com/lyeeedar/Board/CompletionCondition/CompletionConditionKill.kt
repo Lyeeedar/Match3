@@ -1,5 +1,6 @@
 package com.lyeeedar.Board.CompletionCondition
 
+import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.NinePatch
 import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.badlogic.gdx.scenes.scene2d.ui.Skin
@@ -19,6 +20,8 @@ import com.lyeeedar.Util.set
 
 class CompletionConditionKill() : AbstractCompletionCondition()
 {
+	val tick = AssetManager.loadSprite("Oryx/uf_split/uf_interface/uf_interface_680", colour = Color.FOREST)
+
 	var monsters = Array<Monster>()
 	var monsterMap = ObjectMap<MonsterDesc, Int>()
 
@@ -87,7 +90,15 @@ class CompletionConditionKill() : AbstractCompletionCondition()
 			val count = monster.value
 
 			table.add(SpriteWidget(sprite, 24, 24))
-			table.add(Label(" x $count", Global.skin))
+
+			if (count == 0)
+			{
+				table.add(SpriteWidget(tick, 24, 24))
+			}
+			else
+			{
+				table.add(Label(" x $count", Global.skin))
+			}
 		}
 	}
 

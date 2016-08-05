@@ -3,7 +3,9 @@ package com.lyeeedar.desktop
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.files.FileHandle
 import com.badlogic.gdx.utils.Array
+import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.XmlReader
+import com.lyeeedar.Util.set
 import java.io.File
 
 /**
@@ -12,41 +14,33 @@ import java.io.File
 
 class LevelProcessor
 {
-	val paths = Array<String>()
+	val dungeons = ObjectMap<String, Array<String>>()
 
 	init
 	{
-		findFilesRecursive( File("Levels") )
+		findDungeons( File("World/Levels") )
 
-		var output = "<Levels>\n"
+		var output = "<Dungeons>\n"
 
-		for (path in paths)
+		for (dungeon in dungeons)
 		{
-			output += "\t<Level>$path</Level>\n"
+			output += "\t<${dungeon.key}>\n"
+
+			for (path in dungeon.value)
+			{
+				output += "\t\t<Level>$path</Level>\n"
+			}
+
+			output += "\t</${dungeon.key}>\n"
 		}
 
-		output += "</Levels>"
+		output += "</Dungeons>"
 
-		val outputHandle = FileHandle(File("Levels/LevelList.xml"))
+		val outputHandle = FileHandle(File("World/Levels/LevelList.xml"))
 		outputHandle.writeString(output, false)
 	}
 
-	fun parseXml( path: String )
-	{
-		val xml = XmlReader().parse(Gdx.files.internal(path))
-
-		if (!xml.name.equals("Level")) return
-
-		var p = path
-		p = p.replace("\\", "/")
-		p = p.replace("Levels/", "")
-		p = p.replace(".xml", "")
-
-		paths.add(p)
-		System.out.println("Adding level $p")
-	}
-
-	private fun findFilesRecursive(dir: File)
+	private fun findDungeons(dir: File)
 	{
 		val contents = dir.listFiles() ?: return
 
@@ -54,12 +48,43 @@ class LevelProcessor
 		{
 			if (file.isDirectory)
 			{
-				findFilesRecursive(file)
-			}
-			else if (file.path.endsWith(".xml"))
-			{
-				parseXml(file.path)
+				dungeons[file.name] = Array()
+				findFilesRecursive(file, file.name)
 			}
 		}
 	}
+
+	private fun findFilesRecursive(dir: File, dungeon: String)
+	{
+		val contents = dir.listFiles() ?: return
+
+		for (file in contents)
+		{
+			if (file.isDirectory)
+			{
+				findFilesRecursive(file, dungeon)
+			}
+			else if (file.path.endsWith(".xml"))
+			{
+				parseXml(file.path, dungeon)
+			}
+		}
+	}
+
+	fun parseXml( path: String, dungeon: String )
+	{
+		val xml = XmlReader().parse(Gdx.files.internal(path))
+
+		if (!xml.name.equals("Level")) return
+
+		var p = path
+		p = p.replace("\\", "/")
+		p = p.replace("World/Levels/", "")
+		p = p.replace(".xml", "")
+
+		dungeons[dungeon].add(p)
+		System.out.println("Adding level $p")
+	}
+
+
 }

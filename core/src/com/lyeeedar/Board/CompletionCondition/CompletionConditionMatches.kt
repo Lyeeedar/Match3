@@ -1,5 +1,6 @@
 package com.lyeeedar.Board.CompletionCondition
 
+import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.NinePatch
 import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.badlogic.gdx.scenes.scene2d.ui.Skin
@@ -24,6 +25,8 @@ import com.lyeeedar.Util.get
 
 class CompletionConditionMatches(): AbstractCompletionCondition()
 {
+	val tick = AssetManager.loadSprite("Oryx/uf_split/uf_interface/uf_interface_680", colour = Color.FOREST)
+
 	val toBeMatched = IntIntMap()
 	val sprites = IntMap<Sprite>()
 	val table = Table()
@@ -51,7 +54,15 @@ class CompletionConditionMatches(): AbstractCompletionCondition()
 			val count = entry.value
 
 			table.add(SpriteWidget(sprite, 24, 24))
-			table.add(Label("$count", Global.skin))
+
+			if (count == 0)
+			{
+				table.add(SpriteWidget(tick, 24, 24))
+			}
+			else
+			{
+				table.add(Label("$count", Global.skin))
+			}
 		}
 	}
 

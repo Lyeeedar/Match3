@@ -22,8 +22,8 @@ class House
 		this.sprite = sprite
 
 		skillTree = SkillTree()
-		skillTree.baseIcon = AssetManager.loadSprite("Icons/Action", colour = Color.FIREBRICK)
-		skillTree.rootSkills[3] = Skill(Ability(icon = AssetManager.loadSprite("Icons/Find", colour = Color.CYAN), cost = 1, elite = false))
+		skillTree.baseIcon = AssetManager.loadSprite("Icons/UnreliableFlames")
+		skillTree.rootSkills[3] = Skill(Ability(icon = AssetManager.loadSprite("Icons/Firebolt"), cost = 1, elite = false))
 		skillTree.rootSkills[1] = Skill(Ability(icon = AssetManager.loadSprite("Icons/Bash", colour = Color.FOREST), cost = 1, elite = false))
 		skillTree.rootSkills[0] = Skill(Ability(icon = AssetManager.loadSprite("Icons/Aim", colour = Color.CHARTREUSE), cost = 1, elite = false))
 

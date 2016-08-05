@@ -1,5 +1,6 @@
 package com.lyeeedar.Board.CompletionCondition
 
+import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.NinePatch
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.scenes.scene2d.ui.Label
@@ -20,9 +21,11 @@ import com.lyeeedar.Util.AssetManager
 
 class CompletionConditionLoot(): AbstractCompletionCondition()
 {
+	val tick = AssetManager.loadSprite("Oryx/uf_split/uf_interface/uf_interface_680", colour = Color.FOREST)
+
 	var count = 0
 
-	lateinit var label: Label
+	lateinit var table: Table
 	lateinit var grid: Grid
 
 	override fun attachHandlers(grid: Grid)
@@ -32,10 +35,10 @@ class CompletionConditionLoot(): AbstractCompletionCondition()
 		grid.onSunk += {
 
 			val sprite = it.sprite.copy()
-			val dst = label.localToStageCoordinates(Vector2())
+			val dst = table.localToStageCoordinates(Vector2())
 			val src = GridWidget.instance.pointToScreenspace(it)
 
-			Mote(src, dst, sprite, { count++; label.setText("$count") })
+			Mote(src, dst, sprite, { count++; updateTable() })
 		}
 	}
 
@@ -46,19 +49,33 @@ class CompletionConditionLoot(): AbstractCompletionCondition()
 
 	}
 
+	fun updateTable()
+	{
+		table.clear()
+
+		val sprite = AssetManager.loadSprite("Oryx/uf_split/uf_items/coin_gold")
+
+		table.add(SpriteWidget(sprite, 24, 24))
+
+		if (count == 0)
+		{
+			table.add(SpriteWidget(tick, 24, 24))
+		}
+		else
+		{
+			table.add(Label("$count", Global.skin))
+		}
+	}
+
 	override fun createTable(skin: Skin): Table
 	{
-		val table = Table()
+		table = Table()
 
 		table.defaults().pad(10f)
 
 		table.background = NinePatchDrawable(NinePatch(AssetManager.loadTextureRegion("GUI/TilePanel"), 6, 6, 6, 6))
 
-		val sprite = AssetManager.loadSprite("Oryx/uf_split/uf_items/coin_gold")
-		label = Label("$count", Global.skin)
-
-		table.add(SpriteWidget(sprite, 24, 24))
-		table.add(label)
+		updateTable()
 
 		return table
 	}

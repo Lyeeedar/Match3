@@ -5,10 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.scenes.scene2d.InputEvent
-import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane
-import com.badlogic.gdx.scenes.scene2d.ui.Table
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton
-import com.badlogic.gdx.scenes.scene2d.ui.Widget
+import com.badlogic.gdx.scenes.scene2d.ui.*
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener
 import com.badlogic.gdx.utils.Array
 import com.lyeeedar.Global
@@ -76,7 +73,8 @@ class TownWidget(val town: Town, val player: Player) : Widget()
 
 					moveTo(hx+1, hy-1, {
 						val widget = Table()
-						val closeButton = TextButton("X", Global.skin)
+						val closeButton = Button(Global.skin, "close")
+						closeButton.setSize(24f, 24f)
 
 						val skills = SkillTreeWidget(house.skillTree)
 						val scroll = ScrollPane(skills)
@@ -101,7 +99,8 @@ class TownWidget(val town: Town, val player: Player) : Widget()
 					// world map
 					moveTo(tilesWidth/2, tilesHeight - 5, {
 						val widget = Table()
-						val closeButton = TextButton("X", Global.skin)
+						val closeButton = Button(Global.skin, "close")
+						closeButton.setSize(24f, 24f)
 
 						val map = WorldMapWidget(World(), widget, closeButton)
 						val scroll = ScrollPane(map)

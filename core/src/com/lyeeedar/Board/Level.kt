@@ -245,7 +245,7 @@ class Level(val loadPath: String)
 		}
 	}
 
-	fun complete()
+	private fun complete()
 	{
 		completeFun = null
 		if (victory.isCompleted())
@@ -264,7 +264,7 @@ class Level(val loadPath: String)
 	{
 		fun load(path: String): Level
 		{
-			val xml = XmlReader().parse(Gdx.files.internal("Levels/$path.xml"))
+			val xml = XmlReader().parse(Gdx.files.internal("World/Levels/$path.xml"))
 
 			val level = Level(path)
 
@@ -324,19 +324,28 @@ class Level(val loadPath: String)
 			return level
 		}
 
-		fun loadAll(): FastEnumMap<DungeonMapEntry.Type, Array<Level>>
+		fun loadAll(dungeon: String): FastEnumMap<DungeonMapEntry.Type, Array<Level>>
 		{
 			val levels = FastEnumMap<DungeonMapEntry.Type, Array<Level>>(DungeonMapEntry.Type::class.java)
 			for (type in DungeonMapEntry.Type.values()) levels[type] = Array()
 
-			val xml = XmlReader().parse(Gdx.files.internal("Levels/LevelList.xml"))
-			for (i in 0..xml.childCount-1)
+			val xml = XmlReader().parse(Gdx.files.internal("World/Levels/LevelList.xml"))
+			for (di in 0..xml.childCount-1)
 			{
-				val el = xml.getChild(i)
-				val path = el.text
-				val level = load(path)
+				val del = xml.getChild(di)
 
-				levels[level.category].add(level)
+				if (del.name.toLowerCase() == dungeon.toLowerCase())
+				{
+					for (i in 0..del.childCount-1)
+					{
+						val el = del.getChild(i)
+
+						val path = el.text
+						val level = load(path)
+
+						levels[level.category].add(level)
+					}
+				}
 			}
 
 			return levels

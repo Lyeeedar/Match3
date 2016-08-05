@@ -116,7 +116,7 @@ class HubGenerator
 			emptyRooms.add(room)
 		}
 
-		val levels = Level.loadAll()
+		val levels = Level.loadAll(theme.name)
 		bossRoom!!.level = if (levels[DungeonMapEntry.Type.BOSS].size > 0) levels[DungeonMapEntry.Type.BOSS].random(ran) else null
 
 		fun assignLevels(type: DungeonMapEntry.Type, rooms: Array<DungeonMapEntry>)

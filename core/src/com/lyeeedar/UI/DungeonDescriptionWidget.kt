@@ -2,16 +2,14 @@ package com.lyeeedar.UI
 
 import com.badlogic.gdx.graphics.g2d.NinePatch
 import com.badlogic.gdx.scenes.scene2d.Actor
-import com.badlogic.gdx.scenes.scene2d.ui.Label
-import com.badlogic.gdx.scenes.scene2d.ui.Table
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton
-import com.badlogic.gdx.scenes.scene2d.ui.Widget
+import com.badlogic.gdx.scenes.scene2d.ui.*
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable
 import com.badlogic.gdx.utils.Align
 import com.lyeeedar.Board.LevelTheme
 import com.lyeeedar.Global
 import com.lyeeedar.MainGame
+import com.lyeeedar.Map.DungeonMap
 import com.lyeeedar.Map.Generators.HubGenerator
 import com.lyeeedar.Map.WorldDungeon
 import com.lyeeedar.Player.Ability.Ability
@@ -35,9 +33,10 @@ class DungeonDescriptionWidget(val dungeon: WorldDungeon, val mapWidget: Actor, 
 		this.add(table).expand().fill().pad(15f)
 
 		// close button
-		val closeButton = TextButton("X", Global.skin)
+		val closeButton = Button(Global.skin, "close")
+		closeButton.setSize(24f, 24f)
 		closeButton.addClickListener({ remove() })
-		table.add(closeButton).expand().top().right()
+		table.add(closeButton).width(24f).height(24f).expand().top().right()
 		table.row()
 		table.add(Label(dungeon.name, Global.skin, "title")).expandX().center().pad(30f)
 		table.row()
@@ -66,9 +65,9 @@ class DungeonDescriptionWidget(val dungeon: WorldDungeon, val mapWidget: Actor, 
 			{
 				val generator = HubGenerator()
 				map = generator.generate(theme,  8)
-				if (generator.roomsToSpawn <= 0) break
+				if (generator.numRoomsToSpawn <= 0) break
 			}
-			
+
 			val player = Player()
 			player.abilities[0] = Ability(icon = AssetManager.loadSprite("Icons/Action"), cost = 1, elite = false)
 			player.portrait = AssetManager.loadSprite("Oryx/Custom/heroes/Merc")

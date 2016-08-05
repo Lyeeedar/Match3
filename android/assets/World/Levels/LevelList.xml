@@ -1,0 +1,10 @@
+<Dungeons>
+	<Dungeon>
+		<Level>Dungeon/Fight/Box</Level>
+		<Level>Dungeon/Fight/Pack</Level>
+		<Level>Dungeon/Trap/Box</Level>
+		<Level>Dungeon/Trap/Diamond</Level>
+		<Level>Dungeon/Trap/Pyramid</Level>
+		<Level>Dungeon/Treasure/Box</Level>
+	</Dungeon>
+</Dungeons>

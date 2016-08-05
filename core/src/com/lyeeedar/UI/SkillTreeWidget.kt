@@ -23,9 +23,10 @@ class SkillTreeWidget(val skillTree: SkillTree) : Widget()
 	val lineVec2 = Vector2()
 	val tempVec = Vector2()
 	val shape = ShapeRenderer()
-	val iconSize = 32f
+	val iconSize = 48f
+	val circleCol = Color(1f, 1f, 1f, 0.2f)
 	val circle = AssetManager.loadTexture("Sprites/largecircle.png")
-	val white = AssetManager.loadTextureRegion("Sprites/white.png")
+	val background = AssetManager.loadTexture("Sprites/Oryx/uf_split/uf_terrain/ground_dirt_dark_1.png", wrapping = Texture.TextureWrap.Repeat)
 
 	val min = Vector2()
 	val max = Vector2()
@@ -60,10 +61,9 @@ class SkillTreeWidget(val skillTree: SkillTree) : Widget()
 	{
 		super.draw(batch, parentAlpha)
 
-		batch?.color = Color.GOLDENROD
-		batch?.draw(white, 0f, 0f, width, height)
-
 		tempVec.set(x + width * 0.5f, y + height * 0.5f)
+
+		batch?.draw(background, 0f, 0f, width, height, -x / 64f, -y / 64f, (-x + width) / 64f, (-y + height) / 64f)
 
 		// draw lines
 		fun drawLines(skill: Skill)
@@ -98,9 +98,10 @@ class SkillTreeWidget(val skillTree: SkillTree) : Widget()
 		}
 
 		// draw background
-		batch?.color = Color.GOLD
+		batch?.color = circleCol
 		val radius = SkillTreeRadiusStep * maxDepth + 100
-		batch?.draw(circle, tempVec.x - radius, tempVec.y - radius, radius * 2, radius * 2)
+		//batch?.draw(circle, tempVec.x - radius, tempVec.y - radius, radius * 2, radius * 2)
+		batch?.color = Color.WHITE
 
 		batch?.end()
 		batch?.begin()

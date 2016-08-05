@@ -18,6 +18,8 @@ import com.lyeeedar.Util.set
 
 class LevelTheme
 {
+	lateinit var name: String
+
 	lateinit var floor: SpriteWrapper
 	lateinit var wall: SpriteWrapper
 	lateinit var pit: SpriteWrapper
@@ -35,6 +37,8 @@ class LevelTheme
 			val xml = XmlReader().parse(Gdx.files.internal("Themes/$path.xml"))
 
 			val theme = LevelTheme()
+			theme.name = path
+
 			theme.floor = SpriteWrapper.load(xml.getChildByName("Floor"))
 			theme.wall = SpriteWrapper.load(xml.getChildByName("Wall"))
 			theme.pit = SpriteWrapper.load(xml.getChildByName("Pit"))
