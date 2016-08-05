@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener
 import com.badlogic.gdx.utils.Array
 import com.lyeeedar.Global
 import com.lyeeedar.Map.World
+import com.lyeeedar.Player.Ability.Skill
 import com.lyeeedar.Player.Player
 import com.lyeeedar.SpaceSlot
 import com.lyeeedar.Sprite.Sprite
@@ -73,7 +74,27 @@ class TownWidget(val town: Town, val player: Player) : Widget()
 					val hx = 1 + 8 * (index % 2)
 					val hy = tilesHeight - (9 + 6 * (index / 2)) - 1
 
-					moveTo(hx+1, hy-1)
+					moveTo(hx+1, hy-1, {
+						val widget = Table()
+						val closeButton = TextButton("X", Global.skin)
+
+						val skills = SkillTreeWidget(house.skillTree)
+						val scroll = ScrollPane(skills)
+						scroll.setFlingTime(0f)
+						scroll.setOverscroll(false, false)
+						widget.add(scroll).expand().fill()
+
+						widget.setFillParent(true)
+						Global.stage.addActor(widget)
+
+						scroll.layout()
+						scroll.scrollTo(skills.prefWidth/3, 0f, 1f, 1f, true, true)
+						scroll.act(1f)
+
+						closeButton.addClickListener({ widget.remove(); closeButton.remove() })
+						Global.stage.addActor(closeButton)
+						closeButton.setPosition(Global.stage.width - 50, Global.stage.height - 50)
+					})
 				}
 				else if (ix >= 5 && ix < 9 && iy >= tilesHeight-4)
 				{

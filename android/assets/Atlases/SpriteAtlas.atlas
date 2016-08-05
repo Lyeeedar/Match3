@@ -286,14 +286,14 @@ GUI/Button
   index: -1
 GUI/Checked
   rotate: false
-  xy: 626, 208
+  xy: 770, 208
   size: 24, 24
   orig: 24, 24
   offset: 0, 0
   index: -1
 GUI/ProgressIndicator
   rotate: false
-  xy: 654, 208
+  xy: 798, 208
   size: 24, 24
   orig: 24, 24
   offset: 0, 0
@@ -356,21 +356,21 @@ GUI/background
   index: -1
 GUI/border
   rotate: false
-  xy: 554, 200
+  xy: 698, 200
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 GUI/frame_0
   rotate: false
-  xy: 482, 200
+  xy: 626, 200
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 GUI/frame_1
   rotate: false
-  xy: 518, 200
+  xy: 662, 200
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -378,6 +378,34 @@ GUI/frame_1
 Icons/Action
   rotate: false
   xy: 410, 200
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Icons/Aim
+  rotate: false
+  xy: 518, 200
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Icons/Bash
+  rotate: false
+  xy: 482, 200
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Icons/Find
+  rotate: false
+  xy: 446, 200
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Icons/Gather
+  rotate: false
+  xy: 554, 200
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -1035,7 +1063,7 @@ Oryx/Custom/townmap/warrior
   index: -1
 Oryx/Custom/ui/arrow
   rotate: false
-  xy: 682, 208
+  xy: 826, 208
   size: 24, 24
   orig: 24, 24
   offset: 0, 0
@@ -1147,7 +1175,7 @@ Oryx/uf_split/uf_items/skull_small
   index: -1
 Oryx/uf_split/uf_map/uf_map_263
   rotate: false
-  xy: 710, 208
+  xy: 854, 208
   size: 24, 24
   orig: 24, 24
   offset: 0, 0
@@ -1539,14 +1567,14 @@ blank
   index: -1
 borderedcircle
   rotate: false
-  xy: 590, 200
+  xy: 734, 200
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 glow
   rotate: false
-  xy: 446, 200
+  xy: 590, 200
   size: 32, 32
   orig: 32, 32
   offset: 0, 0

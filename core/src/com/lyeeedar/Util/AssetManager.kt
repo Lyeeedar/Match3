@@ -123,7 +123,7 @@ class AssetManager
 
 		private val loadedTextures = HashMap<String, Texture?>()
 
-		fun loadTexture(path: String): Texture?
+		fun loadTexture(path: String, filter: TextureFilter = TextureFilter.Linear, wrapping: Texture.TextureWrap = Texture.TextureWrap.ClampToEdge): Texture?
 		{
 			if (loadedTextures.containsKey(path))
 			{
@@ -138,7 +138,8 @@ class AssetManager
 			}
 
 			val region = Texture(path)
-			region.setFilter(TextureFilter.Linear, TextureFilter.Linear)
+			region.setFilter(filter, filter)
+			region.setWrap(wrapping, wrapping)
 			loadedTextures.put(path, region)
 
 			return region

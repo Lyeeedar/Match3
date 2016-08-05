@@ -13,7 +13,7 @@ import com.lyeeedar.Util.addClickListener
  * Created by Philip on 03-Aug-16.
  */
 
-class MessageBox(val title: String, val message: String, vararg buttons: Pair<String, () -> Unit>) : FullscreenTable()
+class MessageBox(title: String, message: String, vararg buttons: Pair<String, () -> Unit>) : FullscreenTable()
 {
 	val table = Table()
 
