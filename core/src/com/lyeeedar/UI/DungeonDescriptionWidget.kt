@@ -60,8 +60,15 @@ class DungeonDescriptionWidget(val dungeon: WorldDungeon, val mapWidget: Actor, 
 		embarkButton.addClickListener {
 
 			val theme = LevelTheme.load(dungeon.theme)
-			val generator = HubGenerator()
-			val map = generator.generate(theme, 8)
+			var map: DungeonMap
+
+			while (true)
+			{
+				val generator = HubGenerator()
+				map = generator.generate(theme,  8)
+				if (generator.roomsToSpawn <= 0) break
+			}
+			
 			val player = Player()
 			player.abilities[0] = Ability(icon = AssetManager.loadSprite("Icons/Action"), cost = 1, elite = false)
 			player.portrait = AssetManager.loadSprite("Oryx/Custom/heroes/Merc")
