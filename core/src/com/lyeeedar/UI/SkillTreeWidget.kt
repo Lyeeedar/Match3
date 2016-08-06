@@ -27,6 +27,9 @@ class SkillTreeWidget(val skillTree: SkillTree) : Widget()
 	val circleCol = Color(1f, 1f, 1f, 0.2f)
 	val circle = AssetManager.loadTexture("Sprites/largecircle.png")
 	val background = AssetManager.loadTexture("Sprites/Oryx/uf_split/uf_terrain/ground_dirt_dark_1.png", wrapping = Texture.TextureWrap.Repeat)
+	val unbought = AssetManager.loadSprite("Icons/Unknown", colour = Color.LIGHT_GRAY)
+	val boughtLineCol = Color(Color.GOLDENROD)
+	val unboughtLineCol = Color(0.5f, 0.5f, 0.5f, 1f)
 
 	val min = Vector2()
 	val max = Vector2()
@@ -63,15 +66,22 @@ class SkillTreeWidget(val skillTree: SkillTree) : Widget()
 
 		tempVec.set(x + width * 0.5f, y + height * 0.5f)
 
+		batch?.color = Color.LIGHT_GRAY
 		batch?.draw(background, 0f, 0f, width, height, -x / 64f, -y / 64f, (-x + width) / 64f, (-y + height) / 64f)
+		batch?.color = Color.WHITE
 
 		// draw lines
 		fun drawLines(skill: Skill)
 		{
+			if (!skill.bought) return
+
 			if (skill.children[0] != null)
 			{
 				lineVec1.set(skill.location).add(tempVec)
 				lineVec2.set(skill.children[0]!!.location).add(tempVec)
+
+				shape.color = if(skill.children[0]!!.bought) boughtLineCol else unboughtLineCol
+
 				shape.line(lineVec1, lineVec2)
 
 				drawLines(skill.children[0]!!)
@@ -81,6 +91,9 @@ class SkillTreeWidget(val skillTree: SkillTree) : Widget()
 			{
 				lineVec1.set(skill.location).add(tempVec)
 				lineVec2.set(skill.children[1]!!.location).add(tempVec)
+
+				shape.color = if(skill.children[1]!!.bought) boughtLineCol else unboughtLineCol
+
 				shape.line(lineVec1, lineVec2)
 
 				drawLines(skill.children[1]!!)
@@ -91,10 +104,18 @@ class SkillTreeWidget(val skillTree: SkillTree) : Widget()
 		{
 			val x = tempVec.x + skill.location.x - iconSize * 0.5f
 			val y = tempVec.y + skill.location.y - iconSize * 0.5f
-			skill.ability.icon.render(batch as SpriteBatch, x, y, iconSize, iconSize)
 
-			if (skill.children[0] != null) drawIcons(skill.children[0]!!)
-			if (skill.children[1] != null) drawIcons(skill.children[1]!!)
+			if (skill.bought)
+			{
+				skill.ability.icon.render(batch as SpriteBatch, x, y, iconSize, iconSize)
+
+				if (skill.children[0] != null) drawIcons(skill.children[0]!!)
+				if (skill.children[1] != null) drawIcons(skill.children[1]!!)
+			}
+			else
+			{
+				unbought.render(batch as SpriteBatch, x, y, iconSize, iconSize)
+			}
 		}
 
 		// draw background
@@ -114,6 +135,9 @@ class SkillTreeWidget(val skillTree: SkillTree) : Widget()
 			{
 				lineVec1.set(tempVec)
 				lineVec2.set(skill.location).add(tempVec)
+
+				shape.color = if(skill.bought) boughtLineCol else unboughtLineCol
+
 				shape.line(lineVec1, lineVec2)
 
 				drawLines(skill)

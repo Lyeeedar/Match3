@@ -1,7 +1,12 @@
 package com.lyeeedar.Player.Ability
 
 import com.badlogic.gdx.math.Vector2
+import com.badlogic.gdx.utils.ObjectMap
+import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Sprite.Sprite
+import com.lyeeedar.Util.AssetManager
+import com.lyeeedar.Util.getXml
+import com.lyeeedar.Util.set
 
 /**
  * Created by Philip on 05-Aug-16.
@@ -10,10 +15,8 @@ import com.lyeeedar.Sprite.Sprite
 val SkillTreeRadiusStep = 100f
 private val tempVec = Vector2()
 
-class SkillTree()
+class SkillTree(val numBaseSkills: Int)
 {
-	val numBaseSkills = 5
-
 	lateinit var baseIcon: Sprite
 
 	val rootSkills: Array<Skill?> = Array(numBaseSkills){ e -> null }
@@ -33,10 +36,57 @@ class SkillTree()
 			rootSkills[i]?.assignLocation(radiansPerSkill, start, SkillTreeRadiusStep)
 		}
 	}
+
+	companion object
+	{
+		fun load(path: String): SkillTree
+		{
+			val xml = getXml("Skills/$path")
+
+			val resources = ObjectMap<String, XmlReader.Element>()
+			val abilities = ObjectMap<String, Ability>()
+
+			val resourcesEl = xml.getChildByName("Resources")
+			for (i in 0..resourcesEl.childCount-1)
+			{
+				val el = resourcesEl.getChild(i)
+				resources[el.getAttribute("Key")] = el
+			}
+
+			val abilitiesEl = xml.getChildByName("Abilities")
+			for (i in 0..abilitiesEl.childCount-1)
+			{
+				val el = abilitiesEl.getChild(i)
+				val ability = Ability.load(el, resources)
+				abilities[el.name] = ability
+			}
+
+			val treeEl = xml.getChildByName("Tree")
+
+			val tree = SkillTree(treeEl.childCount)
+			tree.baseIcon = AssetManager.tryLoadSpriteWithResources(xml.getChildByName("Icon"), resources)
+
+			for (i in 0..treeEl.childCount-1)
+			{
+				val el = treeEl.getChild(i)
+				val ability = abilities[el.name]
+				val skill = Skill(ability)
+				skill.parse(el, abilities, resources)
+
+				tree.rootSkills[i] = skill
+			}
+
+			tree.assignLocations()
+			return tree
+		}
+	}
 }
 
 class Skill(val ability: Ability)
 {
+	val costs = ObjectMap<String, Int>()
+	var bought = false
+
 	val location: Vector2 = Vector2()
 	val children: Array<Skill?> = Array(2){ e -> null }
 
@@ -64,6 +114,35 @@ class Skill(val ability: Ability)
 			val child = children[0] ?: children[1]
 
 			child?.assignLocation(angle, start, radius + SkillTreeRadiusStep)
+		}
+	}
+
+	fun parse(xml: XmlReader.Element, abilities: ObjectMap<String, Ability>, resources: ObjectMap<String, XmlReader.Element>)
+	{
+		// parse cost
+		val costsEl = xml.getChildByName("Cost")
+		if (costsEl != null)
+		{
+			for (i in 0..costsEl.childCount - 1)
+			{
+				val el = costsEl.getChild(i)
+				costs[el.name] = el.text.toInt()
+			}
+		}
+		else
+		{
+			bought = true
+		}
+
+		val childrenEl = xml.getChildByName("Children") ?: return
+		for (i in 0..childrenEl.childCount-1)
+		{
+			val el = childrenEl.getChild(i)
+			val ability = abilities[el.name]
+			val skill = Skill(ability)
+			skill.parse(el, abilities, resources)
+
+			children[i] = skill
 		}
 	}
 }

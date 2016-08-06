@@ -2,6 +2,8 @@ package com.lyeeedar.Player.Ability
 
 import com.badlogic.gdx.math.Interpolation
 import com.badlogic.gdx.utils.Array
+import com.badlogic.gdx.utils.ObjectMap
+import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Board.Grid
 import com.lyeeedar.Board.Tile
 import com.lyeeedar.Sprite.Sprite
@@ -17,26 +19,22 @@ import com.lyeeedar.Util.UnsmoothedPath
 
 class Ability()
 {
-	constructor(icon: Sprite, cost: Int, elite: Boolean) : this()
-	{
-		this.icon = icon
-		this.cost = cost
-		this.elite = elite
-	}
+	lateinit var name: String
+	lateinit var description: String
 
 	lateinit var icon: Sprite
+	lateinit var hitSprite: Sprite
+	var flightSprite: Sprite? = null
+
 	var cost: Int = 2
 	var elite: Boolean = false
-
-	val selectedTargets = Array<Tile>()
 
 	var targets = 1
 	var targetter: Targetter = Targetter(Targetter.Type.ORB)
 	var permuter: Permuter = Permuter(Permuter.Type.SINGLE)
 	var effect: Effect = Effect(Effect.Type.TEST)
 
-	var flightSprite: Sprite? = null
-	var hitSprite: Sprite = AssetManager.loadSprite("EffectSprites/Explosion/Explosion", updateTime = 0.1f)
+	val selectedTargets = Array<Tile>()
 
 	fun activate(grid: Grid)
 	{
@@ -77,6 +75,33 @@ class Ability()
 			target.effects.add(hs)
 
 			effect.apply(target, grid, delay)
+		}
+	}
+
+	companion object
+	{
+		fun load(xml: XmlReader.Element, resources: ObjectMap<String, XmlReader.Element>) : Ability
+		{
+			val ability = Ability()
+
+			ability.name = xml.get("Name")
+			ability.description = xml.get("Description")
+
+			ability.icon = AssetManager.tryLoadSpriteWithResources(xml.getChildByName("Icon"), resources)
+			ability.hitSprite = AssetManager.tryLoadSpriteWithResources(xml.getChildByName("HitSprite"), resources)
+			ability.flightSprite = if (xml.getChildByName("FlightSprite") != null) AssetManager.tryLoadSpriteWithResources(xml.getChildByName("FlightSprite"), resources) else null
+
+			ability.cost = xml.getInt("Cost")
+
+			val effectDesc = xml.get("Effect")
+			val split = effectDesc.toUpperCase().split(",")
+
+			ability.targets = split[0].toInt()
+			ability.targetter = Targetter(Targetter.Type.valueOf(split[1]))
+			ability.permuter = Permuter(Permuter.Type.valueOf(split[2]))
+			ability.effect = Effect(Effect.Type.valueOf(split[3]))
+
+			return ability
 		}
 	}
 }

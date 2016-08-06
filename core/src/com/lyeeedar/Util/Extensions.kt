@@ -1,5 +1,6 @@
 package com.lyeeedar.Util
 
+import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.Interpolation
 import com.badlogic.gdx.math.MathUtils
@@ -36,6 +37,7 @@ class Leap() : Interpolation()
 }
 val leap = Leap()
 
+inline fun getXml(path: String): XmlReader.Element = XmlReader().parse(Gdx.files.internal("$path.xml"))
 
 inline fun <reified T : Any> getPool(): Pool<T> = Pools.get(T::class.java, Int.MAX_VALUE)
 

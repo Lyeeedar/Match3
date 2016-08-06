@@ -69,7 +69,6 @@ class DungeonDescriptionWidget(val dungeon: WorldDungeon, val mapWidget: Actor, 
 			}
 
 			val player = Player()
-			player.abilities[0] = Ability(icon = AssetManager.loadSprite("Icons/Action"), cost = 1, elite = false)
 			player.portrait = AssetManager.loadSprite("Oryx/Custom/heroes/Merc")
 
 			MapScreen.instance.setMap(map, player)

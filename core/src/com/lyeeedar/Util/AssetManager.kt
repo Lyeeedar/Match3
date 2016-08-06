@@ -20,6 +20,7 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter
 import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.BufferUtils
+import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.XmlReader.Element
 import com.lyeeedar.Sound.SoundInstance
 import com.lyeeedar.Sprite.Sprite
@@ -239,9 +240,16 @@ class AssetManager
 			return sprite
 		}
 
+		fun tryLoadSpriteWithResources(xml: Element, resources: ObjectMap<String, Element>): Sprite
+		{
+			if (xml.childCount == 0) return loadSprite(resources[xml.text])
+			else return loadSprite(xml)
+		}
+
 		fun tryLoadSprite(xml: Element?): Sprite?
 		{
 			if (xml == null) return null
+			else if (xml.childCount == 0) return null
 			else return loadSprite(xml)
 		}
 

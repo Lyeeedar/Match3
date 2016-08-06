@@ -15,7 +15,6 @@ class TownScreen() : AbstractScreen()
 	override fun create()
 	{
 		val player = Player()
-		player.abilities[0] = Ability(icon = AssetManager.loadSprite("Icons/Action"), cost = 1, elite = false)
 		player.portrait = AssetManager.loadSprite("Oryx/Custom/heroes/Merc", drawActualSize = true)
 
 		val widget = TownWidget(Town(), player)

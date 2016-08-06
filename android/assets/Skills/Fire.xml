@@ -1,0 +1,100 @@
+<SkillTree>
+
+    <Icon>
+        <Name>Icons/FireTree</Name>
+    </Icon>
+
+    <Resources>
+        <Sprite Key="FireBoltMove">
+            <Name>EffectSprites/FireBoltMove/FireBoltMove</Name>
+            <UpdateRate>0.1</UpdateRate>
+        </Sprite>
+
+        <Sprite Key="FireBurst">
+            <Name>EffectSprites/FireBurst/FireBurst</Name>
+            <UpdateRate>0.1</UpdateRate>
+        </Sprite>
+    </Resources>
+
+    <Abilities>
+        <Firebolt>
+            <Name>Firebolt</Name>
+            <Description>Launch a firebolt at a single orb, destroying it</Description>
+            <Cost>3</Cost>
+            <Effect>1,Orb,Single,Pop</Effect>
+
+            <Icon><Name>Icons/Firebolt</Name></Icon>
+            <FlightSprite>FireBoltMove</FlightSprite>
+            <HitSprite>FireBurst</HitSprite>
+        </Firebolt>
+
+        <FireboltDual>
+            <Name>Dual Firebolt</Name>
+            <Description>Launch a firebolt at a pair of orbs, destroying them</Description>
+            <Cost>4</Cost>
+            <Effect>2,Orb,Single,Pop</Effect>
+
+            <Icon><Name>Icons/FireboltDual</Name></Icon>
+            <FlightSprite>FireBoltMove</FlightSprite>
+            <HitSprite>FireBurst</HitSprite>
+        </FireboltDual>
+
+        <FireboltTri>
+            <Name>Tri Firebolt</Name>
+            <Description>Launch a firebolt at a trio of orbs, destroying them</Description>
+            <Cost>4</Cost>
+            <Effect>3,Orb,Single,Pop</Effect>
+
+            <Icon><Name>Icons/FireboltTri</Name></Icon>
+            <FlightSprite>FireBoltMove</FlightSprite>
+            <HitSprite>FireBurst</HitSprite>
+        </FireboltTri>
+
+        <Fireball>
+            <Name>Fireball</Name>
+            <Description>Launch an exploding fireball at the target location, destroying it and all neighbours</Description>
+            <Cost>5</Cost>
+            <Effect>1,Orb,Block1,Pop</Effect>
+
+            <Icon><Name>Icons/Fireball</Name></Icon>
+            <FlightSprite>FireBoltMove</FlightSprite>
+            <HitSprite>FireBurst</HitSprite>
+        </Fireball>
+    </Abilities>
+
+    <Tree>
+        <Firebolt>
+
+            <Children>
+                <FireboltDual>
+                    <UnboughtDescription>With some more funding I think I can develop a way to lunch two firebolts at the same time.</UnboughtDescription>
+                    <Cost>
+                        <Gold>100</Gold>
+                    </Cost>
+
+                    <Children>
+                        <FireboltTri>
+                            <UnboughtDescription>With some more funding I think I can develop a way to lunch three firebolts at the same time.</UnboughtDescription>
+                            <Cost>
+                                <Gold>500</Gold>
+                            </Cost>
+
+                        </FireboltTri>
+                    </Children>
+
+                </FireboltDual>
+
+                <Fireball>
+                    <UnboughtDescription>I've heard tales of a fabled creature of flame. With it's heart I'm sure I could develop a new spell of some form.</UnboughtDescription>
+                    <Cost>
+                        <Gold>1000</Gold>
+                        <Flameheart>5</Flameheart>
+                    </Cost>
+
+                </Fireball>
+            </Children>
+
+        </Firebolt>
+    </Tree>
+
+</SkillTree>
