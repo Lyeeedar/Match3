@@ -22,7 +22,7 @@ class TownScreen() : AbstractScreen()
 
 	override fun create()
 	{
-		val widget = TownWidget(Town(), playerData)
+		val widget = TownWidget(Town(playerData), playerData)
 
 		mainTable.add(widget).expand().fill()
 	}

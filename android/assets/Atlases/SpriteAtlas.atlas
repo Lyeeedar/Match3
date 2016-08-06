@@ -300,7 +300,7 @@ GUI/ProgressIndicator
   index: -1
 GUI/SeperatorHorizontal
   rotate: false
-  xy: 762, 228
+  xy: 798, 228
   size: 32, 6
   orig: 32, 6
   offset: 0, 0
@@ -356,21 +356,28 @@ GUI/background
   index: -1
 GUI/border
   rotate: false
-  xy: 626, 202
+  xy: 662, 202
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 GUI/frame_0
   rotate: false
-  xy: 554, 202
+  xy: 590, 202
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 GUI/frame_1
   rotate: false
-  xy: 590, 202
+  xy: 626, 202
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Icons/Empty
+  rotate: false
+  xy: 518, 202
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -412,7 +419,7 @@ Icons/FireboltTri
   index: -1
 Icons/Unknown
   rotate: false
-  xy: 698, 202
+  xy: 734, 202
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -1224,7 +1231,7 @@ Oryx/uf_split/uf_items/skull_small
   index: -1
 Oryx/uf_split/uf_map/uf_map_263
   rotate: false
-  xy: 734, 210
+  xy: 770, 210
   size: 24, 24
   orig: 24, 24
   offset: 0, 0
@@ -1616,14 +1623,14 @@ blank
   index: -1
 borderedcircle
   rotate: false
-  xy: 662, 202
+  xy: 698, 202
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 glow
   rotate: false
-  xy: 518, 202
+  xy: 554, 202
   size: 32, 32
   orig: 32, 32
   offset: 0, 0

@@ -1,17 +1,21 @@
 package com.lyeeedar.Player.Ability
 
 import com.badlogic.gdx.math.Interpolation
+import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Board.Grid
 import com.lyeeedar.Board.Tile
+import com.lyeeedar.Global
 import com.lyeeedar.Sprite.Sprite
 import com.lyeeedar.Sprite.SpriteAnimation.MoveAnimation
+import com.lyeeedar.UI.GridWidget
 import com.lyeeedar.UI.PowerBar
 import com.lyeeedar.Util.AssetManager
 import com.lyeeedar.Util.Point
 import com.lyeeedar.Util.UnsmoothedPath
+import com.lyeeedar.Util.getRotation
 
 /**
  * Created by Philip on 20-Jul-16.
@@ -62,7 +66,13 @@ class Ability()
 			{
 				val fs = flightSprite!!.copy()
 
-				fs.spriteAnimation = MoveAnimation.obtain().set(0.5f, UnsmoothedPath(target.getPosDiff(Point.MINUS_ONE)), Interpolation.linear)
+				val p1 = Vector2(Global.stage.width * 0.5f, -Global.tileSize)
+				val p2 = GridWidget.instance.pointToScreenspace(target)
+
+				val dist = p1.dst(p2) / Global.tileSize
+
+				fs.spriteAnimation = MoveAnimation.obtain().set(0.25f + 0.05f * dist, arrayOf(p1, p2), Interpolation.exp10In)
+				fs.rotation = getRotation(p1, p2)
 				delay += fs.lifetime
 
 				target.effects.add(fs)
@@ -80,8 +90,6 @@ class Ability()
 
 	companion object
 	{
-		val abilities = ObjectMap<String, Ability>()
-
 		fun load(xml: XmlReader.Element, resources: ObjectMap<String, XmlReader.Element>) : Ability
 		{
 			val ability = Ability()

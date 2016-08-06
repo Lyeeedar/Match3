@@ -17,10 +17,7 @@ import com.lyeeedar.Player.Player
 
 import com.lyeeedar.Sprite.SpriteAnimation.MoveAnimation
 import com.lyeeedar.Sprite.SpriteRenderer
-import com.lyeeedar.UI.AbilityWidget
-import com.lyeeedar.UI.FullscreenMessage
-import com.lyeeedar.UI.GridWidget
-import com.lyeeedar.UI.PowerBar
+import com.lyeeedar.UI.*
 import com.lyeeedar.Util.AssetManager
 import java.awt.event.MouseListener
 
@@ -30,6 +27,8 @@ import java.awt.event.MouseListener
 
 class GridScreen(): AbstractScreen()
 {
+	val emptySlot = AssetManager.loadSprite("Icons/Empty")
+
 	// ----------------------------------------------------------------------
 	init
 	{
@@ -65,7 +64,11 @@ class GridScreen(): AbstractScreen()
 			if (ability != null)
 			{
 				val widget = AbilityWidget(ability, 64, 64, level.grid)
-				abilityTable.add(widget)
+				abilityTable.add(widget).expand()
+			}
+			else
+			{
+				abilityTable.add(SpriteWidget(emptySlot, 64, 64)).expand()
 			}
 		}
 

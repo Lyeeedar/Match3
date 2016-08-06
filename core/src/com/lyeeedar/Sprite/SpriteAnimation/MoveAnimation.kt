@@ -33,7 +33,7 @@ class MoveAnimation : AbstractMoveAnimation
 
 	}
 
-	fun set(duration: Float, path: Path<Vector2>, eqn: Interpolation): MoveAnimation
+	fun set(duration: Float, path: Path<Vector2>, eqn: Interpolation = Interpolation.linear): MoveAnimation
 	{
 		this.duration = duration
 		this.path = path
@@ -61,7 +61,7 @@ class MoveAnimation : AbstractMoveAnimation
 		return time > duration
 	}
 
-	fun set(duration: Float, path: Array<Vector2>): MoveAnimation
+	fun set(duration: Float, path: Array<Vector2>, eqn: Interpolation = Interpolation.linear): MoveAnimation
 	{
 		for (point in path)
 		{
@@ -72,7 +72,7 @@ class MoveAnimation : AbstractMoveAnimation
 		this.duration = duration
 		this.time = 0f
 		this.path = UnsmoothedPath(path)
-		this.eqn = Interpolation.linear
+		this.eqn = eqn
 
 		time = 0f
 
@@ -81,7 +81,7 @@ class MoveAnimation : AbstractMoveAnimation
 		return this
 	}
 
-	fun set(duration: Float, path: Array<Point>): MoveAnimation
+	fun set(duration: Float, path: Array<Point>, eqn: Interpolation = Interpolation.linear): MoveAnimation
 	{
 		val vectorPath = com.badlogic.gdx.utils.Array<Vector2>()
 
@@ -98,22 +98,7 @@ class MoveAnimation : AbstractMoveAnimation
 		this.duration = duration
 		this.time = 0f
 		this.path = UnsmoothedPath(asArray)
-		this.eqn = Interpolation.linear
-
-		time = 0f
-
-		update(0f)
-
-		return this
-	}
-
-
-	fun set(duration: Float, path: Path<Vector2>): MoveAnimation
-	{
-		this.duration = duration
-		this.time = 0f
-		this.path = path
-		this.eqn = Interpolation.linear
+		this.eqn = eqn
 
 		time = 0f
 

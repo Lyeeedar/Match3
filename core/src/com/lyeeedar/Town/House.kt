@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color
 import com.lyeeedar.Player.Ability.Ability
 import com.lyeeedar.Player.Ability.Skill
 import com.lyeeedar.Player.Ability.SkillTree
+import com.lyeeedar.Player.PlayerData
 import com.lyeeedar.Sprite.Sprite
 import com.lyeeedar.Util.AssetManager
 
@@ -17,10 +18,10 @@ class House
 
 	lateinit var skillTree: SkillTree
 
-	constructor(sprite: Sprite)
+	constructor(sprite: Sprite, playerData: PlayerData)
 	{
 		this.sprite = sprite
 
-		skillTree = SkillTree.load("Fire")
+		skillTree = playerData.getSkillTree("Fire")
 	}
 }

@@ -66,7 +66,11 @@ class TownWidget(val town: Town, val player: PlayerData) : Widget()
 				val iy = (ly / Global.tileSize).toInt()
 
 				val house = getHouse(ix, iy)
-				if (house != null)
+				if (playerPos.dist(ix, iy) == 0)
+				{
+					PlayerDataWidget(player)
+				}
+				else if (house != null)
 				{
 					val index = town.houses.indexOf(house)
 
@@ -212,6 +216,11 @@ class TownWidget(val town: Town, val player: PlayerData) : Widget()
 	override fun act(delta: Float)
 	{
 		super.act(delta)
+
+		if (playerSprite.fileName != player.chosenSprite.fileName)
+		{
+			playerSprite = player.chosenSprite.copy()
+		}
 
 		playerSprite.update(delta)
 	}

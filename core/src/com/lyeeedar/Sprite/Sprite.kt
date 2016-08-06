@@ -13,7 +13,7 @@ import com.lyeeedar.Sound.SoundInstance
 import com.lyeeedar.Sprite.SpriteAnimation.*
 import com.lyeeedar.Util.Point
 
-class Sprite(var fileName: String, var animationDelay: Float, var textures: Array<TextureRegion>, colour: Color, mode: Sprite.AnimationMode, var sound: SoundInstance?, var drawActualSize: Boolean)
+class Sprite(val fileName: String, var animationDelay: Float, var textures: Array<TextureRegion>, colour: Color, mode: Sprite.AnimationMode, var sound: SoundInstance?, var drawActualSize: Boolean)
 {
 	enum class AnimationStage
 	{

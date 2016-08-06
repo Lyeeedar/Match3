@@ -41,7 +41,7 @@ class ObjectiveExplore(): AbstractObjective()
 
 	override fun isCompleted(): Boolean = complete
 
-	override fun createTable(skin: Skin): Table
+	override fun createDynamicTable(skin: Skin): Table
 	{
 		val table = Table()
 
@@ -49,6 +49,18 @@ class ObjectiveExplore(): AbstractObjective()
 		table.row()
 
 		table.add(label).left()
+
+		return table
+	}
+
+	override fun createStaticTable(skin: Skin): Table
+	{
+		val table = Table()
+
+		table.add(Label("Explore", skin)).left()
+		table.row()
+
+		table.add(Label(label.text, skin)).left()
 
 		return table
 	}

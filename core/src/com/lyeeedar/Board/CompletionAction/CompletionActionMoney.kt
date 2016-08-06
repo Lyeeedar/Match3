@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Board.Mote
 import com.lyeeedar.Player.Player
+import com.lyeeedar.Screens.MapScreen
 import com.lyeeedar.UI.DungeonMapWidget
 import com.lyeeedar.UI.PlayerWidget
 import com.lyeeedar.Util.AssetManager
@@ -23,7 +24,7 @@ class CompletionActionMoney() : AbstractCompletionAction()
 			for (i in 1..change)
 			{
 				val sprite = AssetManager.loadSprite("Oryx/uf_split/uf_items/coin_gold", drawActualSize = true)
-				val dst = PlayerWidget.instance.localToStageCoordinates(Vector2())
+				val dst = MapScreen.instance.getPortraitPos()
 				val src = DungeonMapWidget.instance.getCenterInScreenspace()
 
 				Mote(src, dst, sprite, { player.gold++ })
