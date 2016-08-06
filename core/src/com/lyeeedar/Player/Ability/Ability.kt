@@ -80,6 +80,8 @@ class Ability()
 
 	companion object
 	{
+		val abilities = ObjectMap<String, Ability>()
+
 		fun load(xml: XmlReader.Element, resources: ObjectMap<String, XmlReader.Element>) : Ability
 		{
 			val ability = Ability()

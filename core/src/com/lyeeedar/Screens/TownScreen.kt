@@ -2,6 +2,7 @@ package com.lyeeedar.Screens
 
 import com.lyeeedar.Player.Ability.Ability
 import com.lyeeedar.Player.Player
+import com.lyeeedar.Player.PlayerData
 import com.lyeeedar.Town.Town
 import com.lyeeedar.UI.TownWidget
 import com.lyeeedar.Util.AssetManager
@@ -12,12 +13,16 @@ import com.lyeeedar.Util.AssetManager
 
 class TownScreen() : AbstractScreen()
 {
+	init
+	{
+		instance = this
+	}
+
+	val playerData = PlayerData()
+
 	override fun create()
 	{
-		val player = Player()
-		player.portrait = AssetManager.loadSprite("Oryx/Custom/heroes/Merc", drawActualSize = true)
-
-		val widget = TownWidget(Town(), player)
+		val widget = TownWidget(Town(), playerData)
 
 		mainTable.add(widget).expand().fill()
 	}
@@ -25,5 +30,10 @@ class TownScreen() : AbstractScreen()
 	override fun doRender(delta: Float)
 	{
 
+	}
+
+	companion object
+	{
+		lateinit var instance: TownScreen
 	}
 }

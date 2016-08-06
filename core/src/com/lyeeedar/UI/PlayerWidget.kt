@@ -20,7 +20,7 @@ class PlayerWidget(val player: Player): Table()
 
 		val sprite = SpriteWidget(player.portrait.copy(), 64, 64)
 		hpLabel = Label("${player.hp}/${player.maxhp}", Global.skin)
-		moneyLabel = Label("${player.money} coins", Global.skin)
+		moneyLabel = Label("${player.gold} coins", Global.skin)
 
 		val abilityBar = Table()
 		for (ability in player.abilities)
@@ -48,7 +48,7 @@ class PlayerWidget(val player: Player): Table()
 		super.act(delta)
 
 		hpLabel.setText("${player.hp}/${player.maxhp}")
-		moneyLabel.setText("${player.money} coins")
+		moneyLabel.setText("${player.gold} coins")
 	}
 
 	companion object

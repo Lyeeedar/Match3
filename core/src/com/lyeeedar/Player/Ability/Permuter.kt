@@ -13,6 +13,8 @@ class Permuter(val type: Type)
 	{
 		SINGLE,
 		ALLOFTYPE,
+		COLUMN,
+		ROW,
 		BLOCK1,
 		BLOCK2,
 		BLOCK3,
@@ -26,6 +28,8 @@ class Permuter(val type: Type)
 		{
 			Type.SINGLE -> fun (tile: Tile, grid: Grid) = sequenceOf(tile)
 			Type.ALLOFTYPE -> fun (tile: Tile, grid: Grid) = grid.grid.filter{ it.orb?.key == tile.orb!!.key }
+			Type.COLUMN ->  fun (tile: Tile, grid: Grid) = grid.grid.filter{ it.x == tile.x }
+			Type.ROW ->  fun (tile: Tile, grid: Grid) = grid.grid.filter{ it.y == tile.y }
 			Type.BLOCK1 ->  fun (tile: Tile, grid: Grid) = grid.grid.filter{ it.taxiDist(tile) <= 1 }
 			Type.BLOCK2 ->  fun (tile: Tile, grid: Grid) = grid.grid.filter{ it.taxiDist(tile) <= 2 }
 			Type.BLOCK3 ->  fun (tile: Tile, grid: Grid) = grid.grid.filter{ it.taxiDist(tile) <= 3 }

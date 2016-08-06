@@ -14,6 +14,7 @@ import com.lyeeedar.MainGame
 import com.lyeeedar.Map.DungeonMap
 import com.lyeeedar.Player.Player
 import com.lyeeedar.Screens.GridScreen
+import com.lyeeedar.Screens.TownScreen
 import com.lyeeedar.SpaceSlot
 import com.lyeeedar.Sprite.Sprite
 import com.lyeeedar.Sprite.SpriteAnimation.MoveAnimation
@@ -130,6 +131,7 @@ class DungeonMapWidget(val map: DungeonMap, val player: Player): Widget()
 	fun completeDungeon()
 	{
 		Global.game.switchScreen(MainGame.ScreenEnum.TOWN)
+		TownScreen.instance.playerData.mergePlayerDataBack(player)
 	}
 
 	override fun act(delta: Float)
@@ -139,6 +141,12 @@ class DungeonMapWidget(val map: DungeonMap, val player: Player): Widget()
 		if (dungeonComplete)
 		{
 		}
+		else if (player.hp <= 0)
+		{
+			dungeonComplete = true
+			MessageBox("Out of life!", "You collapse from your wounds, falling unconscious. Some time later you wake up back in town, alive but with your pockets misteriously lighter.",
+					Pair("Okay", {player.gold /= 2; completeDungeon()}))
+		}
 		else if (map.objective.isCompleted())
 		{
 			dungeonComplete = true
@@ -146,12 +154,6 @@ class DungeonMapWidget(val map: DungeonMap, val player: Player): Widget()
 					Pair("Yes", {completeDungeon()}),
 					Pair("Continue Exploring", {val m = MessageBox("Continue Exploration", "You can tap the icon in the top left when you are ready to return to town.", Pair("Okay", {}))})
 			)
-		}
-		else if (!map.objective.isCompleted() && player.hp <= 0)
-		{
-			dungeonComplete = true
-			MessageBox("Out of life!", "You collapse from your wounds, falling unconscious. Some time later you wake up back in town, alive but with your pockets misteriously lighter.",
-					Pair("Okay", {player.money /= 2; completeDungeon()}))
 		}
 
 		playerSprite.update(delta)

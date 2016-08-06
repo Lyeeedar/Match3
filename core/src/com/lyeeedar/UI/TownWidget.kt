@@ -12,6 +12,7 @@ import com.lyeeedar.Global
 import com.lyeeedar.Map.World
 import com.lyeeedar.Player.Ability.Skill
 import com.lyeeedar.Player.Player
+import com.lyeeedar.Player.PlayerData
 import com.lyeeedar.SpaceSlot
 import com.lyeeedar.Sprite.Sprite
 import com.lyeeedar.Sprite.SpriteAnimation.MoveAnimation
@@ -25,7 +26,7 @@ import com.lyeeedar.Util.*
  * Created by Philip on 02-Aug-16.
  */
 
-class TownWidget(val town: Town, val player: Player) : Widget()
+class TownWidget(val town: Town, val player: PlayerData) : Widget()
 {
 	var gate = AssetManager.loadSprite("Oryx/Custom/townmap/gate")
 	var grass = AssetManager.loadSprite("Oryx/uf_split/uf_terrain/ground_grass_1")
@@ -36,7 +37,8 @@ class TownWidget(val town: Town, val player: Player) : Widget()
 	var tilesHeight: Int = 1
 
 	val playerPos: Point = Point()
-	val playerSprite: Sprite = player.portrait.copy()
+
+	var playerSprite: Sprite = player.chosenSprite.copy()
 
 	init
 	{
@@ -76,7 +78,7 @@ class TownWidget(val town: Town, val player: Player) : Widget()
 						val closeButton = Button(Global.skin, "close")
 						closeButton.setSize(24f, 24f)
 
-						val skills = SkillTreeWidget(house.skillTree)
+						val skills = SkillTreeWidget(house.skillTree, player)
 						val scroll = ScrollPane(skills)
 						scroll.setFlingTime(0f)
 						scroll.setOverscroll(false, false)
@@ -102,7 +104,7 @@ class TownWidget(val town: Town, val player: Player) : Widget()
 						val closeButton = Button(Global.skin, "close")
 						closeButton.setSize(24f, 24f)
 
-						val map = WorldMapWidget(World(), widget, closeButton)
+						val map = WorldMapWidget(World(), player, widget, closeButton)
 						val scroll = ScrollPane(map)
 						scroll.setFlingTime(0f)
 						scroll.setOverscroll(false, false)

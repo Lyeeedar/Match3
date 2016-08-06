@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar
 import com.badlogic.gdx.scenes.scene2d.ui.Skin
 import com.badlogic.gdx.scenes.scene2d.ui.Table
+import com.badlogic.gdx.utils.ObjectMap
 import com.lyeeedar.Board.Grid
 import com.lyeeedar.Player.Ability.Ability
 import com.lyeeedar.Sprite.Sprite
@@ -13,7 +14,7 @@ import com.lyeeedar.UI.SpriteWidget
  * Created by Philip on 15-Jul-16.
  */
 
-class Player
+class Player(data: PlayerData)
 {
 	lateinit var portrait: Sprite
 
@@ -23,8 +24,26 @@ class Player
 	var startpower: Int = 0
 	var maxpower: Int = 50
 
-	var money: Int = 0
+	var gold: Int = 0
+	val inventory = ObjectMap<String, Item>()
 
 	// abilities and stuff
 	val abilities: Array<Ability?> = Array(4){e -> null}
+
+	init
+	{
+		portrait = data.chosenSprite
+		portrait.drawActualSize = false
+
+		maxhp = data.maxHP
+		hp = maxhp
+
+		maxpower = data.maxPower
+		startpower = 0
+
+		for (i in 0..3)
+		{
+			abilities[i] = if (data.abilities[i] != null) Ability.abilities[data.abilities[i]] else null
+		}
+	}
 }

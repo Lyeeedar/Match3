@@ -10,13 +10,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button
 import com.badlogic.gdx.scenes.scene2d.ui.Widget
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener
 import com.lyeeedar.Map.World
+import com.lyeeedar.Player.PlayerData
 import com.lyeeedar.Util.AssetManager
 
 /**
  * Created by Philip on 02-Aug-16.
  */
 
-class WorldMapWidget(val world: World, val parent: Actor, val closeButton: Actor) : Widget()
+class WorldMapWidget(val world: World, val playerData: PlayerData, val parent: Actor, val closeButton: Actor) : Widget()
 {
 	val white = AssetManager.loadTextureRegion("Sprites/white.png")
 	val notSelected = AssetManager.loadTextureRegion("Sprites/Oryx/uf_split/uf_map/uf_map_263.png")!!
@@ -41,7 +42,7 @@ class WorldMapWidget(val world: World, val parent: Actor, val closeButton: Actor
 					if (dungeon.location.dist(x.toInt(), y.toInt()) < 25)
 					{
 						// select this dungeon
-						DungeonDescriptionWidget(dungeon, parent, closeButton)
+						DungeonDescriptionWidget(dungeon, playerData, parent, closeButton)
 					}
 				}
 			}

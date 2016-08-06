@@ -26,12 +26,12 @@ class CompletionActionMoney() : AbstractCompletionAction()
 				val dst = PlayerWidget.instance.localToStageCoordinates(Vector2())
 				val src = DungeonMapWidget.instance.getCenterInScreenspace()
 
-				Mote(src, dst, sprite, { player.money++ })
+				Mote(src, dst, sprite, { player.gold++ })
 			}
 		}
 		else
 		{
-			player.money += change
+			player.gold += change
 		}
 	}
 

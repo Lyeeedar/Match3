@@ -14,6 +14,7 @@ import com.lyeeedar.Map.Generators.HubGenerator
 import com.lyeeedar.Map.WorldDungeon
 import com.lyeeedar.Player.Ability.Ability
 import com.lyeeedar.Player.Player
+import com.lyeeedar.Player.PlayerData
 import com.lyeeedar.Screens.MapScreen
 import com.lyeeedar.Util.AssetManager
 import com.lyeeedar.Util.addClickListener
@@ -22,7 +23,7 @@ import com.lyeeedar.Util.addClickListener
  * Created by Philip on 02-Aug-16.
  */
 
-class DungeonDescriptionWidget(val dungeon: WorldDungeon, val mapWidget: Actor, val button: Actor) : FullscreenTable()
+class DungeonDescriptionWidget(val dungeon: WorldDungeon, val playerData: PlayerData, val mapWidget: Actor, val button: Actor) : FullscreenTable()
 {
 	val table = Table()
 
@@ -68,10 +69,7 @@ class DungeonDescriptionWidget(val dungeon: WorldDungeon, val mapWidget: Actor, 
 				if (generator.numRoomsToSpawn <= 0) break
 			}
 
-			val player = Player()
-			player.portrait = AssetManager.loadSprite("Oryx/Custom/heroes/Merc")
-
-			MapScreen.instance.setMap(map, player)
+			MapScreen.instance.setMap(map, Player(playerData))
 			Global.game.switchScreen(MainGame.ScreenEnum.MAP)
 
 			remove()

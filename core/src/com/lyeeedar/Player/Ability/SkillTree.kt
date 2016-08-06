@@ -37,6 +37,18 @@ class SkillTree(val numBaseSkills: Int)
 		}
 	}
 
+	fun descendants(boughtOnly: Boolean = false) : com.badlogic.gdx.utils.Array<Skill>
+	{
+		val skills = com.badlogic.gdx.utils.Array<Skill>()
+
+		for (skill in rootSkills)
+		{
+			skill?.descendants(skills, boughtOnly)
+		}
+
+		return skills
+	}
+
 	companion object
 	{
 		fun load(path: String): SkillTree
@@ -85,10 +97,23 @@ class SkillTree(val numBaseSkills: Int)
 class Skill(val ability: Ability)
 {
 	val costs = ObjectMap<String, Int>()
+	lateinit var unboughtDescription: String
 	var bought = false
 
 	val location: Vector2 = Vector2()
 	val children: Array<Skill?> = Array(2){ e -> null }
+
+	fun descendants(array: com.badlogic.gdx.utils.Array<Skill>, boughtOnly: Boolean)
+	{
+		array.add(this)
+
+		if (boughtOnly && !bought) return
+
+		for (child in children)
+		{
+			child?.descendants(array, boughtOnly)
+		}
+	}
 
 	fun assignLocation(angle: Float, start: Float, radius: Float)
 	{
@@ -128,6 +153,8 @@ class Skill(val ability: Ability)
 				val el = costsEl.getChild(i)
 				costs[el.name] = el.text.toInt()
 			}
+
+			unboughtDescription = xml.get("UnboughtDescription", ability.description)
 		}
 		else
 		{

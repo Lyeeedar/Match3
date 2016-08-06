@@ -6,18 +6,22 @@ import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.math.Vector2
+import com.badlogic.gdx.scenes.scene2d.InputEvent
 import com.badlogic.gdx.scenes.scene2d.Touchable
 import com.badlogic.gdx.scenes.scene2d.ui.Widget
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener
 import com.lyeeedar.Player.Ability.Skill
 import com.lyeeedar.Player.Ability.SkillTree
 import com.lyeeedar.Player.Ability.SkillTreeRadiusStep
+import com.lyeeedar.Player.PlayerData
 import com.lyeeedar.Util.AssetManager
+import com.lyeeedar.Util.addClickListener
 
 /**
  * Created by Philip on 05-Aug-16.
  */
 
-class SkillTreeWidget(val skillTree: SkillTree) : Widget()
+class SkillTreeWidget(val skillTree: SkillTree, val playerData: PlayerData) : Widget()
 {
 	val lineVec1 = Vector2()
 	val lineVec2 = Vector2()
@@ -55,6 +59,88 @@ class SkillTreeWidget(val skillTree: SkillTree) : Widget()
 		{
 			if (skill != null) getMinMax(skill, 1)
 		}
+
+		addListener(object : ClickListener() {
+			override fun clicked(event: InputEvent?, x: Float, y: Float)
+			{
+				super.clicked(event, x, y)
+
+				for (skill in skillTree.descendants(true))
+				{
+					val dst = skill.location.dst(x - width * 0.5f, y - height * 0.5f)
+
+					if (dst < iconSize)
+					{
+						if (skill.bought)
+						{
+							MessageBox(skill.ability.name, skill.ability.description, Pair("Okay", {}))
+						}
+						else
+						{
+							val title = "Unknown Skill"
+							var message = skill.unboughtDescription
+							message += "\n\nCost:\n"
+
+							var canBuy = true
+
+							for (cost in skill.costs)
+							{
+								if (cost.key == "Gold")
+								{
+									val gold = Math.min(playerData.gold, cost.value)
+									message += "${cost.key}: $gold/${cost.value}\n"
+
+									if (gold < cost.value) canBuy = false
+								}
+								else
+								{
+									val item = playerData.inventory[cost.key]
+									val icount = item?.count ?: 0
+									val count = Math.min(icount, cost.value)
+
+									message += "${cost.key}: $count/${cost.value}\n"
+
+									if (count < cost.value) canBuy = false
+								}
+							}
+
+							if (canBuy)
+							{
+								MessageBox(title, message, Pair("Buy",
+										{
+											skill.bought = true
+
+											for (cost in skill.costs)
+											{
+												if (cost.key == "Gold")
+												{
+													playerData.gold -= cost.value
+												}
+												else
+												{
+													val item = playerData.inventory[cost.key]
+													item.count -= cost.value
+
+													if (item.count == 0)
+													{
+														playerData.inventory.remove(cost.key)
+													}
+												}
+											}
+
+										}), Pair("Okay", {}))
+							}
+							else
+							{
+								MessageBox(title, message, Pair("Okay", {}))
+							}
+						}
+
+						break
+					}
+				}
+			}
+		})
 	}
 
 	override fun getPrefWidth(): Float = (max.x - min.x) + 200
