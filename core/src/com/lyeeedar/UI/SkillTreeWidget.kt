@@ -213,6 +213,7 @@ class SkillTreeWidget(val skillTree: SkillTree, val playerData: PlayerData) : Wi
 		batch?.end()
 		batch?.begin()
 
+		shape.projectionMatrix = stage.camera.combined
 		shape.setAutoShapeType(true)
 		shape.begin()
 		for (skill in skillTree.rootSkills)

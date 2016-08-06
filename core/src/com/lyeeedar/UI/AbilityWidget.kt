@@ -47,6 +47,7 @@ class AbilityWidget(val ability: Ability, val w: Int, val h: Int, val grid: Grid
 					if (grid.activeAbility == ability)
 					{
 						grid.activeAbility = null
+						ability.selectedTargets.clear()
 					}
 					else
 					{
