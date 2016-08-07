@@ -85,7 +85,7 @@ class AbilityList(val playerData: PlayerData, val current: String?, val func: (S
 			textTable.add(label).expand().fill().left()
 		}
 
-		val spriteWidget = SpriteWidget(sprite, 48, 48)
+		val spriteWidget = SpriteWidget(sprite, 48f, 48f)
 
 		val button = Button(Global.skin)
 		button.add(spriteWidget).padRight(10f).padLeft(10f)

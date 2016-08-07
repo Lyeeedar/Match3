@@ -15,9 +15,11 @@ import com.lyeeedar.Util.AssetManager
  * Created by Philip on 20-Jul-16.
  */
 
-class AbilityWidget(val ability: Ability, val w: Int, val h: Int, val grid: Grid) : Table()
+class AbilityWidget(val ability: Ability, val w: Float, val h: Float, val grid: Grid) : Table()
 {
-	val white = AssetManager.loadSprite("white", colour = Color.CYAN)
+	val empty = AssetManager.loadSprite("GUI/power_empty")
+	val full = AssetManager.loadSprite("GUI/power_full")
+
 	val padding = 3
 
 	val widget = SpriteWidget(ability.icon, w, h)
@@ -87,9 +89,9 @@ class AbilityWidget(val ability: Ability, val w: Int, val h: Int, val grid: Grid
 
 		for (i in 1..ability.cost)
 		{
-			white.colour = if (i <= filledPips) Color.CYAN else Color.LIGHT_GRAY
+			val sprite = if (i <= filledPips) full else empty
 
-			white.render(batch as SpriteBatch, x + padding * i + (i-1) * pipSize, y, pipSize, 10f)
+			sprite.render(batch as SpriteBatch, x + padding * i + (i-1) * pipSize, y, pipSize, 10f)
 		}
 	}
 }

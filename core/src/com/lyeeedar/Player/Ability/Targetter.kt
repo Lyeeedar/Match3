@@ -3,6 +3,7 @@ package com.lyeeedar.Player.Ability
 import com.badlogic.gdx.utils.XmlReader
 import com.badlogic.gdx.utils.reflect.ClassReflection
 import com.lyeeedar.Board.Grid
+import com.lyeeedar.Board.Match5
 import com.lyeeedar.Board.Tile
 
 /**
@@ -14,6 +15,7 @@ class Targetter(val type: Type)
 	enum class Type
 	{
 		ORB,
+		SPECIAL,
 		BLOCK,
 		EMPTY,
 		SEALED,
@@ -28,7 +30,8 @@ class Targetter(val type: Type)
 	{
 		isValid = when(type)
 		{
-			Type.ORB -> fun (tile: Tile) = tile.orb != null
+			Type.ORB -> fun (tile: Tile) = tile.orb != null && !tile.orb!!.hasAttack && tile.orb?.special !is Match5
+			Type.SPECIAL  -> fun (tile: Tile) = tile.orb?.special != null
 			Type.BLOCK -> fun (tile: Tile) = tile.block != null
 			Type.EMPTY -> fun (tile: Tile) = tile.contents == null && tile.canHaveOrb
 			Type.SEALED -> fun (tile: Tile) = tile.orb?.sealed ?: false

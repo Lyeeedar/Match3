@@ -56,7 +56,7 @@ class PlayerDataWidget(val playerData: PlayerData) : FullscreenTable()
 		val portrait = Table()
 		portrait.background = NinePatchDrawable(NinePatch(AssetManager.loadTextureRegion("Sprites/GUI/background.png"), 24, 24, 24, 24))
 		val sprite = playerData.chosenSprite.copy()
-		portrait.add(SpriteWidget(sprite, 48, 48)).padTop(10f)
+		portrait.add(SpriteWidget(sprite, 48f, 48f)).padTop(10f)
 
 		val portraitRight = TextButton("->", Global.skin)
 		portraitRight.addClickListener {
@@ -98,7 +98,7 @@ class PlayerDataWidget(val playerData: PlayerData) : FullscreenTable()
 				sprite = emptySlot.copy()
 			}
 
-			val widget = SpriteWidget(sprite, 48, 48)
+			val widget = SpriteWidget(sprite, 48f, 48f)
 			abilityTable.add(widget).expandX()
 
 			widget.addClickListener {
@@ -118,7 +118,7 @@ class PlayerDataWidget(val playerData: PlayerData) : FullscreenTable()
 		val inventoryTable = Table()
 
 		val goldButton = Button(Global.skin)
-		goldButton.add(SpriteWidget(AssetManager.loadSprite("Oryx/uf_split/uf_items/coin_gold", drawActualSize = true), 24, 24)).padRight(10f).padLeft(10f)
+		goldButton.add(SpriteWidget(AssetManager.loadSprite("Oryx/uf_split/uf_items/coin_gold", drawActualSize = true), 24f, 24f, true)).padRight(10f).padLeft(10f)
 		goldButton.add(Label("Gold x ${playerData.gold}", Global.skin)).expand().fill()
 		inventoryTable.add(goldButton).expandX().fillX()
 		inventoryTable.row()
@@ -126,7 +126,7 @@ class PlayerDataWidget(val playerData: PlayerData) : FullscreenTable()
 		for (item in playerData.inventory)
 		{
 			val button = Button(Global.skin)
-			button.add(SpriteWidget(item.value.icon!!.copy(), 24, 24)).padRight(10f).padLeft(10f)
+			button.add(SpriteWidget(item.value.icon!!.copy(), 24f, 24f, true)).padRight(10f).padLeft(10f)
 			button.add(Label("${item.value.name} x ${item.value.count}", Global.skin)).expand().fill()
 			inventoryTable.add(button).expandX().fillX()
 			inventoryTable.row()

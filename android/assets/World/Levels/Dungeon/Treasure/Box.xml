@@ -13,7 +13,6 @@
 
     <AllowedVictories>
         <Sink>5</Sink>
-        <Loot />
     </AllowedVictories>
     <AllowedDefeats>
         <Turns >30</Turns>

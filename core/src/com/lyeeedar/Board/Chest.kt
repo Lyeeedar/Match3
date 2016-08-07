@@ -31,7 +31,7 @@ class Chest(val spawnOrbs: Boolean = true)
 			grid.onSpawn += {
 				if (it.sinkable == true)
 				{
-					val coinsOnBoard = grid.grid.filter { it.orb?.sinkable ?: false }.count() + 1
+					val coinsOnBoard = grid.grid.filter { it.orb?.sinkable ?: false }.count()
 					val allowedToSpawn = victory.count - coinsOnBoard
 
 					if (allowedToSpawn < numToSpawn)
@@ -47,7 +47,7 @@ class Chest(val spawnOrbs: Boolean = true)
 	{
 		if (spawnOrbs)
 		{
-			if (numToSpawn == 0) return Orb(grid.validOrbs.random())
+			if (numToSpawn <= 0) return Orb(grid.validOrbs.random())
 
 			// make sure we dont flood the board
 			val coinsOnBoard = grid.grid.filter { it.orb?.sinkable ?: false }.count() + 1
@@ -66,7 +66,7 @@ class Chest(val spawnOrbs: Boolean = true)
 		}
 		else
 		{
-			if (numToSpawn == 0) return null
+			if (numToSpawn <= 0) return null
 			return Orb(coinDesc)
 		}
 	}

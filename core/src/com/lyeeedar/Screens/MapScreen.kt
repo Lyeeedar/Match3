@@ -48,7 +48,7 @@ class MapScreen(): AbstractScreen()
 		mainTable.clear()
 
 		val dungeonWidget = DungeonMapWidget(map, player)
-		portrait = SpriteWidget(player.portrait.copy(), 48, 48)
+		portrait = SpriteWidget(player.portrait.copy(), 48f, 48f)
 
 		val stack = Stack()
 		stack.add(dungeonWidget)

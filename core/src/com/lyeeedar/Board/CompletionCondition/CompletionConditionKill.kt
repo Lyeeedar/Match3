@@ -63,10 +63,6 @@ class CompletionConditionKill() : AbstractCompletionCondition()
 	{
 		table.clear()
 
-		table.defaults().pad(10f)
-
-		table.background = NinePatchDrawable(NinePatch(AssetManager.loadTextureRegion("GUI/TilePanel"), 6, 6, 6, 6))
-
 		monsterMap.clear()
 
 		for (monster in monsters)
@@ -89,11 +85,11 @@ class CompletionConditionKill() : AbstractCompletionCondition()
 			val sprite = monster.key.sprite.copy()
 			val count = monster.value
 
-			table.add(SpriteWidget(sprite, 24, 24))
+			table.add(SpriteWidget(sprite, 24f, 24f)).padLeft(5f)
 
 			if (count == 0)
 			{
-				table.add(SpriteWidget(tick, 24, 24))
+				table.add(SpriteWidget(tick, 24f, 24f))
 			}
 			else
 			{

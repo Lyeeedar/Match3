@@ -8,6 +8,7 @@ import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Board.Grid
 import com.lyeeedar.Board.Tile
 import com.lyeeedar.Global
+import com.lyeeedar.Screens.GridScreen
 import com.lyeeedar.Sprite.Sprite
 import com.lyeeedar.Sprite.SpriteAnimation.MoveAnimation
 import com.lyeeedar.UI.GridWidget
@@ -66,12 +67,12 @@ class Ability()
 			{
 				val fs = flightSprite!!.copy()
 
-				val p1 = Vector2(Global.stage.width * 0.5f, -Global.tileSize)
+				val p1 = GridScreen.instance.playerPortrait.localToStageCoordinates(Vector2())
 				val p2 = GridWidget.instance.pointToScreenspace(target)
 
 				val dist = p1.dst(p2) / Global.tileSize
 
-				fs.spriteAnimation = MoveAnimation.obtain().set(0.25f + 0.05f * dist, arrayOf(p1, p2), Interpolation.exp10In)
+				fs.spriteAnimation = MoveAnimation.obtain().set(0.05f + 0.025f * dist, arrayOf(p1, p2), Interpolation.linear)
 				fs.rotation = getRotation(p1, p2)
 				delay += fs.lifetime
 

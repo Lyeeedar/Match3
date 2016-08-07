@@ -47,14 +47,10 @@ class CompletionConditionSink() : AbstractCompletionCondition()
 	{
 		val table = Table()
 
-		table.defaults().pad(10f)
-
-		table.background = NinePatchDrawable(NinePatch(AssetManager.loadTextureRegion("GUI/TilePanel"), 6, 6, 6, 6))
-
 		val sprite = AssetManager.loadSprite("Oryx/uf_split/uf_items/coin_gold")
 		label = Label("$count", Global.skin)
 
-		table.add(SpriteWidget(sprite, 24, 24))
+		table.add(SpriteWidget(sprite, 24f, 24f))
 		table.add(label)
 
 		return table

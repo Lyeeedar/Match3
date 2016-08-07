@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.scenes.scene2d.ui.Widget
+import com.lyeeedar.Global
 import com.lyeeedar.Util.*
 
 /**
@@ -19,9 +20,10 @@ class PowerBar() : Widget()
 
 	val powerChanged = Event0Arg()
 
-	val blank = AssetManager.loadTextureRegion("white")
+	val empty = AssetManager.loadTextureRegion("GUI/power_empty")
+	val full = AssetManager.loadTextureRegion("GUI/power_full")
 
-	val pipPadding = 5f
+	val pipPadding = 0f
 
 	val powerPerPip = 10
 	var maxPower = 100
@@ -71,13 +73,12 @@ class PowerBar() : Widget()
 			return null
 		}
 
-		val dy = 0f
+		val dy = -Global.tileSize*0.5f
 
-		val destPipVal = ((power + tempPower).toFloat() / powerPerPip.toFloat()).toInt()
+		val minipipWidth = pipWidth / powerPerPip
+		val destPipVal = (power + tempPower).toFloat()
 
-		val pw = pipWidth
-
-		val dx = destPipVal * pipPadding + destPipVal * pw
+		val dx = destPipVal * minipipWidth
 
 		tempPower++
 
@@ -91,26 +92,25 @@ class PowerBar() : Widget()
 		val numPips = (maxPower.toFloat() / powerPerPip.toFloat()).toInt()
 		val pw = pipWidth
 
+		val minipipWidth = pw / powerPerPip
+		val minipipHeight = height * 0.2f
+
 		var powerCounter = 0
 
 		for (i in 0..numPips-1)
 		{
 			val powerDiff = power - powerCounter
 
-			if (powerDiff > powerPerPip)
-			{
-				batch.color = Color.CYAN
-			}
-			else if (powerDiff < 0)
-			{
-				batch.color = Color.DARK_GRAY
-			}
-			else
-			{
-				batch.color = Color(Color.DARK_GRAY).lerp(Color.CYAN, powerDiff.toFloat() / powerPerPip.toFloat())
-			}
+			val sprite = if(powerDiff >= powerPerPip) full else empty
 
-			batch.draw(blank, x + pw * i + pipPadding * i, y, pw, height)
+			val xpos = x + pw * i + pipPadding * i
+			batch.draw(sprite, xpos, y + minipipHeight + 1, pw, height - minipipHeight)
+
+			for (pi in 0..powerPerPip-1)
+			{
+				val ps = if(pi < powerDiff) full else empty
+				batch.draw(ps, xpos + pi * minipipWidth, y, minipipWidth, minipipHeight)
+			}
 
 			powerCounter += powerPerPip
 		}

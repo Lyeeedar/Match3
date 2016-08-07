@@ -5,7 +5,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.utils.XmlReader
 import com.badlogic.gdx.utils.reflect.ClassReflection
-import com.lyeeedar.Board.CompletionCondition.CompletionConditionDeath
 import com.lyeeedar.Board.CompletionCondition.CompletionConditionTime
 import com.lyeeedar.Board.CompletionCondition.CompletionConditionTurns
 import com.lyeeedar.Board.Grid
@@ -40,14 +39,14 @@ abstract class AbstractCompletionCondition
 		private fun getClass(name: String): Class<out AbstractCompletionCondition>
 		{
 			val type = when(name) {
+				"NONE" -> CompletionConditionNone::class.java
+
 				// Defeat
 				"TURN", "TURNS" -> CompletionConditionTurns::class.java
 				"TIME" -> CompletionConditionTime::class.java
-				"DEATH" -> CompletionConditionDeath::class.java
 
 				// Victory
 				"KILL" -> CompletionConditionKill::class.java
-				"LOOT" -> CompletionConditionLoot::class.java
 				"MATCH", "MATCHES" -> CompletionConditionMatches::class.java
 				"SINK" -> CompletionConditionSink::class.java
 

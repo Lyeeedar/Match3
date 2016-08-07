@@ -9,7 +9,7 @@ import com.badlogic.gdx.utils.Align
 import com.badlogic.gdx.utils.Scaling
 import com.lyeeedar.Sprite.Sprite
 
-class SpriteWidget(private val drawable: Sprite, width: Int, height: Int) : Widget()
+class SpriteWidget(private val drawable: Sprite, width: Float, height: Float, val fixHeight: Boolean = false) : Widget()
 {
 	private val scaling = Scaling.stretch
 	private val align = Align.center
@@ -20,8 +20,8 @@ class SpriteWidget(private val drawable: Sprite, width: Int, height: Int) : Widg
 
 	init
 	{
-		this.width = width.toFloat()
-		this.height = height.toFloat()
+		this.width = width
+		this.height = height
 	}
 
 	override fun layout()
@@ -56,7 +56,7 @@ class SpriteWidget(private val drawable: Sprite, width: Int, height: Int) : Widg
 		batch!!.setColor(color.r, color.g, color.b, color.a * parentAlpha)
 
 		val x = x
-		val y = y
+		val y = if (fixHeight) y - 4f else y
 		val scaleX = scaleX
 		val scaleY = scaleY
 

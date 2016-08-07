@@ -16,7 +16,7 @@
     </AllowedVictories>
 
     <AllowedDefeats>
-        <Death />
+        <None />
     </AllowedDefeats>
 
     <Type>Encounter</Type>

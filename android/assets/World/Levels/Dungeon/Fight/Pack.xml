@@ -2,7 +2,7 @@
     <Rows>
         <Row>#.........#</Row>
         <Row>#.........#</Row>
-        <Row>#...!.!...#</Row>
+        <Row>#...!.....#</Row>
         <Row>#.........#</Row>
         <Row>#......!..#</Row>
         <Row>#.........#</Row>
@@ -16,7 +16,7 @@
     </AllowedVictories>
 
     <AllowedDefeats>
-        <Death />
+        <None />
     </AllowedDefeats>
 
     <Type>Encounter</Type>

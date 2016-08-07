@@ -35,8 +35,10 @@ class GridWidget(val grid: Grid) : Widget()
 	val glow: Sprite = AssetManager.loadSprite("glow")
 	val frame: Sprite = AssetManager.loadSprite("GUI/frame", colour = Color(0.6f, 0.7f, 0.9f, 0.6f))
 	val border: Sprite = AssetManager.loadSprite("GUI/border", colour = Color(0.6f, 0.9f, 0.6f, 0.6f))
-	val circle: Sprite = AssetManager.loadSprite("borderedcircle")
-	val white: Sprite = AssetManager.loadSprite("white")
+	val hp_full: Sprite = AssetManager.loadSprite("GUI/health_full")
+	val hp_empty: Sprite = AssetManager.loadSprite("GUI/health_empty")
+	val atk_full: Sprite = AssetManager.loadSprite("GUI/attack_full")
+	val atk_empty: Sprite = AssetManager.loadSprite("GUI/attack_empty")
 
 	val background: SpriteRenderer = SpriteRenderer()
 	val foreground: SpriteRenderer = SpriteRenderer()
@@ -97,7 +99,8 @@ class GridWidget(val grid: Grid) : Widget()
 			}
 		}
 
-		circle.baseScale = floatArrayOf(0.14f, 0.14f)
+		atk_empty.baseScale = floatArrayOf(0.14f, 0.14f)
+		atk_full.baseScale = floatArrayOf(0.14f, 0.14f)
 	}
 
 	fun pointToScreenspace(point: Point): Vector2
@@ -272,10 +275,9 @@ class GridWidget(val grid: Grid) : Widget()
 						val degreesStep = 360f / maxdots
 						for (i in 0..maxdots-1)
 						{
-							val circleCol = if (i < orb.attackTimer) Color.RED else Color.LIGHT_GRAY
-							tempCol.set(orbColour).mul(circleCol)
+							val sprite = if(i < orb.attackTimer) atk_full else atk_empty
 
-							floating.queueSprite(circle, cx + currentPoint.x, cy + currentPoint.y, xp, yp, SpaceSlot.ORB, 2, tempCol)
+							floating.queueSprite(sprite, cx + currentPoint.x, cy + currentPoint.y, xp, yp, SpaceSlot.ORB, 2, orbColour)
 
 							currentPoint.rotate(degreesStep)
 						}
@@ -299,9 +301,8 @@ class GridWidget(val grid: Grid) : Widget()
 
 					for (i in 0..monster.maxhp-1)
 					{
-						val col = tempCol.set(if (i < monster.hp) Color.RED else Color.LIGHT_GRAY)
-						col.a = 0.6f
-						foreground.queueSprite(white, xi+i*spacePerPip, yi+0.1f, xp, yp, SpaceSlot.ORB, 2, col, width = solid, height = 0.15f)
+						val sprite = if(i < monster.hp) hp_full else hp_empty
+						foreground.queueSprite(sprite, xi+i*spacePerPip, yi+0.1f, xp, yp, SpaceSlot.ORB, 2, width = solid, height = 0.15f)
 					}
 				}
 

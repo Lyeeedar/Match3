@@ -226,7 +226,7 @@ class Level(val loadPath: String)
 
 		if (!completed && done)
 		{
-			if (victory.isCompleted() || defeat.isCompleted())
+			if (player.hp <= 0 || victory.isCompleted() || defeat.isCompleted())
 			{
 				completeFun = {complete()}
 				completed = true
@@ -248,7 +248,11 @@ class Level(val loadPath: String)
 	private fun complete()
 	{
 		completeFun = null
-		if (victory.isCompleted())
+		if (player.hp <= 0)
+		{
+			FullscreenMessage("You died", "", { Global.game.switchScreen(MainGame.ScreenEnum.MAP); defeatActions.forEach { it.apply(player) } }).show()
+		}
+		else if (victory.isCompleted())
 		{
 			FullscreenMessage(victoryText, "", { Global.game.switchScreen(MainGame.ScreenEnum.MAP); victoryActions.forEach { it.apply(player) } }).show()
 		}

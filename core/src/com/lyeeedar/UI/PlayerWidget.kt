@@ -19,6 +19,9 @@ import com.lyeeedar.Util.addClickListener
 class PlayerWidget(val player: Player, val objective: AbstractObjective): FullscreenTable()
 {
 	val emptySlot = AssetManager.loadSprite("Icons/Empty")
+	val hp_full: Sprite = AssetManager.loadSprite("GUI/health_full")
+	val hp_empty: Sprite = AssetManager.loadSprite("GUI/health_empty")
+
 	val table = Table()
 
 	init
@@ -45,7 +48,20 @@ class PlayerWidget(val player: Player, val objective: AbstractObjective): Fullsc
 		portrait.background = NinePatchDrawable(NinePatch(AssetManager.loadTextureRegion("Sprites/GUI/background.png"), 24, 24, 24, 24))
 		val sprite = player.portrait.copy()
 		sprite.drawActualSize = true
-		portrait.add(SpriteWidget(sprite, 48, 48)).padTop(10f)
+		portrait.add(SpriteWidget(sprite, 48f, 48f)).padTop(10f)
+
+		val hpBar = Table()
+		val hpPipWidth = 48f / player.maxhp
+		val hpPipHeight = 48f * 0.15f
+		for (i in 0..player.maxhp-1)
+		{
+			val sprite = if(i < player.hp) hp_full else hp_empty
+			val swidget = SpriteWidget(sprite, hpPipWidth, hpPipHeight)
+			hpBar.add(swidget).bottom()
+		}
+
+		portrait.row()
+		portrait.add(hpBar)
 
 		table.add(portrait).expandX().center().padBottom(10f)
 		table.row()
@@ -95,7 +111,7 @@ class PlayerWidget(val player: Player, val objective: AbstractObjective): Fullsc
 
 			val sprite = ability?.icon?.copy() ?: emptySlot.copy()
 
-			val widget = SpriteWidget(sprite, 48, 48)
+			val widget = SpriteWidget(sprite, 48f, 48f)
 			abilityTable.add(widget).expandX()
 
 			if (ability != null)
@@ -118,7 +134,7 @@ class PlayerWidget(val player: Player, val objective: AbstractObjective): Fullsc
 		val inventoryTable = Table()
 
 		val goldButton = Button(Global.skin)
-		goldButton.add(SpriteWidget(AssetManager.loadSprite("Oryx/uf_split/uf_items/coin_gold", drawActualSize = true), 24, 24)).padRight(10f).padLeft(10f)
+		goldButton.add(SpriteWidget(AssetManager.loadSprite("Oryx/uf_split/uf_items/coin_gold", drawActualSize = true), 24f, 24f, true)).padRight(10f).padLeft(10f)
 		goldButton.add(Label("Gold x ${player.gold}", Global.skin)).expand().fill()
 		inventoryTable.add(goldButton).expandX().fillX()
 		inventoryTable.row()
@@ -126,7 +142,7 @@ class PlayerWidget(val player: Player, val objective: AbstractObjective): Fullsc
 		for (item in player.inventory)
 		{
 			val button = Button(Global.skin)
-			button.add(SpriteWidget(item.value.icon!!.copy(), 24, 24)).padRight(10f).padLeft(10f)
+			button.add(SpriteWidget(item.value.icon!!.copy(), 24f, 24f, true)).padRight(10f).padLeft(10f)
 			button.add(Label("${item.value.name} x ${item.value.count}", Global.skin)).expand().fill()
 			inventoryTable.add(button).expandX().fillX()
 			inventoryTable.row()

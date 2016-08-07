@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.badlogic.gdx.scenes.scene2d.ui.Skin
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable
+import com.badlogic.gdx.utils.Align
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Board.Grid
 import com.lyeeedar.Util.AssetManager
@@ -23,13 +24,12 @@ class CompletionConditionTurns(): AbstractCompletionCondition()
 
 	override fun createTable(skin: Skin): Table
 	{
-		label = Label("$turnCount", skin)
+		label = Label("$turnCount\nTurns", skin)
+		label.setAlignment(Align.center)
 
 		val table = Table()
 		table.defaults().pad(10f)
 		table.add(label)
-
-		table.background = NinePatchDrawable(NinePatch(AssetManager.loadTextureRegion("GUI/TilePanel"), 6, 6, 6, 6))
 
 		return table
 	}
@@ -44,7 +44,7 @@ class CompletionConditionTurns(): AbstractCompletionCondition()
 		grid.onTurn +=
 				{
 					turnCount--
-					label.setText("$turnCount")
+					label.setText("$turnCount\nTurns")
 				}
 	}
 

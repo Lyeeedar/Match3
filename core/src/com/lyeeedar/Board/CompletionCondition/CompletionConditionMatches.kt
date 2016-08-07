@@ -44,26 +44,36 @@ class CompletionConditionMatches(): AbstractCompletionCondition()
 	{
 		table.clear()
 
-		table.defaults().pad(10f)
-
-		table.background = NinePatchDrawable(NinePatch(AssetManager.loadTextureRegion("GUI/TilePanel"), 6, 6, 6, 6))
+		var row = Table()
+		var counter = 0
 
 		for (entry in toBeMatched.entries())
 		{
 			val sprite = sprites[entry.key]
 			val count = entry.value
 
-			table.add(SpriteWidget(sprite, 24, 24))
+			row.add(SpriteWidget(sprite, 24f, 24f)).padLeft(5f)
 
 			if (count == 0)
 			{
-				table.add(SpriteWidget(tick, 24, 24))
+				row.add(SpriteWidget(tick, 24f, 24f))
 			}
 			else
 			{
-				table.add(Label("$count", Global.skin))
+				row.add(Label("$count", Global.skin))
+			}
+
+			counter++
+			if (counter == 2)
+			{
+				counter = 0
+				table.add(row).expand().fill()
+				table.row()
+				row = Table()
 			}
 		}
+
+		table.add(row)
 	}
 
 	override fun attachHandlers(grid: Grid)

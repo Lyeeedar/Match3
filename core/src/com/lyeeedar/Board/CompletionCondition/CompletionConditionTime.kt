@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.badlogic.gdx.scenes.scene2d.ui.Skin
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable
+import com.badlogic.gdx.utils.Align
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Board.Grid
 import com.lyeeedar.Util.AssetManager
@@ -24,13 +25,12 @@ class CompletionConditionTime(): AbstractCompletionCondition()
 	override fun createTable(skin: Skin): Table
 	{
 		val t = time.toInt()
-		label = Label("$t", skin)
+		label = Label("$t\nSeconds", skin)
+		label.setAlignment(Align.center)
 
 		val table = Table()
 		table.defaults().pad(10f)
 		table.add(label)
-
-		table.background = NinePatchDrawable(NinePatch(AssetManager.loadTextureRegion("GUI/TilePanel"), 6, 6, 6, 6))
 
 		return table
 	}
@@ -46,7 +46,7 @@ class CompletionConditionTime(): AbstractCompletionCondition()
 				{
 					time -= it
 					val t = time.toInt()
-					label.setText("$t")
+					label.setText("$t\nSeconds")
 				}
 	}
 
