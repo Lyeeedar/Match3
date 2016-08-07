@@ -43,15 +43,12 @@ class AbilityList(val playerData: PlayerData, val current: String?, val func: (S
 
 		for (tree in playerData.trees)
 		{
-			for (skill in tree.value.descendants(true))
+			for (skill in tree.value.boughtDescendants())
 			{
-				if (skill.bought)
+				if (!playerData.abilities.contains(skill.key))
 				{
-					if (!playerData.abilities.contains(skill.ability.name))
-					{
-						abilityTable.add(createButton(skill.ability)).expandX().fillX()
-						abilityTable.row()
-					}
+					abilityTable.add(createButton(skill)).expandX().fillX()
+					abilityTable.row()
 				}
 			}
 		}
@@ -92,7 +89,7 @@ class AbilityList(val playerData: PlayerData, val current: String?, val func: (S
 		button.add(textTable).expand().fill()
 
 		button.addClickListener {
-			func(ability?.name)
+			func(ability?.key)
 			remove()
 		}
 

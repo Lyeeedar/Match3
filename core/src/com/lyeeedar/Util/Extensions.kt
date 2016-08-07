@@ -116,6 +116,20 @@ fun XmlReader.Element.ranChild() = this.getChild(MathUtils.random(this.childCoun
 
 fun <T> Sequence<T>.random() = if (this.count() > 0) this.elementAt(MathUtils.random(this.count()-1)) else null
 fun <T> Sequence<T>.random(ran: Random) = if (this.count() > 0) this.elementAt(ran.nextInt(this.count())) else null
+inline fun <reified T> Sequence<T>.random(num: Int): Sequence<T>
+{
+	val array = Array<T>()
+	for (item in this) array.add(item)
+
+	val outArray = Array<T>()
+	for (i in 0..num-1)
+	{
+		if (array.size == 0) break
+		outArray.add(array.removeRandom(MathUtils.random))
+	}
+
+	return outArray.asSequence()
+}
 
 fun Color.toHSV(out: FloatArray? = null): FloatArray
 {

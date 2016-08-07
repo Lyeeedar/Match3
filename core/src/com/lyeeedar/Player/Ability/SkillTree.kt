@@ -27,8 +27,8 @@ class SkillTree(val numBaseSkills: Int)
 		val radiansRemaining = Math.PI.toFloat() * 2f - Math.toRadians(90.0).toFloat()
 		val radiansStart = Math.toRadians(45.0).toFloat()
 
-		// split rest between skills
-		val radiansPerSkill = radiansRemaining / numBaseSkills
+		// split rest between skills, max 90 degrees a chunk
+		val radiansPerSkill = Math.min(Math.PI.toFloat() / 2f, radiansRemaining / numBaseSkills)
 
 		for (i in 0..numBaseSkills-1)
 		{
@@ -37,13 +37,24 @@ class SkillTree(val numBaseSkills: Int)
 		}
 	}
 
-	fun descendants(boughtOnly: Boolean = false) : com.badlogic.gdx.utils.Array<Skill>
+	fun boughtDescendants() : com.badlogic.gdx.utils.Array<Ability>
+	{
+		val map = ObjectMap<String, Ability>()
+		for (skill in rootSkills) skill?.boughtDescendants(map)
+
+		val array = com.badlogic.gdx.utils.Array<Ability>()
+		for (skill in map) array.add(skill.value)
+
+		return array
+	}
+
+	fun visibleDescendants() : com.badlogic.gdx.utils.Array<Skill>
 	{
 		val skills = com.badlogic.gdx.utils.Array<Skill>()
 
 		for (skill in rootSkills)
 		{
-			skill?.descendants(skills, boughtOnly)
+			skill?.visibleDescendants(skills)
 		}
 
 		return skills
@@ -96,23 +107,30 @@ class SkillTree(val numBaseSkills: Int)
 
 class Skill(val ability: Ability)
 {
-	val costs = ObjectMap<String, Int>()
-	lateinit var unboughtDescription: String
 	var bought = false
 
 	val location: Vector2 = Vector2()
 	val children: Array<Skill?> = Array(2){ e -> null }
 
-	fun descendants(array: com.badlogic.gdx.utils.Array<Skill>, boughtOnly: Boolean)
+	fun visibleDescendants(array: com.badlogic.gdx.utils.Array<Skill>)
 	{
 		array.add(this)
 
-		if (boughtOnly && !bought) return
+		if (!bought) return
 
 		for (child in children)
 		{
-			child?.descendants(array, boughtOnly)
+			child?.visibleDescendants(array)
 		}
+	}
+
+	fun boughtDescendants(map: ObjectMap<String, Ability>)
+	{
+		if (!bought) return
+
+		map[ability.key] = ability
+
+		for (child in children) child?.boughtDescendants(map)
 	}
 
 	fun assignLocation(angle: Float, start: Float, radius: Float)
@@ -144,27 +162,9 @@ class Skill(val ability: Ability)
 
 	fun parse(xml: XmlReader.Element, abilities: ObjectMap<String, Ability>, resources: ObjectMap<String, XmlReader.Element>)
 	{
-		// parse cost
-		val costsEl = xml.getChildByName("Cost")
-		if (costsEl != null)
+		for (i in 0..xml.childCount-1)
 		{
-			for (i in 0..costsEl.childCount - 1)
-			{
-				val el = costsEl.getChild(i)
-				costs[el.name] = el.text.toInt()
-			}
-
-			unboughtDescription = xml.get("UnboughtDescription", ability.description)
-		}
-		else
-		{
-			bought = true
-		}
-
-		val childrenEl = xml.getChildByName("Children") ?: return
-		for (i in 0..childrenEl.childCount-1)
-		{
-			val el = childrenEl.getChild(i)
+			val el = xml.getChild(i)
 			val ability = abilities[el.name]
 			val skill = Skill(ability)
 			skill.parse(el, abilities, resources)

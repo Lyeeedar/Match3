@@ -31,7 +31,7 @@ class Chest(val spawnOrbs: Boolean = true)
 			grid.onSpawn += {
 				if (it.sinkable == true)
 				{
-					val coinsOnBoard = grid.grid.filter { it.orb?.sinkable ?: false }.count()
+					val coinsOnBoard = grid.grid.filter { it.orb?.sinkable ?: false }.count() + 1
 					val allowedToSpawn = victory.count - coinsOnBoard
 
 					if (allowedToSpawn < numToSpawn)

@@ -65,7 +65,7 @@ class SkillTreeWidget(val skillTree: SkillTree, val playerData: PlayerData) : Wi
 			{
 				super.clicked(event, x, y)
 
-				for (skill in skillTree.descendants(true))
+				for (skill in skillTree.visibleDescendants())
 				{
 					val dst = skill.location.dst(x - width * 0.5f, y - height * 0.5f)
 
@@ -73,17 +73,24 @@ class SkillTreeWidget(val skillTree: SkillTree, val playerData: PlayerData) : Wi
 					{
 						if (skill.bought)
 						{
-							MessageBox(skill.ability.name, skill.ability.description, Pair("Okay", {}))
+							var message = skill.ability.description
+
+							if (skill.ability.upgrades != null)
+							{
+								message += "\n\n[GOLD]Upgrades ${skill.ability.upgrades}\n"
+							}
+
+							MessageBox(skill.ability.name, message, Pair("Okay", {}))
 						}
 						else
 						{
 							val title = "Unknown Skill"
-							var message = skill.unboughtDescription
+							var message = skill.ability.unboughtDescription
 							message += "\n\nCost:\n"
 
 							var canBuy = true
 
-							for (cost in skill.costs)
+							for (cost in skill.ability.buyCost)
 							{
 								if (cost.key == "Gold")
 								{
@@ -104,13 +111,18 @@ class SkillTreeWidget(val skillTree: SkillTree, val playerData: PlayerData) : Wi
 								}
 							}
 
+							if (skill.ability.upgrades != null)
+							{
+								message += "\n[GOLD]Upgrades ${skill.ability.upgrades}\n"
+							}
+
 							if (canBuy)
 							{
 								MessageBox(title, message, Pair("Buy",
 										{
 											skill.bought = true
 
-											for (cost in skill.costs)
+											for (cost in skill.ability.buyCost)
 											{
 												if (cost.key == "Gold")
 												{

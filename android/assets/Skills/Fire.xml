@@ -17,11 +17,19 @@
     </Resources>
 
     <Abilities>
+
+        <!-- Firebolt tree -->
+
         <Firebolt>
             <Name>Firebolt</Name>
             <Description>Launch a firebolt at a single orb, destroying it</Description>
             <Cost>3</Cost>
             <Effect>1,Orb,Single,Pop</Effect>
+
+            <UnboughtDescription>Want to learn how to throw around some fire? Come here and I'll show you</UnboughtDescription>
+            <BuyCost>
+                <Gold>50</Gold>
+            </BuyCost>
 
             <Icon><Name>Icons/Firebolt</Name></Icon>
             <FlightSprite>FireBoltMove</FlightSprite>
@@ -31,8 +39,14 @@
         <FireboltDual>
             <Name>Dual Firebolt</Name>
             <Description>Launch a firebolt at a pair of orbs, destroying them</Description>
-            <Cost>4</Cost>
+            <Cost>3</Cost>
             <Effect>2,Orb,Single,Pop</Effect>
+            <Upgrades>Firebolt</Upgrades>
+
+            <UnboughtDescription>With some more funding I think I can develop a way to launch two firebolts at the same time.</UnboughtDescription>
+            <BuyCost>
+                <Gold>100</Gold>
+            </BuyCost>
 
             <Icon><Name>Icons/FireboltDual</Name></Icon>
             <FlightSprite>FireBoltMove</FlightSprite>
@@ -42,13 +56,79 @@
         <FireboltTri>
             <Name>Tri Firebolt</Name>
             <Description>Launch a firebolt at a trio of orbs, destroying them</Description>
-            <Cost>4</Cost>
+            <Cost>3</Cost>
             <Effect>3,Orb,Single,Pop</Effect>
+            <Upgrades>Firebolt</Upgrades>
+
+            <UnboughtDescription>With some more funding I think I can develop a way to launch three firebolts at the same time.</UnboughtDescription>
+            <BuyCost>
+                <Gold>500</Gold>
+            </BuyCost>
 
             <Icon><Name>Icons/FireboltTri</Name></Icon>
             <FlightSprite>FireBoltMove</FlightSprite>
             <HitSprite>FireBurst</HitSprite>
         </FireboltTri>
+
+        <FireboltQuad>
+            <Name>Quad Firebolt</Name>
+            <Description>Launch four firebolts</Description>
+            <Cost>3</Cost>
+            <Effect>4,Orb,Single,Pop</Effect>
+            <Upgrades>Firebolt</Upgrades>
+
+            <UnboughtDescription>I'm guessing you can see the pattern now, but I think I can figure out a way to launch four firebolts this time.</UnboughtDescription>
+            <BuyCost>
+                <Gold>1000</Gold>
+            </BuyCost>
+
+            <Icon><Name>Icons/FireboltQuad</Name></Icon>
+            <FlightSprite>FireBoltMove</FlightSprite>
+            <HitSprite>FireBurst</HitSprite>
+        </FireboltQuad>
+
+        <FireFlurry>
+            <Name>Fire Flurry</Name>
+            <Description>Fling out fire randomly, spreading destruction everywhere it lands.</Description>
+            <Cost>1</Cost>
+            <Effect>0,Orb,Random3,Pop</Effect>
+
+            <UnboughtDescription>I really want to burn some random things. Please get some things for me.</UnboughtDescription>
+            <BuyCost>
+                <RatSkin>1</RatSkin>
+                <RatTail>1</RatTail>
+                <GoblinHelmet>1</GoblinHelmet>
+                <BatWing>1</BatWing>
+                <BrokenSpear>1</BrokenSpear>
+            </BuyCost>
+
+            <Icon><Name>Icons/FireFlurry</Name></Icon>
+            <FlightSprite>FireBoltMove</FlightSprite>
+            <HitSprite>FireBurst</HitSprite>
+        </FireFlurry>
+
+        <FireRain>
+            <Name>Fire Rain</Name>
+            <Description>Rain down fire randomly, destroying all it touches</Description>
+            <Cost>1</Cost>
+            <Effect>0,Orb,Random5,Pop</Effect>
+            <Upgrades>FireFlurry</Upgrades>
+
+            <UnboughtDescription>The last set of things you brought me were fun to burn. Please bring me more!</UnboughtDescription>
+            <BuyCost>
+                <MummyWrapping>1</MummyWrapping>
+                <DesicatedFinger>1</DesicatedFinger>
+                <RubyStaff>1</RubyStaff>
+                <ScaledHide>1</ScaledHide>
+                <GlowingEnigma>1</GlowingEnigma>
+            </BuyCost>
+
+            <Icon><Name>Icons/FireRain</Name></Icon>
+            <FlightSprite>FireBoltMove</FlightSprite>
+            <HitSprite>FireBurst</HitSprite>
+        </FireRain>
+
+        <!-- Fireball tree -->
 
         <Fireball>
             <Name>Fireball</Name>
@@ -56,45 +136,174 @@
             <Cost>5</Cost>
             <Effect>1,Orb,Block1,Pop</Effect>
 
+            <UnboughtDescription>I've heard tales of a fabled creature of flame. With it's heart I'm sure I could develop a new spell of some form.</UnboughtDescription>
+            <BuyCost>
+                <Gold>1000</Gold>
+                <Flameheart>5</Flameheart>
+            </BuyCost>
+
             <Icon><Name>Icons/Fireball</Name></Icon>
             <FlightSprite>FireBoltMove</FlightSprite>
             <HitSprite>FireBurst</HitSprite>
         </Fireball>
+
+        <FireballGreater>
+            <Name>Greater Fireball</Name>
+            <Description>Launch an exploding greater fireball at the target location, destroying it and all neighbours</Description>
+            <Cost>5</Cost>
+            <Effect>1,Orb,Block2,Pop</Effect>
+            <Upgrades>Fireball</Upgrades>
+
+            <UnboughtDescription>This spell feels... incomplete. I need something hotter. A more powerful heart I think will do it.</UnboughtDescription>
+            <BuyCost>
+                <Gold>3000</Gold>
+                <Blazeheart>5</Blazeheart>
+            </BuyCost>
+
+            <Icon><Name>Icons/FireballGreater</Name></Icon>
+            <FlightSprite>FireBoltMove</FlightSprite>
+            <HitSprite>FireBurst</HitSprite>
+        </FireballGreater>
+
+        <FireballGrand>
+            <Name>Grand Fireball</Name>
+            <Description>Launch an exploding grand fireball at the target location, destroying it and all neighbours</Description>
+            <Cost>5</Cost>
+            <Effect>1,Orb,Block3,Pop</Effect>
+            <Upgrades>Fireball</Upgrades>
+
+            <UnboughtDescription>This spell is nearly done. I just need something even hotter.</UnboughtDescription>
+            <BuyCost>
+                <Gold>5000</Gold>
+                <Infernoheart>5</Infernoheart>
+            </BuyCost>
+
+            <Icon><Name>Icons/FireballGrand</Name></Icon>
+            <FlightSprite>FireBoltMove</FlightSprite>
+            <HitSprite>FireBurst</HitSprite>
+        </FireballGrand>
+
+        <!-- Immolate tree -->
+
+        <Immolate>
+            <Name>Immolate</Name>
+            <Description>A flash of fire strikes a single monster</Description>
+            <Cost>2</Cost>
+            <Effect>1,Monster,Single,Pop</Effect>
+
+            <UnboughtDescription>My flames can be adapted to target living creatures, all I need is some funding.</UnboughtDescription>
+            <BuyCost>
+                <Gold>500</Gold>
+            </BuyCost>
+
+            <Icon><Name>Icons/Immolate</Name></Icon>
+            <HitSprite>FireBurst</HitSprite>
+        </Immolate>
+
+        <SoulfireDetonation>
+            <Name>Soulfire Detonation</Name>
+            <Description>Blast the soul of your target with purifying flames. The ensuing explosion will destroy all around them.</Description>
+            <Cost>5</Cost>
+            <Effect>1,Monster,Block1,Pop</Effect>
+            <Upgrades>Immolate</Upgrades>
+
+            <UnboughtDescription>Soulfire is a dangerous thing. Careless use can destroy both the caster and all those in the surrounding area. I want to play with it.</UnboughtDescription>
+            <BuyCost>
+                <SoulGem>1</SoulGem>
+                <Gold>2000</Gold>
+            </BuyCost>
+
+            <Icon><Name>Icons/SoulfireDetonation</Name></Icon>
+            <HitSprite>FireBurst</HitSprite>
+        </SoulfireDetonation>
+
+        <!-- Fire beam tree -->
+
+        <FireBeam>
+            <Name>Fire Beam</Name>
+            <Description>Incinerate an entire column with powerful flames</Description>
+            <Cost>6</Cost>
+            <Effect>1,Orb,Column,Pop</Effect>
+
+            <UnboughtDescription>I've been experimenting with burning different kinds of wood, amd I've heard of some super flammable stuff in the enchanted forest. Please bring me some.</UnboughtDescription>
+            <BuyCost>
+                <LivingWood>5</LivingWood>
+                <Gold>1000</Gold>
+            </BuyCost>
+
+            <Icon><Name>Icons/FireBeam</Name></Icon>
+            <HitSprite>FireBurst</HitSprite>
+        </FireBeam>
+
+        <PillarsOfDestruction>
+            <Name>Pillars of Destruction</Name>
+            <Description>Summon the annihilating pillars of creation to destroy your targets</Description>
+            <Cost>8</Cost>
+            <Effect>3,Orb,Column,Pop</Effect>
+            <Upgrades>FireBeam</Upgrades>
+
+            <UnboughtDescription>A ancient magical staff is said to be buried with the dead rulers of Pholbos. I want it to try burning a piece.</UnboughtDescription>
+            <BuyCost>
+                <StaffOfAngohles>1</StaffOfAngohles>
+            </BuyCost>
+
+            <Icon><Name>Icons/PillarsOfDestruction</Name></Icon>
+            <HitSprite>FireBurst</HitSprite>
+        </PillarsOfDestruction>
+
+        <CrossBlaze>
+            <Name>Cross Blaze</Name>
+            <Description>A burning cross destroys all around your target</Description>
+            <Cost>5</Cost>
+            <Effect>1,Orb,Cross,Pop</Effect>
+
+            <UnboughtDescription>I've heard that the wood of the ancient shrines in the forest holds untold power. Please bring me some so I can set it on fire.</UnboughtDescription>
+            <BuyCost>
+                <ShrineFragment>5</ShrineFragment>
+                <Gold>2000</Gold>
+            </BuyCost>
+
+            <Icon><Name>Icons/CrossBlaze</Name></Icon>
+            <HitSprite>FireBurst</HitSprite>
+        </CrossBlaze>
+
+        <!-- Conflagration tree -->
+
     </Abilities>
 
     <Tree>
+
         <Firebolt>
+            <FireboltDual>
+                <FireboltTri>
+                    <FireboltQuad>
 
-            <Children>
-                <FireboltDual>
-                    <UnboughtDescription>With some more funding I think I can develop a way to lunch two firebolts at the same time.</UnboughtDescription>
-                    <Cost>
-                        <Gold>100</Gold>
-                    </Cost>
+                    </FireboltQuad>
+                </FireboltTri>
+                <FireFlurry>
+                    <FireRain>
 
-                    <Children>
-                        <FireboltTri>
-                            <UnboughtDescription>With some more funding I think I can develop a way to lunch three firebolts at the same time.</UnboughtDescription>
-                            <Cost>
-                                <Gold>500</Gold>
-                            </Cost>
-
-                        </FireboltTri>
-                    </Children>
-
-                </FireboltDual>
-
-                <Fireball>
-                    <UnboughtDescription>I've heard tales of a fabled creature of flame. With it's heart I'm sure I could develop a new spell of some form.</UnboughtDescription>
-                    <Cost>
-                        <Gold>1000</Gold>
-                        <Flameheart>5</Flameheart>
-                    </Cost>
-
-                </Fireball>
-            </Children>
-
+                    </FireRain>
+                </FireFlurry>
+            </FireboltDual>
         </Firebolt>
+
+        <Fireball>
+            <FireballGreater>
+                <FireballGrand></FireballGrand>
+            </FireballGreater>
+        </Fireball>
+
+        <Immolate>
+            <SoulfireDetonation>
+            </SoulfireDetonation>
+        </Immolate>
+
+        <FireBeam>
+            <CrossBlaze></CrossBlaze>
+            <PillarsOfDestruction></PillarsOfDestruction>
+        </FireBeam>
+
     </Tree>
 
 </SkillTree>

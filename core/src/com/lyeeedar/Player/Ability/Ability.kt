@@ -13,10 +13,7 @@ import com.lyeeedar.Sprite.Sprite
 import com.lyeeedar.Sprite.SpriteAnimation.MoveAnimation
 import com.lyeeedar.UI.GridWidget
 import com.lyeeedar.UI.PowerBar
-import com.lyeeedar.Util.AssetManager
-import com.lyeeedar.Util.Point
-import com.lyeeedar.Util.UnsmoothedPath
-import com.lyeeedar.Util.getRotation
+import com.lyeeedar.Util.*
 
 /**
  * Created by Philip on 20-Jul-16.
@@ -26,13 +23,18 @@ class Ability()
 {
 	lateinit var name: String
 	lateinit var description: String
+	lateinit var unboughtDescription: String
+	val buyCost = ObjectMap<String, Int>()
+	var upgrades: String? = null
+
+	val key: String
+		get() = upgrades ?: name
 
 	lateinit var icon: Sprite
 	lateinit var hitSprite: Sprite
 	var flightSprite: Sprite? = null
 
 	var cost: Int = 2
-	var elite: Boolean = false
 
 	var targets = 1
 	var targetter: Targetter = Targetter(Targetter.Type.ORB)
@@ -97,6 +99,15 @@ class Ability()
 
 			ability.name = xml.get("Name")
 			ability.description = xml.get("Description")
+
+			val buyCostEl = xml.getChildByName("BuyCost")
+			for (i in 0..buyCostEl.childCount - 1)
+			{
+				val el = buyCostEl.getChild(i)
+				ability.buyCost[el.name] = el.text.toInt()
+			}
+			ability.unboughtDescription = xml.get("UnboughtDescription", ability.description)
+			ability.upgrades = xml.get("Upgrades", null)
 
 			ability.icon = AssetManager.tryLoadSpriteWithResources(xml.getChildByName("Icon"), resources)
 			ability.hitSprite = AssetManager.tryLoadSpriteWithResources(xml.getChildByName("HitSprite"), resources)

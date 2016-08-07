@@ -49,11 +49,11 @@ class PlayerData
 	{
 		for (tree in trees)
 		{
-			for (skill in tree.value.descendants(true))
+			for (skill in tree.value.boughtDescendants())
 			{
-				if (skill.bought && skill.ability.name == name)
+				if (skill.key == name)
 				{
-					return skill.ability
+					return skill
 				}
 			}
 		}
