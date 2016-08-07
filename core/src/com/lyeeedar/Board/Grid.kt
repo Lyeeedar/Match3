@@ -79,6 +79,12 @@ class Grid(val width: Int, val height: Int, val level: Level)
 			{
 				tile(selected)?.isSelected = false
 				selected = Point.MINUS_ONE
+
+				if (value.targets == 0)
+				{
+					value.activate(this)
+					field = null
+				}
 			}
 		}
 	var queuedAbility: Ability? = null

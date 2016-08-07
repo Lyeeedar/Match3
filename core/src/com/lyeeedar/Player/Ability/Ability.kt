@@ -49,6 +49,14 @@ class Ability()
 
 		val finalTargets = Array<Tile>()
 
+		if (selectedTargets.size == 0 && targets == 0)
+		{
+			selectedTargets.add(grid.tile(grid.width/2, grid.height/2)!!)
+
+		}
+
+		val selectedDelays = ObjectMap<Tile, Float>()
+
 		for (target in selectedTargets)
 		{
 			for (t in permuter.permute(target, grid))
@@ -58,12 +66,7 @@ class Ability()
 					finalTargets.add(t)
 				}
 			}
-		}
 
-		selectedTargets.clear()
-
-		for (target in finalTargets)
-		{
 			var delay = 0f
 			if (flightSprite != null)
 			{
@@ -81,14 +84,25 @@ class Ability()
 				target.effects.add(fs)
 			}
 
+			selectedDelays[target] = delay
+		}
+
+		for (target in finalTargets)
+		{
+			val closest = selectedTargets.minBy { it.dist(target) }!!
+			var delay = selectedDelays[closest]
+			val dst = closest.dist(target)
+
 			val hs = hitSprite.copy()
-			hs.renderDelay = delay
+			hs.renderDelay = delay + 0.1f * dst
 			delay += hs.lifetime * 0.6f
 
 			target.effects.add(hs)
 
 			effect.apply(target, grid, delay)
 		}
+
+		selectedTargets.clear()
 	}
 
 	companion object

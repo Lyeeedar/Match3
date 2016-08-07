@@ -12,7 +12,7 @@ import com.lyeeedar.Util.set
  * Created by Philip on 05-Aug-16.
  */
 
-val SkillTreeRadiusStep = 100f
+val SkillTreeRadiusStep = 64f
 private val tempVec = Vector2()
 
 class SkillTree(val numBaseSkills: Int)
@@ -23,8 +23,7 @@ class SkillTree(val numBaseSkills: Int)
 
 	fun assignLocations()
 	{
-		// top 90 degrees is for the buttons
-		val radiansRemaining = Math.PI.toFloat() * 2f - Math.toRadians(90.0).toFloat()
+		val radiansRemaining = Math.PI.toFloat() * 2f
 		val radiansStart = Math.toRadians(45.0).toFloat()
 
 		// split rest between skills, max 90 degrees a chunk

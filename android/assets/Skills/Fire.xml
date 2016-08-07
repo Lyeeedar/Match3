@@ -240,7 +240,7 @@
             <Description>Summon the annihilating pillars of creation to destroy your targets</Description>
             <Cost>8</Cost>
             <Effect>3,Orb,Column,Pop</Effect>
-            <Upgrades>FireBeam</Upgrades>
+            <Upgrades>Fire Beam</Upgrades>
 
             <UnboughtDescription>A ancient magical staff is said to be buried with the dead rulers of Pholbos. I want it to try burning a piece.</UnboughtDescription>
             <BuyCost>

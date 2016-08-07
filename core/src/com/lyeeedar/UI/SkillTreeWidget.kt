@@ -27,9 +27,8 @@ class SkillTreeWidget(val skillTree: SkillTree, val playerData: PlayerData) : Wi
 	val lineVec2 = Vector2()
 	val tempVec = Vector2()
 	val shape = ShapeRenderer()
-	val iconSize = 48f
+	val iconSize = 40f
 	val circleCol = Color(1f, 1f, 1f, 0.2f)
-	val circle = AssetManager.loadTexture("Sprites/largecircle.png")
 	val background = AssetManager.loadTexture("Sprites/Oryx/uf_split/uf_terrain/ground_dirt_dark_1.png", wrapping = Texture.TextureWrap.Repeat)
 	val unbought = AssetManager.loadSprite("Icons/Unknown", colour = Color.LIGHT_GRAY)
 	val boughtLineCol = Color(Color.GOLDENROD)
@@ -67,7 +66,7 @@ class SkillTreeWidget(val skillTree: SkillTree, val playerData: PlayerData) : Wi
 
 				for (skill in skillTree.visibleDescendants())
 				{
-					val dst = skill.location.dst(x - width * 0.5f, y - height * 0.5f)
+					val dst = skill.location.dst(x - (width * 0.5f + 100), y - (height * 0.5f + 100))
 
 					if (dst < iconSize)
 					{
@@ -162,7 +161,7 @@ class SkillTreeWidget(val skillTree: SkillTree, val playerData: PlayerData) : Wi
 	{
 		super.draw(batch, parentAlpha)
 
-		tempVec.set(x + width * 0.5f, y + height * 0.5f)
+		tempVec.set(x + width * 0.5f + 100, y + height * 0.5f + 100)
 
 		batch?.color = Color.LIGHT_GRAY
 		batch?.draw(background, 0f, 0f, width, height, -x / 64f, -y / 64f, (-x + width) / 64f, (-y + height) / 64f)
