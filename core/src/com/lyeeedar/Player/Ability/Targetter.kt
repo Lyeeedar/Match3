@@ -1,5 +1,6 @@
 package com.lyeeedar.Player.Ability
 
+import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.XmlReader
 import com.badlogic.gdx.utils.reflect.ClassReflection
 import com.lyeeedar.Board.Grid
@@ -24,20 +25,20 @@ class Targetter(val type: Type)
 		TILE
 	}
 
-	lateinit var isValid: (tile: Tile) -> Boolean
+	lateinit var isValid: (tile: Tile, data: ObjectMap<String, String>) -> Boolean
 
 	init
 	{
 		isValid = when(type)
 		{
-			Type.ORB -> fun (tile: Tile) = tile.orb != null && !tile.orb!!.hasAttack && tile.orb?.special !is Match5
-			Type.SPECIAL  -> fun (tile: Tile) = tile.orb?.special != null
-			Type.BLOCK -> fun (tile: Tile) = tile.block != null
-			Type.EMPTY -> fun (tile: Tile) = tile.contents == null && tile.canHaveOrb
-			Type.SEALED -> fun (tile: Tile) = tile.orb?.sealed ?: false
-			Type.MONSTER ->  fun (tile: Tile) = tile.monster != null
-			Type.ATTACK ->  fun (tile: Tile) = tile.orb?.hasAttack ?: false
-			Type.TILE -> fun (tile: Tile) = tile.canHaveOrb
+			Type.ORB -> fun (tile: Tile, data: ObjectMap<String, String>) = tile.orb != null && !tile.orb!!.hasAttack && tile.orb?.special !is Match5
+			Type.SPECIAL  -> fun (tile: Tile, data: ObjectMap<String, String>) = tile.orb?.special != null
+			Type.BLOCK -> fun (tile: Tile, data: ObjectMap<String, String>) = tile.block != null
+			Type.EMPTY -> fun (tile: Tile, data: ObjectMap<String, String>) = tile.contents == null && tile.canHaveOrb
+			Type.SEALED -> fun (tile: Tile, data: ObjectMap<String, String>) = tile.orb?.sealed ?: false
+			Type.MONSTER ->  fun (tile: Tile, data: ObjectMap<String, String>) = tile.monster != null
+			Type.ATTACK ->  fun (tile: Tile, data: ObjectMap<String, String>) = tile.orb?.hasAttack ?: false
+			Type.TILE -> fun (tile: Tile, data: ObjectMap<String, String>) = tile.canHaveOrb
 			else -> throw Exception("Invalid targetter type $type")
 		}
 	}

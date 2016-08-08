@@ -73,28 +73,11 @@ class HubGenerator
 		val emptyRooms = Array<DungeonMapEntry>()
 		val goodRooms = Array<DungeonMapEntry>()
 		val badRooms = Array<DungeonMapEntry>()
-		var bossRoom: DungeonMapEntry? = null
 
 		for (room in endOfChainRooms)
 		{
-			if (bossRoom == null)
-			{
-				bossRoom = room
-				room.type = DungeonMapEntry.Type.BOSS
-			}
-			else if (room.depth > bossRoom.depth)
-			{
-				goodRooms.add(bossRoom)
-				bossRoom.type = DungeonMapEntry.Type.GOOD
-
-				bossRoom = room
-				room.type = DungeonMapEntry.Type.BOSS
-			}
-			else
-			{
-				room.type = DungeonMapEntry.Type.GOOD
-				goodRooms.add(room)
-			}
+			room.type = DungeonMapEntry.Type.GOOD
+			goodRooms.add(room)
 		}
 
 		for (i in 1..good)
@@ -117,18 +100,45 @@ class HubGenerator
 		}
 
 		val levels = Level.loadAll(theme.name)
-		bossRoom!!.level = if (levels[DungeonMapEntry.Type.BOSS].size > 0) levels[DungeonMapEntry.Type.BOSS].random(ran) else null
+
+		fun getWeightedTypes(count: Int, type: DungeonMapEntry.Type): Array<String>
+		{
+			val typeList = Array<String>()
+
+			val weights = theme.roomWeights[type] ?: return typeList
+			val total = weights.sumBy { it.value }.toFloat()
+			if (total == 0f) return typeList
+
+			for (weight in weights)
+			{
+				val ratio = weight.value.toFloat() / total
+				val num = (count * ratio).toInt()
+				for (i in 1..num) typeList.add(weight.key)
+			}
+
+			return typeList
+		}
+
+		val typeMap = ObjectMap<DungeonMapEntry.Type, Array<String>>()
+		for (type in DungeonMapEntry.Type.values())
+		{
+			val count = when (type)
+			{
+				DungeonMapEntry.Type.GOOD -> goodRooms.size
+				DungeonMapEntry.Type.BAD -> badRooms.size
+				DungeonMapEntry.Type.EMPTY -> emptyRooms.size
+				DungeonMapEntry.Type.BOSS -> 0
+				else -> 0
+			}
+			typeMap[type] = getWeightedTypes(count, type)
+		}
 
 		fun assignLevels(type: DungeonMapEntry.Type, rooms: Array<DungeonMapEntry>)
 		{
 			val used = ObjectMap<Level, Int>()
-			val weights = theme.roomWeights[type] ?: return
-			val typeList = Array<String>()
-			for (weight in weights)
-			{
-				for (i in 1..weight.value) typeList.add(weight.key)
-			}
-			val chosenType = typeList.random()
+			val typeList = typeMap[type]
+			if (typeList.size == 0) return
+			val chosenType = typeList.removeRandom(ran)
 
 			for (room in rooms)
 			{

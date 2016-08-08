@@ -91,7 +91,8 @@
             <Name>Fire Flurry</Name>
             <Description>Fling out fire randomly, spreading destruction everywhere it lands.</Description>
             <Cost>1</Cost>
-            <Effect>0,Orb,Random3,Pop</Effect>
+            <Effect>0,Orb,Random,Pop</Effect>
+            <Data><Count>3</Count></Data>
 
             <UnboughtDescription>I really want to burn some random things. Please get some things for me.</UnboughtDescription>
             <BuyCost>
@@ -111,8 +112,9 @@
             <Name>Fire Rain</Name>
             <Description>Rain down fire randomly, destroying all it touches</Description>
             <Cost>1</Cost>
-            <Effect>0,Orb,Random5,Pop</Effect>
-            <Upgrades>FireFlurry</Upgrades>
+            <Effect>0,Orb,Random,Pop</Effect>
+            <Upgrades>Fire Flurry</Upgrades>
+            <Data><Count>5</Count></Data>
 
             <UnboughtDescription>The last set of things you brought me were fun to burn. Please bring me more!</UnboughtDescription>
             <BuyCost>
@@ -134,7 +136,8 @@
             <Name>Fireball</Name>
             <Description>Launch an exploding fireball at the target location, destroying it and all neighbours</Description>
             <Cost>5</Cost>
-            <Effect>1,Orb,Block1,Pop</Effect>
+            <Effect>1,Orb,Diamond,Pop</Effect>
+            <Data><aoe>1</aoe></Data>
 
             <UnboughtDescription>I've heard tales of a fabled creature of flame. With it's heart I'm sure I could develop a new spell of some form.</UnboughtDescription>
             <BuyCost>
@@ -151,7 +154,8 @@
             <Name>Greater Fireball</Name>
             <Description>Launch an exploding greater fireball at the target location, destroying it and all neighbours</Description>
             <Cost>5</Cost>
-            <Effect>1,Orb,Block2,Pop</Effect>
+            <Effect>1,Orb,Diamond,Pop</Effect>
+            <Data><aoe>2</aoe></Data>
             <Upgrades>Fireball</Upgrades>
 
             <UnboughtDescription>This spell feels... incomplete. I need something hotter. A more powerful heart I think will do it.</UnboughtDescription>
@@ -169,7 +173,8 @@
             <Name>Grand Fireball</Name>
             <Description>Launch an exploding grand fireball at the target location, destroying it and all neighbours</Description>
             <Cost>5</Cost>
-            <Effect>1,Orb,Block3,Pop</Effect>
+            <Effect>1,Orb,Diamond,Pop</Effect>
+            <Data><aoe>3</aoe></Data>
             <Upgrades>Fireball</Upgrades>
 
             <UnboughtDescription>This spell is nearly done. I just need something even hotter.</UnboughtDescription>
@@ -204,8 +209,9 @@
             <Name>Soulfire Detonation</Name>
             <Description>Blast the soul of your target with purifying flames. The ensuing explosion will destroy all around them.</Description>
             <Cost>5</Cost>
-            <Effect>1,Monster,Block1,Pop</Effect>
+            <Effect>1,Monster,Block,Pop</Effect>
             <Upgrades>Immolate</Upgrades>
+            <Data><aoe>1</aoe></Data>
 
             <UnboughtDescription>Soulfire is a dangerous thing. Careless use can destroy both the caster and all those in the surrounding area. I want to play with it.</UnboughtDescription>
             <BuyCost>

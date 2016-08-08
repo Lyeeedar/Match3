@@ -21,6 +21,8 @@ import com.lyeeedar.Sprite.SpriteRenderer
 import com.lyeeedar.Sprite.SpriteWrapper
 import com.lyeeedar.Sprite.TilingSprite
 import com.lyeeedar.UI.FullscreenMessage
+import com.lyeeedar.UI.GridWidget
+import com.lyeeedar.UI.PowerBar
 import com.lyeeedar.Util.*
 import com.sun.org.apache.xpath.internal.operations.Or
 import java.util.*
@@ -66,6 +68,8 @@ class Grid(val width: Int, val height: Int, val level: Level)
 	var activeAbility: Ability? = null
 		set(value)
 		{
+			if (inTurn && value != null) return
+
 			field = value
 
 			if (value == null)
@@ -85,16 +89,6 @@ class Grid(val width: Int, val height: Int, val level: Level)
 					value.activate(this)
 					field = null
 				}
-			}
-		}
-	var queuedAbility: Ability? = null
-		set(value)
-		{
-			field = value
-
-			for (tile in grid)
-			{
-				tile.isSelected = false
 			}
 		}
 
@@ -154,6 +148,22 @@ class Grid(val width: Int, val height: Int, val level: Level)
 				if (monster != null && tile == monster.tiles[0, 0])
 				{
 					monster.onTurn(this@Grid)
+					monster.damSources.clear()
+				}
+			}
+		}
+
+		onPop += fun (orb: Orb, delay: Float) {
+
+			if (!orb.skipPowerOrb)
+			{
+				val pos = GridWidget.instance.pointToScreenspace(orb)
+				val dst = PowerBar.instance.getOrbDest()
+				val sprite = AssetManager.loadSprite("Oryx/uf_split/uf_items/crystal_sky")
+
+				if (dst != null)
+				{
+					Future.call({ Mote(pos, dst, sprite, { PowerBar.instance.power++ }) }, delay)
 				}
 			}
 		}
@@ -190,7 +200,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 		if (activeAbility != null)
 		{
 			val newTile = tile(newSelection) ?: return
-			if (!activeAbility!!.targetter.isValid(newTile)) return
+			if (!activeAbility!!.targetter.isValid(newTile, activeAbility!!.data)) return
 
 			if (newTile.isSelected)
 			{
@@ -413,10 +423,12 @@ class Grid(val width: Int, val height: Int, val level: Level)
 				{
 					// check neighbours for orb
 					val diagL = tile(x - 1, currentY - 1)
+					val diagLBelow = tile(x - 1, currentY)
 					val diagR = tile(x + 1, currentY - 1)
+					val diagRBelow = tile(x + 1, currentY)
 
-					val diagLValid = diagL != null && diagL.orb != null && diagL.orb!!.armed == null && !diagL.orb!!.sealed
-					val diagRValid = diagR != null && diagR.orb != null && diagR.orb!!.armed == null && !diagR.orb!!.sealed
+					val diagLValid = diagL != null && diagL.orb != null && diagL.orb!!.armed == null && !diagL.orb!!.sealed && (diagLBelow == null || !diagLBelow.canHaveOrb || diagLBelow.contents != null)
+					val diagRValid = diagR != null && diagR.orb != null && diagR.orb!!.armed == null && !diagR.orb!!.sealed && (diagRBelow == null || !diagRBelow.canHaveOrb || diagRBelow.contents != null)
 
 					if (diagLValid || diagRValid)
 					{
@@ -568,12 +580,6 @@ class Grid(val width: Int, val height: Int, val level: Level)
 
 			if (!level.completed && FullscreenMessage.instance == null)
 			{
-				if (queuedAbility != null)
-				{
-					activeAbility = queuedAbility
-					queuedAbility = null
-				}
-
 				if (activeAbility == null) matchHint = findValidMove()
 				if (activeAbility == null && matchHint == null)
 				{
@@ -1259,13 +1265,13 @@ class Grid(val width: Int, val height: Int, val level: Level)
 	}
 
 	// ----------------------------------------------------------------------
-	fun pop(point: Point, delay: Float, isSpecial: Boolean = false)
+	fun pop(point: Point, delay: Float, damSource: Any? = null, bonusDam: Int = 0, skipPowerOrb: Boolean = false)
 	{
-		pop(point.x, point.y , delay, isSpecial)
+		pop(point.x, point.y , delay, damSource, bonusDam, skipPowerOrb)
 	}
 
 	// ----------------------------------------------------------------------
-	fun pop(x: Int, y: Int, delay: Float, isSpecial: Boolean = false)
+	fun pop(x: Int, y: Int, delay: Float, damSource: Any? = null, bonusDam: Int = 0, skipPowerOrb: Boolean = false)
 	{
 		val tile = tile(x, y) ?: return
 
@@ -1277,7 +1283,8 @@ class Grid(val width: Int, val height: Int, val level: Level)
 
 		if (tile.monster != null)
 		{
-			tile.monster!!.hp -= if (isSpecial) 2 else 1
+			tile.monster!!.hp -= if (!tile.monster!!.damSources.contains(damSource)) 1 + bonusDam else 1
+			if (damSource != null) tile.monster!!.damSources.add(damSource)
 			onDamaged(tile.monster!!)
 			return
 		}
@@ -1296,6 +1303,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 
 		orb.markedForDeletion = true
 		orb.deletionEffectDelay = delay
+		orb.skipPowerOrb = skipPowerOrb
 
 		if (orb.armed != null)
 		{

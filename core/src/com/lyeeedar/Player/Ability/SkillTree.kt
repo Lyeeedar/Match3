@@ -106,7 +106,7 @@ class SkillTree(val numBaseSkills: Int)
 
 class Skill(val ability: Ability)
 {
-	var bought = false
+	var bought = true
 
 	val location: Vector2 = Vector2()
 	val children: com.badlogic.gdx.utils.Array<Skill> = com.badlogic.gdx.utils.Array()

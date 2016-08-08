@@ -53,7 +53,7 @@ class AbilityWidget(val ability: Ability, val w: Float, val h: Float, val grid: 
 					}
 					else
 					{
-						grid.queuedAbility = ability
+						grid.activeAbility = ability
 					}
 				}
 			}

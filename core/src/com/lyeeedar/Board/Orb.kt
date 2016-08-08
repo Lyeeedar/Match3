@@ -38,6 +38,7 @@ class Orb(val desc: OrbDesc): Point()
 
 	var markedForDeletion: Boolean = false
 	var deletionEffectDelay: Float = 0f
+	var skipPowerOrb = false
 
 	val sealSprite = AssetManager.loadSprite("Oryx/uf_split/uf_items/shield_vorpal_buckler")
 	val sealBreak = AssetManager.loadSprite("EffectSprites/Aegis/Aegis", 0.1f, Color(0.2f, 0f, 0.2f, 1f), Sprite.AnimationMode.TEXTURE, null, false, true)

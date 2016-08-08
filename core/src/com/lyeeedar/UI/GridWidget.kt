@@ -87,18 +87,6 @@ class GridWidget(val grid: Grid) : Widget()
 			}
 		})
 
-		grid.onPop += fun (orb: Orb, delay: Float) {
-
-			val pos = pointToScreenspace(orb)
-			val dst = PowerBar.instance.getOrbDest()
-			val sprite = AssetManager.loadSprite("Oryx/uf_split/uf_items/crystal_sky")
-
-			if (dst != null)
-			{
-				Future.call({Mote(pos, dst, sprite, { PowerBar.instance.power++ })}, delay)
-			}
-		}
-
 		atk_empty.baseScale = floatArrayOf(0.14f, 0.14f)
 		atk_full.baseScale = floatArrayOf(0.14f, 0.14f)
 	}
@@ -150,7 +138,7 @@ class GridWidget(val grid: Grid) : Widget()
 
 				if (grid.activeAbility != null)
 				{
-					if (grid.activeAbility!!.targetter.isValid(tile))
+					if (grid.activeAbility!!.targetter.isValid(tile, grid.activeAbility!!.data))
 					{
 						if (grid.activeAbility!!.targetter.type == Targetter.Type.ORB)
 						{

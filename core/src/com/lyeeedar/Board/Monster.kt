@@ -2,6 +2,7 @@ package com.lyeeedar.Board
 
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.MathUtils
+import com.badlogic.gdx.utils.ObjectSet
 import com.lyeeedar.Direction
 import com.lyeeedar.Sprite.Sprite
 import com.lyeeedar.Sprite.SpriteAnimation.BlinkAnimation
@@ -52,6 +53,8 @@ class Monster(val desc: MonsterDesc)
 	var attackSpeed: Int = 5
 	var attackDelay: Float = 5f
 	var attackAccumulator: Float = 1f
+
+	val damSources = ObjectSet<Any>()
 
 	init
 	{

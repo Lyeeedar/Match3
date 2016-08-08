@@ -1,5 +1,6 @@
 package com.lyeeedar.Player.Ability
 
+import com.badlogic.gdx.utils.ObjectMap
 import com.lyeeedar.Board.Grid
 import com.lyeeedar.Board.Tile
 import com.lyeeedar.Util.random
@@ -17,29 +18,25 @@ class Permuter(val type: Type)
 		COLUMN,
 		ROW,
 		CROSS,
-		BLOCK1,
-		BLOCK2,
-		BLOCK3,
-		RANDOM3,
-		RANDOM5
+		BLOCK,
+		DIAMOND,
+		RANDOM
 	}
 
-	lateinit var permute: (tile: Tile, grid: Grid) -> Sequence<Tile>
+	lateinit var permute: (tile: Tile, grid: Grid, data: ObjectMap<String, String>) -> Sequence<Tile>
 
 	init
 	{
 		permute = when(type)
 		{
-			Type.SINGLE -> fun (tile: Tile, grid: Grid) = sequenceOf(tile)
-			Type.ALLOFTYPE -> fun (tile: Tile, grid: Grid) = grid.grid.filter{ it.orb?.key == tile.orb!!.key }
-			Type.COLUMN ->  fun (tile: Tile, grid: Grid) = grid.grid.filter{ it.x == tile.x }
-			Type.ROW ->  fun (tile: Tile, grid: Grid) = grid.grid.filter{ it.y == tile.y }
-			Type.CROSS ->  fun (tile: Tile, grid: Grid) = grid.grid.filter{ it.y == tile.y || it.x == tile.x }
-			Type.BLOCK1 ->  fun (tile: Tile, grid: Grid) = grid.grid.filter{ it.taxiDist(tile) <= 1 }
-			Type.BLOCK2 ->  fun (tile: Tile, grid: Grid) = grid.grid.filter{ it.taxiDist(tile) <= 2 }
-			Type.BLOCK3 ->  fun (tile: Tile, grid: Grid) = grid.grid.filter{ it.taxiDist(tile) <= 3 }
-			Type.RANDOM3 ->  fun (tile: Tile, grid: Grid) = grid.grid.filter{ it.canHaveOrb }.random(3)
-			Type.RANDOM5 ->  fun (tile: Tile, grid: Grid) = grid.grid.filter{ it.canHaveOrb }.random(5)
+			Type.SINGLE -> fun (tile: Tile, grid: Grid, data: ObjectMap<String, String>) = sequenceOf(tile)
+			Type.ALLOFTYPE -> fun (tile: Tile, grid: Grid, data: ObjectMap<String, String>) = grid.grid.filter{ it.orb?.key == tile.orb!!.key }
+			Type.COLUMN ->  fun (tile: Tile, grid: Grid, data: ObjectMap<String, String>) = grid.grid.filter{ it.x == tile.x }
+			Type.ROW ->  fun (tile: Tile, grid: Grid, data: ObjectMap<String, String>) = grid.grid.filter{ it.y == tile.y }
+			Type.CROSS ->  fun (tile: Tile, grid: Grid, data: ObjectMap<String, String>) = grid.grid.filter{ it.y == tile.y || it.x == tile.x }
+			Type.BLOCK ->  fun (tile: Tile, grid: Grid, data: ObjectMap<String, String>): Sequence<Tile> { val dst = data["AOE"].toInt(); return grid.grid.filter{ it.taxiDist(tile) <= dst } }
+			Type.DIAMOND ->  fun (tile: Tile, grid: Grid, data: ObjectMap<String, String>): Sequence<Tile> { val dst = data["AOE"].toInt(); return grid.grid.filter{ it.dist(tile) <= dst } }
+			Type.RANDOM ->  fun (tile: Tile, grid: Grid, data: ObjectMap<String, String>): Sequence<Tile> { val count = data["COUNT"].toInt(); return grid.grid.filter{ it.canHaveOrb }.random(count) }
 			else -> throw Exception("Invalid permuter type $type")
 		}
 	}

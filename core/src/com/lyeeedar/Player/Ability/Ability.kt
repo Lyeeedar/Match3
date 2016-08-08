@@ -40,6 +40,7 @@ class Ability()
 	var targetter: Targetter = Targetter(Targetter.Type.ORB)
 	var permuter: Permuter = Permuter(Permuter.Type.SINGLE)
 	var effect: Effect = Effect(Effect.Type.TEST)
+	val data = ObjectMap<String, String>()
 
 	val selectedTargets = Array<Tile>()
 
@@ -49,21 +50,33 @@ class Ability()
 
 		val finalTargets = Array<Tile>()
 
-		if (selectedTargets.size == 0 && targets == 0)
+		if (permuter.type == Permuter.Type.RANDOM)
 		{
-			selectedTargets.add(grid.tile(grid.width/2, grid.height/2)!!)
-
+			for (t in permuter.permute(grid.tile(grid.width/2, grid.height/2)!!, grid, data))
+			{
+				if (!selectedTargets.contains(t, true))
+				{
+					selectedTargets.add(t)
+				}
+			}
 		}
 
 		val selectedDelays = ObjectMap<Tile, Float>()
 
 		for (target in selectedTargets)
 		{
-			for (t in permuter.permute(target, grid))
+			if (permuter.type == Permuter.Type.RANDOM)
 			{
-				if (!finalTargets.contains(t, true))
+				finalTargets.add(target)
+			}
+			else
+			{
+				for (t in permuter.permute(target, grid, data))
 				{
-					finalTargets.add(t)
+					if (!finalTargets.contains(t, true))
+					{
+						finalTargets.add(t)
+					}
 				}
 			}
 
@@ -99,7 +112,7 @@ class Ability()
 
 			target.effects.add(hs)
 
-			effect.apply(target, grid, delay)
+			effect.apply(target, grid, delay, data)
 		}
 
 		selectedTargets.clear()
@@ -136,6 +149,16 @@ class Ability()
 			ability.targetter = Targetter(Targetter.Type.valueOf(split[1]))
 			ability.permuter = Permuter(Permuter.Type.valueOf(split[2]))
 			ability.effect = Effect(Effect.Type.valueOf(split[3]))
+
+			val dataEl = xml.getChildByName("Data")
+			if (dataEl != null)
+			{
+				for (i in 0..dataEl.childCount-1)
+				{
+					val el = dataEl.getChild(i)
+					ability.data[el.name.toUpperCase()] = el.text.toUpperCase()
+				}
+			}
 
 			return ability
 		}
