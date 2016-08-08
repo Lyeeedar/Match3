@@ -1,0 +1,158 @@
+<Level>
+
+    <Grid>
+
+        <Rows>
+            <Row>#.........#</Row>
+            <Row>#.........#</Row>
+            <Row>#.........#</Row>
+            <Row>#.........#</Row>
+            <Row>#...!!....#</Row>
+            <Row>#...!!....#</Row>
+            <Row>#.........#</Row>
+            <Row>#.........#</Row>
+            <Row>#.........#</Row>
+        </Rows>
+
+        <Rows>
+            <Row>#.........#</Row>
+            <Row>#.........#</Row>
+            <Row>#......=..#</Row>
+            <Row>#..=......#</Row>
+            <Row>#......!..#</Row>
+            <Row>#.=.......#</Row>
+            <Row>#.....=...#</Row>
+            <Row>#.!.......#</Row>
+            <Row>#.......=.#</Row>
+        </Rows>
+
+        <Rows>
+            <Row>#.........#</Row>
+            <Row>#..==.....#</Row>
+            <Row>#..==.....#</Row>
+            <Row>#.........#</Row>
+            <Row>#.....==..#</Row>
+            <Row>#.....==..#</Row>
+            <Row>#...!!....#</Row>
+            <Row>#..=!!....#</Row>
+            <Row>#.........#</Row>
+        </Rows>
+
+        <Rows>
+            <Row>#.........#</Row>
+            <Row>#.........#</Row>
+            <Row>#.........#</Row>
+            <Row>#.........#</Row>
+            <Row>###.!!.####</Row>
+            <Row>###.!!.####</Row>
+            <Row>#.........#</Row>
+            <Row>#.........#</Row>
+            <Row>#.........#</Row>
+        </Rows>
+
+        <Rows>
+            <Row>#.........#</Row>
+            <Row>#.........#</Row>
+            <Row>#...!.....#</Row>
+            <Row>#.........#</Row>
+            <Row>#......!..#</Row>
+            <Row>#.........#</Row>
+            <Row>#..!......#</Row>
+            <Row>#.........#</Row>
+            <Row>#.........#</Row>
+        </Rows>
+
+        <Rows>
+            <Row>#.........#</Row>
+            <Row>#.........#</Row>
+            <Row>#...!...###</Row>
+            <Row>#.........#</Row>
+            <Row>###....!..#</Row>
+            <Row>#.........#</Row>
+            <Row>#..!....###</Row>
+            <Row>#.........#</Row>
+            <Row>#.........#</Row>
+        </Rows>
+
+        <Rows>
+            <Row>#.........#</Row>
+            <Row>#.........#</Row>
+            <Row>#.........#</Row>
+            <Row>#.........#</Row>
+            <Row>#...!!....#</Row>
+            <Row>#...!!.!..#</Row>
+            <Row>#.........#</Row>
+            <Row>#.........#</Row>
+            <Row>#.........#</Row>
+        </Rows>
+
+        <Rows>
+            <Row>#.........#</Row>
+            <Row>#.........#</Row>
+            <Row>#..!!.....#</Row>
+            <Row>#..!!.....#</Row>
+            <Row>#.........#</Row>
+            <Row>#.........#</Row>
+            <Row>#.........#</Row>
+            <Row>#.......!.#</Row>
+            <Row>#.........#</Row>
+        </Rows>
+
+        <Rows>
+            <Row>#.........#</Row>
+            <Row>#.........#</Row>
+            <Row>#.........#</Row>
+            <Row>#...====..#</Row>
+            <Row>#...=!!=..#</Row>
+            <Row>#...=!!=..#</Row>
+            <Row>#...====..#</Row>
+            <Row>#.........#</Row>
+            <Row>#.........#</Row>
+        </Rows>
+
+        <Rows>
+            <Row>#.........#</Row>
+            <Row>#.........#</Row>
+            <Row>#.........#</Row>
+            <Row>#.........#</Row>
+            <Row>#=========#</Row>
+            <Row>#.........#</Row>
+            <Row>#..!......#</Row>
+            <Row>#......!..#</Row>
+            <Row>#.........#</Row>
+        </Rows>
+
+        <Rows>
+            <Row>########..#</Row>
+            <Row>#..#......#</Row>
+            <Row>#..#......#</Row>
+            <Row>#..#......#</Row>
+            <Row>####......#</Row>
+            <Row>#.......###</Row>
+            <Row>#..!....#.#</Row>
+            <Row>#......!#.#</Row>
+            <Row>#.......###</Row>
+        </Rows>
+
+    </Grid>
+
+    <AllowedVictories>
+        <Kill />
+    </AllowedVictories>
+
+    <AllowedDefeats>
+        <None />
+    </AllowedDefeats>
+
+    <Type>Encounter</Type>
+    <Category>BAD</Category>
+
+    <UncompletedMapSprite>
+        <Name>Oryx/Custom/dungeonmap/combat</Name>
+    </UncompletedMapSprite>
+
+    <CompletedMapSprite>
+        <Name>Oryx/Custom/dungeonmap/combat_complete</Name>
+    </CompletedMapSprite>
+
+</Level>

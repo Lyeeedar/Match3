@@ -1,0 +1,126 @@
+<Level>
+    <Grid>
+
+        <Rows>
+            <Row>#.........#</Row>
+            <Row>#.........#</Row>
+            <Row>#.........#</Row>
+            <Row>#.........#</Row>
+            <Row>#.........#</Row>
+            <Row>#.........#</Row>
+            <Row>#.........#</Row>
+            <Row>#.........#</Row>
+            <Row>#.........#</Row>
+        </Rows>
+
+        <Rows>
+            <Row>#.........#</Row>
+            <Row>#.........#</Row>
+            <Row>#.........#</Row>
+            <Row>###.....###</Row>
+            <Row>#.........#</Row>
+            <Row>#.........#</Row>
+            <Row>####...####</Row>
+            <Row>#.........#</Row>
+            <Row>#.........#</Row>
+        </Rows>
+
+        <Rows>
+            <Row>#..#####..#</Row>
+            <Row>#...###...#</Row>
+            <Row>#....#....#</Row>
+            <Row>#.........#</Row>
+            <Row>#.........#</Row>
+            <Row>#.........#</Row>
+            <Row>#.........#</Row>
+            <Row>##.......##</Row>
+            <Row>###.....###</Row>
+        </Rows>
+
+        <Rows>
+            <Row>#.........#</Row>
+            <Row>#......==.#</Row>
+            <Row>#......==.#</Row>
+            <Row>#..==.....#</Row>
+            <Row>#..==.....#</Row>
+            <Row>#.........#</Row>
+            <Row>##==###==##</Row>
+            <Row>#....#....#</Row>
+            <Row>#....#....#</Row>
+        </Rows>
+
+        <Rows>
+            <Row>#.........#</Row>
+            <Row>#.........#</Row>
+            <Row>#.........#</Row>
+            <Row>#.==......#</Row>
+            <Row>#.==......#</Row>
+            <Row>#.........#</Row>
+            <Row>#.....==..#</Row>
+            <Row>#.....==..#</Row>
+            <Row>#.........#</Row>
+        </Rows>
+
+        <Rows>
+            <Row>#####.#####</Row>
+            <Row>####...####</Row>
+            <Row>###.....###</Row>
+            <Row>##.......##</Row>
+            <Row>#.........#</Row>
+            <Row>##.......##</Row>
+            <Row>###.....###</Row>
+            <Row>####...####</Row>
+            <Row>#####.#####</Row>
+        </Rows>
+
+        <Rows>
+            <Row>#####.#####</Row>
+            <Row>####...####</Row>
+            <Row>###.....###</Row>
+            <Row>##.......##</Row>
+            <Row>#.........#</Row>
+            <Row>#.........#</Row>
+            <Row>#.........#</Row>
+            <Row>#.........#</Row>
+            <Row>#.........#</Row>
+        </Rows>
+
+    </Grid>
+
+
+    <AllowedVictories>
+        <Match >
+            <Orb>30</Orb>
+        </Match>
+        <Match >
+            <Orb>20</Orb>
+            <Orb>20</Orb>
+        </Match>
+        <Match>
+            <Orb>15</Orb>
+            <Orb>20</Orb>
+            <Orb>15</Orb>
+        </Match>
+    </AllowedVictories>
+
+    <AllowedDefeats>
+        <Time >60</Time>
+        <Turns >35</Turns>
+    </AllowedDefeats>
+
+    <DefeatActions>
+        <Harm>5</Harm>
+    </DefeatActions>
+
+    <Type>Trap</Type>
+    <Category>BAD</Category>
+
+    <UncompletedMapSprite>
+        <Name>Oryx/Custom/dungeonmap/spiketrap</Name>
+    </UncompletedMapSprite>
+
+    <CompletedMapSprite>
+        <Name>Oryx/Custom/dungeonmap/spiketrap_complete</Name>
+    </CompletedMapSprite>
+
+</Level>

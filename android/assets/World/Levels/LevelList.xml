@@ -1,10 +1,7 @@
 <Dungeons>
 	<Dungeon>
-		<Level>Dungeon/Fight/Box</Level>
-		<Level>Dungeon/Fight/Pack</Level>
-		<Level>Dungeon/Trap/Box</Level>
-		<Level>Dungeon/Trap/Diamond</Level>
-		<Level>Dungeon/Trap/Pyramid</Level>
-		<Level>Dungeon/Treasure/Box</Level>
+		<Level>Dungeon/Fight/BasicMonster</Level>
+		<Level>Dungeon/Trap/BasicTrap</Level>
+		<Level>Dungeon/Treasure/BasicTreasure</Level>
 	</Dungeon>
 </Dungeons>

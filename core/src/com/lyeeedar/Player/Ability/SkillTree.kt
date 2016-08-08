@@ -109,7 +109,7 @@ class Skill(val ability: Ability)
 	var bought = false
 
 	val location: Vector2 = Vector2()
-	val children: Array<Skill?> = Array(2){ e -> null }
+	val children: com.badlogic.gdx.utils.Array<Skill> = com.badlogic.gdx.utils.Array()
 
 	fun visibleDescendants(array: com.badlogic.gdx.utils.Array<Skill>)
 	{
@@ -142,20 +142,14 @@ class Skill(val ability: Ability)
 
 		location.set(tempVec)
 
-		if (children[0] != null && children[1] != null)
+		if (children.size > 0)
 		{
-			// split into 2
-			val childAngle = angle * 0.5f
-
-			children[0]?.assignLocation(childAngle, start, radius + SkillTreeRadiusStep)
-			children[1]?.assignLocation(childAngle, start + childAngle, radius + SkillTreeRadiusStep)
-		}
-		else
-		{
-			// split into 1 or 0
-			val child = children[0] ?: children[1]
-
-			child?.assignLocation(angle, start, radius + SkillTreeRadiusStep)
+			val angleStep = angle / children.size
+			val childRadius = radius + SkillTreeRadiusStep * Math.max(1, children.size-1)
+			for (i in 0..children.size-1)
+			{
+				children[i].assignLocation(angleStep, start + i*angleStep, childRadius )
+			}
 		}
 	}
 
@@ -168,7 +162,7 @@ class Skill(val ability: Ability)
 			val skill = Skill(ability)
 			skill.parse(el, abilities, resources)
 
-			children[i] = skill
+			children.add(skill)
 		}
 	}
 }

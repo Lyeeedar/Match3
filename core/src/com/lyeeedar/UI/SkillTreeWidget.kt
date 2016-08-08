@@ -50,8 +50,7 @@ class SkillTreeWidget(val skillTree: SkillTree, val playerData: PlayerData) : Wi
 			if (skill.location.y > max.y) max.y = skill.location.y
 			if (depth > maxDepth) maxDepth = depth
 
-			if (skill.children[0] != null) getMinMax(skill.children[0]!!, depth + 1)
-			if (skill.children[1] != null) getMinMax(skill.children[1]!!, depth + 1)
+			for (child in skill.children) getMinMax(child, depth+1)
 		}
 
 		for (skill in skillTree.rootSkills)
@@ -172,28 +171,16 @@ class SkillTreeWidget(val skillTree: SkillTree, val playerData: PlayerData) : Wi
 		{
 			if (!skill.bought) return
 
-			if (skill.children[0] != null)
+			for (child in skill.children)
 			{
 				lineVec1.set(skill.location).add(tempVec)
-				lineVec2.set(skill.children[0]!!.location).add(tempVec)
+				lineVec2.set(child.location).add(tempVec)
 
-				shape.color = if(skill.children[0]!!.bought) boughtLineCol else unboughtLineCol
+				shape.color = if(child.bought) boughtLineCol else unboughtLineCol
 
 				shape.line(lineVec1, lineVec2)
 
-				drawLines(skill.children[0]!!)
-			}
-
-			if (skill.children[1] != null)
-			{
-				lineVec1.set(skill.location).add(tempVec)
-				lineVec2.set(skill.children[1]!!.location).add(tempVec)
-
-				shape.color = if(skill.children[1]!!.bought) boughtLineCol else unboughtLineCol
-
-				shape.line(lineVec1, lineVec2)
-
-				drawLines(skill.children[1]!!)
+				drawLines(child)
 			}
 		}
 
@@ -206,8 +193,7 @@ class SkillTreeWidget(val skillTree: SkillTree, val playerData: PlayerData) : Wi
 			{
 				skill.ability.icon.render(batch as SpriteBatch, x, y, iconSize, iconSize)
 
-				if (skill.children[0] != null) drawIcons(skill.children[0]!!)
-				if (skill.children[1] != null) drawIcons(skill.children[1]!!)
+				for (child in skill.children) drawIcons(child)
 			}
 			else
 			{
