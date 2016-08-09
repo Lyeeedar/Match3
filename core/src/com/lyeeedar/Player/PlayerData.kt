@@ -25,13 +25,13 @@ class PlayerData
 	val specialHitEffect: Sprite
 		get() = getEquipment<Weapon>()?.specialEffect ?: defaultHitEffect
 
-	private var baseSpellDam = 0
-	val spellDam: Int
-		get() = baseSpellDam + (getEquipment<Weapon>()?.spellDam ?: 0)
+	private var baseAbilityDam = 0
+	val abilityDam: Int
+		get() = baseAbilityDam + (getEquipment<Weapon>()?.abilityDam ?: 0)
 
-	private var basePhysDam = 0
-	val physDam: Int
-		get() = basePhysDam + (getEquipment<Weapon>()?.physDam ?: 0)
+	private var baseMatchDam = 0
+	val matchDam: Int
+		get() = baseMatchDam + (getEquipment<Weapon>()?.matchDam ?: 0)
 
 	private var baseMaxHP = 10
 	val maxHP: Int
@@ -66,11 +66,13 @@ class PlayerData
 
 		val wep = Weapon()
 		wep.name = "Lightning Rod"
+		wep.description = "Crackling with lightning this rod provides a powerful channel for magics."
 		wep.icon = AssetManager.loadSprite("Oryx/uf_split/uf_items/weapon_magic_staff_venom", drawActualSize = true)
 		wep.specialEffect = AssetManager.loadSprite("EffectSprites/LightningBurst/LightningBurst", updateTime = 0.1f)
-		wep.spellDam = 5
-		wep.physDam = 1
+		wep.abilityDam = 5
+		wep.matchDam = 1
 		setEquipment(wep)
+		unlockedEquipment.add(wep)
 	}
 
 	val trees = ObjectMap<String, SkillTree>()
@@ -97,6 +99,19 @@ class PlayerData
 		}
 
 		equipment[index] = equip
+	}
+
+	inline fun <reified T> clearEquipment()
+	{
+		val index = when(T::class)
+		{
+			Weapon::class -> 0
+			Armour::class -> 1
+			Charm::class -> 2
+			else -> 3
+		}
+
+		equipment[index] = null
 	}
 
 	inline fun <reified T: Equipment> getEquipment(): T? =

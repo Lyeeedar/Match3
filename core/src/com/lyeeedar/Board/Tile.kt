@@ -34,9 +34,9 @@ class Tile(x: Int, y: Int) : Point(x, y)
 	var contents: Any? = null
 		set(value)
 		{
-			if (field != null && !canHaveOrb)
+			if (value != null && !canHaveOrb)
 			{
-				error("Tried to put something in tile that can't should be empty. IsPit: $isPit")
+				com.lyeeedar.Util.error("Tried to put something in tile that can't should be empty. IsPit: $isPit, object: $value")
 				return
 			}
 			field = value

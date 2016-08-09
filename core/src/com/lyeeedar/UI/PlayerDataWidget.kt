@@ -6,6 +6,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable
 import com.lyeeedar.Global
 import com.lyeeedar.Player.Ability.Ability
 import com.lyeeedar.Player.Ability.SkillTree
+import com.lyeeedar.Player.Equipment.Armour
+import com.lyeeedar.Player.Equipment.Charm
+import com.lyeeedar.Player.Equipment.Weapon
 import com.lyeeedar.Player.PlayerData
 import com.lyeeedar.Sprite.Sprite
 import com.lyeeedar.Util.AssetManager
@@ -139,7 +142,13 @@ class PlayerDataWidget(val playerData: PlayerData) : FullscreenTable()
 			equipmentTable.add(widget).expandX()
 
 			widget.addClickListener {
-				//equipmentList(playerData, abName, {it -> playerData.abilities[i] = it; buildUI()})
+
+				when (i)
+				{
+					0 -> EquipmentList().create<Weapon>(playerData, {buildUI()})
+					1 -> EquipmentList().create<Armour>(playerData, {buildUI()})
+					2 -> EquipmentList().create<Charm>(playerData, {buildUI()})
+				}
 			}
 		}
 

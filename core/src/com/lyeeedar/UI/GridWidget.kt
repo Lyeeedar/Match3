@@ -290,7 +290,7 @@ class GridWidget(val grid: Grid) : Widget()
 					for (i in 0..monster.maxhp-1)
 					{
 						val sprite = if(i < monster.hp) hp_full else hp_empty
-						foreground.queueSprite(sprite, xi+i*spacePerPip, yi+0.1f, xp, yp, SpaceSlot.ORB, 2, width = solid, height = 0.15f)
+						floating.queueSprite(sprite, xi+i*spacePerPip, yi+0.1f, xp, yp, SpaceSlot.ORB, 2, width = solid, height = 0.15f)
 					}
 				}
 

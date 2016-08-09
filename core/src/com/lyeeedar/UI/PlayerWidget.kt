@@ -156,8 +156,11 @@ class PlayerWidget(val player: Player, val objective: AbstractObjective): Fullsc
 			val widget = SpriteWidget(sprite, 48f, 48f)
 			equipmentTable.add(widget).expandX()
 
-			widget.addClickListener {
-				//equipmentList(playerData, abName, {it -> playerData.abilities[i] = it; buildUI()})
+			if (equip != null)
+			{
+				widget.addClickListener {
+					MessageBox(equip.name, equip.description + "\n" + equip.stats(), Pair("Okay", {}))
+				}
 			}
 		}
 

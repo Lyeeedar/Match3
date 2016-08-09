@@ -540,6 +540,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 				val complete = f()
 				if (!complete)
 				{
+					noMatchTimer = 0f
 					done = false
 					return done
 				}
@@ -567,8 +568,6 @@ class Grid(val width: Int, val height: Int, val level: Level)
 					{
 						val swapSuccess = swap()
 						if (swapSuccess) inTurn = true
-
-						noMatchTimer = 0f
 					}
 
 					onTime(delta)
@@ -737,7 +736,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 			fun checkSurrounding(point: Point, dir: Direction, key: Int): Pair<Point, Point>?
 			{
 				val targetTile = tile(point)
-				if (targetTile == null || targetTile.block != null || targetTile.monster != null || targetTile.orb?.sealed ?: false || !targetTile.canHaveOrb) return null
+				if (targetTile == null || targetTile.block != null || targetTile.monster != null || targetTile.orb?.sealed ?: false || !targetTile.canHaveOrb || targetTile.contents == null) return null
 
 				fun canMatch(point: Point): Boolean
 				{
@@ -798,7 +797,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 				}
 			}
 		}
-		
+
 		// check for special merges
 		for (x in 0..width-1)
 		{
@@ -807,7 +806,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 				val orb = grid[x, y].orb ?: continue
 				if (orb.special != null)
 				{
-					for (dir in Direction.CardinalDirections)
+					for (dir in Direction.CardinalValues)
 					{
 						val tile = tile(x + dir.x, y + dir.y) ?: continue
 						if (tile.orb?.special != null)
@@ -1164,7 +1163,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 				}
 				if (t.monster != null)
 				{
-					t.monster!!.hp -= if (!t.monster!!.damSources.contains(this)) 1 + level.player.physDam else 1
+					t.monster!!.hp -= if (!t.monster!!.damSources.contains(this)) 1 + level.player.matchDam else 1
 					t.monster!!.damSources.add(this)
 					onDamaged(t.monster!!)
 

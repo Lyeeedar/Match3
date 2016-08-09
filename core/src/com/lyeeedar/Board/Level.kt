@@ -89,7 +89,7 @@ class Level(val loadPath: String)
 				}
 				else if (char == '$')
 				{
-					tile.chest = Chest(false)
+					tile.chest = Chest(true)
 					tile.canHaveOrb = false
 					tile.sprite = theme.floor.copy()
 					tile.chest!!.attachHandlers(grid)

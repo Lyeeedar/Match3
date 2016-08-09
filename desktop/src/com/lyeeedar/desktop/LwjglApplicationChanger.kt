@@ -48,6 +48,7 @@ class LwjglApplicationChanger : AbstractApplicationChanger(LwjglPreferences("gam
 		{
 			AtlasCreator()
 			LevelProcessor()
+			AbilityValidator()
 		}
 	}
 

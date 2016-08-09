@@ -22,31 +22,5 @@ class Armour : Equipment()
 		regen = xml.getInt("Regen")
 	}
 
-	override fun createSimpleTable(): Table
-	{
-		val table = Table()
-
-		table.add(SpriteWidget(icon.copy(), 32f, 32f))
-
-		val wordsTable = Table()
-		wordsTable.add(Label(name, Global.skin))
-		wordsTable.row()
-
-		val statsTable = Table()
-		statsTable.add(Label("Max HP: $maxHP", Global.skin))
-		statsTable.add(Label("Regen: $regen", Global.skin))
-
-		wordsTable.add(statsTable).expandX().fillX()
-
-		table.add(wordsTable).expand().fill()
-
-		return table
-	}
-
-	override fun createFullTable(): Table
-	{
-		val table = Table()
-
-		return table
-	}
+	override fun stats(): String = "Max HP: $maxHP\nRegen: $regen"
 }

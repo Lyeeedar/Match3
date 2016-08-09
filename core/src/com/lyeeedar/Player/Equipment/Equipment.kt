@@ -1,6 +1,7 @@
 package com.lyeeedar.Player.Equipment
 
 import com.badlogic.gdx.scenes.scene2d.ui.Table
+import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Sprite.Sprite
 import com.lyeeedar.Util.AssetManager
@@ -15,9 +16,13 @@ abstract class Equipment
 	lateinit var name: String
 	lateinit var description: String
 
+	lateinit var unboughtDescription: String
+	val buyCost = ObjectMap<String, Int>()
+	lateinit var coreCost: String
+	var upgrades: String? = null
+
 	abstract fun parse(xml: XmlReader.Element)
-	abstract fun createSimpleTable(): Table
-	abstract fun createFullTable(): Table
+	abstract fun stats(): String
 
 	companion object
 	{

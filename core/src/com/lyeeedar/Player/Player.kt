@@ -30,8 +30,8 @@ class Player(data: PlayerData)
 			if (field > maxhp) field = maxhp
 		}
 
-	var physDam: Int = 0
-	var spellDam: Int = 0
+	var matchDam: Int = 0
+	var abilityDam: Int = 0
 
 	var maxhp: Int = 0
 	var regen: Int = 0
@@ -51,8 +51,8 @@ class Player(data: PlayerData)
 		portrait = data.chosenSprite
 		portrait.drawActualSize = false
 
-		physDam = data.physDam
-		spellDam = data.spellDam
+		matchDam = data.matchDam
+		abilityDam = data.abilityDam
 
 		maxhp = data.maxHP
 		hp = maxhp

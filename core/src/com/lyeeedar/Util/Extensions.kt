@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent
 import com.badlogic.gdx.scenes.scene2d.ui.Widget
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener
 import com.badlogic.gdx.utils.*
+import com.badlogic.gdx.utils.Array
 import java.util.*
 
 /**
@@ -37,7 +38,19 @@ class Leap() : Interpolation()
 }
 val leap = Leap()
 
-inline fun getXml(path: String): XmlReader.Element = XmlReader().parse(Gdx.files.internal("$path.xml"))
+fun XmlReader.Element.getChildrenRecursively(out: Array<XmlReader.Element> = Array()) : Array<XmlReader.Element>
+{
+	for (i in 0..this.childCount-1)
+	{
+		val el = getChild(i)
+		out.add(el)
+		el.getChildrenRecursively(out)
+	}
+
+	return out
+}
+
+fun getXml(path: String): XmlReader.Element = XmlReader().parse(Gdx.files.internal("$path.xml"))
 
 inline fun <reified T : Any> getPool(): Pool<T> = Pools.get(T::class.java, Int.MAX_VALUE)
 

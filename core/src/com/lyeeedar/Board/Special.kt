@@ -28,7 +28,7 @@ abstract class Special(val orb: Orb)
 		fun popTile(special: Special, tile: Tile, point: Point, grid: Grid, offset: Float = 0f)
 		{
 			val delay = tile.dist(point) * 0.1f + offset
-			grid.pop(tile, delay + 0.2f, special, 1 + grid.level.player.physDam)
+			grid.pop(tile, delay + 0.2f, special, 1 + grid.level.player.matchDam)
 
 			val sprite = grid.level.player.specialHitEffect.copy()
 			sprite.renderDelay = delay
@@ -42,14 +42,14 @@ abstract class Special(val orb: Orb)
 			for (y in sy+1..grid.height-1)
 			{
 				val tile = grid.grid[x, y]
-				if (!tile.canHaveOrb) break
+				if (!tile.canHaveOrb && !tile.isPit) break
 				popTile(special, tile, Point(x, sy), grid)
 			}
 
 			for (y in sy-1 downTo 0)
 			{
 				val tile = grid.grid[x, y]
-				if (!tile.canHaveOrb) break
+				if (!tile.canHaveOrb && !tile.isPit) break
 				popTile(special, tile, Point(x, sy), grid)
 			}
 		}
@@ -61,14 +61,14 @@ abstract class Special(val orb: Orb)
 			for (x in sx+1..grid.width-1)
 			{
 				val tile = grid.grid[x, y]
-				if (!tile.canHaveOrb) break
+				if (!tile.canHaveOrb && !tile.isPit) break
 				popTile(special, tile, Point(sx, y), grid)
 			}
 
 			for (x in sx-1 downTo 0)
 			{
 				val tile = grid.grid[x, y]
-				if (!tile.canHaveOrb) break
+				if (!tile.canHaveOrb && !tile.isPit) break
 				popTile(special, tile, Point(sx, y), grid)
 			}
 		}

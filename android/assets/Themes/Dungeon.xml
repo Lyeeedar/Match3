@@ -24,21 +24,9 @@
     </Wall>
 
     <Pit>
-        <TilingSprite>
-            <Name>Wall</Name>
-
-            <Front>
-                <Name>Oryx/uf_split/uf_terrain/wall_dungeon_14</Name>
-            </Front>
-
-            <Top>
-                <Name>Oryx/uf_split/uf_terrain/wall_dungeon_7</Name>
-            </Top>
-
-            <Overhang>
-                <Name>Oryx/uf_split/uf_terrain/wall_dungeon_1</Name>
-            </Overhang>
-        </TilingSprite>
+        <Sprite>
+            <Name>Oryx/uf_split/uf_terrain/water_green</Name>
+        </Sprite>
     </Pit>
 
     <Map>
