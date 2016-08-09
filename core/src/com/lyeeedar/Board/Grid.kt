@@ -798,6 +798,26 @@ class Grid(val width: Int, val height: Int, val level: Level)
 				}
 			}
 		}
+		
+		// check for special merges
+		for (x in 0..width-1)
+		{
+			for (y in 0..height - 1)
+			{
+				val orb = grid[x, y].orb ?: continue
+				if (orb.special != null)
+				{
+					for (dir in Direction.CardinalDirections)
+					{
+						val tile = tile(x + dir.x, y + dir.y) ?: continue
+						if (tile.orb?.special != null)
+						{
+							return Pair(Point(x, y), Point(x + dir.x, y + dir.y))
+						}
+					}
+				}
+			}
+		}
 
 		// else no valid
 
