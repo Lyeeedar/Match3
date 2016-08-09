@@ -89,16 +89,16 @@ class Level(val loadPath: String)
 				}
 				else if (char == '$')
 				{
+					tile.chest = Chest(false)
 					tile.canHaveOrb = false
 					tile.sprite = theme.floor.copy()
-					tile.chest = Chest()
 					tile.chest!!.attachHandlers(grid)
 				}
 				else if (char == '£')
 				{
+					tile.chest = Chest(false)
 					tile.canHaveOrb = false
 					tile.sprite = theme.floor.copy()
-					tile.chest = Chest(false)
 					tile.chest!!.attachHandlers(grid)
 				}
 				else if (char == '!')
