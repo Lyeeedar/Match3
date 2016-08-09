@@ -32,9 +32,19 @@ class Tile(x: Int, y: Int) : Point(x, y)
 		set(value) { contents = value }
 
 	var contents: Any? = null
+		set(value)
+		{
+			if (field != null && !canHaveOrb)
+			{
+				error("Tried to put something in tile that can't should be empty. IsPit: $isPit")
+				return
+			}
+			field = value
+		}
 
 	var connectedTo: Tile? = null
 	var canHaveOrb: Boolean = true
+	var isPit: Boolean = false
 
 	var isSelected: Boolean = false
 

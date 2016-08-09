@@ -82,6 +82,49 @@ class Orb(val desc: OrbDesc): Point()
 		attackTimer = orb.attackTimer
 		special = orb.special
 	}
+
+	companion object
+	{
+		// ----------------------------------------------------------------------
+		val validOrbs: Array<OrbDesc> = Array()
+
+		fun getOrb(key: Int) = validOrbs.first { it.key == key }
+		fun getOrb(name: String) = validOrbs.first { it.name == name }
+
+		init
+		{
+			loadOrbs()
+		}
+
+		fun loadOrbs()
+		{
+			validOrbs.clear()
+
+			val xml = XmlReader().parse(Gdx.files.internal("Orbs/Orbs.xml"))
+
+			val template = xml.getChildByName("Template")
+			val baseSprite = AssetManager.loadSprite(template.getChildByName("Sprite"))
+			val deathSprite = AssetManager.loadSprite(template.getChildByName("Death"))
+
+			val types = xml.getChildByName("Types")
+			for (i in 0..types.childCount-1)
+			{
+				val type = types.getChild(i)
+				val name = type.name
+				val colour = AssetManager.loadColour(type.getChildByName("Colour"))
+
+				val orbDesc = OrbDesc()
+				orbDesc.sprite = baseSprite.copy()
+				orbDesc.sprite.colour = colour
+				orbDesc.name = name
+
+				orbDesc.death = deathSprite
+				orbDesc.death.colour = colour
+
+				validOrbs.add(orbDesc)
+			}
+		}
+	}
 }
 
 class OrbDesc()

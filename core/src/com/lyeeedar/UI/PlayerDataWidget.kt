@@ -24,7 +24,7 @@ class PlayerDataWidget(val playerData: PlayerData) : FullscreenTable()
 	{
 		table.background = NinePatchDrawable(NinePatch(AssetManager.loadTextureRegion("Sprites/GUI/background.png"), 24, 24, 24, 24))
 
-		this.add(table).expand().fill().pad(15f)
+		this.add(table).expand().fill().pad(10f)
 
 		buildUI()
 	}
@@ -33,15 +33,8 @@ class PlayerDataWidget(val playerData: PlayerData) : FullscreenTable()
 	{
 		table.clear()
 
-		// close button
-		val closeButton = Button(Global.skin, "close")
-		closeButton.setSize(24f, 24f)
-		closeButton.addClickListener({ remove() })
-		table.add(closeButton).width(24f).height(24f).expandX().top().right()
-		table.row()
-
 		val portraitTable = Table()
-		portraitTable.defaults().pad(20f)
+		portraitTable.defaults().pad(10f)
 
 		val portraitLeft = TextButton("<-", Global.skin)
 		portraitLeft.addClickListener {
@@ -72,13 +65,24 @@ class PlayerDataWidget(val playerData: PlayerData) : FullscreenTable()
 		portraitTable.add(portrait)
 		portraitTable.add(portraitRight).expand()
 
-		table.add(portraitTable).expandX().center()
+		// close button
+		val closeButtonTable = Table()
+		val closeButton = Button(Global.skin, "close")
+		closeButton.setSize(24f, 24f)
+		closeButton.addClickListener({ remove() })
+		closeButtonTable.add(closeButton).expand().width(24f).height(24f).top().right()
+
+		val portraitStack = Stack()
+		portraitStack.add(portraitTable)
+		portraitStack.add(closeButtonTable)
+
+		table.add(portraitStack).expandX().fillX().center()
 		table.row()
 
 		table.add(Seperator(Global.skin)).expandX().fillX()
 		table.row()
 
-		table.add(Label("Abilities", Global.skin, "title")).padTop(10f)
+		table.add(Label("Abilities", Global.skin, "title")).padTop(5f)
 		table.row()
 
 		val abilityTable = Table()
@@ -106,13 +110,46 @@ class PlayerDataWidget(val playerData: PlayerData) : FullscreenTable()
 			}
 		}
 
-		table.add(abilityTable).expandX().fillX().pad(20f)
+		table.add(abilityTable).expandX().fillX().pad(10f)
 		table.row()
 
 		table.add(Seperator(Global.skin)).expandX().fillX()
 		table.row()
 
-		table.add(Label("Inventory", Global.skin, "title")).padTop(10f)
+		table.add(Label("Equipment", Global.skin, "title")).padTop(5f)
+		table.row()
+
+		val equipmentTable = Table()
+
+		for (i in 0..3)
+		{
+			val equip = playerData.equipment[i]
+			var sprite: Sprite
+
+			if (equip != null)
+			{
+				sprite = equip.icon.copy()
+			}
+			else
+			{
+				sprite = emptySlot.copy()
+			}
+
+			val widget = SpriteWidget(sprite, 48f, 48f)
+			equipmentTable.add(widget).expandX()
+
+			widget.addClickListener {
+				//equipmentList(playerData, abName, {it -> playerData.abilities[i] = it; buildUI()})
+			}
+		}
+
+		table.add(equipmentTable).expandX().fillX().pad(10f)
+		table.row()
+
+		table.add(Seperator(Global.skin)).expandX().fillX()
+		table.row()
+
+		table.add(Label("Inventory", Global.skin, "title")).padTop(5f)
 		table.row()
 
 		val inventoryTable = Table()

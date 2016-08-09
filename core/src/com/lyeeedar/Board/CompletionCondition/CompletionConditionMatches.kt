@@ -83,7 +83,7 @@ class CompletionConditionMatches(): AbstractCompletionCondition()
 		for (entry in entries)
 		{
 			val valid = Array<Int>()
-			for (orb in grid.validOrbs) if (!toBeMatched.containsKey(orb.key)) valid.add(orb.key)
+			for (orb in Orb.validOrbs) if (!toBeMatched.containsKey(orb.key)) valid.add(orb.key)
 
 			if (valid.size > 0)
 			{
@@ -104,7 +104,7 @@ class CompletionConditionMatches(): AbstractCompletionCondition()
 
 		for (entry in toBeMatched.entries())
 		{
-			sprites.put(entry.key, grid.validOrbs.filter{ it.key == entry.key }.first().sprite)
+			sprites.put(entry.key, Orb.validOrbs.filter{ it.key == entry.key }.first().sprite)
 		}
 	}
 

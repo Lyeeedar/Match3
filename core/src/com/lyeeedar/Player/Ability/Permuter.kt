@@ -15,6 +15,7 @@ class Permuter(val type: Type)
 	{
 		SINGLE,
 		ALLOFTYPE,
+		NOFTYPE,
 		COLUMN,
 		ROW,
 		CROSS,
@@ -31,6 +32,7 @@ class Permuter(val type: Type)
 		{
 			Type.SINGLE -> fun (tile: Tile, grid: Grid, data: ObjectMap<String, String>) = sequenceOf(tile)
 			Type.ALLOFTYPE -> fun (tile: Tile, grid: Grid, data: ObjectMap<String, String>) = grid.grid.filter{ it.orb?.key == tile.orb!!.key }
+			Type.NOFTYPE -> fun (tile: Tile, grid: Grid, data: ObjectMap<String, String>): Sequence<Tile> { val type = data["TYPE"].hashCode(); val count = data["COUNT"].toInt(); return grid.grid.filter{ it.orb?.key == type }.random(count) }
 			Type.COLUMN ->  fun (tile: Tile, grid: Grid, data: ObjectMap<String, String>) = grid.grid.filter{ it.x == tile.x }
 			Type.ROW ->  fun (tile: Tile, grid: Grid, data: ObjectMap<String, String>) = grid.grid.filter{ it.y == tile.y }
 			Type.CROSS ->  fun (tile: Tile, grid: Grid, data: ObjectMap<String, String>) = grid.grid.filter{ it.y == tile.y || it.x == tile.x }

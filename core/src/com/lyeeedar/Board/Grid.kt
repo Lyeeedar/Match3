@@ -39,9 +39,6 @@ class Grid(val width: Int, val height: Int, val level: Level)
 	val refillSprite = AssetManager.loadSprite("EffectSprites/Heal/Heal", 0.1f)
 
 	// ----------------------------------------------------------------------
-	val validOrbs: Array<OrbDesc> = Array()
-
-	// ----------------------------------------------------------------------
 	var selected: Point = Point.MINUS_ONE
 	var toSwap: Pair<Point, Point>? = null
 	var lastSwapped: Point = Point.MINUS_ONE
@@ -104,30 +101,6 @@ class Grid(val width: Int, val height: Int, val level: Level)
 				fun() = sink(),
 				fun() = detonate()
 		)
-
-		val xml = XmlReader().parse(Gdx.files.internal("Orbs/Orbs.xml"))
-
-		val template = xml.getChildByName("Template")
-		val baseSprite = AssetManager.loadSprite(template.getChildByName("Sprite"))
-		val deathSprite = AssetManager.loadSprite(template.getChildByName("Death"))
-
-		val types = xml.getChildByName("Types")
-		for (i in 0..types.childCount-1)
-		{
-			val type = types.getChild(i)
-			val name = type.name
-			val colour = AssetManager.loadColour(type.getChildByName("Colour"))
-
-			val orbDesc = OrbDesc()
-			orbDesc.sprite = baseSprite.copy()
-			orbDesc.sprite.colour = colour
-			orbDesc.name = name
-
-			orbDesc.death = deathSprite
-			orbDesc.death.colour = colour
-
-			validOrbs.add(orbDesc)
-		}
 
 		onTurn += {
 
@@ -329,7 +302,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 						found = stile
 						break
 					}
-					else if (!stile.canHaveOrb)
+					else if (!stile.canHaveOrb && !stile.isPit)
 					{
 						break
 					}
@@ -350,7 +323,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 
 					if (found == tile)
 					{
-						orb = Orb(validOrbs.random())
+						orb = Orb(Orb.validOrbs.random())
 						orb.movePoints.add(Point(x, -1))
 						orb.spawnCount = spawnCount[x, 0]
 
@@ -940,7 +913,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 			{
 				if (grid[x, y].canHaveOrb && grid[x, y].block == null && grid[x, y].monster == null)
 				{
-					val valid = Array(validOrbs)
+					val valid = Array(Orb.validOrbs)
 					val l1 = tile(x-1, y)
 					val l2 = tile(x-2, y)
 					val u1 = tile(x, y-1)
@@ -1171,7 +1144,8 @@ class Grid(val width: Int, val height: Int, val level: Level)
 				}
 				if (t.monster != null)
 				{
-					t.monster!!.hp--
+					t.monster!!.hp -= if (!t.monster!!.damSources.contains(this)) 1 + level.player.physDam else 1
+					t.monster!!.damSources.add(this)
 					onDamaged(t.monster!!)
 
 					t.effects.add(hitSprite.copy())

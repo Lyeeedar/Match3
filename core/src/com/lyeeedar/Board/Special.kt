@@ -25,14 +25,12 @@ abstract class Special(val orb: Orb)
 
 	companion object
 	{
-		val effect = AssetManager.loadSprite("EffectSprites/IceBurst/IceBurst", updateTime = 0.1f)
-
 		fun popTile(special: Special, tile: Tile, point: Point, grid: Grid, offset: Float = 0f)
 		{
 			val delay = tile.dist(point) * 0.1f + offset
-			grid.pop(tile, delay + 0.2f, special, 1)
+			grid.pop(tile, delay + 0.2f, special, 1 + grid.level.player.physDam)
 
-			val sprite = effect.copy()
+			val sprite = grid.level.player.specialHitEffect.copy()
 			sprite.renderDelay = delay
 			tile.effects.add(sprite)
 		}

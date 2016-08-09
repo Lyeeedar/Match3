@@ -75,6 +75,12 @@ class Level(val loadPath: String)
 					tile.canHaveOrb = false
 					tile.sprite = theme.wall.copy()
 				}
+				else if (char == '~')
+				{
+					tile.canHaveOrb = false
+					tile.isPit = true
+					tile.sprite = theme.pit.copy()
+				}
 				else if (char == '=')
 				{
 					tile.canHaveOrb = true
@@ -250,15 +256,15 @@ class Level(val loadPath: String)
 		completeFun = null
 		if (player.hp <= 0)
 		{
-			FullscreenMessage("You died", "", { Global.game.switchScreen(MainGame.ScreenEnum.MAP); defeatActions.forEach { it.apply(player) } }).show()
+			FullscreenMessage("You died", "", { Global.game.switchScreen(MainGame.ScreenEnum.MAP); defeatActions.forEach { it.apply(player) }; player.hp += player.regen }).show()
 		}
 		else if (victory.isCompleted())
 		{
-			FullscreenMessage(victoryText, "", { Global.game.switchScreen(MainGame.ScreenEnum.MAP); victoryActions.forEach { it.apply(player) } }).show()
+			FullscreenMessage(victoryText, "", { Global.game.switchScreen(MainGame.ScreenEnum.MAP); victoryActions.forEach { it.apply(player) }; player.hp += player.regen }).show()
 		}
 		else if (defeat.isCompleted())
 		{
-			FullscreenMessage(defeatText, "", { Global.game.switchScreen(MainGame.ScreenEnum.MAP); defeatActions.forEach { it.apply(player) } }).show()
+			FullscreenMessage(defeatText, "", { Global.game.switchScreen(MainGame.ScreenEnum.MAP); defeatActions.forEach { it.apply(player) }; player.hp += player.regen }).show()
 		}
 	}
 

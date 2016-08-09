@@ -3,6 +3,10 @@ package com.lyeeedar.Player
 import com.badlogic.gdx.utils.ObjectMap
 import com.lyeeedar.Player.Ability.Ability
 import com.lyeeedar.Player.Ability.SkillTree
+import com.lyeeedar.Player.Equipment.Armour
+import com.lyeeedar.Player.Equipment.Charm
+import com.lyeeedar.Player.Equipment.Equipment
+import com.lyeeedar.Player.Equipment.Weapon
 import com.lyeeedar.Sprite.Sprite
 import com.lyeeedar.UI.MessageBox
 import com.lyeeedar.Util.AssetManager
@@ -16,11 +20,40 @@ class PlayerData
 {
 	val unlockedSprites = com.badlogic.gdx.utils.Array<Sprite>()
 	lateinit var chosenSprite: Sprite
-	var maxHP = 10
-	var maxPower = 10
+
+	private val defaultHitEffect = AssetManager.loadSprite("EffectSprites/Impact/Impact", updateTime = 0.1f)
+	val specialHitEffect: Sprite
+		get() = getEquipment<Weapon>()?.specialEffect ?: defaultHitEffect
+
+	private var baseSpellDam = 0
+	val spellDam: Int
+		get() = baseSpellDam + (getEquipment<Weapon>()?.spellDam ?: 0)
+
+	private var basePhysDam = 0
+	val physDam: Int
+		get() = basePhysDam + (getEquipment<Weapon>()?.physDam ?: 0)
+
+	private var baseMaxHP = 10
+	val maxHP: Int
+		get() = baseMaxHP + (getEquipment<Armour>()?.maxHP ?: 0)
+
+	private var baseRegen = 0
+	val regen: Int
+		get() = baseRegen + (getEquipment<Armour>()?.regen ?: 0)
+
+	private var baseMaxPower = 10
+	val maxPower: Int
+		get() = baseMaxPower + (getEquipment<Charm>()?.maxPower ?: 0)
+
+	private var baseStartPower = 0
+	val startPower: Int
+		get() = baseStartPower + (getEquipment<Charm>()?.startPower ?: 0)
+
+	val equipment = Array<Equipment?>(4){e -> null}
 	val abilities = Array<String?>(4){e -> null}
 	var gold = 200
 	val inventory = ObjectMap<String, Item>()
+	val unlockedEquipment = com.badlogic.gdx.utils.Array<Equipment>()
 
 	init
 	{
@@ -30,6 +63,14 @@ class PlayerData
 		abilities[0] = "Firebolt"
 
 		chosenSprite = unlockedSprites[0]
+
+		val wep = Weapon()
+		wep.name = "Lightning Rod"
+		wep.icon = AssetManager.loadSprite("Oryx/uf_split/uf_items/weapon_magic_staff_venom", drawActualSize = true)
+		wep.specialEffect = AssetManager.loadSprite("EffectSprites/LightningBurst/LightningBurst", updateTime = 0.1f)
+		wep.spellDam = 5
+		wep.physDam = 1
+		setEquipment(wep)
 	}
 
 	val trees = ObjectMap<String, SkillTree>()
@@ -44,6 +85,28 @@ class PlayerData
 			return tree
 		}
 	}
+
+	fun setEquipment(equip: Equipment)
+	{
+		val index = when(equip)
+		{
+			is Weapon -> 0
+			is Armour -> 1
+			is Charm -> 2
+			else -> 3
+		}
+
+		equipment[index] = equip
+	}
+
+	inline fun <reified T: Equipment> getEquipment(): T? =
+			when(T::class)
+			{
+				Weapon::class -> equipment[0] as? T
+				Armour::class -> equipment[1] as? T
+				Charm::class -> equipment[2] as? T
+				else -> equipment[3] as? T
+			}
 
 	fun getAbility(name: String): Ability?
 	{

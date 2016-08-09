@@ -30,7 +30,17 @@ class MainGame : Game()
 		Global.applicationChanger.processResources()
 		Global.setup()
 
-		if (!Global.android)
+		if (Global.android)
+		{
+			val sw = StringWriter()
+			val handler = Thread.UncaughtExceptionHandler { myThread, e ->
+				val exceptionAsString = sw.toString()
+				JOptionPane.showMessageDialog(null, "A fatal error occurred:\n" + exceptionAsString, "An error occurred", JOptionPane.ERROR_MESSAGE)
+			}
+
+			Thread.currentThread().uncaughtExceptionHandler = handler
+		}
+		else
 		{
 			val sw = StringWriter()
 			val pw = PrintWriter(sw)

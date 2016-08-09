@@ -15,7 +15,7 @@ class Effect(val type: Type)
 	enum class Type
 	{
 		POP,
-		RANDOMISE,
+		CONVERT,
 		TEST
 	}
 
@@ -25,8 +25,8 @@ class Effect(val type: Type)
 	{
 		apply = when(type)
 		{
-			Type.POP -> fun (tile: Tile, grid: Grid, delay: Float, data: ObjectMap<String, String>) { grid.pop(tile, delay, skipPowerOrb = true) }
-			Type.RANDOMISE -> fun (tile: Tile, grid: Grid, delay: Float, data: ObjectMap<String, String>) { val orb = tile.orb ?: return; tile.orb = Orb(grid.validOrbs.random()); tile.orb!!.setAttributes(orb) }
+			Type.POP -> fun (tile: Tile, grid: Grid, delay: Float, data: ObjectMap<String, String>) { grid.pop(tile, delay, damSource = this, bonusDam = grid.level.player.spellDam, skipPowerOrb = true) }
+			Type.CONVERT -> fun (tile: Tile, grid: Grid, delay: Float, data: ObjectMap<String, String>) { val orb = tile.orb ?: return; tile.orb = if(data["CONVERTTO"] == "RANDOM") Orb(Orb.validOrbs.random()) else Orb(Orb.getOrb(data["CONVERTTO"])); tile.orb!!.setAttributes(orb) }
 			Type.TEST ->  fun (tile: Tile, grid: Grid, delay: Float, data: ObjectMap<String, String>) { val orb = tile.orb ?: return; orb.special = Match5(orb) }
 			else -> throw Exception("Invalid effect type $type")
 		}
