@@ -737,7 +737,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 			fun checkSurrounding(point: Point, dir: Direction, key: Int): Pair<Point, Point>?
 			{
 				val targetTile = tile(point)
-				if (targetTile == null || targetTile.block != null || targetTile.orb?.sealed ?: false || !targetTile.canHaveOrb) return null
+				if (targetTile == null || targetTile.block != null || targetTile.monster != null || targetTile.orb?.sealed ?: false || !targetTile.canHaveOrb) return null
 
 				fun canMatch(point: Point): Boolean
 				{
