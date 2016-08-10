@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable
 import com.lyeeedar.Global
 import com.lyeeedar.MainGame
 import com.lyeeedar.Map.Objective.AbstractObjective
+import com.lyeeedar.Player.Equipment.Equipment
 import com.lyeeedar.Player.Player
 import com.lyeeedar.Screens.TownScreen
 import com.lyeeedar.Sprite.Sprite
@@ -139,9 +140,9 @@ class PlayerWidget(val player: Player, val objective: AbstractObjective): Fullsc
 
 		val equipmentTable = Table()
 
-		for (i in 0..3)
+		for (slot in Equipment.EquipmentSlot.values())
 		{
-			val equip = player.equipment[i]
+			val equip = player.equipment[slot.ordinal]
 			var sprite: Sprite
 
 			if (equip != null)

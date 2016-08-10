@@ -89,7 +89,7 @@ class UnlockTreeWidget<T : Unlockable>(val unlockTree: UnlockTree<T>, val player
 						}
 						else
 						{
-							val title = "Unknown Skill"
+							val title = "Unknown"
 							var message = item.data.unboughtDescription
 							message += "\n\nCost:\n"
 
@@ -300,10 +300,13 @@ class UnlockTree<T: Unlockable>
 			val unlockables = ObjectMap<String, T>()
 
 			val resourcesEl = xml.getChildByName("Resources")
-			for (i in 0..resourcesEl.childCount-1)
+			if (resourcesEl != null)
 			{
-				val el = resourcesEl.getChild(i)
-				resources[el.getAttribute("Key")] = el
+				for (i in 0..resourcesEl.childCount - 1)
+				{
+					val el = resourcesEl.getChild(i)
+					resources[el.getAttribute("Key")] = el
+				}
 			}
 
 			val unlockablesEl = xml.getChildByName("Unlockables")
@@ -338,7 +341,7 @@ class UnlockTree<T: Unlockable>
 
 class UnlockableTreeItem<T: Unlockable>(val data: T)
 {
-	var bought = true
+	var bought = false
 
 	val location: Vector2 = Vector2()
 	val children: com.badlogic.gdx.utils.Array<UnlockableTreeItem<T>> = com.badlogic.gdx.utils.Array()

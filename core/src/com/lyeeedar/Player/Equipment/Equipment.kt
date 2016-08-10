@@ -36,7 +36,7 @@ class Equipment : Unlockable()
 
 	override fun parse(xml: XmlReader.Element, resources: ObjectMap<String, XmlReader.Element>)
 	{
-		slot = EquipmentSlot.valueOf(xml.get("Slot"))
+		slot = EquipmentSlot.valueOf(xml.get("Slot").toUpperCase())
 		val statsEl = xml.getChildByName("Stats")
 		for (i in 0..statsEl.childCount-1)
 		{

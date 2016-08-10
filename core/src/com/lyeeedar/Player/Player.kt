@@ -42,8 +42,8 @@ class Player(data: PlayerData)
 	val inventory = ObjectMap<String, Item>()
 
 	// abilities and stuff
-	val abilities: Array<Ability?> = Array(4){e -> null}
-	val equipment = Array<Equipment?>(4){ e -> null}
+	val abilities = Array<Ability?>(4){e -> null}
+	val equipment = Array<Equipment?>(Equipment.EquipmentSlot.values().size){ e -> null}
 
 	init
 	{
@@ -65,7 +65,11 @@ class Player(data: PlayerData)
 		for (i in 0..3)
 		{
 			abilities[i] = if (data.abilities[i] != null) data.getAbility(data.abilities[i]!!) else null
-			equipment[i] = if (data.equipment[i] != null) data.getEquipment(data.equipment[i]!!) else null
+		}
+
+		for (slot in Equipment.EquipmentSlot.values())
+		{
+			equipment[slot.ordinal] = data.getEquipment(slot)
 		}
 	}
 }

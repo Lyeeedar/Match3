@@ -19,7 +19,7 @@ class MaterialValidator
 
 	init
 	{
-		findFilesRecursive( File("") )
+		findFilesRecursive( File(".") )
 
 		for (cost in costs)
 		{

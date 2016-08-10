@@ -109,7 +109,7 @@ class PlayerDataWidget(val playerData: PlayerData) : FullscreenTable()
 				val trees = Array<UnlockTree<Ability>>(playerData.skillTrees.size) { i -> UnlockTree() }
 				var ti = 0
 				for (tree in playerData.skillTrees) trees[ti++] = tree.value
-				UnlockablesList<Ability>(abName, playerData.abilities, trees, { it -> playerData.abilities[i] = it; buildUI()})
+				UnlockablesList<Ability>(abName, trees, { it -> playerData.abilities[i] = it; buildUI()}, { !playerData.abilities.contains(it.key) })
 			}
 		}
 
@@ -143,8 +143,8 @@ class PlayerDataWidget(val playerData: PlayerData) : FullscreenTable()
 			equipmentTable.add(widget).expandX()
 
 			widget.addClickListener {
-				val trees = arrayOf(playerData.equipTrees[slot])
-				UnlockablesList<Equipment>(equip, playerData.equipment, trees, { it -> playerData.equipment[slot.ordinal] = it; buildUI()})
+				val trees = arrayOf(playerData.equipTree)
+				UnlockablesList<Equipment>(equip, trees, { it -> playerData.equipment[slot.ordinal] = it; buildUI()}, { it.slot == slot })
 			}
 		}
 

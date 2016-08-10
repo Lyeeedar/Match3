@@ -46,20 +46,18 @@ class PlayerData
 	val startPower: Int
 		get() = baseStartPower + (getEquipment(Equipment.EquipmentSlot.CHARM)?.get("StartPower") ?: 0)
 
-	val equipment = Array<String?>(4){e -> null}
+	val equipment = Array<String?>(Equipment.EquipmentSlot.values().size){ e -> null}
 	val abilities = Array<String?>(4){e -> null}
 	var gold = 200
 	val inventory = ObjectMap<String, Item>()
 
-	val equipTrees = ObjectMap<Equipment.EquipmentSlot, UnlockTree<Equipment>>()
+	val equipTree = UnlockTree.load("UnlockTrees/Equipment", {Equipment()})
 	val skillTrees = ObjectMap<String, UnlockTree<Ability>>()
 
 	init
 	{
 		unlockedSprites.add(AssetManager.loadSprite("Oryx/Custom/heroes/farmer_m", drawActualSize = true))
 		unlockedSprites.add(AssetManager.loadSprite("Oryx/Custom/heroes/farmer_f", drawActualSize = true))
-
-		abilities[0] = "Firebolt"
 
 		chosenSprite = unlockedSprites[0]
 	}
@@ -78,14 +76,11 @@ class PlayerData
 	fun getEquipment(slot: Equipment.EquipmentSlot) = if(equipment[slot.ordinal] != null) getEquipment(equipment[slot.ordinal]!!) else null
 	fun getEquipment(name: String): Equipment?
 	{
-		for (tree in equipTrees)
+		for (equip in equipTree.boughtDescendants())
 		{
-			for (equip in tree.value.boughtDescendants())
+			if (equip.key == name)
 			{
-				if (equip.key == name)
-				{
-					return equip
-				}
+				return equip
 			}
 		}
 

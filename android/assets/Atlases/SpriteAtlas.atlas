@@ -6,203 +6,203 @@ filter: MipMapLinearLinear,MipMapLinearLinear
 repeat: none
 EffectSprites/Aegis/Aegis_0
   rotate: false
-  xy: 690, 91
+  xy: 898, 55
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/Aegis/Aegis_1
   rotate: false
-  xy: 726, 127
+  xy: 934, 91
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/Aegis/Aegis_2
   rotate: false
-  xy: 798, 163
+  xy: 970, 127
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/Aegis/Aegis_3
   rotate: false
-  xy: 690, 55
+  xy: 934, 55
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/Beam/Beam
   rotate: false
-  xy: 654, 55
+  xy: 934, 127
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/FireBoltMove/FireBoltMove_0
   rotate: false
-  xy: 2014, 347
+  xy: 2014, 311
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/FireBoltMove/FireBoltMove_1
   rotate: false
-  xy: 2014, 311
+  xy: 2014, 275
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/FireBoltMove/FireBoltMove_2
   rotate: false
-  xy: 2014, 275
+  xy: 2014, 239
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/FireBoltMove/FireBoltMove_3
   rotate: false
-  xy: 2014, 239
+  xy: 682, 111
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/FireBurst/FireBurst_0
   rotate: false
-  xy: 474, 163
+  xy: 786, 163
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/FireBurst/FireBurst_1
   rotate: false
-  xy: 510, 163
+  xy: 682, 75
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/FireBurst/FireBurst_2
   rotate: false
-  xy: 474, 127
+  xy: 718, 111
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/FireBurst/FireBurst_3
   rotate: false
-  xy: 546, 163
+  xy: 822, 163
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/FireBurst/FireBurst_4
   rotate: false
-  xy: 474, 91
+  xy: 718, 75
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/FireBurst/FireBurst_5
   rotate: false
-  xy: 510, 127
+  xy: 858, 163
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/Heal/Heal_0
   rotate: false
-  xy: 654, 127
+  xy: 862, 127
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/Heal/Heal_1
   rotate: false
-  xy: 726, 163
+  xy: 826, 55
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/Heal/Heal_2
   rotate: false
-  xy: 618, 55
+  xy: 862, 91
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/Heal/Heal_3
   rotate: false
-  xy: 654, 91
+  xy: 898, 127
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/Heal/Heal_4
   rotate: false
-  xy: 690, 127
+  xy: 862, 55
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/Heal/Heal_5
   rotate: false
-  xy: 762, 163
+  xy: 898, 91
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/Hit/Hit_1
   rotate: false
-  xy: 1406, 455
+  xy: 1770, 455
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 EffectSprites/Hit/Hit_2
   rotate: false
-  xy: 710, 251
+  xy: 1822, 455
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 EffectSprites/Hit/Hit_3
   rotate: false
-  xy: 1458, 455
+  xy: 1874, 455
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 EffectSprites/Hit/Hit_4
   rotate: false
-  xy: 762, 251
+  xy: 1926, 455
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 EffectSprites/Impact/Impact_0
   rotate: false
-  xy: 762, 127
+  xy: 970, 55
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/Impact/Impact_1
   rotate: false
-  xy: 834, 163
+  xy: 1006, 127
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/Impact/Impact_2
   rotate: false
-  xy: 726, 55
+  xy: 1006, 91
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 EffectSprites/Impact/Impact_3
   rotate: false
-  xy: 762, 91
+  xy: 1006, 55
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -258,21 +258,21 @@ EffectSprites/Splatter/Splatter_6
   index: -1
 GUI/Button
   rotate: false
-  xy: 474, 36
+  xy: 1462, 228
   size: 30, 15
   orig: 30, 15
   offset: 0, 0
   index: -1
 GUI/Checked
   rotate: false
-  xy: 906, 135
+  xy: 1350, 219
   size: 24, 24
   orig: 24, 24
   offset: 0, 0
   index: -1
 GUI/ProgressIndicator
   rotate: false
-  xy: 978, 171
+  xy: 1378, 219
   size: 24, 24
   orig: 24, 24
   offset: 0, 0
@@ -286,14 +286,14 @@ GUI/SeperatorHorizontal
   index: -1
 GUI/SeperatorVertical
   rotate: false
-  xy: 182, 7
+  xy: 1038, 163
   size: 6, 32
   orig: 6, 32
   offset: 0, 0
   index: -1
 GUI/TextField
   rotate: false
-  xy: 726, 91
+  xy: 970, 91
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -307,21 +307,21 @@ GUI/Tooltip
   index: -1
 GUI/Unchecked
   rotate: false
-  xy: 870, 99
+  xy: 1322, 219
   size: 24, 24
   orig: 24, 24
   offset: 0, 0
   index: -1
 GUI/attack_empty
   rotate: false
-  xy: 942, 163
+  xy: 1250, 211
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 GUI/attack_full
   rotate: false
-  xy: 870, 127
+  xy: 1214, 211
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -335,224 +335,224 @@ GUI/background
   index: -1
 GUI/border
   rotate: false
-  xy: 834, 91
+  xy: 1178, 211
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 GUI/frame_0
   rotate: false
-  xy: 906, 163
+  xy: 970, 19
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 GUI/frame_1
   rotate: false
-  xy: 798, 55
+  xy: 1006, 19
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 GUI/health_empty
   rotate: false
-  xy: 870, 163
+  xy: 826, 19
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 GUI/power_empty
   rotate: false
-  xy: 870, 163
+  xy: 826, 19
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 GUI/health_full
   rotate: false
-  xy: 798, 127
+  xy: 790, 19
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 GUI/power_full
   rotate: false
-  xy: 798, 91
+  xy: 898, 19
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Icons/CrossBlaze
   rotate: false
-  xy: 618, 91
+  xy: 826, 91
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Icons/Empty
   rotate: false
-  xy: 762, 55
+  xy: 862, 19
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Icons/FireBeam
   rotate: false
-  xy: 690, 163
+  xy: 826, 127
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Icons/FireFlurry
   rotate: false
-  xy: 510, 55
+  xy: 682, 39
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Icons/FireRain
   rotate: false
-  xy: 546, 91
+  xy: 718, 39
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Icons/FireTree
   rotate: false
-  xy: 582, 163
+  xy: 2014, 347
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Icons/Fireball
   rotate: false
-  xy: 582, 127
+  xy: 754, 111
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Icons/FireballGrand
   rotate: false
-  xy: 546, 55
+  xy: 754, 39
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Icons/FireballGreater
   rotate: false
-  xy: 654, 163
+  xy: 754, 75
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Icons/Firebolt
   rotate: false
-  xy: 474, 55
+  xy: 894, 163
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Icons/FireboltDual
   rotate: false
-  xy: 510, 91
+  xy: 930, 163
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Icons/FireboltQuad
   rotate: false
-  xy: 618, 163
+  xy: 1002, 163
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Icons/FireboltTri
   rotate: false
-  xy: 546, 127
+  xy: 966, 163
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Icons/Immolate
   rotate: false
-  xy: 582, 91
+  xy: 790, 127
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Icons/PillarsOfDestruction
   rotate: false
-  xy: 582, 55
+  xy: 790, 55
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Icons/SoulfireDetonation
   rotate: false
-  xy: 618, 127
+  xy: 790, 91
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Icons/Unknown
   rotate: false
-  xy: 834, 55
+  xy: 1286, 211
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Masks/fog_Masks/fog_C_false
   rotate: false
-  xy: 318, 123
+  xy: 1338, 403
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Masks/fog_Masks/fog_false
   rotate: false
-  xy: 318, 123
+  xy: 1338, 403
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Masks/fog_Masks/fog_DNE_DNW_DSE_DSW_false
   rotate: false
-  xy: 1806, 299
+  xy: 1598, 299
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Masks/fog_Masks/fog_DNE_DNW_DSE_false
   rotate: false
-  xy: 1702, 351
+  xy: 1442, 247
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Masks/fog_Masks/fog_DNE_DNW_DSW_false
   rotate: false
-  xy: 1598, 351
+  xy: 1962, 403
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Masks/fog_Masks/fog_DNE_DNW_false
   rotate: false
-  xy: 1806, 351
+  xy: 1650, 351
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Masks/fog_Masks/fog_DNE_DSE_DSW_false
   rotate: false
-  xy: 1702, 299
+  xy: 1182, 247
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Masks/fog_Masks/fog_DNE_DSE_false
   rotate: false
-  xy: 1546, 299
+  xy: 1858, 299
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
@@ -566,273 +566,273 @@ Masks/fog_Masks/fog_DNE_DSW_false
   index: -1
 Masks/fog_Masks/fog_DNE_false
   rotate: false
-  xy: 1754, 299
+  xy: 1234, 247
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Masks/fog_Masks/fog_DNW_DSE_DSW_false
   rotate: false
-  xy: 1806, 403
+  xy: 1962, 351
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Masks/fog_Masks/fog_DNW_DSE_false
   rotate: false
-  xy: 1650, 299
+  xy: 1806, 299
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Masks/fog_Masks/fog_DNW_DSW_false
   rotate: false
-  xy: 1858, 403
+  xy: 1494, 247
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Masks/fog_Masks/fog_DNW_false
   rotate: false
-  xy: 1338, 351
+  xy: 1910, 299
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Masks/fog_Masks/fog_DSE_DSW_false
   rotate: false
-  xy: 1702, 403
+  xy: 1390, 351
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Masks/fog_Masks/fog_DSE_false
   rotate: false
-  xy: 1650, 351
+  xy: 1286, 247
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Masks/fog_Masks/fog_DSW_false
   rotate: false
-  xy: 1858, 351
+  xy: 1910, 351
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Masks/fog_Masks/fog_E_DNW_DSW_false
   rotate: false
-  xy: 1754, 403
+  xy: 1390, 247
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Masks/fog_Masks/fog_E_DNW_false
   rotate: false
-  xy: 1126, 231
+  xy: 1338, 247
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Masks/fog_Masks/fog_E_DSW_false
   rotate: false
-  xy: 1442, 403
+  xy: 1650, 403
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Masks/fog_Masks/fog_E_W_false
   rotate: false
-  xy: 1182, 299
+  xy: 1338, 351
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Masks/fog_Masks/fog_E_false
   rotate: false
-  xy: 1494, 299
+  xy: 1702, 403
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Masks/fog_Masks/fog_NE_DSW_false
   rotate: false
-  xy: 1130, 283
+  xy: 1598, 351
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Masks/fog_Masks/fog_NE_NW_SE_SW_false
   rotate: false
-  xy: 1390, 351
+  xy: 1390, 299
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Masks/fog_Masks/fog_NE_NW_false
   rotate: false
-  xy: 1130, 387
+  xy: 1754, 403
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Masks/fog_Masks/fog_NE_SE_false
   rotate: false
-  xy: 1234, 299
+  xy: 1546, 403
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Masks/fog_Masks/fog_NE_false
   rotate: false
-  xy: 1338, 403
+  xy: 1442, 403
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Masks/fog_Masks/fog_NW_DSE_false
   rotate: false
-  xy: 1442, 299
+  xy: 1494, 403
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Masks/fog_Masks/fog_NW_SW_false
   rotate: false
-  xy: 1286, 299
+  xy: 1442, 299
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Masks/fog_Masks/fog_NW_false
   rotate: false
-  xy: 1546, 351
+  xy: 1494, 299
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Masks/fog_Masks/fog_N_DSE_DSW_false
   rotate: false
-  xy: 1442, 351
+  xy: 1858, 403
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Masks/fog_Masks/fog_N_DSE_false
   rotate: false
-  xy: 1494, 351
+  xy: 1442, 351
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Masks/fog_Masks/fog_N_DSW_false
   rotate: false
-  xy: 1598, 403
+  xy: 1546, 299
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Masks/fog_Masks/fog_N_S_false
   rotate: false
-  xy: 1182, 351
+  xy: 1286, 299
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Masks/fog_Masks/fog_N_false
   rotate: false
-  xy: 1338, 299
+  xy: 1390, 403
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Masks/fog_Masks/fog_SE_DNW_false
   rotate: false
-  xy: 1130, 335
+  xy: 1806, 403
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Masks/fog_Masks/fog_SE_SW_false
   rotate: false
-  xy: 206, 7
+  xy: 1494, 351
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Masks/fog_Masks/fog_SE_false
   rotate: false
-  xy: 1390, 403
+  xy: 1598, 403
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Masks/fog_Masks/fog_SW_DNE_false
   rotate: false
-  xy: 1234, 403
+  xy: 1754, 299
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Masks/fog_Masks/fog_SW_false
   rotate: false
-  xy: 1494, 403
+  xy: 1338, 299
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Masks/fog_Masks/fog_S_DNE_DNW_false
   rotate: false
-  xy: 1650, 403
+  xy: 1546, 351
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Masks/fog_Masks/fog_S_DNE_false
   rotate: false
-  xy: 1234, 351
+  xy: 1858, 351
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Masks/fog_Masks/fog_S_DNW_false
   rotate: false
-  xy: 1286, 403
+  xy: 1962, 299
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Masks/fog_Masks/fog_S_false
   rotate: false
-  xy: 1182, 403
+  xy: 1702, 351
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Masks/fog_Masks/fog_W_DNE_DSE_false
   rotate: false
-  xy: 1546, 403
+  xy: 1806, 351
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Masks/fog_Masks/fog_W_DNE_false
   rotate: false
-  xy: 1286, 351
+  xy: 1702, 299
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Masks/fog_Masks/fog_W_DSE_false
   rotate: false
-  xy: 1390, 299
+  xy: 1650, 299
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Masks/fog_Masks/fog_W_false
   rotate: false
-  xy: 1598, 299
+  xy: 1910, 403
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
@@ -1070,84 +1070,84 @@ Oryx/Custom/dungeonmap/treasure_complete
   index: -1
 Oryx/Custom/heroes/farmer_f_1
   rotate: false
-  xy: 1926, 455
+  xy: 1234, 351
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/Custom/heroes/farmer_f_2
   rotate: false
-  xy: 1978, 455
+  xy: 1286, 403
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/Custom/heroes/farmer_f_3
   rotate: false
-  xy: 1078, 283
+  xy: 1234, 299
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/Custom/heroes/farmer_f_4
   rotate: false
-  xy: 1074, 231
+  xy: 1286, 351
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/Custom/heroes/farmer_m_1
   rotate: false
-  xy: 1770, 455
+  xy: 1182, 351
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/Custom/heroes/farmer_m_2
   rotate: false
-  xy: 1822, 455
+  xy: 1234, 403
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/Custom/heroes/farmer_m_4
   rotate: false
-  xy: 1822, 455
+  xy: 1234, 403
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/Custom/heroes/farmer_m_3
   rotate: false
-  xy: 1874, 455
+  xy: 1182, 299
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/Custom/items/gem
   rotate: false
-  xy: 1022, 251
+  xy: 1182, 403
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/Custom/items/orb_dual
   rotate: false
-  xy: 1718, 455
+  xy: 1126, 231
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/Custom/items/orb_hori
   rotate: false
-  xy: 970, 251
+  xy: 1130, 283
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/Custom/items/orb_vert
   rotate: false
-  xy: 1666, 455
+  xy: 1130, 335
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
@@ -1224,7 +1224,7 @@ Oryx/Custom/townmap/warrior_3
   index: -1
 Oryx/Custom/ui/arrow
   rotate: false
-  xy: 870, 71
+  xy: 1406, 219
   size: 24, 24
   orig: 24, 24
   offset: 0, 0
@@ -1299,23 +1299,58 @@ Oryx/uf_split/uf_interface/uf_interface_681
   orig: 16, 16
   offset: 0, 0
   index: -1
-Oryx/uf_split/uf_items/chest_silver_empty
+Oryx/uf_split/uf_items/armor_chain_chest
+  rotate: false
+  xy: 866, 251
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+Oryx/uf_split/uf_items/armor_leather_chest
   rotate: false
   xy: 814, 251
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
+Oryx/uf_split/uf_items/armor_wild_chest
+  rotate: false
+  xy: 1562, 455
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+Oryx/uf_split/uf_items/chest_silver_empty
+  rotate: false
+  xy: 1078, 283
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
 Oryx/uf_split/uf_items/chest_silver_open
+  rotate: false
+  xy: 1978, 455
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+Oryx/uf_split/uf_items/cloak_leather
   rotate: false
   xy: 1510, 455
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
+Oryx/uf_split/uf_items/cloak_tattered
+  rotate: false
+  xy: 762, 251
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
 Oryx/uf_split/uf_items/coin_gold
   rotate: false
-  xy: 1562, 455
+  xy: 1074, 231
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
@@ -1329,91 +1364,154 @@ Oryx/uf_split/uf_items/crystal_cloud
   index: -1
 Oryx/uf_split/uf_items/crystal_sky
   rotate: false
-  xy: 866, 251
+  xy: 318, 123
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
-Oryx/uf_split/uf_items/shield_vorpal_buckler
+Oryx/uf_split/uf_items/necklace_eye
+  rotate: false
+  xy: 970, 251
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+Oryx/uf_split/uf_items/necklace_ruby
+  rotate: false
+  xy: 1718, 455
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+Oryx/uf_split/uf_items/ring_copper
   rotate: false
   xy: 1614, 455
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
-Oryx/uf_split/uf_items/skull_small
+Oryx/uf_split/uf_items/ring_diamond
+  rotate: false
+  xy: 1666, 455
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+Oryx/uf_split/uf_items/ring_ornate
   rotate: false
   xy: 918, 251
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
-Oryx/uf_split/uf_map/uf_map_263
+Oryx/uf_split/uf_items/shield_vorpal_buckler
   rotate: false
-  xy: 934, 135
-  size: 24, 24
-  orig: 24, 24
+  xy: 206, 7
+  size: 48, 48
+  orig: 48, 48
   offset: 0, 0
   index: -1
-Oryx/uf_split/uf_terrain/crate
+Oryx/uf_split/uf_items/skull_small
+  rotate: false
+  xy: 1130, 387
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+Oryx/uf_split/uf_items/weapon_spear
   rotate: false
   xy: 658, 251
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
+Oryx/uf_split/uf_items/weapon_staff_branch
+  rotate: false
+  xy: 710, 251
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+Oryx/uf_split/uf_items/weapon_staff_jeweled
+  rotate: false
+  xy: 1458, 455
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+Oryx/uf_split/uf_items/weapon_sword
+  rotate: false
+  xy: 1406, 455
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+Oryx/uf_split/uf_map/uf_map_263
+  rotate: false
+  xy: 1434, 219
+  size: 24, 24
+  orig: 24, 24
+  offset: 0, 0
+  index: -1
+Oryx/uf_split/uf_terrain/crate
+  rotate: false
+  xy: 1022, 251
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
 Oryx/uf_split/uf_terrain/floor_extra_5_Masks/path_C_false
   rotate: false
-  xy: 1858, 299
+  xy: 1598, 247
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/uf_split/uf_terrain/floor_extra_5_Masks/path_false
   rotate: false
-  xy: 1858, 299
+  xy: 1598, 247
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/uf_split/uf_terrain/floor_extra_5_Masks/path_DNE_DNW_DSE_DSW_false
   rotate: false
-  xy: 422, 87
+  xy: 750, 199
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/uf_split/uf_terrain/floor_extra_5_Masks/path_DNE_DNW_DSE_false
   rotate: false
-  xy: 958, 199
+  xy: 734, 147
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/uf_split/uf_terrain/floor_extra_5_Masks/path_DNE_DNW_DSW_false
   rotate: false
-  xy: 646, 199
+  xy: 578, 147
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/uf_split/uf_terrain/floor_extra_5_Masks/path_DNE_DNW_false
   rotate: false
-  xy: 370, 35
+  xy: 802, 199
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/uf_split/uf_terrain/floor_extra_5_Masks/path_DNE_DSE_DSW_false
   rotate: false
-  xy: 370, 139
+  xy: 526, 43
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/uf_split/uf_terrain/floor_extra_5_Masks/path_DNE_DSE_false
   rotate: false
-  xy: 594, 199
+  xy: 526, 147
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
@@ -1427,273 +1525,273 @@ Oryx/uf_split/uf_terrain/floor_extra_5_Masks/path_DNE_DSW_false
   index: -1
 Oryx/uf_split/uf_terrain/floor_extra_5_Masks/path_DNE_false
   rotate: false
-  xy: 1114, 179
+  xy: 578, 95
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/uf_split/uf_terrain/floor_extra_5_Masks/path_DNW_DSE_DSW_false
   rotate: false
-  xy: 1062, 179
+  xy: 526, 95
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/uf_split/uf_terrain/floor_extra_5_Masks/path_DNW_DSE_false
   rotate: false
-  xy: 906, 199
+  xy: 422, 87
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/uf_split/uf_terrain/floor_extra_5_Masks/path_DNW_DSW_false
   rotate: false
-  xy: 422, 139
+  xy: 630, 43
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/uf_split/uf_terrain/floor_extra_5_Masks/path_DNW_false
   rotate: false
-  xy: 1702, 247
+  xy: 474, 43
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/uf_split/uf_terrain/floor_extra_5_Masks/path_DSE_DSW_false
   rotate: false
-  xy: 854, 199
+  xy: 1858, 247
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/uf_split/uf_terrain/floor_extra_5_Masks/path_DSE_false
   rotate: false
-  xy: 802, 199
+  xy: 682, 147
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/uf_split/uf_terrain/floor_extra_5_Masks/path_DSW_false
   rotate: false
-  xy: 422, 35
+  xy: 474, 95
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/uf_split/uf_terrain/floor_extra_5_Masks/path_E_DNW_DSW_false
   rotate: false
-  xy: 1010, 199
+  xy: 630, 95
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/uf_split/uf_terrain/floor_extra_5_Masks/path_E_DNW_false
   rotate: false
-  xy: 1962, 299
+  xy: 578, 43
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/uf_split/uf_terrain/floor_extra_5_Masks/path_E_DSW_false
   rotate: false
-  xy: 1910, 247
+  xy: 698, 199
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/uf_split/uf_terrain/floor_extra_5_Masks/path_E_W_false
   rotate: false
-  xy: 1338, 247
+  xy: 1702, 247
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/uf_split/uf_terrain/floor_extra_5_Masks/path_E_false
   rotate: false
-  xy: 438, 199
+  xy: 854, 199
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/uf_split/uf_terrain/floor_extra_5_Masks/path_NE_DSW_false
   rotate: false
-  xy: 1962, 351
+  xy: 646, 199
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/uf_split/uf_terrain/floor_extra_5_Masks/path_NE_NW_SE_SW_false
   rotate: false
-  xy: 1858, 247
+  xy: 1962, 247
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/uf_split/uf_terrain/floor_extra_5_Masks/path_NE_NW_false
   rotate: false
-  xy: 1962, 403
+  xy: 1010, 199
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/uf_split/uf_terrain/floor_extra_5_Masks/path_NE_SE_false
   rotate: false
-  xy: 1494, 247
+  xy: 386, 191
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/uf_split/uf_terrain/floor_extra_5_Masks/path_NE_false
   rotate: false
-  xy: 1598, 247
+  xy: 1910, 247
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/uf_split/uf_terrain/floor_extra_5_Masks/path_NW_DSE_false
   rotate: false
-  xy: 258, 19
+  xy: 318, 71
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/uf_split/uf_terrain/floor_extra_5_Masks/path_NW_SW_false
   rotate: false
-  xy: 1650, 247
+  xy: 258, 19
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/uf_split/uf_terrain/floor_extra_5_Masks/path_NW_false
   rotate: false
-  xy: 490, 199
+  xy: 438, 199
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/uf_split/uf_terrain/floor_extra_5_Masks/path_N_DSE_DSW_false
   rotate: false
-  xy: 266, 71
+  xy: 422, 139
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/uf_split/uf_terrain/floor_extra_5_Masks/path_N_DSE_false
   rotate: false
-  xy: 310, 19
+  xy: 266, 71
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/uf_split/uf_terrain/floor_extra_5_Masks/path_N_DSW_false
   rotate: false
-  xy: 542, 199
+  xy: 594, 199
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/uf_split/uf_terrain/floor_extra_5_Masks/path_N_S_false
   rotate: false
-  xy: 1234, 247
+  xy: 1650, 247
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/uf_split/uf_terrain/floor_extra_5_Masks/path_N_false
   rotate: false
-  xy: 1806, 247
+  xy: 1754, 247
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/uf_split/uf_terrain/floor_extra_5_Masks/path_SE_DNW_false
   rotate: false
-  xy: 1910, 299
+  xy: 1062, 179
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/uf_split/uf_terrain/floor_extra_5_Masks/path_SE_SW_false
   rotate: false
-  xy: 1910, 351
+  xy: 310, 19
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/uf_split/uf_terrain/floor_extra_5_Masks/path_SE_false
   rotate: false
-  xy: 1754, 247
+  xy: 542, 199
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/uf_split/uf_terrain/floor_extra_5_Masks/path_SW_DNE_false
   rotate: false
-  xy: 1286, 247
+  xy: 1114, 179
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/uf_split/uf_terrain/floor_extra_5_Masks/path_SW_false
   rotate: false
-  xy: 318, 71
+  xy: 1806, 247
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/uf_split/uf_terrain/floor_extra_5_Masks/path_S_DNE_DNW_false
   rotate: false
-  xy: 698, 199
+  xy: 490, 199
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/uf_split/uf_terrain/floor_extra_5_Masks/path_S_DNE_false
   rotate: false
-  xy: 1390, 247
+  xy: 422, 35
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/uf_split/uf_terrain/floor_extra_5_Masks/path_S_DNW_false
   rotate: false
-  xy: 1442, 247
+  xy: 630, 147
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/uf_split/uf_terrain/floor_extra_5_Masks/path_S_false
   rotate: false
-  xy: 1182, 247
+  xy: 958, 199
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/uf_split/uf_terrain/floor_extra_5_Masks/path_W_DNE_DSE_false
   rotate: false
-  xy: 386, 191
+  xy: 370, 35
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/uf_split/uf_terrain/floor_extra_5_Masks/path_W_DNE_false
   rotate: false
-  xy: 1546, 247
+  xy: 370, 139
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/uf_split/uf_terrain/floor_extra_5_Masks/path_W_DSE_false
   rotate: false
-  xy: 1962, 247
+  xy: 906, 199
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/uf_split/uf_terrain/floor_extra_5_Masks/path_W_false
   rotate: false
-  xy: 750, 199
+  xy: 474, 147
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
@@ -1707,7 +1805,7 @@ Oryx/uf_split/uf_terrain/floor_extra_8
   index: -1
 Oryx/uf_split/uf_terrain/ground_grass_1
   rotate: false
-  xy: 1910, 403
+  xy: 1546, 247
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
@@ -1770,14 +1868,14 @@ blank
   index: -1
 glow
   rotate: false
-  xy: 834, 127
+  xy: 934, 19
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 white
   rotate: false
-  xy: 1006, 179
+  xy: 182, 23
   size: 16, 16
   orig: 16, 16
   offset: 0, 0

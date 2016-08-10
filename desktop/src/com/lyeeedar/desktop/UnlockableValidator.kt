@@ -16,7 +16,7 @@ class UnlockableValidator
 {
 	init
 	{
-		findFilesRecursive( File("") )
+		findFilesRecursive( File(".") )
 	}
 
 	private fun findFilesRecursive(dir: File)

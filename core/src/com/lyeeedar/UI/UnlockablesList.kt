@@ -13,7 +13,7 @@ import com.lyeeedar.Util.addClickListener
  * Created by Philip on 06-Aug-16.
  */
 
-class UnlockablesList<T: Unlockable>(val current: String?, val othersEquipped: Array<String?>, val trees: Array<UnlockTree<T>>, val func: (String?) -> Unit): FullscreenTable()
+class UnlockablesList<T: Unlockable>(val current: String?, val trees: Array<UnlockTree<T>>, val func: (String?) -> Unit, val displayCondition: (T) -> Boolean): FullscreenTable()
 {
 	val emptySlot = AssetManager.loadSprite("Icons/Empty")
 	val table = Table()
@@ -44,7 +44,7 @@ class UnlockablesList<T: Unlockable>(val current: String?, val othersEquipped: A
 		{
 			for (item in tree.boughtDescendants())
 			{
-				if (!othersEquipped.contains(item.key))
+				if (displayCondition(item))
 				{
 					itemTable.add(createButton(item)).expandX().fillX()
 					itemTable.row()
