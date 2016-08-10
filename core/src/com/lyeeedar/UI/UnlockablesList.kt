@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.g2d.NinePatch
 import com.badlogic.gdx.scenes.scene2d.ui.*
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable
 import com.lyeeedar.Global
-import com.lyeeedar.Player.Ability.Ability
 import com.lyeeedar.Player.PlayerData
 import com.lyeeedar.Sprite.Sprite
 import com.lyeeedar.Util.AssetManager
@@ -14,7 +13,7 @@ import com.lyeeedar.Util.addClickListener
  * Created by Philip on 06-Aug-16.
  */
 
-class AbilityList(val playerData: PlayerData, val current: String?, val func: (String?) -> Unit): FullscreenTable()
+class UnlockablesList<T: Unlockable>(val current: String?, val othersEquipped: Array<String?>, val trees: Array<UnlockTree<T>>, val func: (String?) -> Unit): FullscreenTable()
 {
 	val emptySlot = AssetManager.loadSprite("Icons/Empty")
 	val table = Table()
@@ -28,32 +27,32 @@ class AbilityList(val playerData: PlayerData, val current: String?, val func: (S
 		val stack = Stack()
 		table.add(stack).expand().fill()
 
-		// build abilities
-		val abilityTable = Table()
-		abilityTable.defaults().pad(5f)
+		// build items
+		val itemTable = Table()
+		itemTable.defaults().pad(5f)
 
 		if (current != null)
 		{
-			abilityTable.add(createButton(playerData.getAbility(current))).expandX().fillX()
-			abilityTable.row()
+			itemTable.add(createButton(getItem(current))).expandX().fillX()
+			itemTable.row()
 		}
 
-		abilityTable.add(createButton(null)).expandX().fillX()
-		abilityTable.row()
+		itemTable.add(createButton(null)).expandX().fillX()
+		itemTable.row()
 
-		for (tree in playerData.trees)
+		for (tree in trees)
 		{
-			for (skill in tree.value.boughtDescendants())
+			for (item in tree.boughtDescendants())
 			{
-				if (!playerData.abilities.contains(skill.key))
+				if (!othersEquipped.contains(item.key))
 				{
-					abilityTable.add(createButton(skill)).expandX().fillX()
-					abilityTable.row()
+					itemTable.add(createButton(item)).expandX().fillX()
+					itemTable.row()
 				}
 			}
 		}
 
-		val scroll = ScrollPane(abilityTable)
+		val scroll = ScrollPane(itemTable)
 		scroll.scrollTo(0f, 0f, 0f, 0f)
 		stack.add(scroll)
 
@@ -66,11 +65,27 @@ class AbilityList(val playerData: PlayerData, val current: String?, val func: (S
 		stack.add(closeTable)
 	}
 
-	fun createButton(ability: Ability?): Button
+	fun getItem(name: String): Unlockable?
 	{
-		val sprite = ability?.icon?.copy() ?: emptySlot.copy()
-		val name = ability?.name ?: "Empty"
-		val description = ability?.description ?: null
+		for (tree in trees)
+		{
+			for (item in tree.boughtDescendants())
+			{
+				if (item.key == name)
+				{
+					return item
+				}
+			}
+		}
+
+		return null
+	}
+
+	fun createButton(item: Unlockable?): Button
+	{
+		val sprite = item?.icon?.copy() ?: emptySlot.copy()
+		val name = item?.name ?: "Empty"
+		val description = item?.description ?: null
 
 		val textTable = Table()
 		textTable.add(Label(name, Global.skin, "title")).expand().fill().left()
@@ -89,7 +104,7 @@ class AbilityList(val playerData: PlayerData, val current: String?, val func: (S
 		button.add(textTable).expand().fill()
 
 		button.addClickListener {
-			func(ability?.key)
+			func(item?.key)
 			remove()
 		}
 

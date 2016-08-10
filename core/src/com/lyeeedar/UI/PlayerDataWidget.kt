@@ -5,10 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.*
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable
 import com.lyeeedar.Global
 import com.lyeeedar.Player.Ability.Ability
-import com.lyeeedar.Player.Ability.SkillTree
-import com.lyeeedar.Player.Equipment.Armour
-import com.lyeeedar.Player.Equipment.Charm
-import com.lyeeedar.Player.Equipment.Weapon
+import com.lyeeedar.Player.Equipment.Equipment
 import com.lyeeedar.Player.PlayerData
 import com.lyeeedar.Sprite.Sprite
 import com.lyeeedar.Util.AssetManager
@@ -109,7 +106,10 @@ class PlayerDataWidget(val playerData: PlayerData) : FullscreenTable()
 			abilityTable.add(widget).expandX()
 
 			widget.addClickListener {
-				AbilityList(playerData, abName, {it -> playerData.abilities[i] = it; buildUI()})
+				val trees = Array<UnlockTree<Ability>>(playerData.skillTrees.size) { i -> UnlockTree() }
+				var ti = 0
+				for (tree in playerData.skillTrees) trees[ti++] = tree.value
+				UnlockablesList<Ability>(abName, playerData.abilities, trees, { it -> playerData.abilities[i] = it; buildUI()})
 			}
 		}
 
@@ -124,14 +124,15 @@ class PlayerDataWidget(val playerData: PlayerData) : FullscreenTable()
 
 		val equipmentTable = Table()
 
-		for (i in 0..3)
+		for (slot in Equipment.EquipmentSlot.values())
 		{
-			val equip = playerData.equipment[i]
+			val equip = playerData.equipment[slot.ordinal]
 			var sprite: Sprite
 
 			if (equip != null)
 			{
-				sprite = equip.icon.copy()
+				val ability = playerData.getEquipment(equip)
+				sprite = ability?.icon?.copy() ?: emptySlot.copy()
 			}
 			else
 			{
@@ -142,13 +143,8 @@ class PlayerDataWidget(val playerData: PlayerData) : FullscreenTable()
 			equipmentTable.add(widget).expandX()
 
 			widget.addClickListener {
-
-				when (i)
-				{
-					0 -> EquipmentList().create<Weapon>(playerData, {buildUI()})
-					1 -> EquipmentList().create<Armour>(playerData, {buildUI()})
-					2 -> EquipmentList().create<Charm>(playerData, {buildUI()})
-				}
+				val trees = arrayOf(playerData.equipTrees[slot])
+				UnlockablesList<Equipment>(equip, playerData.equipment, trees, { it -> playerData.equipment[slot.ordinal] = it; buildUI()})
 			}
 		}
 

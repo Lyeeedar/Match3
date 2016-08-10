@@ -10,7 +10,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener
 import com.badlogic.gdx.utils.Array
 import com.lyeeedar.Global
 import com.lyeeedar.Map.World
-import com.lyeeedar.Player.Ability.Skill
 import com.lyeeedar.Player.Player
 import com.lyeeedar.Player.PlayerData
 import com.lyeeedar.SpaceSlot
@@ -82,7 +81,7 @@ class TownWidget(val town: Town, val player: PlayerData) : Widget()
 						val closeButton = Button(Global.skin, "close")
 						closeButton.setSize(24f, 24f)
 
-						val skills = SkillTreeWidget(house.skillTree, player)
+						val skills = UnlockTreeWidget(house.skillTree, player)
 						val scroll = ScrollPane(skills)
 						scroll.setFlingTime(0f)
 						scroll.setOverscroll(false, false)

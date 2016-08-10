@@ -4,44 +4,51 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Sprite.Sprite
+import com.lyeeedar.UI.Unlockable
 import com.lyeeedar.Util.AssetManager
+import com.lyeeedar.Util.set
 
 /**
  * Created by Philip on 09-Aug-16.
  */
 
-abstract class Equipment
+class Equipment : Unlockable()
 {
-	lateinit var icon: Sprite
-	lateinit var name: String
-	lateinit var description: String
-
-	lateinit var unboughtDescription: String
-	val buyCost = ObjectMap<String, Int>()
-	lateinit var coreCost: String
-	var upgrades: String? = null
-
-	abstract fun parse(xml: XmlReader.Element)
-	abstract fun stats(): String
-
-	companion object
+	enum class EquipmentSlot
 	{
-		fun load(xml: XmlReader.Element): Equipment
+		WEAPON,
+		ARMOUR,
+		CHARM
+	}
+
+	lateinit var slot: EquipmentSlot
+	val stats = ObjectMap<String, Int>()
+	var specialEffect: Sprite? = null
+
+	fun get(key: String) : Int? = stats[key]
+
+	fun stats(): String
+	{
+		var s = ""
+		for (stat in stats) s += "${stat.key}: ${stat.value}\n"
+		return s
+	}
+
+	override fun parse(xml: XmlReader.Element, resources: ObjectMap<String, XmlReader.Element>)
+	{
+		slot = EquipmentSlot.valueOf(xml.get("Slot"))
+		val statsEl = xml.getChildByName("Stats")
+		for (i in 0..statsEl.childCount-1)
 		{
-			val equip = when (xml.name.toUpperCase())
-			{
-				"WEAPON" -> Weapon()
-				"ARMOUR" -> Armour()
-				"CHARM" -> Charm()
-				else -> throw Exception("Invalid equipment type ${xml.name}!")
-			}
+			val el = statsEl.getChild(i)
+			stats[el.name] = el.text.toInt()
+		}
 
-			equip.icon = AssetManager.loadSprite(xml.getChildByName("Icon"))
-			equip.name = xml.get("Name")
-			equip.description = xml.get("Description")
-			equip.parse(xml)
-
-			return equip
+		val specialEl = xml.getChildByName("Sprite")
+		if (specialEl != null)
+		{
+			specialEffect = AssetManager.tryLoadSpriteWithResources(specialEl, resources)
 		}
 	}
+
 }

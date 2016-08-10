@@ -7,7 +7,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.utils.ObjectMap
 import com.lyeeedar.Board.Grid
 import com.lyeeedar.Player.Ability.Ability
-import com.lyeeedar.Player.Ability.SkillTree
 import com.lyeeedar.Player.Equipment.Equipment
 import com.lyeeedar.Sprite.Sprite
 import com.lyeeedar.UI.SpriteWidget
@@ -66,7 +65,7 @@ class Player(data: PlayerData)
 		for (i in 0..3)
 		{
 			abilities[i] = if (data.abilities[i] != null) data.getAbility(data.abilities[i]!!) else null
-			equipment[i] = data.equipment[i]
+			equipment[i] = if (data.equipment[i] != null) data.getEquipment(data.equipment[i]!!) else null
 		}
 	}
 }

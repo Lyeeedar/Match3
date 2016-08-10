@@ -13,24 +13,15 @@ import com.lyeeedar.Sprite.Sprite
 import com.lyeeedar.Sprite.SpriteAnimation.MoveAnimation
 import com.lyeeedar.UI.GridWidget
 import com.lyeeedar.UI.PowerBar
+import com.lyeeedar.UI.Unlockable
 import com.lyeeedar.Util.*
 
 /**
  * Created by Philip on 20-Jul-16.
  */
 
-class Ability()
+class Ability() : Unlockable()
 {
-	lateinit var name: String
-	lateinit var description: String
-	lateinit var unboughtDescription: String
-	val buyCost = ObjectMap<String, Int>()
-	var upgrades: String? = null
-
-	val key: String
-		get() = upgrades ?: name
-
-	lateinit var icon: Sprite
 	lateinit var hitSprite: Sprite
 	var flightSprite: Sprite? = null
 
@@ -118,49 +109,29 @@ class Ability()
 		selectedTargets.clear()
 	}
 
-	companion object
+	override fun parse(xml: XmlReader.Element, resources: ObjectMap<String, XmlReader.Element>)
 	{
-		fun load(xml: XmlReader.Element, resources: ObjectMap<String, XmlReader.Element>) : Ability
+		hitSprite = AssetManager.tryLoadSpriteWithResources(xml.getChildByName("HitSprite"), resources)
+		flightSprite = if (xml.getChildByName("FlightSprite") != null) AssetManager.tryLoadSpriteWithResources(xml.getChildByName("FlightSprite"), resources) else null
+
+		cost = xml.getInt("Cost")
+
+		val effectDesc = xml.get("Effect")
+		val split = effectDesc.toUpperCase().split(",")
+
+		targets = split[0].toInt()
+		targetter = Targetter(Targetter.Type.valueOf(split[1]))
+		permuter = Permuter(Permuter.Type.valueOf(split[2]))
+		effect = Effect(Effect.Type.valueOf(split[3]))
+
+		val dataEl = xml.getChildByName("Data")
+		if (dataEl != null)
 		{
-			val ability = Ability()
-
-			ability.name = xml.get("Name")
-			ability.description = xml.get("Description")
-
-			val buyCostEl = xml.getChildByName("BuyCost")
-			for (i in 0..buyCostEl.childCount - 1)
+			for (i in 0..dataEl.childCount-1)
 			{
-				val el = buyCostEl.getChild(i)
-				ability.buyCost[el.name] = el.text.toInt()
+				val el = dataEl.getChild(i)
+				data[el.name.toUpperCase()] = el.text.toUpperCase()
 			}
-			ability.unboughtDescription = xml.get("UnboughtDescription", ability.description)
-			ability.upgrades = xml.get("Upgrades", null)
-
-			ability.icon = AssetManager.tryLoadSpriteWithResources(xml.getChildByName("Icon"), resources)
-			ability.hitSprite = AssetManager.tryLoadSpriteWithResources(xml.getChildByName("HitSprite"), resources)
-			ability.flightSprite = if (xml.getChildByName("FlightSprite") != null) AssetManager.tryLoadSpriteWithResources(xml.getChildByName("FlightSprite"), resources) else null
-
-			ability.cost = xml.getInt("Cost")
-
-			val effectDesc = xml.get("Effect")
-			val split = effectDesc.toUpperCase().split(",")
-
-			ability.targets = split[0].toInt()
-			ability.targetter = Targetter(Targetter.Type.valueOf(split[1]))
-			ability.permuter = Permuter(Permuter.Type.valueOf(split[2]))
-			ability.effect = Effect(Effect.Type.valueOf(split[3]))
-
-			val dataEl = xml.getChildByName("Data")
-			if (dataEl != null)
-			{
-				for (i in 0..dataEl.childCount-1)
-				{
-					val el = dataEl.getChild(i)
-					ability.data[el.name.toUpperCase()] = el.text.toUpperCase()
-				}
-			}
-
-			return ability
 		}
 	}
 }

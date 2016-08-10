@@ -1,4 +1,4 @@
-<SkillTree>
+<UnlockTree>
 
     <Icon>
         <Name>Icons/FireTree</Name>
@@ -16,7 +16,7 @@
         </Sprite>
     </Resources>
 
-    <Abilities>
+    <Unlockables>
 
         <!-- Firebolt tree -->
 
@@ -275,7 +275,7 @@
 
         <!-- Conflagration tree -->
 
-    </Abilities>
+    </Unlockables>
 
     <Tree>
 
@@ -312,4 +312,4 @@
 
     </Tree>
 
-</SkillTree>
+</UnlockTree>

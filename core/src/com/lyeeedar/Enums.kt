@@ -28,15 +28,6 @@ enum class Rarity
 }
 
 // ----------------------------------------------------------------------
-enum class EquipmentSlot
-{
-	WEAPON,
-	ARMOUR,
-	TRINKET,
-	POTION
-}
-
-// ----------------------------------------------------------------------
 enum class Direction private constructor(val x: Int, val y: Int, val identifier: String)
 {
 	CENTRE(0, 0, "C"),
