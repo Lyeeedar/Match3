@@ -85,14 +85,24 @@ class UnlockablesList<T: Unlockable>(val current: String?, val othersEquipped: A
 	{
 		val sprite = item?.icon?.copy() ?: emptySlot.copy()
 		val name = item?.name ?: "Empty"
-		val description = item?.description ?: null
+		val description = item?.description
+		val stats = item?.stats()
 
 		val textTable = Table()
 		textTable.add(Label(name, Global.skin, "title")).expand().fill().left()
+
 		if (description != null)
 		{
 			textTable.row()
 			val label = Label(description, Global.skin)
+			label.setWrap(true)
+			textTable.add(label).expand().fill().left()
+		}
+
+		if (stats != null)
+		{
+			textTable.row()
+			val label = Label(stats, Global.skin)
 			label.setWrap(true)
 			textTable.add(label).expand().fill().left()
 		}

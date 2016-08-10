@@ -27,7 +27,7 @@ class Equipment : Unlockable()
 
 	fun get(key: String) : Int? = stats[key]
 
-	fun stats(): String
+	override fun stats(): String?
 	{
 		var s = ""
 		for (stat in stats) s += "${stat.key}: ${stat.value}\n"

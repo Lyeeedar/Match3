@@ -434,4 +434,5 @@ abstract class Unlockable()
 	}
 
 	protected abstract fun parse(xml: XmlReader.Element, resources: ObjectMap<String, XmlReader.Element>)
+	open fun stats(): String? = null
 }
