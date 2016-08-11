@@ -1,0 +1,11 @@
+<House>
+    <Sprite>
+        <Name>Oryx/Custom/townmap/pyro</Name>
+    </Sprite>
+
+    <Dialogue>
+        <Line>What a hot day it is today. Time to burn some things.</Line>
+        <Tree>Fire</Tree>
+        <Line>Have fun.</Line>
+    </Dialogue>
+</House>

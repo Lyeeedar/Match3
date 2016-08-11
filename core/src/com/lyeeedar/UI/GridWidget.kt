@@ -68,21 +68,25 @@ class GridWidget(val grid: Grid) : Widget()
 				return true
 			}
 
+			override fun touchUp(event: InputEvent?, x: Float, y: Float, pointer: Int, button: Int)
+			{
+				grid.clearDrag()
+
+				super.touchUp(event, x, y, pointer, button)
+			}
+
 			override fun touchDragged (event: InputEvent?, x: Float, y: Float, pointer: Int)
 			{
-				if (grid.selected != Point.MINUS_ONE)
+				val xp = x + ((grid.width * Global.tileSize) / 2f) - (width.toFloat() / 2f)
+
+				val sx = (xp / Global.tileSize).toInt()
+				val sy = (grid.height - 1) - (y / Global.tileSize).toInt()
+
+				val point = Point(sx, sy)
+
+				if (point != grid.dragStart)
 				{
-					val xp = x + ((grid.width * Global.tileSize) / 2f) - (width.toFloat() / 2f)
-
-					val sx = (xp / Global.tileSize).toInt()
-					val sy = (grid.height - 1) - (y / Global.tileSize).toInt()
-
-					val point = Point(sx, sy)
-
-					if (point != grid.selected)
-					{
-						grid.select(point)
-					}
+					grid.dragEnd(point)
 				}
 			}
 		})

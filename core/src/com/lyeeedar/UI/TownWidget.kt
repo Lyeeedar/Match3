@@ -77,26 +77,7 @@ class TownWidget(val town: Town, val player: PlayerData) : Widget()
 					val hy = tilesHeight - (9 + 6 * (index / 2)) - 1
 
 					moveTo(hx+1, hy-1, {
-						val widget = Table()
-						val closeButton = Button(Global.skin, "close")
-						closeButton.setSize(24f, 24f)
-
-						val skills = UnlockTreeWidget(house.skillTree, player)
-						val scroll = ScrollPane(skills)
-						scroll.setFlingTime(0f)
-						scroll.setOverscroll(false, false)
-						widget.add(scroll).expand().fill()
-
-						widget.setFillParent(true)
-						Global.stage.addActor(widget)
-
-						scroll.layout()
-						scroll.scrollTo(skills.prefWidth/3, 0f, 1f, 1f, true, true)
-						scroll.act(1f)
-
-						closeButton.addClickListener({ widget.remove(); closeButton.remove() })
-						Global.stage.addActor(closeButton)
-						closeButton.setPosition(Global.stage.width - 50, Global.stage.height - 50)
+						house.advance(player)
 					})
 				}
 				else if (ix >= 5 && ix < 9 && iy >= tilesHeight-4)

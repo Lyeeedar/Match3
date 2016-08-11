@@ -1,0 +1,9 @@
+<House>
+    <Sprite>
+        <Name>Oryx/Custom/townmap/warrior</Name>
+    </Sprite>
+
+    <Dialogue>
+        <Line>Piss off</Line>
+    </Dialogue>
+</House>

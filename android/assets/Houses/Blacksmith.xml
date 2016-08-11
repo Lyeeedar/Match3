@@ -1,0 +1,11 @@
+<House>
+    <Sprite>
+        <Name>Oryx/Custom/townmap/blacksmith</Name>
+    </Sprite>
+
+    <Dialogue>
+        <Line>Good morning! What can I craft for you today?</Line>
+        <Tree>Equipment</Tree>
+        <Line>Be careful out there, I don't want to see my work squandered.</Line>
+    </Dialogue>
+</House>

@@ -39,7 +39,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 	val refillSprite = AssetManager.loadSprite("EffectSprites/Heal/Heal", 0.1f)
 
 	// ----------------------------------------------------------------------
-	var selected: Point = Point.MINUS_ONE
+	var dragStart: Point = Point.MINUS_ONE
 	var toSwap: Pair<Point, Point>? = null
 	var lastSwapped: Point = Point.MINUS_ONE
 
@@ -78,8 +78,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 			}
 			else
 			{
-				tile(selected)?.isSelected = false
-				selected = Point.MINUS_ONE
+				dragStart = Point.MINUS_ONE
 
 				if (value.targets == 0)
 				{
@@ -194,32 +193,22 @@ class Grid(val width: Int, val height: Int, val level: Level)
 		}
 		else
 		{
-			tile(selected)?.isSelected = false
-
-			if (selected != Point.MINUS_ONE && newSelection != Point.MINUS_ONE)
-			{
-				// check if within 1
-				if (newSelection.dist(selected) == 1)
-				{
-					toSwap = Pair(selected, newSelection)
-					selected = Point.MINUS_ONE
-				}
-				else
-				{
-					selected = newSelection
-					tile(selected)?.isSelected = true
-				}
-			}
-			else
-			{
-				val newTile = tile(newSelection)
-				if (newTile != null && newTile.canHaveOrb)
-				{
-					selected = newSelection
-					newTile.isSelected = true
-				}
-			}
+			dragStart = newSelection
 		}
+	}
+
+	fun dragEnd(selection: Point)
+	{
+		if (selection != dragStart && dragStart.dist(selection) == 1)
+		{
+			toSwap = Pair(dragStart, selection)
+			dragStart = Point.MINUS_ONE
+		}
+	}
+
+	fun clearDrag()
+	{
+		dragStart = Point.MINUS_ONE
 	}
 
 	// ----------------------------------------------------------------------

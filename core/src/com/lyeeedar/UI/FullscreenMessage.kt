@@ -17,7 +17,7 @@ import com.lyeeedar.Util.AssetManager
  * Created by Philip on 15-Jul-16.
  */
 
-class FullscreenMessage(val text: String, val style: String, val function: () -> Unit) : Table()
+class FullscreenMessage(val text: String, val style: String, val function: () -> Unit) : FullscreenTable()
 {
 	lateinit var label: Label
 
@@ -28,8 +28,6 @@ class FullscreenMessage(val text: String, val style: String, val function: () ->
 	init
 	{
 		instance = this
-
-		background = TextureRegionDrawable(AssetManager.loadTextureRegion("white")).tint(Color(0f, 0f, 0f, 0.4f))
 
 		label = Label("", Global.skin)
 		label.setWrap(true)
@@ -65,11 +63,7 @@ class FullscreenMessage(val text: String, val style: String, val function: () ->
 		{
 			function()
 			instance = null
-		}
-		else
-		{
-			setFillParent(true)
-			Global.stage.addActor(this)
+			remove()
 		}
 	}
 
