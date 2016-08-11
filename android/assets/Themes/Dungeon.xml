@@ -29,14 +29,42 @@
         </Sprite>
     </Pit>
 
+    <Chest>
+        <Sprite>
+            <Name>Oryx/uf_split/uf_items/chest_silver_open</Name>
+            <DrawActualSize>true</DrawActualSize>
+        </Sprite>
+        <Sprite>
+            <Name>Oryx/uf_split/uf_items/chest_silver_empty</Name>
+            <DrawActualSize>true</DrawActualSize>
+        </Sprite>
+    </Chest>
+
+    <Coin>
+        <Sprite>
+            <Name>Oryx/uf_split/uf_items/coin_gold</Name>
+            <DrawActualSize>true</DrawActualSize>
+        </Sprite>
+    </Coin>
+
+    <Block>
+        <Sprite>
+            <Name>Oryx/uf_split/uf_terrain/crate</Name>
+            <DrawActualSize>true</DrawActualSize>
+        </Sprite>
+    </Block>
+
+    <Seal>
+        <Sprite>
+            <Name>Oryx/uf_split/uf_items/shield_vorpal_buckler</Name>
+            <DrawActualSize>true</DrawActualSize>
+        </Sprite>
+    </Seal>
+
     <Map>
         <Room><DirectedSprite>Oryx/Custom/dungeonmap/stone_room</DirectedSprite></Room>
         <Corridor><DirectedSprite>Oryx/Custom/dungeonmap/stone_corridor</DirectedSprite></Corridor>
     </Map>
-
-    <AllowedFactions>
-        <Rats></Rats>
-    </AllowedFactions>
 
     <RoomWeights>
 

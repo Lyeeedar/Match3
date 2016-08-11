@@ -10,12 +10,13 @@ import com.lyeeedar.Sprite.SpriteAnimation.BlinkAnimation
 import com.lyeeedar.Util.AssetManager
 import com.lyeeedar.Util.FastEnumMap
 import com.lyeeedar.Util.Point
+import com.lyeeedar.Util.tryGet
 
 /**
  * Created by Philip on 04-Jul-16.
  */
 
-class Orb(val desc: OrbDesc): Point()
+class Orb(val desc: OrbDesc, val theme: LevelTheme): Point()
 {
 	var armed: ((point: Point, grid: Grid) -> Unit)? = null
 
@@ -40,9 +41,16 @@ class Orb(val desc: OrbDesc): Point()
 	var deletionEffectDelay: Float = 0f
 	var skipPowerOrb = false
 
-	val sealSprite = AssetManager.loadSprite("Oryx/uf_split/uf_items/shield_vorpal_buckler")
+	var sealSprite: Sprite = theme.sealSprites.tryGet(0).copy()
 	val sealBreak = AssetManager.loadSprite("EffectSprites/Aegis/Aegis", 0.1f, Color(0.2f, 0f, 0.2f, 1f), Sprite.AnimationMode.TEXTURE, null, false, true)
-	var sealed = false
+	var sealCount = 0
+		set(value)
+		{
+			field = value
+			sealSprite = theme.sealSprites.tryGet(sealCount-1).copy()
+		}
+	val sealed: Boolean
+		get() = sealCount > 0
 
 	var hasAttack: Boolean = false
 		set(value)
@@ -77,7 +85,7 @@ class Orb(val desc: OrbDesc): Point()
 
 	fun setAttributes(orb: Orb)
 	{
-		sealed = orb.sealed
+		sealCount = orb.sealCount
 		hasAttack = orb.hasAttack
 		attackTimer = orb.attackTimer
 		special = orb.special

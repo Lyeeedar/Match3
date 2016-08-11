@@ -43,8 +43,13 @@ class Level(val loadPath: String)
 	var minDepth: Int = 0
 	var maxDepth: Int = Int.MAX_VALUE
 
+	var sealStrength = 1
+	var blockStrength = 1
+
 	var uncompletedMapSprite: Sprite? = null
 	var completedMapSprite: Sprite? = null
+
+	lateinit var faction: String
 
 	// Active state data
 	lateinit var theme: LevelTheme
@@ -85,18 +90,19 @@ class Level(val loadPath: String)
 				{
 					tile.canHaveOrb = true
 					tile.sprite = theme.floor.copy()
-					tile.block = Block()
+					tile.block = Block(theme)
+					tile.block!!.count = blockStrength
 				}
 				else if (char == '$')
 				{
-					tile.chest = Chest(true)
+					tile.chest = Chest(true, theme)
 					tile.canHaveOrb = false
 					tile.sprite = theme.floor.copy()
 					tile.chest!!.attachHandlers(grid)
 				}
 				else if (char == '£')
 				{
-					tile.chest = Chest(false)
+					tile.chest = Chest(false, theme)
 					tile.canHaveOrb = false
 					tile.sprite = theme.floor.copy()
 					tile.chest!!.attachHandlers(grid)
@@ -117,8 +123,7 @@ class Level(val loadPath: String)
 
 		if (hasMonster)
 		{
-			val chosenFactionName = theme.allowedFactions.random()!!
-			val chosenFaction = Faction.load(chosenFactionName)
+			val chosenFaction = Faction.load(faction)
 
 			// iterate through and find groups
 			val blocks = Array<Array<Tile>>()
@@ -155,7 +160,7 @@ class Level(val loadPath: String)
 				}
 			}
 
-			// convet groups into x by x arrays
+			// convert groups into x by x arrays
 			for (block in blocks)
 			{
 				var minx = block[0].x
@@ -217,7 +222,7 @@ class Level(val loadPath: String)
 				}
 				else if (char == '@')
 				{
-					orb!!.sealed = true
+					orb!!.sealCount = sealStrength
 				}
 			}
 		}
@@ -339,6 +344,11 @@ class Level(val loadPath: String)
 				level.maxCountPerMap = xml.getInt("MaxCountPerMap", level.maxCountPerMap)
 				level.minDepth = xml.getInt("MinDepth", level.minDepth)
 				level.maxDepth = xml.getInt("MaxDepth", level.maxDepth)
+
+				level.sealStrength = xml.getInt("SealStrength", 1)
+				level.blockStrength = xml.getInt("BlockStrength", 1)
+
+				level.faction = xml.get("Faction", "")
 
 				level.uncompletedMapSprite = AssetManager.tryLoadSprite(xml.getChildByName("UncompletedMapSprite"))
 				level.completedMapSprite = AssetManager.tryLoadSprite(xml.getChildByName("CompletedMapSprite"))

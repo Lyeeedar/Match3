@@ -23,6 +23,10 @@
 
             <HP>7</HP>
 
+            <Reward>
+                <Gold>5</Gold>
+            </Reward>
+
         </SmallRat>
 
         <GiantRat>
@@ -45,6 +49,10 @@
             <Size>2</Size>
 
             <HP>20</HP>
+
+            <Reward>
+                <Gold>15</Gold>
+            </Reward>
 
         </GiantRat>
 

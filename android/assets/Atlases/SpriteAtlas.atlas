@@ -153,28 +153,28 @@ EffectSprites/Heal/Heal_5
   index: -1
 EffectSprites/Hit/Hit_1
   rotate: false
-  xy: 1770, 455
+  xy: 1978, 455
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 EffectSprites/Hit/Hit_2
   rotate: false
-  xy: 1822, 455
+  xy: 1078, 283
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 EffectSprites/Hit/Hit_3
   rotate: false
-  xy: 1874, 455
+  xy: 1074, 231
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 EffectSprites/Hit/Hit_4
   rotate: false
-  xy: 1926, 455
+  xy: 318, 123
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
@@ -1301,56 +1301,56 @@ Oryx/uf_split/uf_interface/uf_interface_681
   index: -1
 Oryx/uf_split/uf_items/armor_chain_chest
   rotate: false
-  xy: 866, 251
+  xy: 1718, 455
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/uf_split/uf_items/armor_leather_chest
   rotate: false
-  xy: 814, 251
+  xy: 1666, 455
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/uf_split/uf_items/armor_wild_chest
   rotate: false
-  xy: 1562, 455
+  xy: 970, 251
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/uf_split/uf_items/chest_silver_empty
   rotate: false
-  xy: 1078, 283
+  xy: 606, 251
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/uf_split/uf_items/chest_silver_open
   rotate: false
-  xy: 1978, 455
+  xy: 1302, 455
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/uf_split/uf_items/cloak_leather
   rotate: false
-  xy: 1510, 455
+  xy: 918, 251
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/uf_split/uf_items/cloak_tattered
   rotate: false
-  xy: 762, 251
+  xy: 1614, 455
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/uf_split/uf_items/coin_gold
   rotate: false
-  xy: 1074, 231
+  xy: 1354, 455
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
@@ -1364,49 +1364,49 @@ Oryx/uf_split/uf_items/crystal_cloud
   index: -1
 Oryx/uf_split/uf_items/crystal_sky
   rotate: false
-  xy: 318, 123
+  xy: 206, 7
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/uf_split/uf_items/necklace_eye
   rotate: false
-  xy: 970, 251
+  xy: 1874, 455
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/uf_split/uf_items/necklace_ruby
   rotate: false
-  xy: 1718, 455
+  xy: 1926, 455
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/uf_split/uf_items/ring_copper
   rotate: false
-  xy: 1614, 455
+  xy: 1022, 251
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/uf_split/uf_items/ring_diamond
   rotate: false
-  xy: 1666, 455
+  xy: 1822, 455
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/uf_split/uf_items/ring_ornate
   rotate: false
-  xy: 918, 251
+  xy: 1770, 455
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/uf_split/uf_items/shield_vorpal_buckler
   rotate: false
-  xy: 206, 7
+  xy: 1406, 455
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
@@ -1420,28 +1420,28 @@ Oryx/uf_split/uf_items/skull_small
   index: -1
 Oryx/uf_split/uf_items/weapon_spear
   rotate: false
-  xy: 658, 251
+  xy: 1510, 455
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/uf_split/uf_items/weapon_staff_branch
   rotate: false
-  xy: 710, 251
+  xy: 1562, 455
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/uf_split/uf_items/weapon_staff_jeweled
   rotate: false
-  xy: 1458, 455
+  xy: 866, 251
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/uf_split/uf_items/weapon_sword
   rotate: false
-  xy: 1406, 455
+  xy: 814, 251
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
@@ -1455,7 +1455,7 @@ Oryx/uf_split/uf_map/uf_map_263
   index: -1
 Oryx/uf_split/uf_terrain/crate
   rotate: false
-  xy: 1022, 251
+  xy: 658, 251
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
@@ -1812,21 +1812,21 @@ Oryx/uf_split/uf_terrain/ground_grass_1
   index: -1
 Oryx/uf_split/uf_terrain/wall_dungeon_1
   rotate: false
-  xy: 1354, 455
+  xy: 762, 251
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/uf_split/uf_terrain/wall_dungeon_14
   rotate: false
-  xy: 606, 251
+  xy: 1458, 455
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 Oryx/uf_split/uf_terrain/wall_dungeon_7
   rotate: false
-  xy: 1302, 455
+  xy: 710, 251
   size: 48, 48
   orig: 48, 48
   offset: 0, 0

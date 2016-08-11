@@ -105,6 +105,20 @@ class PlayerData
 		return null
 	}
 
+	fun addItem(item: Item)
+	{
+		val existing = inventory[item.name]
+
+		if (existing != null)
+		{
+			existing.count += item.count
+		}
+		else
+		{
+			inventory[item.name] = item
+		}
+	}
+
 	fun mergePlayerDataBack(player: Player)
 	{
 		var message = "Quest rewards:\n\n"
@@ -114,16 +128,7 @@ class PlayerData
 
 		for (item in player.inventory)
 		{
-			val existing = inventory[item.key]
-
-			if (existing != null)
-			{
-				existing.count += item.value.count
-			}
-			else
-			{
-				inventory[item.key] = item.value
-			}
+			addItem(item.value)
 
 			message += "${item.value.name}: +${item.value.count}\n"
 		}

@@ -2,9 +2,11 @@ package com.lyeeedar.Board
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.utils.Array
+import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Sprite.Sprite
 import com.lyeeedar.Util.AssetManager
+import com.lyeeedar.Util.set
 
 /**
  * Created by Philip on 01-Aug-16.
@@ -50,11 +52,11 @@ class MonsterDesc
 {
 	lateinit var sprite: Sprite
 	lateinit var death: Sprite
-	var reward: Int = 0
 	var attackDelay: Float = 5f
 	var attackSpeed: Int = 6
 	var size: Int = 1
 	var hp: Int = 25
+	val rewards = ObjectMap<String, Int>()
 
 	companion object
 	{
@@ -71,6 +73,13 @@ class MonsterDesc
 			desc.size = xml.getInt("Size")
 
 			desc.hp = xml.getInt("HP")
+
+			val rewardsEl = xml.getChildByName("Reward")
+			for (i in 0..rewardsEl.childCount-1)
+			{
+				val el = rewardsEl.getChild(i)
+				desc.rewards[el.name] = el.text.toInt()
+			}
 
 			return desc
 		}

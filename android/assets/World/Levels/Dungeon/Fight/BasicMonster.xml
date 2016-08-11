@@ -136,6 +136,8 @@
 
     </Grid>
 
+    <Faction>Rats</Faction>
+
     <AllowedVictories>
         <Kill />
     </AllowedVictories>

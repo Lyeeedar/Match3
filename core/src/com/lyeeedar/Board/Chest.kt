@@ -8,7 +8,7 @@ import com.lyeeedar.Util.AssetManager
  * Created by Philip on 22-Jul-16.
  */
 
-class Chest(val spawnOrbs: Boolean = true)
+class Chest(val spawnOrbs: Boolean = true, val theme: LevelTheme)
 {
 	var numToSpawn = 4
 	var spacing = 3
@@ -17,10 +17,10 @@ class Chest(val spawnOrbs: Boolean = true)
 	val sprite: Sprite
 		get() = if (numToSpawn > 0) fullSprite else emptySprite
 
-	val fullSprite = AssetManager.loadSprite("Oryx/uf_split/uf_items/chest_silver_open", drawActualSize = true)
-	val emptySprite = AssetManager.loadSprite("Oryx/uf_split/uf_items/chest_silver_empty", drawActualSize = true)
+	val fullSprite = theme.chestFull.copy()
+	val emptySprite = theme.chestEmpty.copy()
 
-	val coinDesc = OrbDesc(AssetManager.loadSprite("Oryx/uf_split/uf_items/coin_gold", drawActualSize = true), AssetManager.loadSprite("blank"), true, -1, "Coin")
+	val coinDesc = OrbDesc(theme.coin.copy(), AssetManager.loadSprite("blank"), true, -1, "Coin")
 
 	fun attachHandlers(grid: Grid)
 	{
@@ -47,27 +47,27 @@ class Chest(val spawnOrbs: Boolean = true)
 	{
 		if (spawnOrbs)
 		{
-			if (numToSpawn <= 0) return Orb(Orb.validOrbs.random())
+			if (numToSpawn <= 0) return Orb(Orb.validOrbs.random(), theme)
 
 			// make sure we dont flood the board
 			val coinsOnBoard = grid.grid.filter { it.orb?.sinkable ?: false }.count() + 1
-			if (coinsOnBoard >= 7) return Orb(Orb.validOrbs.random())
+			if (coinsOnBoard >= 7) return Orb(Orb.validOrbs.random(), theme)
 
 			if (spacingCounter < spacing)
 			{
 				spacingCounter++
-				return Orb(Orb.validOrbs.random())
+				return Orb(Orb.validOrbs.random(), theme)
 			}
 			else
 			{
 				spacingCounter = 0
-				return Orb(coinDesc)
+				return Orb(coinDesc, theme)
 			}
 		}
 		else
 		{
 			if (numToSpawn <= 0) return null
-			return Orb(coinDesc)
+			return Orb(coinDesc, theme)
 		}
 	}
 }

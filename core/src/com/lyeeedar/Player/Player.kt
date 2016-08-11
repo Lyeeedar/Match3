@@ -10,6 +10,7 @@ import com.lyeeedar.Player.Ability.Ability
 import com.lyeeedar.Player.Equipment.Equipment
 import com.lyeeedar.Sprite.Sprite
 import com.lyeeedar.UI.SpriteWidget
+import com.lyeeedar.Util.set
 
 /**
  * Created by Philip on 15-Jul-16.
@@ -70,6 +71,20 @@ class Player(data: PlayerData)
 		for (slot in Equipment.EquipmentSlot.values())
 		{
 			equipment[slot.ordinal] = data.getEquipment(slot)
+		}
+	}
+
+	fun addItem(item: Item)
+	{
+		val existing = inventory[item.name]
+
+		if (existing != null)
+		{
+			existing.count += item.count
+		}
+		else
+		{
+			inventory[item.name] = item
 		}
 	}
 }

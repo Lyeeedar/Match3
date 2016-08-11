@@ -24,10 +24,15 @@ class LevelTheme
 	lateinit var wall: SpriteWrapper
 	lateinit var pit: SpriteWrapper
 
+	lateinit var chestFull: Sprite
+	lateinit var chestEmpty: Sprite
+	lateinit var coin: Sprite
+	val blockSprites = Array<Sprite>()
+	val sealSprites = Array<Sprite>()
+
 	lateinit var mapRoom: DirectedSprite
 	lateinit var mapCorridor: DirectedSprite
 
-	val allowedFactions = Array<String>()
 	val roomWeights = FastEnumMap<DungeonMapEntry.Type, ObjectMap<String, Int>>(DungeonMapEntry.Type::class.java)
 
 	companion object
@@ -43,16 +48,26 @@ class LevelTheme
 			theme.wall = SpriteWrapper.load(xml.getChildByName("Wall"))
 			theme.pit = SpriteWrapper.load(xml.getChildByName("Pit"))
 
+			val chestEl = xml.getChildByName("Chest")
+			theme.chestFull = AssetManager.loadSprite(chestEl.getChild(0))
+			theme.chestEmpty = AssetManager.loadSprite(chestEl.getChild(1))
+			theme.coin = AssetManager.loadSprite(xml.getChildByName("Coin").getChild(0))
+
+			val blockEls = xml.getChildByName("Block")
+			for (i in 0..blockEls.childCount-1)
+			{
+				theme.blockSprites.add(AssetManager.loadSprite(blockEls.getChild(i)))
+			}
+
+			val sealEls = xml.getChildByName("Seal")
+			for (i in 0..sealEls.childCount-1)
+			{
+				theme.sealSprites.add(AssetManager.loadSprite(sealEls.getChild(i)))
+			}
+
 			val mapEl = xml.getChildByName("Map")
 			theme.mapRoom = DirectedSprite.load(mapEl.getChildByName("Room").getChild(0))
 			theme.mapCorridor = DirectedSprite.load(mapEl.getChildByName("Corridor").getChild(0))
-
-			val factionsEl = xml.getChildByName("AllowedFactions")
-			for (i in 0..factionsEl.childCount-1)
-			{
-				val el = factionsEl.getChild(i)
-				theme.allowedFactions.add(el.name)
-			}
 
 			val weightsEl = xml.getChildByName("RoomWeights")
 			for (i in 0..weightsEl.childCount-1)

@@ -2,16 +2,15 @@ package com.lyeeedar.Board
 
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.MathUtils
+import com.badlogic.gdx.utils.Array
+import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.ObjectSet
 import com.lyeeedar.Direction
 import com.lyeeedar.Sprite.Sprite
 import com.lyeeedar.Sprite.SpriteAnimation.BlinkAnimation
 import com.lyeeedar.Sprite.SpriteAnimation.BumpAnimation
 import com.lyeeedar.Sprite.SpriteAnimation.ExtendAnimation
-import com.lyeeedar.Util.Array2D
-import com.lyeeedar.Util.AssetManager
-import com.lyeeedar.Util.getRotation
-import com.lyeeedar.Util.random
+import com.lyeeedar.Util.*
 
 /**
  * Created by Philip on 22-Jul-16.
@@ -56,6 +55,8 @@ class Monster(val desc: MonsterDesc)
 
 	val damSources = ObjectSet<Any>()
 
+	val rewards = ObjectMap<String, Int>()
+
 	init
 	{
 		attackSpeed = desc.attackSpeed
@@ -66,6 +67,11 @@ class Monster(val desc: MonsterDesc)
 		maxhp = desc.hp
 
 		attackAccumulator = MathUtils.random() * attackDelay
+
+		for (reward in desc.rewards)
+		{
+			rewards[reward.key] = reward.value
+		}
 	}
 
 	fun onTurn(grid: Grid)

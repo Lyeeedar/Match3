@@ -11,6 +11,8 @@ import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Direction
 import com.lyeeedar.Global
 import com.lyeeedar.Player.Ability.Ability
+import com.lyeeedar.Player.Item
+import com.lyeeedar.Screens.GridScreen
 import com.lyeeedar.SpaceSlot
 import com.lyeeedar.Sprite.Sprite
 import com.lyeeedar.Sprite.SpriteAnimation.AlphaAnimation
@@ -197,6 +199,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 		}
 	}
 
+	// ----------------------------------------------------------------------
 	fun dragEnd(selection: Point)
 	{
 		if (selection != dragStart && dragStart.dist(selection) == 1)
@@ -206,6 +209,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 		}
 	}
 
+	// ----------------------------------------------------------------------
 	fun clearDrag()
 	{
 		dragStart = Point.MINUS_ONE
@@ -312,7 +316,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 
 					if (found == tile)
 					{
-						orb = Orb(Orb.validOrbs.random())
+						orb = Orb(Orb.validOrbs.random(), level.theme)
 						orb.movePoints.add(Point(x, -1))
 						orb.spawnCount = spawnCount[x, 0]
 
@@ -690,6 +694,37 @@ class Grid(val width: Int, val height: Int, val level: Level)
 						death.size[1] = monster.size
 
 						tile.effects.add(death)
+
+						for (reward in monster.rewards)
+						{
+							for (i in 1..reward.value)
+							{
+								if (reward.key == "Gold")
+								{
+									val pos = GridWidget.instance.pointToScreenspace(tile)
+									val dst = GridScreen.instance.playerPortrait.localToStageCoordinates(Vector2())
+									val sprite = level.theme.coin.copy()
+
+									if (dst != null)
+									{
+										Mote(pos, dst, sprite, { level.player.gold++ })
+									}
+								}
+								else
+								{
+									val item = Item.load(reward.key)
+
+									val pos = GridWidget.instance.pointToScreenspace(tile)
+									val dst = GridScreen.instance.playerPortrait.localToStageCoordinates(Vector2())
+									val sprite = item.icon.copy()
+
+									if (dst != null)
+									{
+										Mote(pos, dst, sprite, { level.player.addItem(item) })
+									}
+								}
+							}
+						}
 					}
 				}
 			}
@@ -890,7 +925,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 					val orb = grid[x, y].orb!!
 
 					if (oldorb.special != null) orb.special = oldorb.special!!.copy(orb)
-					if (oldorb.sealed) orb.sealed = true
+					orb.sealCount = oldorb.sealCount
 					if (oldorb.hasAttack)
 					{
 						orb.hasAttack = true
@@ -937,7 +972,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 					}
 
 					val desc = valid.random()
-					val orb = Orb(desc)
+					val orb = Orb(desc, level.theme)
 					grid[x, y].orb = orb
 				}
 			}
@@ -1166,7 +1201,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 		{
 			if (tile.associatedMatches[0] != null && tile.associatedMatches[1] != null)
 			{
-				val orb = Orb(tile.orb!!.desc)
+				val orb = Orb(tile.orb!!.desc, level.theme)
 				val special = getSpecial(tile.associatedMatches[0]!!.length(), tile.associatedMatches[1]!!.length(), Direction.CENTRE, orb) ?: continue
 				orb.special = special
 
@@ -1215,7 +1250,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 			{
 				val tile = grid[match.points().maxBy { grid[it].orb?.cascadeCount ?: 0 }!!]
 
-				val orb = Orb(tile.orb!!.desc)
+				val orb = Orb(tile.orb!!.desc, level.theme)
 				val special = getSpecial(match.length(), 0, match.direction(), orb) ?: continue
 				orb.special = special
 
@@ -1277,7 +1312,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 
 		if (orb.sealed)
 		{
-			orb.sealed = false
+			orb.sealCount--
 			orb.sealBreak.renderDelay = delay
 			tile.effects.add(orb.sealBreak)
 			return
