@@ -41,7 +41,7 @@ class LeapAnimation : AbstractMoveAnimation
 		temp.set(p1).lerp(p2, alpha)
 
 		offset[0] = temp.x
-		offset[1] = temp.y + Global.tileSize * height * lalpha
+		offset[1] = temp.y + height * lalpha
 
 		return time >= duration
 	}

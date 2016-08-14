@@ -19,7 +19,7 @@ import java.util.*
  * Created by Philip on 04-Jul-16.
  */
 
-class SpriteRenderer
+class SpriteRenderer(var tileSize: Float, val width: Float, val height: Float)
 {
 	var batchID: Int = 0
 
@@ -34,6 +34,12 @@ class SpriteRenderer
 	var screenShakeAccumulator: Float = 0f
 	var screenShakeSpeed: Float = 0f
 	var screenShakeAngle: Float = 0f
+
+	val MAX_INDEX = 3
+	val X_BLOCK_SIZE = SpaceSlot.Values.size * MAX_INDEX
+	val Y_BLOCK_SIZE = X_BLOCK_SIZE * width
+	val MAX_Y_BLOCK_SIZE = Y_BLOCK_SIZE * height
+	val MAX_X_BLOCK_SIZE = X_BLOCK_SIZE * width
 
 	// ----------------------------------------------------------------------
 	fun setScreenShake(amount: Float)
@@ -67,7 +73,7 @@ class SpriteRenderer
 			val rs = heap.pop()
 
 			batch.color = rs.colour
-			rs.sprite?.render(batch, rs.x + offsetx, rs.y + offsety, Global.tileSize * rs.width, Global.tileSize * rs.height )
+			rs.sprite?.render(batch, rs.x + offsetx, rs.y + offsety, tileSize * rs.width, tileSize * rs.height )
 
 			if (rs.tilingSprite != null)
 			{
@@ -84,7 +90,7 @@ class SpriteRenderer
 				}
 
 				val sprite = rs.tilingSprite!!.getSprite(bitflag)
-				sprite.render(batch, rs.x + offsetx, rs.y + offsety, Global.tileSize * rs.width, Global.tileSize * rs.height )
+				sprite.render(batch, rs.x + offsetx, rs.y + offsety, tileSize * rs.width, tileSize * rs.height )
 			}
 
 			rs.free()
@@ -100,13 +106,28 @@ class SpriteRenderer
 		tilingMap.clear()
 	}
 
+	fun getComparisonVal(x: Float, y: Float, offsetx: Float, offsety: Float, slot: SpaceSlot, index: Int) : Float
+	{
+		if (index > MAX_INDEX-1) throw RuntimeException("Index too high! $index > $MAX_INDEX!")
+
+		val bx = (x - offsetx).toFloat() / tileSize
+		val by = (y - offsety).toFloat() / tileSize
+
+		val sx = bx.toInt()
+		val sy = by.toInt()
+
+		return MAX_Y_BLOCK_SIZE - sy * Y_BLOCK_SIZE + (MAX_X_BLOCK_SIZE - sx * X_BLOCK_SIZE) + slot.ordinal * MAX_INDEX + index
+	}
+
 	// ----------------------------------------------------------------------
 	fun queueSprite(tilingSprite: TilingSprite, ix: Float, iy: Float, offsetx: Float, offsety: Float, slot: SpaceSlot, index: Int, colour: Color = Color.WHITE, width: Float = 1f, height: Float = 1f)
 	{
-		val x = ix * Global.tileSize + offsetx
-		val y = iy * Global.tileSize + offsety
+		val x = ix * tileSize + offsetx
+		val y = iy * tileSize + offsety
 
-		val rs = RenderSprite.obtain().set( null, tilingSprite, x, y, offsetx, offsety, ix, iy, slot, index, colour, width, height )
+		val comparisonVal = getComparisonVal(x, y, offsetx, offsety, slot, index)
+
+		val rs = RenderSprite.obtain().set( null, tilingSprite, x, y, ix, iy, colour, width, height, comparisonVal )
 
 		val point = Point.obtain().set(ix.toInt(), iy.toInt())
 		var keys = tilingMap[point]
@@ -130,8 +151,8 @@ class SpriteRenderer
 		}
 		sprite.batchID = batchID
 
-		var x = ix * Global.tileSize + offsetx
-		var y = iy * Global.tileSize + offsety
+		var x = ix * tileSize + offsetx
+		var y = iy * tileSize + offsety
 
 		if ( sprite.spriteAnimation != null )
 		{
@@ -139,12 +160,14 @@ class SpriteRenderer
 
 			if (offset != null)
 			{
-				x += offset[0]
-				y += offset[1]
+				x += offset[0] * tileSize
+				y += offset[1] * tileSize
 			}
 		}
 
-		val rs = RenderSprite.obtain().set( sprite, null, x, y, offsetx, offsety, ix, iy, slot, index, colour, width, height )
+		val comparisonVal = getComparisonVal(x, y, offsetx, offsety, slot, index)
+
+		val rs = RenderSprite.obtain().set( sprite, null, x, y, ix, iy, colour, width, height, comparisonVal )
 
 		heap.add( rs, rs.comparisonVal )
 	}
@@ -168,7 +191,12 @@ class RenderSprite : BinaryHeap.Node(0f)
 
 	var comparisonVal: Float = 0f
 
-	operator fun set(sprite: Sprite?, tilingSprite: TilingSprite?, x: Float, y: Float, offsetx: Float, offsety: Float, ix: Float, iy: Float, slot: SpaceSlot, index: Int, colour: Color, width: Float, height: Float): RenderSprite
+	operator fun set(sprite: Sprite?, tilingSprite: TilingSprite?,
+					 x: Float, y: Float,
+					 ix: Float, iy: Float,
+					 colour: Color,
+					 width: Float, height: Float,
+					 comparisonVal: Float): RenderSprite
 	{
 		point.set(ix.toInt(), iy.toInt())
 		this.colour.set(colour)
@@ -178,14 +206,7 @@ class RenderSprite : BinaryHeap.Node(0f)
 		this.y = y
 		this.width = width
 		this.height = height
-
-		val bx = (x - offsetx).toFloat() / Global.tileSize
-		val by = (y - offsety).toFloat() / Global.tileSize
-
-		val sx = bx.toInt()
-		val sy = by.toInt()
-
-		comparisonVal = MAX_Y_BLOCK_SIZE - sy * Y_BLOCK_SIZE + (MAX_X_BLOCK_SIZE - sx * X_BLOCK_SIZE) + slot.ordinal * 3f + index
+		this.comparisonVal = comparisonVal
 
 		return this
 	}
@@ -196,10 +217,5 @@ class RenderSprite : BinaryHeap.Node(0f)
 	{
 		val pool: Pool<RenderSprite> = Pools.get( RenderSprite::class.java, Int.MAX_VALUE )
 		fun obtain() = RenderSprite.pool.obtain()
-
-		val X_BLOCK_SIZE = SpaceSlot.Values.size * 3
-		val Y_BLOCK_SIZE = X_BLOCK_SIZE * Global.tileSize
-		val MAX_Y_BLOCK_SIZE = Y_BLOCK_SIZE * Global.tileSize
-		val MAX_X_BLOCK_SIZE = X_BLOCK_SIZE * Global.tileSize
 	}
 }

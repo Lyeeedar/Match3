@@ -43,8 +43,8 @@ class BumpAnimation : AbstractMoveAnimation
 
 		val alpha = 1f - MathUtils.clamp(Math.abs((time - duration / 2) / (duration / 2)), 0f, 1f)
 
-		offset[0] = (Global.tileSize / 2 * alpha * direction!!.x.toFloat()).toInt().toFloat()
-		offset[1] = (Global.tileSize / 2 * alpha * direction!!.y.toFloat() * -1f).toInt().toFloat()
+		offset[0] = (0.5f * alpha * direction!!.x.toFloat()).toInt().toFloat()
+		offset[1] = (0.5f * alpha * direction!!.y.toFloat() * -1f).toInt().toFloat()
 
 		return time > duration
 	}

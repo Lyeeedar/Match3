@@ -73,7 +73,7 @@ class PowerBar() : Widget()
 			return null
 		}
 
-		val dy = -Global.tileSize*0.5f
+		val dy = -0.5f
 
 		val minipipWidth = pipWidth / powerPerPip
 		val destPipVal = (power + tempPower).toFloat()

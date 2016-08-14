@@ -26,7 +26,6 @@ class Global
 	{
 		lateinit var skin: Skin
 		var fps = 60
-		var tileSize = 32f
 		var android = false
 		var release = false
 		lateinit var game: MainGame

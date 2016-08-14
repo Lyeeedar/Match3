@@ -90,7 +90,7 @@ class MoveAnimation : AbstractMoveAnimation
 			point.x -= path.last().x
 			point.y -= path.last().y
 
-			vectorPath.add(Vector2(point.x * Global.tileSize, point.y * Global.tileSize))
+			vectorPath.add(Vector2(point.x.toFloat(), point.y.toFloat()))
 		}
 
 		val asArray = Array<Vector2>(vectorPath.size) { i -> vectorPath[i] }
@@ -110,7 +110,6 @@ class MoveAnimation : AbstractMoveAnimation
 	fun set(p1: Point, p2: Point, duration: Float = 0.5f, eqn: Interpolation = Interpolation.linear): MoveAnimation
 	{
 		val v1 = Vector2((p2.x - p1.x).toFloat(), (p2.y - p1.y).toFloat())
-		v1.scl(Global.tileSize)
 
 		path = UnsmoothedPath(arrayOf(v1, Vector2()))
 

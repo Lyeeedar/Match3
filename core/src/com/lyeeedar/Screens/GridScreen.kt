@@ -113,14 +113,14 @@ class GridScreen(): AbstractScreen()
 			val src = GridWidget.instance.pointToScreenspace(it)
 
 			val vec = Vector2()
-			vec.set(dst).sub(src).nor().rotate90(1).scl(2f * Global.tileSize)
+			vec.set(dst).sub(src).nor().rotate90(1).scl(64f)
 
 			val vec2 = Vector2()
 			vec2.set(src).lerp(dst, 0.5f).add(vec)
 
 			val path = Bezier<Vector2>(src, vec2, dst)
 
-			val diff = src.dst(dst).div(Global.tileSize)
+			val diff = src.dst(dst).div(32f)
 
 			sprite.spriteAnimation = MoveAnimation.obtain().set(0.2f + diff * 0.1f, path, Interpolation.exp5In)
 

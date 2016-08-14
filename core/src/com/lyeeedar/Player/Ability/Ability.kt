@@ -79,7 +79,7 @@ class Ability() : Unlockable()
 				val p1 = GridScreen.instance.playerPortrait.localToStageCoordinates(Vector2())
 				val p2 = GridWidget.instance.pointToScreenspace(target)
 
-				val dist = p1.dst(p2) / Global.tileSize
+				val dist = p1.dst(p2) / 32f
 
 				fs.spriteAnimation = MoveAnimation.obtain().set(0.05f + 0.025f * dist, arrayOf(p1, p2), Interpolation.linear)
 				fs.rotation = getRotation(p1, p2)

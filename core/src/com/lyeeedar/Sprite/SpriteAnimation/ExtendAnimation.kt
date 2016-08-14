@@ -67,8 +67,8 @@ class ExtendAnimation() : AbstractScaleAnimation()
 		this.diff[1] = diff.last().y - diff.first().y
 		this.time = 0f
 
-		val dist = diff.first().dst(diff.last()) + Global.tileSize * 2f
-		finalScale = dist / Global.tileSize / 2f
+		val dist = diff.first().dst(diff.last()) + 2f
+		finalScale = dist / 2f
 
 		update(0f)
 

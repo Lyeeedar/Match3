@@ -29,6 +29,8 @@ import sun.applet.Main
 
 class DungeonMapWidget(val map: DungeonMap, val player: Player): Widget()
 {
+	val tileSize = 64f
+
 	var moveFrom: Point? = null
 	var moveTo: Point? = null
 
@@ -42,6 +44,12 @@ class DungeonMapWidget(val map: DungeonMap, val player: Player): Widget()
 	val tempPoint = Point()
 
 	lateinit var playerSprite: Sprite
+
+	val baseRenderer = SpriteRenderer(tileSize, 100f, 100f)
+	val detailRenderer = SpriteRenderer(tileSize, 100f, 100f)
+	val bitflag = EnumBitflag<Direction>()
+	var waitingOnTransition: Boolean = false
+	var dungeonComplete = false
 
 	init
 	{
@@ -121,12 +129,6 @@ class DungeonMapWidget(val map: DungeonMap, val player: Player): Widget()
 			}
 		} )
 	}
-
-	val baseRenderer = SpriteRenderer()
-	val detailRenderer = SpriteRenderer()
-	val bitflag = EnumBitflag<Direction>()
-	var waitingOnTransition: Boolean = false
-	var dungeonComplete = false
 
 	fun completeDungeon()
 	{
@@ -217,18 +219,16 @@ class DungeonMapWidget(val map: DungeonMap, val player: Player): Widget()
 
 	override fun draw(batch: Batch?, parentAlpha: Float)
 	{
-		Global.tileSize = 64f
-
 		super.draw(batch, parentAlpha)
 
-		var offsetx = (x + width / 2) - map.playerPos.x * Global.tileSize - Global.tileSize*0.5f
-		var offsety = (y + height / 2) - map.playerPos.y * Global.tileSize - Global.tileSize*0.5f
+		var offsetx = (x + width / 2) - map.playerPos.x * tileSize - tileSize*0.5f
+		var offsety = (y + height / 2) - map.playerPos.y * tileSize - tileSize*0.5f
 
 		if (playerSprite.spriteAnimation != null)
 		{
 			val offset = playerSprite.spriteAnimation!!.renderOffset()!!
-			offsetx -= offset[0]
-			offsety -= offset[1]
+			offsetx -= offset[0] * tileSize
+			offsety -= offset[1] * tileSize
 		}
 
 		detailRenderer.queueSprite(playerSprite, map.playerPos.x.toFloat(), map.playerPos.y.toFloat() + 0.2f, offsetx, offsety, SpaceSlot.TILE, 1, update = false)

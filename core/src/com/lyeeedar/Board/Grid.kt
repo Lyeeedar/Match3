@@ -462,7 +462,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 				{
 					val firstIsNull = orb.spawnCount >= 0
 
-					val pathPoints = Array(orb.movePoints.size){ i -> Vector2(orb.movePoints[i].x * Global.tileSize, orb.movePoints[i].y * Global.tileSize) }
+					val pathPoints = Array(orb.movePoints.size){ i -> Vector2(orb.movePoints[i].x.toFloat(), orb.movePoints[i].y.toFloat()) }
 					for (point in pathPoints)
 					{
 						point.x -= pathPoints.last().x

@@ -27,6 +27,8 @@ import com.lyeeedar.Util.*
 
 class TownWidget(val town: Town, val player: PlayerData) : Widget()
 {
+	val tileSize = 48f
+
 	var gate = AssetManager.loadSprite("Oryx/Custom/townmap/gate")
 	var grass = AssetManager.loadSprite("Oryx/uf_split/uf_terrain/ground_grass_1")
 	var path = TilingSprite("path", "Oryx/uf_split/uf_terrain/floor_extra_5", "Masks/path")
@@ -38,6 +40,8 @@ class TownWidget(val town: Town, val player: PlayerData) : Widget()
 	val playerPos: Point = Point()
 
 	var playerSprite: Sprite = player.chosenSprite.copy()
+
+	lateinit var renderer: SpriteRenderer
 
 	init
 	{
@@ -55,14 +59,14 @@ class TownWidget(val town: Town, val player: PlayerData) : Widget()
 
 				if (playerSprite.spriteAnimation != null) return
 
-				val offsetx = (width / 2) - playerPos.x * Global.tileSize - Global.tileSize*0.5f
-				val offsety = (height / 2) - playerPos.y * Global.tileSize - Global.tileSize*0.5f
+				val offsetx = (width / 2) - playerPos.x * tileSize - tileSize*0.5f
+				val offsety = (height / 2) - playerPos.y * tileSize - tileSize*0.5f
 
 				val lx = x - offsetx
 				val ly = y - offsety
 
-				val ix = (lx / Global.tileSize).toInt()
-				val iy = (ly / Global.tileSize).toInt()
+				val ix = (lx / tileSize).toInt()
+				val iy = (ly / tileSize).toInt()
 
 				val house = getHouse(ix, iy)
 				if (playerPos.dist(ix, iy) == 0)
@@ -112,6 +116,8 @@ class TownWidget(val town: Town, val player: PlayerData) : Widget()
 				}
 			}
 		})
+
+		renderer = SpriteRenderer(tileSize, tilesWidth.toFloat(), tilesHeight.toFloat())
 	}
 
 	fun moveTo(x: Int, y: Int, arrivalFun: (() -> Unit)? = null)
@@ -124,7 +130,7 @@ class TownWidget(val town: Town, val player: PlayerData) : Widget()
 		if ((oldPos.x == cx || oldPos.x == cx-1) && (x == cx || x == cx-1))
 		{
 			val dst = Math.abs(oldPos.y - y)
-			val path = arrayOf(Vector2((oldPos.x - x) * Global.tileSize, (oldPos.y - y) * Global.tileSize), Vector2())
+			val path = arrayOf(Vector2((oldPos.x - x).toFloat(), (oldPos.y - y).toFloat()), Vector2())
 			playerSprite.spriteAnimation = MoveAnimation.obtain().set(dst * 0.2f, UnsmoothedPath(path))
 
 			if (arrivalFun != null) Future.call(arrivalFun, dst * 0.2f + 0.3f, this)
@@ -148,7 +154,7 @@ class TownWidget(val town: Town, val player: PlayerData) : Widget()
 		else
 		{
 			val dst = oldPos.dist(playerPos)
-			val path = arrayOf(Vector2((oldPos.x - x) * Global.tileSize, 0f), Vector2())
+			val path = arrayOf(Vector2((oldPos.x - x).toFloat(), 0f), Vector2())
 			playerSprite.spriteAnimation = MoveAnimation.obtain().set(dst * 0.2f, UnsmoothedPath(path))
 
 			if (arrivalFun != null) Future.call(arrivalFun, dst * 0.2f + 0.3f, this)
@@ -191,8 +197,6 @@ class TownWidget(val town: Town, val player: PlayerData) : Widget()
 		return false
 	}
 
-	val renderer = SpriteRenderer()
-
 	override fun act(delta: Float)
 	{
 		super.act(delta)
@@ -207,18 +211,16 @@ class TownWidget(val town: Town, val player: PlayerData) : Widget()
 
 	override fun draw(batch: Batch?, parentAlpha: Float)
 	{
-		Global.tileSize = 48f//width.toFloat() / tilesWidth.toFloat()
-
 		super.draw(batch, parentAlpha)
 
-		var offsetx = (x + width / 2) - playerPos.x * Global.tileSize - Global.tileSize*0.5f
-		var offsety = (y + height / 2) - playerPos.y * Global.tileSize - Global.tileSize*0.5f
+		var offsetx = (x + width / 2) - playerPos.x * tileSize - tileSize*0.5f
+		var offsety = (y + height / 2) - playerPos.y * tileSize - tileSize*0.5f
 
 		if (playerSprite.spriteAnimation != null)
 		{
 			val offset = playerSprite.spriteAnimation!!.renderOffset()!!
-			offsetx -= offset[0]
-			offsety -= offset[1]
+			offsetx -= offset[0] * tileSize
+			offsety -= offset[1] * tileSize
 		}
 
 		// draw grass
@@ -278,6 +280,6 @@ class TownWidget(val town: Town, val player: PlayerData) : Widget()
 		}
 
 		renderer.flush(Gdx.app.graphics.deltaTime, batch as SpriteBatch)
-		playerSprite.render(batch, x + width / 2 - Global.tileSize * 0.5f, y + height / 2 - Global.tileSize * 0.2f, Global.tileSize, Global.tileSize)
+		playerSprite.render(batch, x + width / 2 - tileSize * 0.5f, y + height / 2 - tileSize * 0.2f, tileSize, tileSize)
 	}
 }
