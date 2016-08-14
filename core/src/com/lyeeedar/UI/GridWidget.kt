@@ -18,7 +18,6 @@ import com.lyeeedar.Direction
 import com.lyeeedar.Global
 import com.lyeeedar.Player.Ability.Targetter
 import com.lyeeedar.Player.Player
-import com.lyeeedar.SpaceSlot
 import com.lyeeedar.Sprite.Sprite
 import com.lyeeedar.Sprite.SpriteRenderer
 import com.lyeeedar.Util.AssetManager
@@ -48,8 +47,12 @@ class GridWidget(val grid: Grid) : Widget()
 	val atk_full: Sprite = AssetManager.loadSprite("GUI/attack_full")
 	val atk_empty: Sprite = AssetManager.loadSprite("GUI/attack_empty")
 
-	val ground: SpriteRenderer = SpriteRenderer(tileSize, grid.width.toFloat(), grid.height.toFloat())
-	val floating: SpriteRenderer = SpriteRenderer(tileSize, grid.width.toFloat(), grid.height.toFloat())
+	val TILE = 0
+	val ORB = 1
+	val EFFECT = 2
+
+	val ground: SpriteRenderer = SpriteRenderer(tileSize, grid.width.toFloat(), grid.height.toFloat(), 3)
+	val floating: SpriteRenderer = SpriteRenderer(tileSize, grid.width.toFloat(), grid.height.toFloat(), 3)
 
 	val tempCol = Color()
 
@@ -215,17 +218,17 @@ class GridWidget(val grid: Grid) : Widget()
 
 				if (tile.sprite.sprite != null)
 				{
-					ground.queueSprite(tile.sprite.sprite!!, xi, yi, xp, yp, SpaceSlot.TILE, 0, tileColour)
+					ground.queueSprite(tile.sprite.sprite!!, xi, yi, TILE, 0, tileColour)
 				}
 				if (tile.sprite.tilingSprite != null)
 				{
 					val tiling = tile.sprite.tilingSprite!!
-					ground.queueSprite(tiling, xi, yi, xp, yp, SpaceSlot.TILE, 0, tileColour)
+					ground.queueSprite(tiling, xi, yi, TILE, 0, tileColour)
 				}
 
 				if (chest != null)
 				{
-					ground.queueSprite(chest.sprite, xi, yi, xp, yp, SpaceSlot.TILE, 1, tileColour)
+					ground.queueSprite(chest.sprite, xi, yi, TILE, 1, tileColour)
 				}
 
 				for (sprite in tile.effects)
@@ -236,22 +239,22 @@ class GridWidget(val grid: Grid) : Widget()
 					}
 					else
 					{
-						floating.queueSprite(sprite, xi, yi, xp, yp, SpaceSlot.EFFECT, 0)
+						floating.queueSprite(sprite, xi, yi, EFFECT, 0)
 					}
 				}
 
 				if (orb != null)
 				{
-					ground.queueSprite(orb.sprite, xi, yi, xp, yp, SpaceSlot.ORB, 1, orbColour)
+					ground.queueSprite(orb.sprite, xi, yi, ORB, 1, orbColour)
 
 					if (orb.sealed)
 					{
-						ground.queueSprite(orb.sealSprite, xi, yi, xp, yp, SpaceSlot.ORB, 2, orbColour)
+						ground.queueSprite(orb.sealSprite, xi, yi, ORB, 2, orbColour)
 					}
 
 					if (orb.armed != null)
 					{
-						ground.queueSprite(glow, xi, yi, xp, yp, SpaceSlot.ORB, 0)
+						ground.queueSprite(glow, xi, yi, ORB, 0)
 					}
 
 					if (orb.hasAttack)
@@ -267,7 +270,7 @@ class GridWidget(val grid: Grid) : Widget()
 						{
 							val sprite = if(i < orb.attackTimer) atk_full else atk_empty
 
-							floating.queueSprite(sprite, cx + currentPoint.x, cy + currentPoint.y, xp, yp, SpaceSlot.ORB, 2, orbColour)
+							floating.queueSprite(sprite, cx + currentPoint.x, cy + currentPoint.y, ORB, 2, orbColour)
 
 							currentPoint.rotate(degreesStep)
 						}
@@ -280,7 +283,7 @@ class GridWidget(val grid: Grid) : Widget()
 				{
 					monster.sprite.size[0] = monster.size
 					monster.sprite.size[1] = monster.size
-					ground.queueSprite(monster.sprite, xi, yi, xp, yp, SpaceSlot.ORB, 1, monsterColour)
+					ground.queueSprite(monster.sprite, xi, yi, ORB, 1, monsterColour)
 
 					// do hp bar
 					val solidSpaceRatio = 0.12f // 20% free space
@@ -292,32 +295,32 @@ class GridWidget(val grid: Grid) : Widget()
 					for (i in 0..monster.maxhp-1)
 					{
 						val sprite = if(i < monster.hp) hp_full else hp_empty
-						floating.queueSprite(sprite, xi+i*spacePerPip, yi+0.1f, xp, yp, SpaceSlot.ORB, 2, width = solid, height = 0.15f)
+						floating.queueSprite(sprite, xi+i*spacePerPip, yi+0.1f, ORB, 2, width = solid, height = 0.15f)
 					}
 				}
 
 				if (block != null)
 				{
-					ground.queueSprite(block.sprite, xi, yi, xp, yp, SpaceSlot.ORB, 1, blockColour)
+					ground.queueSprite(block.sprite, xi, yi, ORB, 1, blockColour)
 				}
 
 				if (tile.isSelected)
 				{
-					ground.queueSprite(frame, xi, yi, xp, yp, SpaceSlot.ORB, 0)
+					ground.queueSprite(frame, xi, yi, ORB, 0)
 				}
 
 				if (grid.noMatchTimer > 10f && grid.matchHint != null)
 				{
 					if (tile == grid.matchHint!!.first || tile == grid.matchHint!!.second)
 					{
-						ground.queueSprite(border, xi, yi, xp, yp, SpaceSlot.ORB, 0)
+						ground.queueSprite(border, xi, yi, ORB, 0)
 					}
 				}
 			}
 		}
 
-		ground.flush(Gdx.app.graphics.deltaTime, batch as SpriteBatch)
-		floating.flush(Gdx.app.graphics.deltaTime, batch as SpriteBatch)
+		ground.flush(Gdx.app.graphics.deltaTime, xp, yp, batch as SpriteBatch)
+		floating.flush(Gdx.app.graphics.deltaTime, xp, yp, batch as SpriteBatch)
 	}
 
 	companion object

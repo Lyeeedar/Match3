@@ -12,7 +12,6 @@ import com.lyeeedar.Global
 import com.lyeeedar.Map.World
 import com.lyeeedar.Player.Player
 import com.lyeeedar.Player.PlayerData
-import com.lyeeedar.SpaceSlot
 import com.lyeeedar.Sprite.Sprite
 import com.lyeeedar.Sprite.SpriteAnimation.MoveAnimation
 import com.lyeeedar.Sprite.SpriteRenderer
@@ -117,7 +116,7 @@ class TownWidget(val town: Town, val player: PlayerData) : Widget()
 			}
 		})
 
-		renderer = SpriteRenderer(tileSize, tilesWidth.toFloat(), tilesHeight.toFloat())
+		renderer = SpriteRenderer(tileSize, tilesWidth.toFloat(), tilesHeight.toFloat(), 2)
 	}
 
 	fun moveTo(x: Int, y: Int, arrivalFun: (() -> Unit)? = null)
@@ -229,20 +228,20 @@ class TownWidget(val town: Town, val player: PlayerData) : Widget()
 		{
 			for (y in -tilesHeight..tilesHeight*2)
 			{
-				renderer.queueSprite(grass, x.toFloat(), y.toFloat(), offsetx, offsety, SpaceSlot.TILE, 0)
+				renderer.queueSprite(grass, x.toFloat(), y.toFloat(), 0, 0)
 			}
 		}
 
 		// draw path
 		for (y in 1..tilesHeight*2)
 		{
-			renderer.queueSprite(path, 6f, y.toFloat(), offsetx, offsety, SpaceSlot.TILE, 1)
-			renderer.queueSprite(path, 7f, y.toFloat(), offsetx, offsety, SpaceSlot.TILE, 1)
+			renderer.queueSprite(path, 6f, y.toFloat(), 0, 1)
+			renderer.queueSprite(path, 7f, y.toFloat(), 0, 1)
 		}
 
 		gate.size[0] = 4
 		gate.size[1] = 4
-		renderer.queueSprite(gate, 5f, tilesHeight - 5f, offsetx, offsety, SpaceSlot.ORB, 0)
+		renderer.queueSprite(gate, 5f, tilesHeight - 5f, 1, 0)
 
 		for (i in 0..town.houses.size-1)
 		{
@@ -253,7 +252,7 @@ class TownWidget(val town: Town, val player: PlayerData) : Widget()
 			house.sprite.size[0] = 4
 			house.sprite.size[1] = 4
 
-			renderer.queueSprite(house.sprite, x, y, offsetx, offsety, SpaceSlot.ORB, 0)
+			renderer.queueSprite(house.sprite, x, y, 1, 0)
 
 			val left = (i % 2) == 0
 
@@ -261,25 +260,25 @@ class TownWidget(val town: Town, val player: PlayerData) : Widget()
 			{
 				for (px in x.toInt()..(tilesWidth/2))
 				{
-					renderer.queueSprite(path, px.toFloat(), y.toFloat() - 1f, offsetx, offsety, SpaceSlot.TILE, 1)
+					renderer.queueSprite(path, px.toFloat(), y.toFloat() - 1f, 0, 1)
 				}
 
-				renderer.queueSprite(path, 2f, (y.toFloat()), offsetx, offsety, SpaceSlot.TILE, 1)
-				renderer.queueSprite(path, 3f, (y.toFloat()), offsetx, offsety, SpaceSlot.TILE, 1)
+				renderer.queueSprite(path, 2f, (y.toFloat()), 0, 1)
+				renderer.queueSprite(path, 3f, (y.toFloat()), 0, 1)
 			}
 			else
 			{
 				for (px in (tilesWidth/2)..tilesWidth-3)
 				{
-					renderer.queueSprite(path, px.toFloat(), y.toFloat() - 1f, offsetx, offsety, SpaceSlot.TILE, 1)
+					renderer.queueSprite(path, px.toFloat(), y.toFloat() - 1f, 0, 1)
 				}
 
-				renderer.queueSprite(path, tilesWidth - 4f, (y.toFloat()), offsetx, offsety, SpaceSlot.TILE, 1)
-				renderer.queueSprite(path, tilesWidth - 3f, (y.toFloat()), offsetx, offsety, SpaceSlot.TILE, 1)
+				renderer.queueSprite(path, tilesWidth - 4f, (y.toFloat()), 0, 1)
+				renderer.queueSprite(path, tilesWidth - 3f, (y.toFloat()), 0, 1)
 			}
 		}
 
-		renderer.flush(Gdx.app.graphics.deltaTime, batch as SpriteBatch)
+		renderer.flush(Gdx.app.graphics.deltaTime, offsetx, offsety, batch as SpriteBatch)
 		playerSprite.render(batch, x + width / 2 - tileSize * 0.5f, y + height / 2 - tileSize * 0.2f, tileSize, tileSize)
 	}
 }

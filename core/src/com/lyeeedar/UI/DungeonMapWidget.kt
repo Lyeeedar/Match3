@@ -15,7 +15,6 @@ import com.lyeeedar.Map.DungeonMap
 import com.lyeeedar.Player.Player
 import com.lyeeedar.Screens.GridScreen
 import com.lyeeedar.Screens.TownScreen
-import com.lyeeedar.SpaceSlot
 import com.lyeeedar.Sprite.Sprite
 import com.lyeeedar.Sprite.SpriteAnimation.MoveAnimation
 import com.lyeeedar.Sprite.SpriteRenderer
@@ -45,8 +44,13 @@ class DungeonMapWidget(val map: DungeonMap, val player: Player): Widget()
 
 	lateinit var playerSprite: Sprite
 
-	val baseRenderer = SpriteRenderer(tileSize, 100f, 100f)
-	val detailRenderer = SpriteRenderer(tileSize, 100f, 100f)
+	val ROOMBASE = 0
+	val ROOMDETAIL = 1
+	val ARROWS = 2
+	val FOG = 3
+	val PLAYER = 4
+
+	val renderer = SpriteRenderer(tileSize, map.width.toFloat(), map.height.toFloat(), 5)
 	val bitflag = EnumBitflag<Direction>()
 	var waitingOnTransition: Boolean = false
 	var dungeonComplete = false
@@ -231,14 +235,14 @@ class DungeonMapWidget(val map: DungeonMap, val player: Player): Widget()
 			offsety -= offset[1] * tileSize
 		}
 
-		detailRenderer.queueSprite(playerSprite, map.playerPos.x.toFloat(), map.playerPos.y.toFloat() + 0.2f, offsetx, offsety, SpaceSlot.TILE, 1, update = false)
+		renderer.queueSprite(playerSprite, map.playerPos.x.toFloat(), map.playerPos.y.toFloat() + 0.2f, PLAYER, 0, update = false)
 
-		for (entry in map.map)
+		for (entry in map.map.values())
 		{
 			var sprite: Sprite?
 
 			bitflag.clear()
-			fun setFlag(dir: Direction) { if (entry.value.connections.containsKey(dir)) bitflag.setBit(dir) }
+			fun setFlag(dir: Direction) { if (entry.connections.containsKey(dir)) bitflag.setBit(dir) }
 			setFlag(Direction.NORTH)
 			setFlag(Direction.SOUTH)
 			setFlag(Direction.EAST)
@@ -246,7 +250,7 @@ class DungeonMapWidget(val map: DungeonMap, val player: Player): Widget()
 
 			if (bitflag.bitFlag == 0) bitflag.setBit(Direction.CENTRE)
 
-			if (entry.value.isRoom)
+			if (entry.isRoom)
 			{
 				sprite = map.theme.mapRoom.getSprite(bitflag)
 			}
@@ -257,52 +261,51 @@ class DungeonMapWidget(val map: DungeonMap, val player: Player): Widget()
 
 			if (sprite != null)
 			{
-				baseRenderer.queueSprite(sprite, entry.key.x.toFloat(), entry.key.y.toFloat(), offsetx, offsety, SpaceSlot.TILE, 0)
+				renderer.queueSprite(sprite, entry.point.x.toFloat(), entry.point.y.toFloat(), ROOMBASE, 0)
 			}
 
-			if (entry.value.isRoom)
+			if (entry.isRoom)
 			{
-				if (entry.value.isCompleted)
+				if (entry.isCompleted)
 				{
-					if (entry.value.completedSprite != null) baseRenderer.queueSprite(entry.value.completedSprite!!, entry.key.x.toFloat(), entry.key.y.toFloat(), offsetx, offsety, SpaceSlot.TILE, 1)
+					if (entry.completedSprite != null) renderer.queueSprite(entry.completedSprite!!, entry.point.x.toFloat(), entry.point.y.toFloat(), ROOMDETAIL, 0)
 				}
 				else
 				{
-					if (entry.value.uncompletedSprite != null) baseRenderer.queueSprite(entry.value.uncompletedSprite!!, entry.key.x.toFloat(), entry.key.y.toFloat(), offsetx, offsety, SpaceSlot.TILE, 1)
+					if (entry.uncompletedSprite != null) renderer.queueSprite(entry.uncompletedSprite!!, entry.point.x.toFloat(), entry.point.y.toFloat(), ROOMDETAIL, 0)
 				}
 			}
 
-			if (!entry.value.seen)
+			if (!entry.seen)
 			{
-				buildTilingBitflag(bitflag, entry.key)
+				buildTilingBitflag(bitflag, entry.point)
 				val fsprite = fog.getSprite(bitflag)
-				baseRenderer.queueSprite(fsprite, entry.key.x.toFloat(), entry.key.y.toFloat(), offsetx, offsety, SpaceSlot.EFFECT, 0, colour = Color.BLACK)
+				renderer.queueSprite(fsprite, entry.point.x.toFloat(), entry.point.y.toFloat(), FOG, 0, colour = Color.BLACK)
 			}
 
-			if (entry.key == map.playerPos && moveTo == null && playerSprite.spriteAnimation == null && !waitingOnTransition)
+			if (entry.point == map.playerPos && moveTo == null && playerSprite.spriteAnimation == null && !waitingOnTransition)
 			{
 				// add arrows
-				if (entry.value.connections.containsKey(Direction.NORTH))
+				if (entry.connections.containsKey(Direction.NORTH))
 				{
-					baseRenderer.queueSprite(upArrow, entry.key.x.toFloat() + Direction.NORTH.x, entry.key.y.toFloat() + Direction.NORTH.y, offsetx, offsety, SpaceSlot.EFFECT, 1)
+					renderer.queueSprite(upArrow, entry.point.x.toFloat() + Direction.NORTH.x, entry.point.y.toFloat() + Direction.NORTH.y, ARROWS, 0)
 				}
-				if (entry.value.connections.containsKey(Direction.SOUTH))
+				if (entry.connections.containsKey(Direction.SOUTH))
 				{
-					baseRenderer.queueSprite(downArrow, entry.key.x.toFloat() + Direction.SOUTH.x, entry.key.y.toFloat() + Direction.SOUTH.y, offsetx, offsety, SpaceSlot.EFFECT, 1)
+					renderer.queueSprite(downArrow, entry.point.x.toFloat() + Direction.SOUTH.x, entry.point.y.toFloat() + Direction.SOUTH.y, ARROWS, 0)
 				}
-				if (entry.value.connections.containsKey(Direction.WEST))
+				if (entry.connections.containsKey(Direction.WEST))
 				{
-					baseRenderer.queueSprite(leftArrow, entry.key.x.toFloat() + Direction.WEST.x, entry.key.y.toFloat() + Direction.WEST.y, offsetx, offsety, SpaceSlot.EFFECT, 1)
+					renderer.queueSprite(leftArrow, entry.point.x.toFloat() + Direction.WEST.x, entry.point.y.toFloat() + Direction.WEST.y, ARROWS, 0)
 				}
-				if (entry.value.connections.containsKey(Direction.EAST))
+				if (entry.connections.containsKey(Direction.EAST))
 				{
-					baseRenderer.queueSprite(rightArrow, entry.key.x.toFloat() + Direction.EAST.x, entry.key.y.toFloat() + Direction.EAST.y, offsetx, offsety, SpaceSlot.EFFECT, 1)
+					renderer.queueSprite(rightArrow, entry.point.x.toFloat() + Direction.EAST.x, entry.point.y.toFloat() + Direction.EAST.y, ARROWS, 0)
 				}
 			}
 		}
 
-		baseRenderer.flush(Gdx.app.graphics.deltaTime, batch as SpriteBatch)
-		detailRenderer.flush(Gdx.app.graphics.deltaTime, batch as SpriteBatch)
+		renderer.flush(Gdx.app.graphics.deltaTime, offsetx, offsety, batch as SpriteBatch)
 	}
 
 	// ----------------------------------------------------------------------

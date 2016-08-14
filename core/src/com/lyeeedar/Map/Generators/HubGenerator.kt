@@ -30,16 +30,16 @@ class HubGenerator
 		map.theme = theme
 		map.objective = ObjectiveExplore()
 
-		val hub = DungeonMapEntry()
+		val hub = DungeonMapEntry(Point.ZERO.copy())
 		hub.isRoom = true
-		map.map[Point.ZERO] = hub
+		map.map[hub.point.hashCode()] = hub
 
 		for (dir in Direction.CardinalValues)
 		{
 			val placed = expand(map, Point(dir.x, dir.y), dir)
 			if (placed)
 			{
-				hub.connections[dir] = map.map[Point.ZERO + dir]
+				hub.connections[dir] = map.map[(Point.ZERO + dir).hashCode()]
 			}
 		}
 
@@ -206,10 +206,10 @@ class HubGenerator
 			makeRoom = false
 		}
 
-		val tempRoom = DungeonMapEntry()
+		val tempRoom = DungeonMapEntry(point)
 		tempRoom.depth = depth
-		tempRoom.connections[dir.opposite] = map.map[point + dir.opposite]
-		map.map[point] = tempRoom
+		tempRoom.connections[dir.opposite] = map.map[(point + dir.opposite).hashCode()]
+		map.map[point.hashCode()] = tempRoom
 
 		if (!makeRoom)
 		{
@@ -222,7 +222,7 @@ class HubGenerator
 			}
 			else
 			{
-				tempRoom.connections[newDir] = map.map[point + newDir]
+				tempRoom.connections[newDir] = map.map[(point + newDir).hashCode()]
 			}
 		}
 
@@ -251,7 +251,7 @@ class HubGenerator
 						val placed = expand(map, point + newDir, newDir, 0, depth+1)
 						if (placed)
 						{
-							tempRoom.connections[newDir] = map.map[point + newDir]
+							tempRoom.connections[newDir] = map.map[(point + newDir).hashCode()]
 						}
 
 						if (freeDirections.size == 0) break

@@ -244,22 +244,6 @@ enum class Direction private constructor(val x: Int, val y: Int, val identifier:
 }
 
 // ----------------------------------------------------------------------
-enum class SpaceSlot
-{
-	TILE,
-	ORB,
-	EFFECT,
-	OVERHANG,
-	MOTE;
-
-
-	companion object
-	{
-		val Values = SpaceSlot.values()
-	}
-}
-
-// ----------------------------------------------------------------------
 enum class Statistic
 {
 	HEALTH,

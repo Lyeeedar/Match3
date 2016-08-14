@@ -8,7 +8,6 @@ import com.badlogic.gdx.utils.*
 import com.badlogic.gdx.utils.Array
 import com.lyeeedar.Direction
 import com.lyeeedar.Global
-import com.lyeeedar.SpaceSlot
 import com.lyeeedar.Util.EnumBitflag
 import com.lyeeedar.Util.Point
 import com.lyeeedar.Util.getPool
@@ -19,7 +18,7 @@ import java.util.*
  * Created by Philip on 04-Jul-16.
  */
 
-class SpriteRenderer(var tileSize: Float, val width: Float, val height: Float)
+class SpriteRenderer(var tileSize: Float, val width: Float, val height: Float, val layers: Int)
 {
 	var batchID: Int = 0
 
@@ -36,7 +35,7 @@ class SpriteRenderer(var tileSize: Float, val width: Float, val height: Float)
 	var screenShakeAngle: Float = 0f
 
 	val MAX_INDEX = 3
-	val X_BLOCK_SIZE = SpaceSlot.Values.size * MAX_INDEX
+	val X_BLOCK_SIZE = layers * MAX_INDEX
 	val Y_BLOCK_SIZE = X_BLOCK_SIZE * width
 	val MAX_Y_BLOCK_SIZE = Y_BLOCK_SIZE * height
 	val MAX_X_BLOCK_SIZE = X_BLOCK_SIZE * width
@@ -48,11 +47,11 @@ class SpriteRenderer(var tileSize: Float, val width: Float, val height: Float)
 	}
 
 	// ----------------------------------------------------------------------
-	fun flush(deltaTime: Float, batch: SpriteBatch)
+	fun flush(deltaTime: Float, offsetx: Float, offsety: Float, batch: SpriteBatch)
 	{
 		// do screen shake
-		var offsetx = 0f
-		var offsety = 0f
+		var offsetx = offsetx
+		var offsety = offsety
 
 		if ( screenShakeRadius > 2 )
 		{
@@ -106,26 +105,24 @@ class SpriteRenderer(var tileSize: Float, val width: Float, val height: Float)
 		tilingMap.clear()
 	}
 
-	fun getComparisonVal(x: Float, y: Float, offsetx: Float, offsety: Float, slot: SpaceSlot, index: Int) : Float
+	fun getComparisonVal(x: Float, y: Float, layer: Int, index: Int) : Float
 	{
-		if (index > MAX_INDEX-1) throw RuntimeException("Index too high! $index > $MAX_INDEX!")
+		if (index > MAX_INDEX-1) throw RuntimeException("Index too high! $index >= $MAX_INDEX!")
+		if (layer > layers-1) throw RuntimeException("Layer too high! $index >= $layers!")
 
-		val bx = (x - offsetx).toFloat() / tileSize
-		val by = (y - offsety).toFloat() / tileSize
+		val sx = (x / tileSize).toInt()
+		val sy = (y / tileSize).toInt()
 
-		val sx = bx.toInt()
-		val sy = by.toInt()
-
-		return MAX_Y_BLOCK_SIZE - sy * Y_BLOCK_SIZE + (MAX_X_BLOCK_SIZE - sx * X_BLOCK_SIZE) + slot.ordinal * MAX_INDEX + index
+		return MAX_Y_BLOCK_SIZE - sy * Y_BLOCK_SIZE + (MAX_X_BLOCK_SIZE - sx * X_BLOCK_SIZE) + layer * MAX_INDEX + index
 	}
 
 	// ----------------------------------------------------------------------
-	fun queueSprite(tilingSprite: TilingSprite, ix: Float, iy: Float, offsetx: Float, offsety: Float, slot: SpaceSlot, index: Int, colour: Color = Color.WHITE, width: Float = 1f, height: Float = 1f)
+	fun queueSprite(tilingSprite: TilingSprite, ix: Float, iy: Float, layer: Int, index: Int, colour: Color = Color.WHITE, width: Float = 1f, height: Float = 1f)
 	{
-		val x = ix * tileSize + offsetx
-		val y = iy * tileSize + offsety
+		val x = ix * tileSize
+		val y = iy * tileSize
 
-		val comparisonVal = getComparisonVal(x, y, offsetx, offsety, slot, index)
+		val comparisonVal = getComparisonVal(x, y, layer, index)
 
 		val rs = RenderSprite.obtain().set( null, tilingSprite, x, y, ix, iy, colour, width, height, comparisonVal )
 
@@ -143,7 +140,7 @@ class SpriteRenderer(var tileSize: Float, val width: Float, val height: Float)
 	}
 
 	// ----------------------------------------------------------------------
-	fun queueSprite(sprite: Sprite, ix: Float, iy: Float, offsetx: Float, offsety: Float, slot: SpaceSlot, index: Int, colour: Color = Color.WHITE, update: Boolean = true, width: Float = 1f, height: Float = 1f)
+	fun queueSprite(sprite: Sprite, ix: Float, iy: Float, layer: Int, index: Int, colour: Color = Color.WHITE, update: Boolean = true, width: Float = 1f, height: Float = 1f)
 	{
 		if (update)
 		{
@@ -151,8 +148,8 @@ class SpriteRenderer(var tileSize: Float, val width: Float, val height: Float)
 		}
 		sprite.batchID = batchID
 
-		var x = ix * tileSize + offsetx
-		var y = iy * tileSize + offsety
+		var x = ix * tileSize
+		var y = iy * tileSize
 
 		if ( sprite.spriteAnimation != null )
 		{
@@ -165,7 +162,7 @@ class SpriteRenderer(var tileSize: Float, val width: Float, val height: Float)
 			}
 		}
 
-		val comparisonVal = getComparisonVal(x, y, offsetx, offsety, slot, index)
+		val comparisonVal = getComparisonVal(x, y, layer, index)
 
 		val rs = RenderSprite.obtain().set( sprite, null, x, y, ix, iy, colour, width, height, comparisonVal )
 

@@ -1,15 +1,13 @@
 package com.lyeeedar.Map
 
+import com.badlogic.gdx.utils.IntMap
 import com.badlogic.gdx.utils.ObjectMap
 import com.lyeeedar.Board.Level
 import com.lyeeedar.Board.LevelTheme
 import com.lyeeedar.Direction
 import com.lyeeedar.Map.Objective.AbstractObjective
 import com.lyeeedar.Sprite.Sprite
-import com.lyeeedar.Util.Event0Arg
-import com.lyeeedar.Util.Event1Arg
-import com.lyeeedar.Util.FastEnumMap
-import com.lyeeedar.Util.Point
+import com.lyeeedar.Util.*
 
 /**
  * Created by Philip on 24-Jul-16.
@@ -23,13 +21,39 @@ class DungeonMap
 
 	lateinit var objective: AbstractObjective
 
-	val map: ObjectMap<Point, DungeonMapEntry> = ObjectMap()
+	val map: IntMap<DungeonMapEntry> = IntMap()
 
-	fun isFree(point: Point): Boolean = !map.containsKey(point)
-	fun get(point: Point): DungeonMapEntry? = map[point]
+	fun isFree(point: Point): Boolean = !map.containsKey(point.hashCode())
+	fun get(point: Point): DungeonMapEntry? = map[point.hashCode()]
+
+	val width: Int
+		get() = map.values().maxBy { it.point.x }!!.point.x
+
+	val height: Int
+		get() = map.values().maxBy { it.point.y }!!.point.y
 
 	fun finishSetup()
 	{
+		val minx = map.values().minBy { it.point.x }!!.point.x
+		val miny = map.values().minBy { it.point.y }!!.point.y
+
+		val ox = minx * -1
+		val oy = miny * -1
+
+		val playerRoom = map[playerPos.hashCode()]
+
+		val rooms = map.values().toArray()
+		map.clear()
+		for (room in rooms)
+		{
+			room.point.x += ox
+			room.point.y += oy
+			map[room.point.hashCode()] = room
+
+		}
+
+		playerPos.set(playerRoom.point)
+
 		for (room in map)
 		{
 			if (room.value.isRoom)
@@ -44,7 +68,7 @@ class DungeonMap
 	val onRoomComplete = Event1Arg<DungeonMapEntry>()
 }
 
-class DungeonMapEntry
+class DungeonMapEntry(val point: Point)
 {
 	enum class Type
 	{

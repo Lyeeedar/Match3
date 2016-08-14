@@ -12,9 +12,10 @@ import com.lyeeedar.Direction
  * Created by Philip on 20-Mar-16.
  */
 
+const val X_HASH_SIZE = 10000
+
 open class Point : Pool.Poolable, Comparable<Point>
 {
-	var fastHash = true
 	var dirty = true
 	var locked: Boolean = false
 	var fromPool: Boolean = false
@@ -26,7 +27,6 @@ open class Point : Pool.Poolable, Comparable<Point>
 			if (fromPool && !obtained) throw RuntimeException("Tried to edit a freed point")
 			if (field != value) dirty = true
 			field = value
-
 		}
 
 	var y: Int = 0
@@ -88,6 +88,7 @@ open class Point : Pool.Poolable, Comparable<Point>
 		{
 			val point = Point.pool.obtain()
 			point.fromPool = true
+			point.locked = false
 
 			if (point.obtained) throw RuntimeException()
 
@@ -116,6 +117,13 @@ open class Point : Pool.Poolable, Comparable<Point>
         this.y = y
         return this
     }
+
+	fun set(hashcode: Int): Point
+	{
+		x = hashcode / X_HASH_SIZE
+		y = hashcode - (x * X_HASH_SIZE)
+		return this
+	}
 
     fun set(other: Point) = set(other.x, other.y)
 
@@ -219,23 +227,19 @@ open class Point : Pool.Poolable, Comparable<Point>
 	{
 		if (other == null || other !is Point) return false
 
-		return other.x == x && other.y == y
+		return hashCode() == other.hashCode()
 	}
 
 	override operator fun compareTo(other: Point): Int
 	{
-		val compX = x.compareTo(other.x)
-		if (compX != 0) return compX
-
-		val compY = y.compareTo(other.y)
-		return compY
+		return hashCode().compareTo(other.hashCode())
 	}
 
 	operator fun rangeTo(other: Point): PointRange = PointRange(this, other)
 
 	override fun toString(): String
 	{
-		return "" + x + ", " + y
+		return "" + x + ", " + y + " hashcode: " + hashCode()
 	}
 
 	var storedHashCode: Int = 0
@@ -243,14 +247,8 @@ open class Point : Pool.Poolable, Comparable<Point>
 	{
 		if (dirty)
 		{
-			if (fastHash)
-			{
-				storedHashCode = x * 10000 + y
-			}
-			else
-			{
-				storedHashCode = toString().hashCode()
-			}
+			if (y >= X_HASH_SIZE) throw RuntimeException("Y too large for fast hashcode path! Y: $y >= $X_HASH_SIZE")
+			storedHashCode = x * X_HASH_SIZE + y
 			dirty = false
 		}
 

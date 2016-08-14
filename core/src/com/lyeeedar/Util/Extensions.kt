@@ -122,6 +122,8 @@ fun Float.floor() = MathUtils.floor(this)
 
 fun String.neaten() = this.substring(0, 1).toUpperCase() + this.substring(1).toLowerCase()
 
+operator fun <V> IntMap<V>.set(key: Int, value: V) = this.put(key, value)
+
 operator fun IntIntMap.get(key: Int) = this.get(key, 0)
 operator fun IntIntMap.set(key: Int, value: Int) = this.put(key, value)
 operator fun <K, V> ObjectMap<K, V>.set(key: K, value: V) = this.put(key, value)

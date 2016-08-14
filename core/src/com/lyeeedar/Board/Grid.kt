@@ -13,7 +13,6 @@ import com.lyeeedar.Global
 import com.lyeeedar.Player.Ability.Ability
 import com.lyeeedar.Player.Item
 import com.lyeeedar.Screens.GridScreen
-import com.lyeeedar.SpaceSlot
 import com.lyeeedar.Sprite.Sprite
 import com.lyeeedar.Sprite.SpriteAnimation.AlphaAnimation
 import com.lyeeedar.Sprite.SpriteAnimation.BumpAnimation
