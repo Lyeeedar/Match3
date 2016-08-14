@@ -33,6 +33,8 @@ class Sprite(val fileName: String, var animationDelay: Float, var textures: Arra
 		NONE, TEXTURE, SHRINK, SINE
 	}
 
+	var referenceSize: Float? = null
+
 	var batchID: Int = 0
 
 	var colour = Color(1f,1f,1f,1f)
@@ -96,7 +98,6 @@ class Sprite(val fileName: String, var animationDelay: Float, var textures: Arra
 
 	init
 	{
-
 		animationState = AnimationState()
 		animationState.mode = mode
 
@@ -225,7 +226,7 @@ class Sprite(val fileName: String, var animationDelay: Float, var textures: Arra
 		render(batch, x, y, width, height, scaleX, scaleY, animationState)
 	}
 
-	fun render(batch: SpriteBatch, x: Float, y: Float, width: Float, height: Float, scaleX: Float, scaleY: Float, animationState: AnimationState)
+	private fun render(batch: SpriteBatch, x: Float, y: Float, width: Float, height: Float, scaleX: Float, scaleY: Float, animationState: AnimationState)
 	{
 		val colour = if (colourAnimation != null) colourAnimation!!.renderColour()!! else if (spriteAnimation?.renderColour() != null) spriteAnimation!!.renderColour()!! else this.colour
 
@@ -267,11 +268,14 @@ class Sprite(val fileName: String, var animationDelay: Float, var textures: Arra
 
 		if (drawActualSize)
 		{
-			val widthRatio = width / 32.0f
-			val heightRatio = height / 32.0f
+			val widthRatio = width / 32f
+			val heightRatio = height / 32f
 
-			val trueWidth = texture.regionWidth * widthRatio
-			val trueHeight = texture.regionHeight * heightRatio
+			val regionWidth = referenceSize ?: texture.regionWidth.toFloat()
+			val regionHeight = referenceSize ?: texture.regionHeight.toFloat()
+
+			val trueWidth = regionWidth * widthRatio
+			val trueHeight = regionHeight * heightRatio
 
 			val widthOffset = (trueWidth - width) / 2
 
@@ -305,6 +309,7 @@ class Sprite(val fileName: String, var animationDelay: Float, var textures: Arra
 	fun copy(): Sprite
 	{
 		val sprite = Sprite(fileName, animationDelay, textures, colour, animationState.mode, sound, drawActualSize)
+		sprite.referenceSize = referenceSize
 		sprite.spriteAnimation = spriteAnimation?.copy()
 		sprite.colourAnimation = colourAnimation?.copy() as? AbstractColourAnimation
 

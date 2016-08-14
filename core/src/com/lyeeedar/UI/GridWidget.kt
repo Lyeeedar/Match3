@@ -44,8 +44,6 @@ class GridWidget(val grid: Grid) : Widget()
 	val foreground: SpriteRenderer = SpriteRenderer()
 	val floating: SpriteRenderer = SpriteRenderer()
 
-	val bitflag: EnumBitflag<Direction> = EnumBitflag()
-
 	val tempCol = Color()
 
 	init
@@ -215,14 +213,7 @@ class GridWidget(val grid: Grid) : Widget()
 				if (tile.sprite.tilingSprite != null)
 				{
 					val tiling = tile.sprite.tilingSprite!!
-					grid.buildTilingBitflag(bitflag, x, y, tiling.checkID)
-					val sprite = tiling.getSprite( bitflag )
-					background.queueSprite(sprite, xi, yi, xp, yp, SpaceSlot.TILE, 0, tileColour)
-
-					if (tiling.overhang != null && bitflag.contains(Direction.NORTH))
-					{
-						foreground.queueSprite(tiling.overhang!!, xi, (grid.height) - y.toFloat(), xp, yp, SpaceSlot.OVERHANG, 0, tileColour)
-					}
+					background.queueSprite(tiling, xi, yi, xp, yp, SpaceSlot.TILE, 0, tileColour)
 				}
 
 				if (chest != null)

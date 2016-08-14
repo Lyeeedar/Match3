@@ -1355,22 +1355,6 @@ class Grid(val width: Int, val height: Int, val level: Level)
 		if (x >= 0 && y >= 0 && x < width && y < height) return grid[x, y]
 		else return null
 	}
-
-	// ----------------------------------------------------------------------
-	fun buildTilingBitflag(bitflag: EnumBitflag<Direction>, x: Int, y: Int, id: Long)
-	{
-		// Build bitflag of surrounding tiles
-		bitflag.clear()
-		for (dir in Direction.Values)
-		{
-			val tile = tile( x - dir.x, y - dir.y )
-
-			if (tile == null || tile.sprite.tilingSprite == null || tile.sprite.tilingSprite?.checkID != id)
-			{
-				bitflag.setBit(dir)
-			}
-		}
-	}
 }
 
 data class Match(val p1: Point, val p2: Point, var used: Boolean = false)

@@ -70,7 +70,7 @@ class Orb(val desc: OrbDesc, val theme: LevelTheme): Point()
 		get() = desc.sinkable
 
 	val key: Int
-		get() = desc.key
+		get() = if (special is Match5) -1 else desc.key
 
 	var sprite: Sprite = desc.sprite.copy()
 

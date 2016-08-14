@@ -255,7 +255,16 @@ class AtlasCreator
 
 			if (overhangElement != null)
 			{
-				exists = tryPackSprite(overhangElement)
+
+				// pack top overhang
+				exists = packOverhang(topElement.get("Name"), overhangElement.get("Name"))
+				if (!exists)
+				{
+					return false
+				}
+
+				// pack front overhang
+				exists = packOverhang(frontElement.get("Name"), overhangElement.get("Name"))
 				if (!exists)
 				{
 					return false
@@ -292,6 +301,46 @@ class AtlasCreator
 			}
 		}
 
+		return true
+	}
+
+	private fun packOverhang(topName: String, overhangName: String) : Boolean
+	{
+		val composedName = topName + ": Overhang :" + overhangName
+
+		// File exists on disk, no need to compose
+		if (tryPackSprite(composedName))
+		{
+			println("Added Overhang sprite: " + composedName)
+			return true
+		}
+
+		val topHandle = Gdx.files.internal("Sprites/$topName.png")
+		if (!topHandle.exists())
+		{
+			System.err.println("Failed to find sprite for: " + topName)
+			return false
+		}
+
+		val overhangHandle = Gdx.files.internal("Sprites/$overhangName.png")
+		if (!overhangHandle.exists())
+		{
+			System.err.println("Failed to find sprite for: " + overhangName)
+			return false
+		}
+
+		val top = Pixmap(topHandle)
+		val overhang = Pixmap(overhangHandle)
+		val composed = ImageUtils.composeOverhang(top, overhang)
+		top.dispose()
+		overhang.dispose()
+
+		val image = ImageUtils.pixmapToImage(composed)
+		composed.dispose()
+
+		val path = "Sprites/$composedName.png"
+		packer.addImage(image, composedName)
+		packedPaths.add(path)
 		return true
 	}
 

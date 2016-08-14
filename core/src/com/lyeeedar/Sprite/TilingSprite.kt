@@ -1,5 +1,7 @@
 package com.lyeeedar.Sprite
 
+import com.badlogic.gdx.graphics.Color
+import com.badlogic.gdx.graphics.Colors
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.IntMap
@@ -15,16 +17,6 @@ class TilingSprite
 	constructor()
 	{
 
-	}
-
-	constructor(topSprite: Sprite, frontSprite: Sprite, overhangSprite: Sprite)
-	{
-		sprites.put(CENTER, topSprite)
-		sprites.put(SOUTH, frontSprite)
-
-		overhang = overhangSprite
-
-		hasAllElements = true
 	}
 
 	constructor(name: String, texture: String, mask: String)
@@ -43,8 +35,6 @@ class TilingSprite
 	var spriteBase = Element("Sprite", null)
 	var additive = false
 
-	var overhang: Sprite? = null
-
 	var hasAllElements: Boolean = false
 
 	fun copy(): TilingSprite
@@ -56,7 +46,6 @@ class TilingSprite
 		copy.maskName = maskName
 		copy.spriteBase = spriteBase
 		copy.hasAllElements = hasAllElements
-		copy.overhang = overhang?.copy()
 
 		for (pair in sprites.entries())
 		{
@@ -77,14 +66,28 @@ class TilingSprite
 		val topElement = xml.getChildByName("Top")
 		if (topElement != null)
 		{
+			val frontElement = xml.getChildByName("Front")
 			val topSprite = AssetManager.loadSprite(topElement)
-			val frontSprite = AssetManager.loadSprite(xml.getChildByName("Front"))
-			val overhangSprite = AssetManager.loadSprite(xml.getChildByName("Overhang"))
+			val frontSprite = AssetManager.loadSprite(frontElement)
 
 			sprites.put(CENTER, topSprite)
 			sprites.put(SOUTH, frontSprite)
 
-			overhang = overhangSprite
+			val overhangElement = xml.getChildByName("Overhang")
+			if (overhangElement != null)
+			{
+				val composedTopName = topElement.get("Name") + ": Overhang :" + overhangElement.get("Name")
+				val overhangTopSprite = AssetManager.loadSprite(composedTopName)
+				overhangTopSprite.drawActualSize = true
+				overhangTopSprite.referenceSize = 48f
+				sprites.put(NORTH, overhangTopSprite)
+
+				val composedFrontName = frontElement.get("Name") + ": Overhang :" + overhangElement.get("Name")
+				val overhangFrontSprite = AssetManager.loadSprite(composedFrontName)
+				overhangFrontSprite.drawActualSize = true
+				overhangFrontSprite.referenceSize = 48f
+				sprites.put(NORTHSOUTH, overhangFrontSprite)
+			}
 
 			hasAllElements = true
 		}
@@ -111,7 +114,15 @@ class TilingSprite
 	{
 		if (hasAllElements)
 		{
-			if (emptyDirections.contains(Direction.SOUTH))
+			if (emptyDirections.contains(Direction.NORTH) && emptyDirections.contains(Direction.SOUTH))
+			{
+				return sprites.get(NORTHSOUTH)
+			}
+			else if (emptyDirections.contains(Direction.NORTH))
+			{
+				return sprites.get(NORTH)
+			}
+			else if (emptyDirections.contains(Direction.SOUTH))
 			{
 				return sprites.get(SOUTH)
 			}
@@ -158,6 +169,7 @@ class TilingSprite
 		private val CENTER = 1 shl Direction.CENTRE.ordinal + 1
 		private val SOUTH = 1 shl Direction.SOUTH.ordinal + 1
 		private val NORTH = 1 shl Direction.NORTH.ordinal + 1
+		private val NORTHSOUTH = 0 or NORTH or SOUTH
 
 		fun load(xml: Element): TilingSprite
 		{
