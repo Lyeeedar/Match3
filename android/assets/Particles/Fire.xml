@@ -1,0 +1,103 @@
+<Effect>
+
+    <Repeat>true</Repeat>
+    <Warmup>5</Warmup>
+
+    <Emitters>
+        <Emitter>
+            <Space>Local</Space>
+            <Shape>Circle</Shape>
+            <Width>0</Width>
+            <Height>0</Height>
+            <Area>Interior</Area>
+            <Direction>Random</Direction>
+            <ParticleSpeed>0</ParticleSpeed>
+
+            <RateKeyframes>
+                <Rate>0,5</Rate>
+            </RateKeyframes>
+
+            <Particles>
+                <Particle>
+                    <Lifetime>1.5</Lifetime>
+                    <LifetimeOffset>0.5</LifetimeOffset>
+
+                    <SizeKeyframes>
+                        <Keyframe>0,1</Keyframe>
+                    </SizeKeyframes>
+
+                    <ColourKeyframes>
+                        <Keyframe>
+                            <Time>0</Time>
+                            <Value>255,255,255</Value>
+                        </Keyframe>
+                        <Keyframe>
+                            <Time>0.5</Time>
+                            <Value>255,255,180</Value>
+                        </Keyframe>
+                        <Keyframe>
+                            <Time>1</Time>
+                            <Value>255,255,255</Value>
+                        </Keyframe>
+                    </ColourKeyframes>
+
+                    <AlphaKeyframes>
+                        <Keyframe>0,0</Keyframe>
+                        <Keyframe>0.1,0.7</Keyframe>
+                        <Keyframe>0.6,0.7</Keyframe>
+                        <Keyframe>1,0</Keyframe>
+                    </AlphaKeyframes>
+                </Particle>
+            </Particles>
+        </Emitter>
+
+        <Emitter>
+
+            <Space>World</Space>
+            <Shape>Circle</Shape>
+            <Width>1</Width>
+            <Height>1</Height>
+            <Area>Interior</Area>
+            <Direction>Random</Direction>
+            <ParticleSpeed>0.005</ParticleSpeed>
+
+            <RateKeyframes>
+                <Rate>0,600</Rate>
+            </RateKeyframes>
+
+            <Particles>
+                <Particle>
+                    <Lifetime>1.5</Lifetime>
+                    <LifetimeOffset>0.5</LifetimeOffset>
+
+                    <SizeKeyframes>
+                        <Keyframe>0,0.1</Keyframe>
+                    </SizeKeyframes>
+
+                    <ColourKeyframes>
+                        <Keyframe>
+                            <Time>0</Time>
+                            <Value>255,255,255</Value>
+                        </Keyframe>
+                        <Keyframe>
+                            <Time>0.1</Time>
+                            <Value>255,255,0</Value>
+                        </Keyframe>
+                        <Keyframe>
+                            <Time>1</Time>
+                            <Value>255,0,0</Value>
+                        </Keyframe>
+                    </ColourKeyframes>
+
+                    <AlphaKeyframes>
+                        <Keyframe>0,0.6</Keyframe>
+                        <Keyframe>0.1,0.7</Keyframe>
+                        <Keyframe>0.6,0.7</Keyframe>
+                        <Keyframe>1,0</Keyframe>
+                    </AlphaKeyframes>
+                </Particle>
+            </Particles>
+        </Emitter>
+    </Emitters>
+
+</Effect>

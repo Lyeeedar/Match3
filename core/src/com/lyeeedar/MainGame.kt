@@ -3,10 +3,7 @@ package com.lyeeedar
 import com.badlogic.gdx.Game
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.files.FileHandle
-import com.lyeeedar.Screens.AbstractScreen
-import com.lyeeedar.Screens.GridScreen
-import com.lyeeedar.Screens.MapScreen
-import com.lyeeedar.Screens.TownScreen
+import com.lyeeedar.Screens.*
 
 import javax.swing.*
 import java.io.PrintWriter
@@ -64,7 +61,14 @@ class MainGame : Game()
 		screens.put(ScreenEnum.MAP, MapScreen())
 		screens.put(ScreenEnum.TOWN, TownScreen())
 
-		switchScreen(ScreenEnum.TOWN)
+		if (Global.PARTICLE_EDITOR)
+		{
+			setScreen(ParticleEditorScreen())
+		}
+		else
+		{
+			switchScreen(ScreenEnum.TOWN)
+		}
 	}
 
 	fun switchScreen(screen: AbstractScreen)
