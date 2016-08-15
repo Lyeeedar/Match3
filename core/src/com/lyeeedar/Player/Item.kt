@@ -1,7 +1,7 @@
 package com.lyeeedar.Player
 
 import com.lyeeedar.Rarity
-import com.lyeeedar.Sprite.Sprite
+import com.lyeeedar.Renderables.Sprite.Sprite
 import com.lyeeedar.Util.AssetManager
 import com.lyeeedar.Util.getXml
 

@@ -3,12 +3,9 @@ package com.lyeeedar.Sprite
 import com.badlogic.gdx.utils.IntMap
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Direction
+import com.lyeeedar.Renderables.Sprite.Sprite
 import com.lyeeedar.Util.AssetManager
 import com.lyeeedar.Util.EnumBitflag
-
-/**
- * Created by Philip on 25-Jul-16.
- */
 
 class DirectedSprite(val name: String)
 {

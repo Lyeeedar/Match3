@@ -2,10 +2,9 @@ package com.lyeeedar.Board
 
 import com.badlogic.gdx.math.Interpolation
 import com.lyeeedar.Global
-import com.lyeeedar.Sprite.Sprite
-import com.lyeeedar.Sprite.SpriteAnimation.BlinkAnimation
-import com.lyeeedar.Sprite.SpriteAnimation.ChromaticAnimation
-import com.lyeeedar.Sprite.SpriteAnimation.MoveAnimation
+import com.lyeeedar.Renderables.Animation.ChromaticAnimation
+import com.lyeeedar.Renderables.Animation.MoveAnimation
+import com.lyeeedar.Renderables.Sprite.Sprite
 import com.lyeeedar.Util.AssetManager
 import com.lyeeedar.Util.Point
 import com.lyeeedar.Util.UnsmoothedPath
@@ -234,7 +233,7 @@ class Match5(orb: Orb) : Special(orb)
 
 							val s = sprite.copy()
 							s.drawActualSize = false
-							s.spriteAnimation = MoveAnimation.obtain().set(flightTime, UnsmoothedPath(tile.getPosDiff(point)))
+							s.animation = MoveAnimation.obtain().set(flightTime, UnsmoothedPath(tile.getPosDiff(point)))
 							s.renderDelay = delay
 							tile.effects.add(s)
 						}
@@ -245,7 +244,7 @@ class Match5(orb: Orb) : Special(orb)
 
 							val s = sprite.copy()
 							s.drawActualSize = false
-							s.spriteAnimation = MoveAnimation.obtain().set(flightTime, UnsmoothedPath(tile.getPosDiff(point)))
+							s.animation = MoveAnimation.obtain().set(flightTime, UnsmoothedPath(tile.getPosDiff(point)))
 							s.renderDelay = delay
 							tile.effects.add(s)
 						}
@@ -268,7 +267,7 @@ class Match5(orb: Orb) : Special(orb)
 
 						val s = sprite.copy()
 						s.drawActualSize = false
-						s.spriteAnimation = MoveAnimation.obtain().set(flightTime, UnsmoothedPath(tile.getPosDiff(point)))
+						s.animation = MoveAnimation.obtain().set(flightTime, UnsmoothedPath(tile.getPosDiff(point)))
 						s.renderDelay = delay
 						tile.effects.add(s)
 					}
@@ -279,7 +278,7 @@ class Match5(orb: Orb) : Special(orb)
 
 						val s = sprite.copy()
 						s.drawActualSize = false
-						s.spriteAnimation = MoveAnimation.obtain().set(flightTime, UnsmoothedPath(tile.getPosDiff(point)))
+						s.animation = MoveAnimation.obtain().set(flightTime, UnsmoothedPath(tile.getPosDiff(point)))
 						s.renderDelay = delay
 						tile.effects.add(s)
 					}

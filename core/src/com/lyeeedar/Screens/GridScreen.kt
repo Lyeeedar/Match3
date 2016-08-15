@@ -16,9 +16,9 @@ import com.lyeeedar.Board.Level
 import com.lyeeedar.Board.LevelTheme
 import com.lyeeedar.Global
 import com.lyeeedar.Player.Player
-import com.lyeeedar.Sprite.Sprite
+import com.lyeeedar.Renderables.Animation.MoveAnimation
+import com.lyeeedar.Renderables.Sprite.Sprite
 
-import com.lyeeedar.Sprite.SpriteAnimation.MoveAnimation
 import com.lyeeedar.Sprite.SpriteEffectActor
 import com.lyeeedar.Sprite.SpriteRenderer
 import com.lyeeedar.UI.*
@@ -122,7 +122,7 @@ class GridScreen(): AbstractScreen()
 
 			val diff = src.dst(dst).div(32f)
 
-			sprite.spriteAnimation = MoveAnimation.obtain().set(0.2f + diff * 0.1f, path, Interpolation.exp5In)
+			sprite.animation = MoveAnimation.obtain().set(0.2f + diff * 0.1f, path, Interpolation.exp5In)
 
 			SpriteEffectActor(sprite, 32f, 32f, Vector2(),
 					{

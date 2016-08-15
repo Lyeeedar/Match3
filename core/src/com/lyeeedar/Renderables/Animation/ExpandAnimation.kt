@@ -1,4 +1,4 @@
-package com.lyeeedar.Sprite.SpriteAnimation
+package com.lyeeedar.Renderables.Animation
 
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.utils.Pool
@@ -47,7 +47,7 @@ class ExpandAnimation() : AbstractScaleAnimation()
 		return this
 	}
 
-	override fun copy(): AbstractSpriteAnimation = ExpandAnimation.obtain().set(duration)
+	override fun copy(): AbstractAnimation = ExpandAnimation.obtain().set(duration)
 
 	var obtained: Boolean = false
 	companion object

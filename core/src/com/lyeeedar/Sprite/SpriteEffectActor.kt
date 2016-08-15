@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.scenes.scene2d.Actor
 import com.lyeeedar.Global
-import com.lyeeedar.Sprite.Sprite
+import com.lyeeedar.Renderables.Sprite.Sprite
 
 open class SpriteEffectActor(val sprite: Sprite, val w: Float, val h: Float, val pos: Vector2, val completionFunc: (() -> Unit)? = null): Actor()
 {
@@ -32,9 +32,9 @@ open class SpriteEffectActor(val sprite: Sprite, val w: Float, val h: Float, val
 		var x = pos.x
 		var y = pos.y
 
-		if ( sprite.spriteAnimation != null )
+		if ( sprite.animation != null )
 		{
-			val offset = sprite.spriteAnimation?.renderOffset()
+			val offset = sprite.animation?.renderOffset()
 
 			if (offset != null)
 			{

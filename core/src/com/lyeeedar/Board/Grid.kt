@@ -12,15 +12,13 @@ import com.lyeeedar.Direction
 import com.lyeeedar.Global
 import com.lyeeedar.Player.Ability.Ability
 import com.lyeeedar.Player.Item
+import com.lyeeedar.Renderables.Animation.AlphaAnimation
+import com.lyeeedar.Renderables.Animation.BumpAnimation
+import com.lyeeedar.Renderables.Animation.ExpandAnimation
+import com.lyeeedar.Renderables.Animation.MoveAnimation
 import com.lyeeedar.Screens.GridScreen
-import com.lyeeedar.Sprite.Sprite
-import com.lyeeedar.Sprite.SpriteAnimation.AlphaAnimation
-import com.lyeeedar.Sprite.SpriteAnimation.BumpAnimation
-import com.lyeeedar.Sprite.SpriteAnimation.ExpandAnimation
-import com.lyeeedar.Sprite.SpriteAnimation.MoveAnimation
 import com.lyeeedar.Sprite.SpriteRenderer
 import com.lyeeedar.Sprite.SpriteWrapper
-import com.lyeeedar.Sprite.TilingSprite
 import com.lyeeedar.UI.FullscreenMessage
 import com.lyeeedar.UI.GridWidget
 import com.lyeeedar.UI.PowerBar
@@ -470,13 +468,13 @@ class Grid(val width: Int, val height: Int, val level: Level)
 
 					val path = UnsmoothedPath(pathPoints)
 
-					orb.sprite.spriteAnimation = MoveAnimation.obtain().set(0.1f + pathPoints.size * animSpeed, path, Interpolation.exp5In)
+					orb.sprite.animation = MoveAnimation.obtain().set(0.1f + pathPoints.size * animSpeed, path, Interpolation.exp5In)
 					orb.sprite.renderDelay = orb.spawnCount * 0.1f
 					orb.spawnCount = -1
 
 					if (firstIsNull)
 					{
-						orb.sprite.spriteAnimation = ExpandAnimation.obtain().set(animSpeed)
+						orb.sprite.animation = ExpandAnimation.obtain().set(animSpeed)
 						orb.sprite.showBeforeRender = false
 					}
 
@@ -506,7 +504,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 				}
 
 				val orb = tile.orb
-				if (orb != null && orb.sprite.spriteAnimation != null)
+				if (orb != null && orb.sprite.animation != null)
 				{
 					hasAnim = true
 					break
@@ -598,7 +596,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 			if (armfun != null)
 			{
 				val sprite = oldOrb.sprite.copy()
-				sprite.spriteAnimation = MoveAnimation.obtain().set(animSpeed, UnsmoothedPath(newTile.getPosDiff(oldTile)), Interpolation.linear)
+				sprite.animation = MoveAnimation.obtain().set(animSpeed, UnsmoothedPath(newTile.getPosDiff(oldTile)), Interpolation.linear)
 				newTile.effects.add(sprite)
 
 				onPop(oldOrb, 0f)
@@ -620,15 +618,15 @@ class Grid(val width: Int, val height: Int, val level: Level)
 			oldTile.orb = oldOrb
 			newTile.orb = newOrb
 
-			oldOrb.sprite.spriteAnimation = BumpAnimation.obtain().set(animSpeed, Direction.Companion.getDirection(oldTile, newTile))
+			oldOrb.sprite.animation = BumpAnimation.obtain().set(animSpeed, Direction.Companion.getDirection(oldTile, newTile))
 			return false
 		}
 		else
 		{
 			lastSwapped = newTile
 
-			oldOrb.sprite.spriteAnimation = MoveAnimation.obtain().set(animSpeed, UnsmoothedPath(newTile.getPosDiff(oldTile)), Interpolation.linear)
-			newOrb.sprite.spriteAnimation = MoveAnimation.obtain().set(animSpeed, UnsmoothedPath(oldTile.getPosDiff(newTile)), Interpolation.linear)
+			oldOrb.sprite.animation = MoveAnimation.obtain().set(animSpeed, UnsmoothedPath(newTile.getPosDiff(oldTile)), Interpolation.linear)
+			newOrb.sprite.animation = MoveAnimation.obtain().set(animSpeed, UnsmoothedPath(oldTile.getPosDiff(newTile)), Interpolation.linear)
 			return true
 		}
 	}
@@ -648,7 +646,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 					orb.x = x
 					orb.y = y
 
-					if (orb.markedForDeletion && orb.sprite.spriteAnimation == null && orb.armed == null)
+					if (orb.markedForDeletion && orb.sprite.animation == null && orb.armed == null)
 					{
 						tile.orb = null
 						onPop(orb, orb.deletionEffectDelay)
@@ -658,11 +656,11 @@ class Grid(val width: Int, val height: Int, val level: Level)
 							val sprite = orb.sprite.copy()
 							sprite.renderDelay = orb.deletionEffectDelay - 0.2f
 							sprite.showBeforeRender = true
-							sprite.spriteAnimation = AlphaAnimation.obtain().set(floatArrayOf(1f, 0f), sprite.colour, 0.2f)
+							sprite.animation = AlphaAnimation.obtain().set(floatArrayOf(1f, 0f), sprite.colour, 0.2f)
 							tile.effects.add(sprite)
 						}
 					}
-					else if (orb.hasAttack && orb.attackTimer == 0 && orb.sprite.spriteAnimation == null)
+					else if (orb.hasAttack && orb.attackTimer == 0 && orb.sprite.animation == null)
 					{
 						if (!level.completed) onAttacked(orb)
 						tile.orb = null
@@ -1226,7 +1224,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 				{
 					val sprite = orb.sprite.copy()
 					sprite.drawActualSize = false
-					sprite.spriteAnimation = MoveAnimation.obtain().set(animSpeed, UnsmoothedPath(tile.getPosDiff(point)), Interpolation.linear)
+					sprite.animation = MoveAnimation.obtain().set(animSpeed, UnsmoothedPath(tile.getPosDiff(point)), Interpolation.linear)
 
 					tile.effects.add(sprite)
 				}
@@ -1235,7 +1233,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 				{
 					val sprite = orb.sprite.copy()
 					sprite.drawActualSize = false
-					sprite.spriteAnimation = MoveAnimation.obtain().set(animSpeed, UnsmoothedPath(tile.getPosDiff(point)), Interpolation.linear)
+					sprite.animation = MoveAnimation.obtain().set(animSpeed, UnsmoothedPath(tile.getPosDiff(point)), Interpolation.linear)
 
 					tile.effects.add(sprite)
 				}
@@ -1272,7 +1270,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 				{
 					val sprite = orb.sprite.copy()
 					sprite.drawActualSize = false
-					sprite.spriteAnimation = MoveAnimation.obtain().set(animSpeed, UnsmoothedPath(tile.getPosDiff(point)), Interpolation.linear)
+					sprite.animation = MoveAnimation.obtain().set(animSpeed, UnsmoothedPath(tile.getPosDiff(point)), Interpolation.linear)
 
 					tile.effects.add(sprite)
 				}

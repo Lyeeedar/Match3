@@ -6,8 +6,8 @@ import com.badlogic.gdx.math.*
 import com.badlogic.gdx.scenes.scene2d.Actor
 import com.badlogic.gdx.utils.Array
 import com.lyeeedar.Global
-import com.lyeeedar.Sprite.Sprite
-import com.lyeeedar.Sprite.SpriteAnimation.MoveAnimation
+import com.lyeeedar.Renderables.Animation.MoveAnimation
+import com.lyeeedar.Renderables.Sprite.Sprite
 import com.lyeeedar.Sprite.SpriteEffectActor
 
 class Mote(src: Vector2, dst: Vector2, sprite: Sprite, completionFunc: (() -> Unit)? = null) : SpriteEffectActor(sprite, 32f, 32f, Vector2(), { completionFunc?.invoke(); moteCount-- })
@@ -21,7 +21,7 @@ class Mote(src: Vector2, dst: Vector2, sprite: Sprite, completionFunc: (() -> Un
 		val p3 = dst.cpy()
 
 		val path = Bezier(p0, p1, p2, p3)
-		sprite.spriteAnimation = MoveAnimation.obtain().set(1.5f, path, Interpolation.exp5)
+		sprite.animation = MoveAnimation.obtain().set(1.5f, path, Interpolation.exp5)
 
 		moteCount++
 	}

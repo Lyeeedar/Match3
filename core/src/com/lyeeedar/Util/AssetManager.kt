@@ -22,10 +22,10 @@ import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.BufferUtils
 import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.XmlReader.Element
+import com.lyeeedar.Renderables.Animation.AbstractAnimation
+import com.lyeeedar.Renderables.Sprite.Sprite
+import com.lyeeedar.Renderables.Sprite.TilingSprite
 import com.lyeeedar.Sound.SoundInstance
-import com.lyeeedar.Sprite.Sprite
-import com.lyeeedar.Sprite.SpriteAnimation.AbstractSpriteAnimation
-import com.lyeeedar.Sprite.TilingSprite
 
 class AssetManager
 {
@@ -282,7 +282,7 @@ class AssetManager
 			val animationElement = xml.getChildByName("Animation")
 			if (animationElement != null)
 			{
-				sprite.spriteAnimation = AbstractSpriteAnimation.load(animationElement.getChild(0))
+				sprite.animation = AbstractAnimation.load(animationElement.getChild(0))
 			}
 
 			return sprite
@@ -334,7 +334,7 @@ class AssetManager
 			val animationElement = xml.getChildByName("Animation")
 			if (animationElement != null)
 			{
-				sprite.spriteAnimation = AbstractSpriteAnimation.load(animationElement.getChild(0))
+				sprite.animation = AbstractAnimation.load(animationElement.getChild(0))
 			}
 
 

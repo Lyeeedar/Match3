@@ -1,25 +1,22 @@
-package com.lyeeedar.Sprite
+package com.lyeeedar.Renderables.Sprite
 
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.Colors
+import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.IntMap
 import com.badlogic.gdx.utils.XmlReader.Element
 import com.lyeeedar.Util.AssetManager
 import com.lyeeedar.Direction
+import com.lyeeedar.Renderables.Renderable
 import com.lyeeedar.Util.EnumBitflag
 
 // Naming priority: NSEW
-class TilingSprite
+class TilingSprite() : Renderable()
 {
 
-	constructor()
-	{
-
-	}
-
-	constructor(name: String, texture: String, mask: String)
+	constructor(name: String, texture: String, mask: String) : this()
 	{
 		val spriteBase = Element("Sprite", null)
 
@@ -162,6 +159,23 @@ class TilingSprite
 				return sprite!!
 			}
 		}
+	}
+
+	override fun doUpdate(delta: Float): Boolean
+	{
+		val complete = animation?.update(delta) ?: true
+		if (complete)
+		{
+			animation?.free()
+			animation = null
+		}
+
+		return complete
+	}
+
+	override fun doRender(batch: SpriteBatch, x: Float, y: Float, tileSize: Float)
+	{
+
 	}
 
 	companion object

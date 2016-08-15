@@ -5,8 +5,8 @@ import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Direction
-import com.lyeeedar.Sprite.Sprite
-import com.lyeeedar.Sprite.SpriteAnimation.BlinkAnimation
+import com.lyeeedar.Renderables.Animation.BlinkAnimation
+import com.lyeeedar.Renderables.Sprite.Sprite
 import com.lyeeedar.Util.AssetManager
 import com.lyeeedar.Util.FastEnumMap
 import com.lyeeedar.Util.Point

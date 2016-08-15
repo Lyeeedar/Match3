@@ -6,10 +6,10 @@ import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.ObjectSet
 import com.lyeeedar.Direction
-import com.lyeeedar.Sprite.Sprite
-import com.lyeeedar.Sprite.SpriteAnimation.BlinkAnimation
-import com.lyeeedar.Sprite.SpriteAnimation.BumpAnimation
-import com.lyeeedar.Sprite.SpriteAnimation.ExtendAnimation
+import com.lyeeedar.Renderables.Animation.BlinkAnimation
+import com.lyeeedar.Renderables.Animation.BumpAnimation
+import com.lyeeedar.Renderables.Animation.ExtendAnimation
+import com.lyeeedar.Renderables.Sprite.Sprite
 import com.lyeeedar.Util.*
 
 /**
@@ -90,11 +90,11 @@ class Monster(val desc: MonsterDesc)
 				tile.orb!!.attackTimer = attackSpeed
 				val diff = tile.getPosDiff(tiles[0, 0])
 				diff[0].y *= -1
-				sprite.spriteAnimation = BumpAnimation.obtain().set(0.2f, diff)
+				sprite.animation = BumpAnimation.obtain().set(0.2f, diff)
 
 				val beam = AssetManager.loadSprite("EffectSprites/Beam/Beam")
 				beam.rotation = getRotation(tiles[0, 0], tile) * -1
-				beam.spriteAnimation = ExtendAnimation.obtain().set(0.25f, tile.getPosDiff(tiles[0, 0]))
+				beam.animation = ExtendAnimation.obtain().set(0.25f, tile.getPosDiff(tiles[0, 0]))
 				beam.colour = Color.RED
 				tiles[0, 0].effects.add(beam)
 			}

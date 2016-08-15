@@ -8,8 +8,8 @@ import com.lyeeedar.MainGame
 import com.lyeeedar.Map.Objective.AbstractObjective
 import com.lyeeedar.Player.Equipment.Equipment
 import com.lyeeedar.Player.Player
+import com.lyeeedar.Renderables.Sprite.Sprite
 import com.lyeeedar.Screens.TownScreen
-import com.lyeeedar.Sprite.Sprite
 import com.lyeeedar.Util.AssetManager
 import com.lyeeedar.Util.addClickListener
 

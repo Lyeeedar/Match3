@@ -1,7 +1,7 @@
 package com.lyeeedar.Board
 
 import com.lyeeedar.Board.CompletionCondition.CompletionConditionSink
-import com.lyeeedar.Sprite.Sprite
+import com.lyeeedar.Renderables.Sprite.Sprite
 import com.lyeeedar.Util.AssetManager
 
 /**

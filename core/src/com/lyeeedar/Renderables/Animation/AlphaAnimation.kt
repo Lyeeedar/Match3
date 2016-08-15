@@ -1,4 +1,4 @@
-package com.lyeeedar.Sprite.SpriteAnimation
+package com.lyeeedar.Renderables.Animation
 
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.MathUtils
@@ -58,7 +58,7 @@ class AlphaAnimation() : AbstractColourAnimation()
 		return this
 	}
 
-	override fun copy(): AbstractSpriteAnimation = AlphaAnimation.obtain().set(alphas, startColour, duration, oneTime)
+	override fun copy(): AbstractAnimation = AlphaAnimation.obtain().set(alphas, startColour, duration, oneTime)
 
 	var obtained: Boolean = false
 	companion object

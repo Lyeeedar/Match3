@@ -8,7 +8,7 @@ import com.badlogic.gdx.utils.ObjectMap
 import com.lyeeedar.Board.Grid
 import com.lyeeedar.Player.Ability.Ability
 import com.lyeeedar.Player.Equipment.Equipment
-import com.lyeeedar.Sprite.Sprite
+import com.lyeeedar.Renderables.Sprite.Sprite
 import com.lyeeedar.UI.SpriteWidget
 import com.lyeeedar.Util.set
 

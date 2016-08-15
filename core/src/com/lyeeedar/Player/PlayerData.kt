@@ -3,7 +3,7 @@ package com.lyeeedar.Player
 import com.badlogic.gdx.utils.ObjectMap
 import com.lyeeedar.Player.Ability.Ability
 import com.lyeeedar.Player.Equipment.Equipment
-import com.lyeeedar.Sprite.Sprite
+import com.lyeeedar.Renderables.Sprite.Sprite
 import com.lyeeedar.UI.MessageBox
 import com.lyeeedar.UI.UnlockTree
 import com.lyeeedar.Util.AssetManager

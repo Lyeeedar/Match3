@@ -6,7 +6,7 @@ import com.lyeeedar.Board.Level
 import com.lyeeedar.Board.LevelTheme
 import com.lyeeedar.Direction
 import com.lyeeedar.Map.Objective.AbstractObjective
-import com.lyeeedar.Sprite.Sprite
+import com.lyeeedar.Renderables.Sprite.Sprite
 import com.lyeeedar.Util.*
 
 /**

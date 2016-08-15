@@ -1,4 +1,4 @@
-package com.lyeeedar.Sprite.SpriteAnimation
+package com.lyeeedar.Renderables.Animation
 
 import com.badlogic.gdx.math.Interpolation
 import com.badlogic.gdx.math.MathUtils
@@ -7,7 +7,6 @@ import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.Pool
 import com.badlogic.gdx.utils.Pools
 import com.badlogic.gdx.utils.XmlReader.Element
-import com.lyeeedar.Global
 import com.lyeeedar.Util.Point
 import com.lyeeedar.Util.UnsmoothedPath
 
@@ -128,7 +127,7 @@ class MoveAnimation : AbstractMoveAnimation
 	{
 	}
 
-	override fun copy(): AbstractSpriteAnimation
+	override fun copy(): AbstractAnimation
 	{
 		val anim = MoveAnimation.obtain()
 		anim.eqn = eqn

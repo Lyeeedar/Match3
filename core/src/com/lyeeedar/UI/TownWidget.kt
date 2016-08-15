@@ -10,13 +10,13 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener
 import com.badlogic.gdx.utils.Array
 import com.lyeeedar.Global
 import com.lyeeedar.Map.World
-import com.lyeeedar.Particle.Effect
+import com.lyeeedar.Renderables.Particle.Effect
 import com.lyeeedar.Player.Player
 import com.lyeeedar.Player.PlayerData
-import com.lyeeedar.Sprite.Sprite
-import com.lyeeedar.Sprite.SpriteAnimation.MoveAnimation
+import com.lyeeedar.Renderables.Animation.MoveAnimation
+import com.lyeeedar.Renderables.Sprite.Sprite
+import com.lyeeedar.Renderables.Sprite.TilingSprite
 import com.lyeeedar.Sprite.SpriteRenderer
-import com.lyeeedar.Sprite.TilingSprite
 import com.lyeeedar.Town.House
 import com.lyeeedar.Town.Town
 import com.lyeeedar.Util.*
@@ -57,7 +57,7 @@ class TownWidget(val town: Town, val player: PlayerData) : Widget()
 			{
 				super.clicked(event, x, y)
 
-				if (playerSprite.spriteAnimation != null) return
+				if (playerSprite.animation != null) return
 
 				val offsetx = (width / 2) - playerPos.x * tileSize - tileSize*0.5f
 				val offsety = (height / 2) - playerPos.y * tileSize - tileSize*0.5f
@@ -131,7 +131,7 @@ class TownWidget(val town: Town, val player: PlayerData) : Widget()
 		{
 			val dst = Math.abs(oldPos.y - y)
 			val path = arrayOf(Vector2((oldPos.x - x).toFloat(), (oldPos.y - y).toFloat()), Vector2())
-			playerSprite.spriteAnimation = MoveAnimation.obtain().set(dst * 0.2f, UnsmoothedPath(path))
+			playerSprite.animation = MoveAnimation.obtain().set(dst * 0.2f, UnsmoothedPath(path))
 
 			if (arrivalFun != null) Future.call(arrivalFun, dst * 0.2f + 0.3f, this)
 		}
@@ -147,7 +147,7 @@ class TownWidget(val town: Town, val player: PlayerData) : Widget()
 				else return 0
 			})
 
-			playerSprite.spriteAnimation = MoveAnimation.obtain().set(dst * 0.2f, path)
+			playerSprite.animation = MoveAnimation.obtain().set(dst * 0.2f, path)
 
 			if (arrivalFun != null) Future.call(arrivalFun, dst * 0.2f + 0.3f, this)
 		}
@@ -155,7 +155,7 @@ class TownWidget(val town: Town, val player: PlayerData) : Widget()
 		{
 			val dst = oldPos.dist(playerPos)
 			val path = arrayOf(Vector2((oldPos.x - x).toFloat(), 0f), Vector2())
-			playerSprite.spriteAnimation = MoveAnimation.obtain().set(dst * 0.2f, UnsmoothedPath(path))
+			playerSprite.animation = MoveAnimation.obtain().set(dst * 0.2f, UnsmoothedPath(path))
 
 			if (arrivalFun != null) Future.call(arrivalFun, dst * 0.2f + 0.3f, this)
 		}
@@ -216,9 +216,9 @@ class TownWidget(val town: Town, val player: PlayerData) : Widget()
 		var offsetx = (x + width / 2) - playerPos.x * tileSize - tileSize*0.5f
 		var offsety = (y + height / 2) - playerPos.y * tileSize - tileSize*0.5f
 
-		if (playerSprite.spriteAnimation != null)
+		if (playerSprite.animation != null)
 		{
-			val offset = playerSprite.spriteAnimation!!.renderOffset()!!
+			val offset = playerSprite.animation!!.renderOffset()!!
 			offsetx -= offset[0] * tileSize
 			offsety -= offset[1] * tileSize
 		}

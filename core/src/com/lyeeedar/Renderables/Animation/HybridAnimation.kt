@@ -1,4 +1,4 @@
-package com.lyeeedar.Sprite.SpriteAnimation
+package com.lyeeedar.Renderables.Animation
 
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.MathUtils
@@ -8,7 +8,7 @@ import com.badlogic.gdx.utils.XmlReader
  * Created by Philip on 28-Apr-16.
  */
 
-class HybridAnimation(): AbstractSpriteAnimation()
+class HybridAnimation(): AbstractAnimation()
 {
 	var offset: AbstractMoveAnimation? = null
 	var scale: AbstractScaleAnimation? = null
@@ -46,7 +46,7 @@ class HybridAnimation(): AbstractSpriteAnimation()
 		colour = null
 	}
 
-	override fun copy(): AbstractSpriteAnimation
+	override fun copy(): AbstractAnimation
 	{
 		val anim = HybridAnimation()
 

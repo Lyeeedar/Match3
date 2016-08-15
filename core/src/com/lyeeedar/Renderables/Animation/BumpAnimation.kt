@@ -1,4 +1,4 @@
-package com.lyeeedar.Sprite.SpriteAnimation
+package com.lyeeedar.Renderables.Animation
 
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Vector2
@@ -6,7 +6,6 @@ import com.badlogic.gdx.utils.Pool
 import com.badlogic.gdx.utils.Pools
 import com.badlogic.gdx.utils.XmlReader.Element
 import com.lyeeedar.Direction
-import com.lyeeedar.Global
 
 class BumpAnimation : AbstractMoveAnimation
 {
@@ -49,7 +48,7 @@ class BumpAnimation : AbstractMoveAnimation
 		return time > duration
 	}
 
-	fun set(duration: Float, path: kotlin.Array<Vector2>): BumpAnimation
+	fun set(duration: Float, path: Array<Vector2>): BumpAnimation
 	{
 		this.duration = duration
 		this.direction = Direction.getDirection(path)
@@ -71,7 +70,7 @@ class BumpAnimation : AbstractMoveAnimation
 	{
 	}
 
-	override fun copy(): AbstractSpriteAnimation
+	override fun copy(): AbstractAnimation
 	{
 		val anim = BumpAnimation()
 		anim.direction = direction

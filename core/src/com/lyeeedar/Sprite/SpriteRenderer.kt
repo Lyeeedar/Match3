@@ -8,6 +8,8 @@ import com.badlogic.gdx.utils.*
 import com.badlogic.gdx.utils.Array
 import com.lyeeedar.Direction
 import com.lyeeedar.Global
+import com.lyeeedar.Renderables.Sprite.TilingSprite
+import com.lyeeedar.Renderables.Sprite.Sprite
 import com.lyeeedar.Util.EnumBitflag
 import com.lyeeedar.Util.Point
 import com.lyeeedar.Util.getPool
@@ -119,8 +121,22 @@ class SpriteRenderer(var tileSize: Float, val width: Float, val height: Float, v
 	// ----------------------------------------------------------------------
 	fun queueSprite(tilingSprite: TilingSprite, ix: Float, iy: Float, layer: Int, index: Int, colour: Color = Color.WHITE, width: Float = 1f, height: Float = 1f)
 	{
-		val x = ix * tileSize
-		val y = iy * tileSize
+		if (tilingSprite.batchID != batchID) tilingSprite.update(Gdx.app.graphics.deltaTime)
+		tilingSprite.batchID = batchID
+
+		var x = ix * tileSize
+		var y = iy * tileSize
+
+		if ( tilingSprite.animation != null )
+		{
+			val offset = tilingSprite.animation?.renderOffset()
+
+			if (offset != null)
+			{
+				x += offset[0] * tileSize
+				y += offset[1] * tileSize
+			}
+		}
 
 		val comparisonVal = getComparisonVal(x, y, layer, index)
 
@@ -151,9 +167,9 @@ class SpriteRenderer(var tileSize: Float, val width: Float, val height: Float, v
 		var x = ix * tileSize
 		var y = iy * tileSize
 
-		if ( sprite.spriteAnimation != null )
+		if ( sprite.animation != null )
 		{
-			val offset = sprite.spriteAnimation?.renderOffset()
+			val offset = sprite.animation?.renderOffset()
 
 			if (offset != null)
 			{

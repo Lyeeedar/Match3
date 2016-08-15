@@ -7,7 +7,7 @@ import com.lyeeedar.Global
 import com.lyeeedar.Player.Ability.Ability
 import com.lyeeedar.Player.Equipment.Equipment
 import com.lyeeedar.Player.PlayerData
-import com.lyeeedar.Sprite.Sprite
+import com.lyeeedar.Renderables.Sprite.Sprite
 import com.lyeeedar.Util.AssetManager
 import com.lyeeedar.Util.addClickListener
 

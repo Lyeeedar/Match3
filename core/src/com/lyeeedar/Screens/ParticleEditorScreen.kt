@@ -9,8 +9,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable
 import com.badlogic.gdx.scenes.scene2d.utils.TiledDrawable
 import com.lyeeedar.Global
-import com.lyeeedar.Particle.Effect
-import com.lyeeedar.Particle.Particle
+import com.lyeeedar.Renderables.Particle.Effect
+import com.lyeeedar.Renderables.Particle.Particle
 import com.lyeeedar.Util.AssetManager
 import com.lyeeedar.Util.addClickListener
 import javax.swing.JFileChooser
@@ -65,7 +65,7 @@ class ParticleEditorScreen : AbstractScreen()
 		particle.update(delta)
 
 		batch.begin()
-		particle.draw(batch, 0f, 0f, 32f)
+		particle.render(batch, 0f, 0f, 32f)
 		batch.end()
 	}
 

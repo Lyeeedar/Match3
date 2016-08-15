@@ -7,7 +7,7 @@ import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.scenes.scene2d.ui.Widget
 import com.badlogic.gdx.utils.Align
 import com.badlogic.gdx.utils.Scaling
-import com.lyeeedar.Sprite.Sprite
+import com.lyeeedar.Renderables.Sprite.Sprite
 
 class SpriteWidget(private val drawable: Sprite, width: Float, height: Float, val fixHeight: Boolean = false) : Widget()
 {

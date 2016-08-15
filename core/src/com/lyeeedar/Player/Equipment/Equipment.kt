@@ -3,7 +3,7 @@ package com.lyeeedar.Player.Equipment
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.XmlReader
-import com.lyeeedar.Sprite.Sprite
+import com.lyeeedar.Renderables.Sprite.Sprite
 import com.lyeeedar.UI.Unlockable
 import com.lyeeedar.Util.AssetManager
 import com.lyeeedar.Util.set

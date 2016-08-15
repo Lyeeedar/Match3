@@ -1,4 +1,4 @@
-package com.lyeeedar.Sprite.SpriteAnimation
+package com.lyeeedar.Renderables.Animation
 
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.MathUtils
@@ -87,7 +87,7 @@ class BlinkAnimation() : AbstractColourAnimation()
 	{
 	}
 
-	override fun copy(): AbstractSpriteAnimation = BlinkAnimation.obtain().set(targetColour, startColour, duration, oneTime)
+	override fun copy(): AbstractAnimation = BlinkAnimation.obtain().set(targetColour, startColour, duration, oneTime)
 
 	var obtained: Boolean = false
 	companion object

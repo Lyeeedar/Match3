@@ -1,4 +1,4 @@
-package com.lyeeedar.Sprite.SpriteAnimation
+package com.lyeeedar.Renderables.Animation
 
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Vector2
@@ -79,7 +79,7 @@ class ExtendAnimation() : AbstractScaleAnimation()
 	{
 	}
 
-	override fun copy(): AbstractSpriteAnimation = ExtendAnimation.obtain().set(duration, diff, finalScale)
+	override fun copy(): AbstractAnimation = ExtendAnimation.obtain().set(duration, diff, finalScale)
 
 	var obtained: Boolean = false
 	companion object

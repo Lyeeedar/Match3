@@ -13,12 +13,12 @@ import com.lyeeedar.Global
 import com.lyeeedar.MainGame
 import com.lyeeedar.Map.DungeonMap
 import com.lyeeedar.Player.Player
+import com.lyeeedar.Renderables.Animation.MoveAnimation
+import com.lyeeedar.Renderables.Sprite.Sprite
+import com.lyeeedar.Renderables.Sprite.TilingSprite
 import com.lyeeedar.Screens.GridScreen
 import com.lyeeedar.Screens.TownScreen
-import com.lyeeedar.Sprite.Sprite
-import com.lyeeedar.Sprite.SpriteAnimation.MoveAnimation
 import com.lyeeedar.Sprite.SpriteRenderer
-import com.lyeeedar.Sprite.TilingSprite
 import com.lyeeedar.Util.*
 import sun.applet.Main
 
@@ -169,7 +169,7 @@ class DungeonMapWidget(val map: DungeonMap, val player: Player): Widget()
 		val playerRoom = map.get(map.playerPos)!!
 		playerRoom.seen = true
 
-		if (playerSprite.spriteAnimation == null && playerRoom.isRoom && !playerRoom.isCompleted)
+		if (playerSprite.animation == null && playerRoom.isRoom && !playerRoom.isCompleted)
 		{
 			moveTo = null
 			moveFrom = null
@@ -186,11 +186,11 @@ class DungeonMapWidget(val map: DungeonMap, val player: Player): Widget()
 					}, 0.5f)
 
 		}
-		else if (moveTo != null && playerSprite.spriteAnimation == null)
+		else if (moveTo != null && playerSprite.animation == null)
 		{
 			map.playerPos.set(moveTo!!)
 
-			playerSprite.spriteAnimation = MoveAnimation.obtain().set(moveTo!!, moveFrom!!, 0.3f)
+			playerSprite.animation = MoveAnimation.obtain().set(moveTo!!, moveFrom!!, 0.3f)
 
 			val room = map.get(moveTo!!) ?: throw RuntimeException("Tried to move to invalid location")
 
@@ -228,9 +228,9 @@ class DungeonMapWidget(val map: DungeonMap, val player: Player): Widget()
 		var offsetx = (x + width / 2) - map.playerPos.x * tileSize - tileSize*0.5f
 		var offsety = (y + height / 2) - map.playerPos.y * tileSize - tileSize*0.5f
 
-		if (playerSprite.spriteAnimation != null)
+		if (playerSprite.animation != null)
 		{
-			val offset = playerSprite.spriteAnimation!!.renderOffset()!!
+			val offset = playerSprite.animation!!.renderOffset()!!
 			offsetx -= offset[0] * tileSize
 			offsety -= offset[1] * tileSize
 		}
@@ -283,7 +283,7 @@ class DungeonMapWidget(val map: DungeonMap, val player: Player): Widget()
 				renderer.queueSprite(fsprite, entry.point.x.toFloat(), entry.point.y.toFloat(), FOG, 0, colour = Color.BLACK)
 			}
 
-			if (entry.point == map.playerPos && moveTo == null && playerSprite.spriteAnimation == null && !waitingOnTransition)
+			if (entry.point == map.playerPos && moveTo == null && playerSprite.animation == null && !waitingOnTransition)
 			{
 				// add arrows
 				if (entry.connections.containsKey(Direction.NORTH))

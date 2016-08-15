@@ -1,12 +1,10 @@
-package com.lyeeedar.Sprite.SpriteAnimation
+package com.lyeeedar.Renderables.Animation
 
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.Pool
 import com.badlogic.gdx.utils.Pools
 import com.badlogic.gdx.utils.XmlReader.Element
-import com.lyeeedar.Direction
-import com.lyeeedar.Global
 import com.lyeeedar.Util.getPool
 
 class LeapAnimation : AbstractMoveAnimation
@@ -59,7 +57,7 @@ class LeapAnimation : AbstractMoveAnimation
 		return this
 	}
 
-	fun set(duration: Float, path: kotlin.Array<Vector2>, height: Float): LeapAnimation
+	fun set(duration: Float, path: Array<Vector2>, height: Float): LeapAnimation
 	{
 		this.duration = duration
 		this.p1.set(path.first())
@@ -76,7 +74,7 @@ class LeapAnimation : AbstractMoveAnimation
 	{
 	}
 
-	override fun copy(): AbstractSpriteAnimation = obtain().set(duration, p1, p2, height)
+	override fun copy(): AbstractAnimation = obtain().set(duration, p1, p2, height)
 
 	var obtained: Boolean = false
 	companion object

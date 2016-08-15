@@ -1,10 +1,10 @@
-package com.lyeeedar.Sprite.SpriteAnimation
+package com.lyeeedar.Renderables.Animation
 
 /**
  * Created by Philip on 31-Jul-16.
  */
 
-abstract class AbstractColourAnimation() : AbstractSpriteAnimation()
+abstract class AbstractColourAnimation() : AbstractAnimation()
 {
 	var oneTime = true
 

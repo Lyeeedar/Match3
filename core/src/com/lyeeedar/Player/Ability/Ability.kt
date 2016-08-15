@@ -8,9 +8,9 @@ import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Board.Grid
 import com.lyeeedar.Board.Tile
 import com.lyeeedar.Global
+import com.lyeeedar.Renderables.Animation.MoveAnimation
+import com.lyeeedar.Renderables.Sprite.Sprite
 import com.lyeeedar.Screens.GridScreen
-import com.lyeeedar.Sprite.Sprite
-import com.lyeeedar.Sprite.SpriteAnimation.MoveAnimation
 import com.lyeeedar.UI.GridWidget
 import com.lyeeedar.UI.PowerBar
 import com.lyeeedar.UI.Unlockable
@@ -81,7 +81,7 @@ class Ability() : Unlockable()
 
 				val dist = p1.dst(p2) / 32f
 
-				fs.spriteAnimation = MoveAnimation.obtain().set(0.05f + 0.025f * dist, arrayOf(p1, p2), Interpolation.linear)
+				fs.animation = MoveAnimation.obtain().set(0.05f + 0.025f * dist, arrayOf(p1, p2), Interpolation.linear)
 				fs.rotation = getRotation(p1, p2)
 				delay += fs.lifetime
 

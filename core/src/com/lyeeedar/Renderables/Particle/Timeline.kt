@@ -1,4 +1,4 @@
-package com.lyeeedar.Particle
+package com.lyeeedar.Renderables.Particle
 
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.Interpolation

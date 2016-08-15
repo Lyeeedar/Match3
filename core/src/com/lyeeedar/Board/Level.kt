@@ -11,7 +11,7 @@ import com.lyeeedar.MainGame
 import com.lyeeedar.Map.DungeonMapEntry
 import com.lyeeedar.Player.Player
 import com.lyeeedar.Rarity
-import com.lyeeedar.Sprite.Sprite
+import com.lyeeedar.Renderables.Sprite.Sprite
 import com.lyeeedar.Sprite.SpriteWrapper
 import com.lyeeedar.UI.DungeonMapWidget
 import com.lyeeedar.UI.FullscreenMessage

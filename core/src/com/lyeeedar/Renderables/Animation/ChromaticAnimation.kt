@@ -1,4 +1,4 @@
-package com.lyeeedar.Sprite.SpriteAnimation
+package com.lyeeedar.Renderables.Animation
 
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.Colors
@@ -56,7 +56,7 @@ class ChromaticAnimation() : AbstractColourAnimation()
 	{
 	}
 
-	override fun copy(): AbstractSpriteAnimation = ChromaticAnimation.obtain().set(duration)
+	override fun copy(): AbstractAnimation = ChromaticAnimation.obtain().set(duration)
 
 	var obtained: Boolean = false
 	companion object

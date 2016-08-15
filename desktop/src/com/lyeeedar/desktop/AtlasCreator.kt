@@ -9,8 +9,8 @@ import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.ObjectSet
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Direction
+import com.lyeeedar.Renderables.Sprite.TilingSprite
 import com.lyeeedar.Sprite.DirectedSprite
-import com.lyeeedar.Sprite.TilingSprite
 import com.lyeeedar.Util.EnumBitflag
 import com.lyeeedar.Util.ImageUtils
 

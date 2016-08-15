@@ -5,8 +5,8 @@ import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Map.DungeonMapEntry
+import com.lyeeedar.Renderables.Sprite.Sprite
 import com.lyeeedar.Sprite.DirectedSprite
-import com.lyeeedar.Sprite.Sprite
 import com.lyeeedar.Sprite.SpriteWrapper
 import com.lyeeedar.Util.AssetManager
 import com.lyeeedar.Util.FastEnumMap

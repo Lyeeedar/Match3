@@ -15,7 +15,7 @@ import com.badlogic.gdx.utils.Pools
 import com.badlogic.gdx.utils.XmlReader
 import com.badlogic.gdx.utils.reflect.ClassReflection
 import com.lyeeedar.Player.PlayerData
-import com.lyeeedar.Sprite.Sprite
+import com.lyeeedar.Renderables.Sprite.Sprite
 import com.lyeeedar.Util.AssetManager
 import com.lyeeedar.Util.addClickListener
 import com.lyeeedar.Util.getXml

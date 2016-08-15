@@ -13,7 +13,7 @@ import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Board.Grid
 import com.lyeeedar.Board.Orb
 import com.lyeeedar.Global
-import com.lyeeedar.Sprite.Sprite
+import com.lyeeedar.Renderables.Sprite.Sprite
 import com.lyeeedar.UI.SpriteWidget
 import com.lyeeedar.Util.AssetManager
 import com.lyeeedar.Util.set

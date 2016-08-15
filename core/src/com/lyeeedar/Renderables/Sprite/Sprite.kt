@@ -1,4 +1,4 @@
-package com.lyeeedar.Sprite
+package com.lyeeedar.Renderables.Sprite
 
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.Batch
@@ -9,11 +9,12 @@ import com.badlogic.gdx.math.Matrix3
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.math.Vector3
 import com.badlogic.gdx.utils.Array
+import com.lyeeedar.Renderables.Animation.AbstractColourAnimation
+import com.lyeeedar.Renderables.Renderable
 import com.lyeeedar.Sound.SoundInstance
-import com.lyeeedar.Sprite.SpriteAnimation.*
 import com.lyeeedar.Util.Point
 
-class Sprite(val fileName: String, var animationDelay: Float, var textures: Array<TextureRegion>, colour: Color, mode: Sprite.AnimationMode, var sound: SoundInstance?, var drawActualSize: Boolean)
+class Sprite(val fileName: String, var animationDelay: Float, var textures: Array<TextureRegion>, colour: Color, mode: Sprite.AnimationMode, var sound: SoundInstance?, var drawActualSize: Boolean) : Renderable()
 {
 	enum class AnimationStage
 	{
@@ -24,7 +25,7 @@ class Sprite(val fileName: String, var animationDelay: Float, var textures: Arra
 
 		companion object
 		{
-			val Values = AnimationStage.values()
+			val Values = values()
 		}
 	}
 
@@ -35,13 +36,8 @@ class Sprite(val fileName: String, var animationDelay: Float, var textures: Arra
 
 	var referenceSize: Float? = null
 
-	var batchID: Int = 0
-
 	var colour = Color(1f,1f,1f,1f)
 	var colourAnimation: AbstractColourAnimation? = null
-
-	var renderDelay = -1f
-	var showBeforeRender = false
 
 	var repeatDelay = 0f
 	var repeatAccumulator: Float = 0.toFloat()
@@ -53,43 +49,6 @@ class Sprite(val fileName: String, var animationDelay: Float, var textures: Arra
 	val size = intArrayOf(1, 1)
 
 	var completed = false
-
-	var visible = true
-
-	var spriteAnimation: AbstractSpriteAnimation? = null
-		set(value)
-		{
-			if (value != null && field != null)
-			{
-				val hybrid = field as? HybridAnimation ?: HybridAnimation()
-
-				fun merge(anim: AbstractSpriteAnimation)
-				{
-					if (anim is AbstractMoveAnimation)
-					{
-						hybrid.offset = anim
-					}
-					else if (anim is AbstractScaleAnimation)
-					{
-						hybrid.scale = anim
-					}
-					else if (anim is AbstractColourAnimation)
-					{
-						hybrid.colour = anim
-					}
-					else throw RuntimeException("No entry for sprite anim type")
-				}
-
-				merge(field!!)
-				merge(value)
-
-				field = hybrid
-			}
-			else
-			{
-				field = value
-			}
-		}
 
 	var animationStage = AnimationStage.INVALID
 	var animationState: AnimationState
@@ -105,23 +64,13 @@ class Sprite(val fileName: String, var animationDelay: Float, var textures: Arra
 	}
 
 	val lifetime: Float
-		get() = if (spriteAnimation != null) spriteAnimation!!.duration() else animationDelay * textures.size
+		get() = if (animation != null) animation!!.duration() else animationDelay * textures.size
 
 	val remainingLifetime: Float
-		get() = if (spriteAnimation != null) spriteAnimation!!.duration() - spriteAnimation!!.time() else animationDelay * (textures.size - animationState.texIndex)
+		get() = if (animation != null) animation!!.duration() - animation!!.time() else animationDelay * (textures.size - animationState.texIndex)
 
-	fun update(delta: Float): Boolean
+	override fun doUpdate(delta: Float): Boolean
 	{
-		if (renderDelay > 0)
-		{
-			renderDelay -= delta
-
-			if (renderDelay > 0)
-			{
-				return false
-			}
-		}
-
 		if (repeatAccumulator > 0)
 		{
 			repeatAccumulator -= delta
@@ -139,7 +88,7 @@ class Sprite(val fileName: String, var animationDelay: Float, var textures: Arra
 
 				if (animationState.mode == AnimationMode.TEXTURE)
 				{
-					if (spriteAnimation == null && animationState.texIndex == textures.size / 2)
+					if (animation == null && animationState.texIndex == textures.size / 2)
 					{
 						animationStage = AnimationStage.MIDDLE
 					}
@@ -169,14 +118,14 @@ class Sprite(val fileName: String, var animationDelay: Float, var textures: Arra
 			animationState.sinOffset = Math.sin(animationAccumulator / (animationDelay / (2 * Math.PI))).toFloat()
 		}
 
-		if (spriteAnimation != null)
+		if (animation != null)
 		{
 			if (animationStage == AnimationStage.INVALID) animationStage = AnimationStage.START
-			looped = spriteAnimation!!.update(delta)
+			looped = animation!!.update(delta)
 
-			if (spriteAnimation!!.time() >= spriteAnimation!!.duration() / 2f)
+			if (animation!!.time() >= animation!!.duration() / 2f)
 			{
-				if (spriteAnimation == null && animationState.texIndex == textures.size / 2)
+				if (animation == null && animationState.texIndex == textures.size / 2)
 				{
 					animationStage = AnimationStage.MIDDLE
 				}
@@ -184,8 +133,8 @@ class Sprite(val fileName: String, var animationDelay: Float, var textures: Arra
 
 			if (looped)
 			{
-				spriteAnimation!!.free()
-				spriteAnimation = null
+				animation!!.free()
+				animation = null
 			}
 		}
 
@@ -208,14 +157,32 @@ class Sprite(val fileName: String, var animationDelay: Float, var textures: Arra
 		return looped
 	}
 
+	override fun doRender(batch: SpriteBatch, x: Float, y: Float, size: Float)
+	{
+		var scaleX = baseScale[0]
+		var scaleY = baseScale[1]
+
+		if (animation != null)
+		{
+			val scale = animation!!.renderScale()
+			if (scale != null)
+			{
+				scaleX *= scale[0]
+				scaleY *= scale[1]
+			}
+		}
+
+		render(batch, x, y, size, size, scaleX, scaleY, animationState)
+	}
+
 	fun render(batch: SpriteBatch, x: Float, y: Float, width: Float, height: Float)
 	{
 		var scaleX = baseScale[0]
 		var scaleY = baseScale[1]
 
-		if (spriteAnimation != null)
+		if (animation != null)
 		{
-			val scale = spriteAnimation!!.renderScale()
+			val scale = animation!!.renderScale()
 			if (scale != null)
 			{
 				scaleX *= scale[0]
@@ -228,7 +195,7 @@ class Sprite(val fileName: String, var animationDelay: Float, var textures: Arra
 
 	private fun render(batch: SpriteBatch, x: Float, y: Float, width: Float, height: Float, scaleX: Float, scaleY: Float, animationState: AnimationState)
 	{
-		val colour = if (colourAnimation != null) colourAnimation!!.renderColour()!! else if (spriteAnimation?.renderColour() != null) spriteAnimation!!.renderColour()!! else this.colour
+		val colour = if (colourAnimation != null) colourAnimation!!.renderColour()!! else if (animation?.renderColour() != null) animation!!.renderColour()!! else this.colour
 
 		var oldCol: Color? = null
 		if (colour.a == 0f)
@@ -252,16 +219,10 @@ class Sprite(val fileName: String, var animationDelay: Float, var textures: Arra
 
 	private fun drawTexture(batch: SpriteBatch, texture: TextureRegion, x: Float, y: Float, width: Float, height: Float, scaleX: Float, scaleY: Float, animationState: AnimationState)
 	{
-		if (!visible) return
-
 		var x = x
 		var y = y
 		var width = width
 		var height = height
-		if (renderDelay > 0 && !showBeforeRender)
-		{
-			return
-		}
 
 		width *= size[0]
 		height *= size[1]
@@ -310,7 +271,7 @@ class Sprite(val fileName: String, var animationDelay: Float, var textures: Arra
 	{
 		val sprite = Sprite(fileName, animationDelay, textures, colour, animationState.mode, sound, drawActualSize)
 		sprite.referenceSize = referenceSize
-		sprite.spriteAnimation = spriteAnimation?.copy()
+		sprite.animation = animation?.copy()
 		sprite.colourAnimation = colourAnimation?.copy() as? AbstractColourAnimation
 
 		return sprite

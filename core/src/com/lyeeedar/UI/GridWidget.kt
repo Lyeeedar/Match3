@@ -18,7 +18,7 @@ import com.lyeeedar.Direction
 import com.lyeeedar.Global
 import com.lyeeedar.Player.Ability.Targetter
 import com.lyeeedar.Player.Player
-import com.lyeeedar.Sprite.Sprite
+import com.lyeeedar.Renderables.Sprite.Sprite
 import com.lyeeedar.Sprite.SpriteRenderer
 import com.lyeeedar.Util.AssetManager
 import com.lyeeedar.Util.EnumBitflag
@@ -259,8 +259,8 @@ class GridWidget(val grid: Grid) : Widget()
 
 					if (orb.hasAttack)
 					{
-						val cx = xi + (orb.sprite.spriteAnimation?.renderOffset()?.get(0) ?: 0f)
-						val cy = yi + 0.15f + (orb.sprite.spriteAnimation?.renderOffset()?.get(1) ?: 0f)
+						val cx = xi + (orb.sprite.animation?.renderOffset()?.get(0) ?: 0f)
+						val cy = yi + 0.15f + (orb.sprite.animation?.renderOffset()?.get(1) ?: 0f)
 
 						val currentPoint = Vector2(0f, 0.4f)
 

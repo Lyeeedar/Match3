@@ -1,6 +1,8 @@
 package com.lyeeedar.Sprite
 
 import com.badlogic.gdx.utils.XmlReader
+import com.lyeeedar.Renderables.Sprite.Sprite
+import com.lyeeedar.Renderables.Sprite.TilingSprite
 import com.lyeeedar.Util.AssetManager
 
 /**

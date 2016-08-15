@@ -1,6 +1,5 @@
 package com.lyeeedar.Board
 
-import com.lyeeedar.Sprite.Sprite
 import com.lyeeedar.Util.AssetManager
 import com.lyeeedar.Util.tryGet
 

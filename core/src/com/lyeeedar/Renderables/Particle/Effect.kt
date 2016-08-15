@@ -1,25 +1,41 @@
-package com.lyeeedar.Particle
+package com.lyeeedar.Renderables.Particle
 
+import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.XmlReader
+import com.lyeeedar.Renderables.Renderable
 import com.lyeeedar.Util.getXml
 
 /**
  * Created by Philip on 14-Aug-16.
  */
 
-class Effect
+class Effect : Renderable()
 {
 	private var repeat = false
 	private var warmupTime = 0f
 	private var doneWarmup = false
-
 	private val emitters = Array<Emitter>()
+	private val position = Vector2()
 
-	fun update(delta: Float): Boolean
+	override fun doUpdate(delta: Float): Boolean
 	{
+		var complete = animation?.update(delta) ?: false
+		if (complete)
+		{
+			for (emitter in emitters) emitter.stop()
+			animation?.free()
+			animation = null
+		}
+
+		val posOffset = animation?.renderOffset()
+		val x = position.x + (posOffset?.get(0) ?: 0f)
+		val y = position.y + (posOffset?.get(1) ?: 0f)
+
+		for (emitter in emitters) emitter.position.set(x, y)
+
 		if (warmupTime > 0f && !doneWarmup)
 		{
 			doneWarmup = true
@@ -40,21 +56,29 @@ class Effect
 				for (emitter in emitters) emitter.time = 0f
 			}
 
-			return true
+			complete = true
 		}
-		else return false
+		else
+		{
+			complete = false
+		}
+
+		return complete
 	}
 
 	fun complete() = emitters.firstOrNull{ !it.complete() } != null
 
 	fun setPosition(x: Float, y: Float)
 	{
-		for (emitter in emitters) emitter.position.set(x, y)
+		position.set(x, y)
 	}
 
-	fun draw(batch: SpriteBatch, offsetx: Float, offsety: Float, tileSize: Float)
+	override fun doRender(batch: SpriteBatch, x: Float, y: Float, tileSize: Float)
 	{
-		for (emitter in emitters) emitter.draw(batch, offsetx, offsety, tileSize)
+		val scale = animation?.renderScale()?.get(0) ?: 1f
+		val colour = animation?.renderColour() ?: Color.WHITE
+
+		for (emitter in emitters) emitter.draw(batch, x, y, tileSize * scale, colour)
 	}
 
 	companion object

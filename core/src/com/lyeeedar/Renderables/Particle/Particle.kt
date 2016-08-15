@@ -1,4 +1,4 @@
-package com.lyeeedar.Particle
+package com.lyeeedar.Renderables.Particle
 
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
@@ -9,7 +9,6 @@ import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.Pool
 import com.badlogic.gdx.utils.Pools
 import com.badlogic.gdx.utils.XmlReader
-import com.lyeeedar.Sprite.SpriteAnimation.BumpAnimation
 import com.lyeeedar.Util.AssetManager
 import com.lyeeedar.Util.getPool
 
@@ -64,7 +63,7 @@ internal class Particle
 		}
 	}
 
-	fun render(batch: SpriteBatch, offsetx: Float, offsety: Float, tileSize: Float)
+	fun render(batch: SpriteBatch, offsetx: Float, offsety: Float, tileSize: Float, modifierColour: Color)
 	{
 		for ((position, speed, rotation, life) in particles)
 		{
@@ -72,6 +71,8 @@ internal class Particle
 			val col = colour.valAt(life)
 			col.a = alpha.valAt(life)
 			val size = size.valAt(life) * tileSize
+
+			col.mul(modifierColour)
 
 			val drawx = position.x * tileSize + offsetx
 			val drawy = position.y * tileSize + offsety
@@ -180,7 +181,7 @@ internal data class ParticleData(val position: Vector2, var speed: Float, var ro
 
 		@JvmStatic fun obtain(): ParticleData
 		{
-			val particle = ParticleData.pool.obtain()
+			val particle = pool.obtain()
 
 			if (particle.obtained) throw RuntimeException()
 
@@ -189,5 +190,5 @@ internal data class ParticleData(val position: Vector2, var speed: Float, var ro
 			return particle
 		}
 	}
-	fun free() { if (obtained) { ParticleData.pool.free(this); obtained = false } }
+	fun free() { if (obtained) { pool.free(this); obtained = false } }
 }

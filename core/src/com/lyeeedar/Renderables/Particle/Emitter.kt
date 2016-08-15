@@ -1,5 +1,6 @@
-package com.lyeeedar.Particle
+package com.lyeeedar.Renderables.Particle
 
+import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Vector2
@@ -7,10 +8,6 @@ import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Direction
 import com.lyeeedar.Util.vectorToAngle
-
-/**
- * Created by Philip on 14-Aug-16.
- */
 
 internal class Emitter
 {
@@ -60,33 +57,40 @@ internal class Emitter
 	var time: Float = 0f
 	var emissionAccumulator: Float = 0f
 
+	var stopped = false
+
 	fun complete() = particles.firstOrNull{ !it.complete() } != null
+	fun stop() { stopped = true }
+	fun start() { stopped = false }
 
 	fun update(delta: Float)
 	{
 		time += delta
 
-		val duration = emissionRate.length()
-		val rate = emissionRate.valAt(time)
-
-		// Keep particle count to emission rate
-		if (duration == 0f)
+		if (!stopped)
 		{
-			val toSpawn = Math.max(0f, rate - particles.sumBy { it.particleCount() }).toInt()
-			for (i in 1..toSpawn)
+			val duration = emissionRate.length()
+			val rate = emissionRate.valAt(time)
+
+			// Keep particle count to emission rate
+			if (duration == 0f)
 			{
-				spawn()
+				val toSpawn = Math.max(0f, rate - particles.sumBy { it.particleCount() }).toInt()
+				for (i in 1..toSpawn)
+				{
+					spawn()
+				}
 			}
-		}
-		// use accumulator to spawn constantly
-		else if (time < duration)
-		{
-			emissionAccumulator += delta * rate
-
-			while (emissionAccumulator > 1f)
+			// use accumulator to spawn constantly
+			else if (time < duration)
 			{
-				emissionAccumulator -= 1f
-				spawn()
+				emissionAccumulator += delta * rate
+
+				while (emissionAccumulator > 1f)
+				{
+					emissionAccumulator -= 1f
+					spawn()
+				}
 			}
 		}
 
@@ -201,14 +205,14 @@ internal class Emitter
 		return temp
 	}
 
-	fun draw(batch: SpriteBatch, offsetx: Float, offsety: Float, tileSize: Float)
+	fun draw(batch: SpriteBatch, offsetx: Float, offsety: Float, tileSize: Float, colour: Color)
 	{
 		for (particle in particles)
 		{
 			val offsetx = offsetx + if (simulationSpace == SimulationSpace.LOCAL) position.x * tileSize else 0f
 			val offsety = offsety + if (simulationSpace == SimulationSpace.LOCAL) position.y * tileSize else 0f
 
-			particle.render(batch, offsetx, offsety, tileSize)
+			particle.render(batch, offsetx, offsety, tileSize, colour)
 		}
 	}
 
