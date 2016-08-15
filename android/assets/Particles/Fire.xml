@@ -59,10 +59,10 @@
             <Height>1</Height>
             <Area>Interior</Area>
             <Direction>Random</Direction>
-            <ParticleSpeed>0.005</ParticleSpeed>
+            <ParticleSpeed>0.01</ParticleSpeed>
 
             <RateKeyframes>
-                <Rate>0,600</Rate>
+                <Rate>0,200</Rate>
             </RateKeyframes>
 
             <Particles>
@@ -70,8 +70,12 @@
                     <Lifetime>1.5</Lifetime>
                     <LifetimeOffset>0.5</LifetimeOffset>
 
+                    <TextureKeyframes>
+                        <Keyframe>0,Particle/ember_1</Keyframe>
+                    </TextureKeyframes>
+
                     <SizeKeyframes>
-                        <Keyframe>0,0.1</Keyframe>
+                        <Keyframe>0,0.4</Keyframe>
                     </SizeKeyframes>
 
                     <ColourKeyframes>
@@ -80,7 +84,41 @@
                             <Value>255,255,255</Value>
                         </Keyframe>
                         <Keyframe>
-                            <Time>0.1</Time>
+                            <Time>0.3</Time>
+                            <Value>255,255,0</Value>
+                        </Keyframe>
+                        <Keyframe>
+                            <Time>1</Time>
+                            <Value>255,0,0</Value>
+                        </Keyframe>
+                    </ColourKeyframes>
+
+                    <AlphaKeyframes>
+                        <Keyframe>0,0.6</Keyframe>
+                        <Keyframe>0.1,0.7</Keyframe>
+                        <Keyframe>0.6,0.7</Keyframe>
+                        <Keyframe>1,0</Keyframe>
+                    </AlphaKeyframes>
+                </Particle>
+                <Particle>
+                    <Lifetime>1.5</Lifetime>
+                    <LifetimeOffset>0.5</LifetimeOffset>
+
+                    <TextureKeyframes>
+                        <Keyframe>0,Particle/ember_2</Keyframe>
+                    </TextureKeyframes>
+
+                    <SizeKeyframes>
+                        <Keyframe>0,0.4</Keyframe>
+                    </SizeKeyframes>
+
+                    <ColourKeyframes>
+                        <Keyframe>
+                            <Time>0</Time>
+                            <Value>255,255,255</Value>
+                        </Keyframe>
+                        <Keyframe>
+                            <Time>0.3</Time>
                             <Value>255,255,0</Value>
                         </Keyframe>
                         <Keyframe>

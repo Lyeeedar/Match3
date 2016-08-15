@@ -212,6 +212,41 @@ class AtlasCreator
 				throw RuntimeException("Failed to process directed sprite in file: " + file)
 			}
 		}
+
+		val particleElements = xml.getChildrenByNameRecursively("TextureKeyframes")
+
+		for (el in particleElements)
+		{
+			val succeed = processParticle(el)
+			if (!succeed)
+			{
+				throw RuntimeException("Failed to process particle in file: " + file)
+			}
+		}
+	}
+
+	private fun processParticle(xml: XmlReader.Element) : Boolean
+	{
+		for (i in 0..xml.childCount-1)
+		{
+			val el = xml.getChild(i)
+			var path: String
+
+			if (el.text != null)
+			{
+				val split = el.text.split(",")
+				path = split[1]
+			}
+			else
+			{
+				path = el.get("Value")
+			}
+
+			val found = processSprite(path)
+			if (!found) return false
+		}
+
+		return true
 	}
 
 	private fun processDirectedSprite(spriteElement: XmlReader.Element): Boolean
