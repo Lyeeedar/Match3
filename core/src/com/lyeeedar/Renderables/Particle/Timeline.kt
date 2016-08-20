@@ -11,18 +11,26 @@ import com.badlogic.gdx.utils.XmlReader
 
 internal abstract class Timeline<T>
 {
-	val keyframes = Array<Pair<Float, T>>()
+	val streams = Array<Array<Pair<Float, T>>>()
 
-	fun length() = keyframes.last().first
+	fun length() = streams[0].last().first
 
-	operator fun set(time: Float, value: T)
+	operator fun set(stream: Int, time: Float, value: T)
 	{
+		if (stream >= streams.size)
+		{
+			streams.add(Array())
+		}
+		val keyframes = streams[stream]
+
 		keyframes.add(Pair(time, value))
 		keyframes.sort { p1, p2 -> p1.first.compareTo(p2.first) }
 	}
 
-	fun valAt(time: Float): T
+	fun valAt(stream: Int, time: Float): T
 	{
+		val keyframes = streams[stream]
+
 		if (keyframes.size == 1) return keyframes[0].second
 
 		var prev: Pair<Float, T> = keyframes[0]
@@ -44,6 +52,23 @@ internal abstract class Timeline<T>
 
 	fun parse(xml: XmlReader.Element, createFunc: (String) -> T, timeScale: Float = 1f)
 	{
+		val streamsEl = xml.getChildrenByName("Stream")
+		if (streamsEl.size == 0)
+		{
+			parseStream(xml, 0, createFunc, timeScale)
+		}
+		else
+		{
+			for (i in 0..streamsEl.size-1)
+			{
+				val el = streamsEl[i]
+				parseStream(el, i, createFunc, timeScale)
+			}
+		}
+	}
+
+	fun parseStream(xml: XmlReader.Element, stream: Int, createFunc: (String) -> T, timeScale: Float = 1f)
+	{
 		for (i in 0..xml.childCount-1)
 		{
 			val el = xml.getChild(i)
@@ -52,15 +77,16 @@ internal abstract class Timeline<T>
 			{
 				val split = el.text.split(",")
 				val time = split[0].toFloat()
-				val value = createFunc(split[1])
-				this[time * timeScale] = value
+				val rest = el.text.replaceFirst(split[0]+",", "")
+				val value = createFunc(rest)
+				this[stream, time * timeScale] = value
 			}
 			else
 			{
 				val time = el.getFloat("Time")
 				val sval = el.get("Value")
 				val value = createFunc(sval)
-				this[time * timeScale] = value
+				this[stream, time * timeScale] = value
 			}
 		}
 	}

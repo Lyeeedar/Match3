@@ -11,6 +11,8 @@ import com.lyeeedar.Util.vectorToAngle
 
 internal class Emitter
 {
+	val MAX_DELTA = 1f / 15f // dont update faster than 15fps
+
 	enum class SimulationSpace
 	{
 		LOCAL,
@@ -48,6 +50,7 @@ internal class Emitter
 	lateinit var simulationSpace: SimulationSpace
 	val emissionRate = LerpTimeline()
 	var particleSpeed: Float = 0f
+	var particleRotation: Float = 0f
 	lateinit var shape: EmissionShape
 	var width: Float = 0f
 	var height: Float = 0f
@@ -67,10 +70,12 @@ internal class Emitter
 	{
 		time += delta
 
+		val scaledDelta = Math.min(delta, MAX_DELTA)
+
 		if (!stopped)
 		{
 			val duration = emissionRate.length()
-			val rate = emissionRate.valAt(time)
+			val rate = emissionRate.valAt(0, time)
 
 			// Keep particle count to emission rate
 			if (duration == 0f)
@@ -84,7 +89,7 @@ internal class Emitter
 			// use accumulator to spawn constantly
 			else if (time < duration)
 			{
-				emissionAccumulator += delta * rate
+				emissionAccumulator += scaledDelta * rate
 
 				while (emissionAccumulator > 1f)
 				{
@@ -96,7 +101,7 @@ internal class Emitter
 
 		for (particle in particles)
 		{
-			particle.simulate(delta)
+			particle.simulate(scaledDelta)
 		}
 	}
 
@@ -109,18 +114,19 @@ internal class Emitter
 			else -> throw RuntimeException("Invalid emitter shape! $shape")
 		}
 
-		val rotation = when (dir)
+		val velocity: Vector2 = when (dir)
 		{
-			EmissionDirection.RADIAL -> vectorToAngle(pos.x, pos.y)
-			EmissionDirection.RANDOM -> MathUtils.random() * 360.0f
-			EmissionDirection.UP -> Direction.NORTH.angle
-			EmissionDirection.DOWN -> Direction.SOUTH.angle
-			EmissionDirection.LEFT -> Direction.WEST.angle
-			EmissionDirection.RIGHT -> Direction.EAST.angle
+			EmissionDirection.RADIAL -> Vector2(pos).nor()
+			EmissionDirection.RANDOM -> Vector2().setToRandomDirection()
+			EmissionDirection.UP -> Vector2(Direction.NORTH.x.toFloat(), Direction.NORTH.y.toFloat())
+			EmissionDirection.DOWN -> Vector2(Direction.SOUTH.x.toFloat(), Direction.SOUTH.y.toFloat())
+			EmissionDirection.LEFT -> Vector2(Direction.WEST.x.toFloat(), Direction.WEST.y.toFloat())
+			EmissionDirection.RIGHT -> Vector2(Direction.EAST.x.toFloat(), Direction.EAST.y.toFloat())
 			else -> throw RuntimeException("Invalid emitter direction type! $dir")
 		}
 
 		val speed = particleSpeed
+		val rotation = particleRotation
 
 		if (simulationSpace == SimulationSpace.WORLD)
 		{
@@ -129,7 +135,7 @@ internal class Emitter
 
 		// pick random particle
 		val particle = particles.random()
-		particle.spawn(pos, speed, rotation)
+		particle.spawn(pos, velocity, speed, rotation)
 	}
 
 	fun spawnCircle(): Vector2
@@ -223,7 +229,8 @@ internal class Emitter
 			val emitter = Emitter()
 
 			emitter.simulationSpace = SimulationSpace.valueOf(xml.get("Space").toUpperCase())
-			emitter.particleSpeed = xml.getFloat("ParticleSpeed")
+			emitter.particleSpeed = xml.getFloat("ParticleSpeed", 0f)
+			emitter.particleRotation = xml.getFloat("ParticleRotation", 0f)
 			emitter.shape = EmissionShape.valueOf(xml.get("Shape").toUpperCase())
 			emitter.width = xml.get("Size", null)?.toFloat() ?: xml.getFloat("Width")
 			emitter.height = xml.get("Size", null)?.toFloat() ?: xml.getFloat("Height")

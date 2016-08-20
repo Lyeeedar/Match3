@@ -1,4 +1,4 @@
-<UnlockTree>
+﻿<UnlockTree>
 
     <Icon>
         <Name>Icons/FireTree</Name>
@@ -16,10 +16,9 @@
             <BuyCost>
                 <Gold>50</Gold>
             </BuyCost>
-            <Stats>
-                <MatchDam>0</MatchDam>
-                <AbilityDam>1</AbilityDam>
-            </Stats>
+            <DataType>Equipment</DataType>
+            <MatchDam>0</MatchDam>
+            <AbilityDam>1</AbilityDam>
             <Slot>Weapon</Slot>
         </Pitchfork>
 
@@ -31,11 +30,10 @@
             <BuyCost>
                 <Gold>100</Gold>
             </BuyCost>
+            <DataType>Equipment</DataType>
             <Upgrades>Pitchfork</Upgrades>
-            <Stats>
-                <MatchDam>0</MatchDam>
-                <AbilityDam>2</AbilityDam>
-            </Stats>
+            <MatchDam>0</MatchDam>
+            <AbilityDam>2</AbilityDam>
             <Slot>Weapon</Slot>
         </ReinforcedPitchfork>
 
@@ -48,11 +46,10 @@
                 <Gold>250</Gold>
                 <IronIngot>5</IronIngot>
             </BuyCost>
+            <DataType>Equipment</DataType>
             <Upgrades>Pitchfork</Upgrades>
-            <Stats>
-                <MatchDam>1</MatchDam>
-                <AbilityDam>3</AbilityDam>
-            </Stats>
+            <MatchDam>1</MatchDam>
+            <AbilityDam>3</AbilityDam>
             <Slot>Weapon</Slot>
         </Trident>
 
@@ -65,10 +62,9 @@
                 <Gold>250</Gold>
                 <IronIngot>5</IronIngot>
             </BuyCost>
-            <Stats>
-                <MatchDam>2</MatchDam>
-                <AbilityDam>0</AbilityDam>
-            </Stats>
+            <DataType>Equipment</DataType>
+            <MatchDam>2</MatchDam>
+            <AbilityDam>0</AbilityDam>
             <Slot>Weapon</Slot>
         </Knife>
 
@@ -81,11 +77,10 @@
                 <Gold>500</Gold>
                 <IronIngot>10</IronIngot>
             </BuyCost>
+            <DataType>Equipment</DataType>
             <Upgrades>Iron Knife</Upgrades>
-            <Stats>
-                <MatchDam>3</MatchDam>
-                <AbilityDam>0</AbilityDam>
-            </Stats>
+            <MatchDam>3</MatchDam>
+            <AbilityDam>0</AbilityDam>
             <Slot>Weapon</Slot>
         </Sword>
 
@@ -98,10 +93,9 @@
                 <Gold>250</Gold>
                 <HeartWood>5</HeartWood>
             </BuyCost>
-            <Stats>
-                <MatchDam>0</MatchDam>
-                <AbilityDam>5</AbilityDam>
-            </Stats>
+            <DataType>Equipment</DataType>
+            <MatchDam>0</MatchDam>
+            <AbilityDam>5</AbilityDam>
             <Slot>Weapon</Slot>
         </OakStaff>
 
@@ -114,11 +108,10 @@
                 <Gold>250</Gold>
                 <FlameHeart>5</FlameHeart>
             </BuyCost>
+            <DataType>Equipment</DataType>
             <Upgrades>Oak Staff</Upgrades>
-            <Stats>
-                <MatchDam>0</MatchDam>
-                <AbilityDam>7</AbilityDam>
-            </Stats>
+            <MatchDam>0</MatchDam>
+            <AbilityDam>7</AbilityDam>
             <Slot>Weapon</Slot>
         </EmberFocus>
 
@@ -132,10 +125,9 @@
             <BuyCost>
                 <Gold>10</Gold>
             </BuyCost>
-            <Stats>
-                <MaxHP>5</MaxHP>
-                <Regen>1</Regen>
-            </Stats>
+            <DataType>Equipment</DataType>
+            <MaxHP>5</MaxHP>
+            <Regen>1</Regen>
             <Slot>Armour</Slot>
         </FarmersRags>
 
@@ -147,11 +139,10 @@
             <BuyCost>
                 <Gold>100</Gold>
             </BuyCost>
+            <DataType>Equipment</DataType>
             <Upgrades>Farmers Rags</Upgrades>
-            <Stats>
-                <MaxHP>10</MaxHP>
-                <Regen>2</Regen>
-            </Stats>
+            <MaxHP>10</MaxHP>
+            <Regen>2</Regen>
             <Slot>Armour</Slot>
         </PaddedCloth>
 
@@ -165,11 +156,10 @@
                 <RatSkin>3</RatSkin>
                 <GoblinSkin>3</GoblinSkin>
             </BuyCost>
+            <DataType>Equipment</DataType>
             <Upgrades>Farmers Rags</Upgrades>
-            <Stats>
-                <MaxHP>20</MaxHP>
-                <Regen>4</Regen>
-            </Stats>
+            <MaxHP>20</MaxHP>
+            <Regen>4</Regen>
             <Slot>Armour</Slot>
         </Leather>
 
@@ -182,10 +172,9 @@
                 <Gold>250</Gold>
                 <HeartWood>5</HeartWood>
             </BuyCost>
-            <Stats>
-                <MaxHP>15</MaxHP>
-                <Regen>8</Regen>
-            </Stats>
+            <DataType>Equipment</DataType>
+            <MaxHP>15</MaxHP>
+            <Regen>8</Regen>
             <Slot>Armour</Slot>
         </Lamellar>
 
@@ -198,10 +187,9 @@
                 <Gold>250</Gold>
                 <IronIngot>10</IronIngot>
             </BuyCost>
-            <Stats>
-                <MaxHP>30</MaxHP>
-                <Regen>1</Regen>
-            </Stats>
+            <DataType>Equipment</DataType>
+            <MaxHP>30</MaxHP>
+            <Regen>1</Regen>
             <Slot>Armour</Slot>
         </ChainMail>
 
@@ -215,6 +203,7 @@
             <BuyCost>
                 <Gold>50</Gold>
             </BuyCost>
+            <DataType>Equipment</DataType>
             <Stats>
                 <MaxPower>0</MaxPower>
                 <StartPower>5</StartPower>
@@ -230,6 +219,7 @@
             <BuyCost>
                 <Gold>100</Gold>
             </BuyCost>
+            <DataType>Equipment</DataType>
             <Upgrades>Wooden Charm</Upgrades>
             <Stats>
                 <MaxPower>5</MaxPower>
@@ -246,6 +236,7 @@
             <BuyCost>
                 <Gold>500</Gold>
             </BuyCost>
+            <DataType>Equipment</DataType>
             <Upgrades>Wooden Charm</Upgrades>
             <Stats>
                 <MaxPower>10</MaxPower>
@@ -263,6 +254,7 @@
                 <Gold>500</Gold>
                 <SoulStone>1</SoulStone>
             </BuyCost>
+            <DataType>Equipment</DataType>
             <Stats>
                 <MaxPower>20</MaxPower>
                 <StartPower>0</StartPower>
@@ -279,6 +271,7 @@
                 <Gold>500</Gold>
                 <HeartWood>5</HeartWood>
             </BuyCost>
+            <DataType>Equipment</DataType>
             <Stats>
                 <MaxPower>10</MaxPower>
                 <StartPower>30</StartPower>

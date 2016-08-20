@@ -1,0 +1,8 @@
+<Definitions>
+	<StructDef Name="Sprite" DescriptionChild="Name">
+		<File BasePath="Sprites" AllowedFileTypes="png" DefaultValue="white" Name="Name" />
+		<Boolean Name="DrawActualSize" />
+		<Number Name="UpdateRate" Default="0.5" Min="0" />
+		<Colour Name="Colour" />
+	</StructDef>
+</Definitions>

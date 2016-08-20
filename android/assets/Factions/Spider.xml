@@ -1,47 +1,47 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Faction>
   <Monsters>
-    <SmallRat>
+    <SmallSpider>
       <Sprite>
-        <Name>Oryx/uf_split/uf_heroes/rat</Name>
+        <Name>Oryx/uf_split/uf_heroes/spider_brown</Name>
         <DrawActualSize>true</DrawActualSize>
         <UpdateRate>0.5</UpdateRate>
         <Colour>255,255,255,255</Colour>
       </Sprite>
       <Death>
         <Name>EffectSprites/Splatter/Splatter</Name>
+        <DrawActualSize>false</DrawActualSize>
         <UpdateRate>0.1</UpdateRate>
         <Colour>158,25,25,255</Colour>
-        <DrawActualSize>false</DrawActualSize>
       </Death>
-      <AttackDelay>5.5</AttackDelay>
-      <AttackSpeed>7</AttackSpeed>
+      <AttackDelay>5</AttackDelay>
+      <AttackSpeed>6</AttackSpeed>
       <Size>1</Size>
-      <HP>7</HP>
+      <HP>5</HP>
       <Reward>
         <Gold>5</Gold>
       </Reward>
-    </SmallRat>
-    <GiantRat>
+    </SmallSpider>
+    <GiantSpider>
       <Sprite>
-        <Name>Oryx/uf_split/uf_heroes/rat_giant</Name>
+        <Name>Oryx/uf_split/uf_heroes/spider_brown_giant</Name>
         <DrawActualSize>true</DrawActualSize>
         <UpdateRate>0.5</UpdateRate>
         <Colour>255,255,255,255</Colour>
       </Sprite>
       <Death>
         <Name>EffectSprites/Splatter/Splatter</Name>
+        <DrawActualSize>false</DrawActualSize>
         <UpdateRate>0.1</UpdateRate>
         <Colour>255,255,255,255</Colour>
-        <DrawActualSize>false</DrawActualSize>
       </Death>
       <AttackDelay>4</AttackDelay>
-      <AttackSpeed>6</AttackSpeed>
+      <AttackSpeed>5</AttackSpeed>
       <Size>2</Size>
       <HP>20</HP>
       <Reward>
         <Gold>15</Gold>
       </Reward>
-    </GiantRat>
+    </GiantSpider>
   </Monsters>
 </Faction>

@@ -341,6 +341,17 @@ class AssetManager
 			return sprite
 		}
 
+		fun loadColour(stringCol: String, colour: Color = Color()): Color
+		{
+			val cols = stringCol.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+			colour.r = java.lang.Float.parseFloat(cols[0]) / 255.0f
+			colour.g = java.lang.Float.parseFloat(cols[1]) / 255.0f
+			colour.b = java.lang.Float.parseFloat(cols[2]) / 255.0f
+			colour.a = if (cols.size > 3) cols[3].toFloat() / 255.0f else 1f
+
+			return colour
+		}
+
 		fun loadColour(xml: Element): Color
 		{
 			val colour = Color()
@@ -349,11 +360,7 @@ class AssetManager
 			val rgb = xml.get("RGB", null) ?: xml.text
 			if (rgb != null)
 			{
-				val cols = rgb.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-				colour.r = java.lang.Float.parseFloat(cols[0]) / 255.0f
-				colour.g = java.lang.Float.parseFloat(cols[1]) / 255.0f
-				colour.b = java.lang.Float.parseFloat(cols[2]) / 255.0f
-				colour.a = if (cols.size > 3) cols[3].toFloat() / 255.0f else 1f
+				loadColour(rgb, colour)
 			}
 
 			colour.r = xml.getFloat("Red", colour.r)

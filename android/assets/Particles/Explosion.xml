@@ -1,0 +1,9 @@
+<Effect>
+    <Repeat>true</Repeat>
+
+    <Emitters>
+        <Emitter>
+
+        </Emitter>
+    </Emitters>
+</Effect>

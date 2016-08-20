@@ -227,6 +227,24 @@ class AtlasCreator
 
 	private fun processParticle(xml: XmlReader.Element) : Boolean
 	{
+		val streamsEl = xml.getChildrenByName("Stream")
+		if (streamsEl.size == 0)
+		{
+			return processParticleStream(xml)
+		}
+		else
+		{
+			for (el in streamsEl)
+			{
+				if (!processParticleStream(el)) return false
+			}
+		}
+
+		return true
+	}
+
+	private fun processParticleStream(xml: XmlReader.Element) : Boolean
+	{
 		for (i in 0..xml.childCount-1)
 		{
 			val el = xml.getChild(i)

@@ -5,6 +5,86 @@
 
     <Emitters>
         <Emitter>
+
+            <Space>World</Space>
+            <Shape>Circle</Shape>
+            <Width>1</Width>
+            <Height>1</Height>
+            <Area>Interior</Area>
+            <Direction>Random</Direction>
+            <ParticleSpeed>0.005</ParticleSpeed>
+            <ParticleRotation>200</ParticleRotation>
+
+            <RateKeyframes>
+                <Rate>0,200</Rate>
+            </RateKeyframes>
+
+            <Particles>
+
+                <Particle>
+                    <Lifetime>1.5</Lifetime>
+                    <LifetimeOffset>0.5</LifetimeOffset>
+
+                    <TextureKeyframes>
+                        <Stream>
+                            <Keyframe>0,Particle/ember_1</Keyframe>
+                        </Stream>
+                        <Stream>
+                            <Keyframe>0,Particle/ember_2</Keyframe>
+                        </Stream>
+                        <Stream>
+                            <Keyframe>0,Particle/glow</Keyframe>
+                        </Stream>
+                    </TextureKeyframes>
+
+                    <SizeKeyframes>
+                        <Keyframe>0,0.1</Keyframe>
+                        <Keyframe>0.2,1.5</Keyframe>
+                        <Keyframe>1,0.2</Keyframe>
+                    </SizeKeyframes>
+
+                    <RotationSpeedKeyframes>
+                        <Stream>
+                            <Keyframe>0,100</Keyframe>
+                        </Stream>
+                        <Stream>
+                            <Keyframe>0,-100</Keyframe>
+                        </Stream>
+                    </RotationSpeedKeyframes>
+
+                    <ColourKeyframes>
+                        <Stream>
+                            <Keyframe>
+                                <Time>0</Time>
+                                <Value>255,255,255</Value>
+                            </Keyframe>
+                            <Keyframe>
+                                <Time>0.3</Time>
+                                <Value>255,255,0</Value>
+                            </Keyframe>
+                            <Keyframe>
+                                <Time>1</Time>
+                                <Value>255,0,0</Value>
+                            </Keyframe>
+                        </Stream>
+                        <Stream>
+                            <Keyframe>0,255,255,0</Keyframe>
+                            <Keyframe>0.8,255,0,0</Keyframe>
+                            <Keyframe>1,100,100,100</Keyframe>
+                        </Stream>
+                    </ColourKeyframes>
+
+                    <AlphaKeyframes>
+                        <Keyframe>0,0.2</Keyframe>
+                        <Keyframe>0.1,0.4</Keyframe>
+                        <Keyframe>0.6,0.4</Keyframe>
+                        <Keyframe>1,0</Keyframe>
+                    </AlphaKeyframes>
+                </Particle>
+            </Particles>
+        </Emitter>
+
+        <Emitter>
             <Space>Local</Space>
             <Shape>Circle</Shape>
             <Width>0</Width>
@@ -22,6 +102,10 @@
                     <Lifetime>1.5</Lifetime>
                     <LifetimeOffset>0.5</LifetimeOffset>
 
+                    <TextureKeyframes>
+                        <Keyframe>0,Particle/glow</Keyframe>
+                    </TextureKeyframes>
+
                     <SizeKeyframes>
                         <Keyframe>0,1</Keyframe>
                     </SizeKeyframes>
@@ -29,106 +113,20 @@
                     <ColourKeyframes>
                         <Keyframe>
                             <Time>0</Time>
-                            <Value>255,255,255</Value>
+                            <Value>255,255,215</Value>
                         </Keyframe>
                         <Keyframe>
                             <Time>0.5</Time>
-                            <Value>255,255,180</Value>
+                            <Value>255,255,130</Value>
                         </Keyframe>
                         <Keyframe>
                             <Time>1</Time>
-                            <Value>255,255,255</Value>
+                            <Value>255,255,215</Value>
                         </Keyframe>
                     </ColourKeyframes>
 
                     <AlphaKeyframes>
                         <Keyframe>0,0</Keyframe>
-                        <Keyframe>0.1,0.7</Keyframe>
-                        <Keyframe>0.6,0.7</Keyframe>
-                        <Keyframe>1,0</Keyframe>
-                    </AlphaKeyframes>
-                </Particle>
-            </Particles>
-        </Emitter>
-
-        <Emitter>
-
-            <Space>World</Space>
-            <Shape>Circle</Shape>
-            <Width>1</Width>
-            <Height>1</Height>
-            <Area>Interior</Area>
-            <Direction>Random</Direction>
-            <ParticleSpeed>0.01</ParticleSpeed>
-
-            <RateKeyframes>
-                <Rate>0,200</Rate>
-            </RateKeyframes>
-
-            <Particles>
-                <Particle>
-                    <Lifetime>1.5</Lifetime>
-                    <LifetimeOffset>0.5</LifetimeOffset>
-
-                    <TextureKeyframes>
-                        <Keyframe>0,Particle/ember_1</Keyframe>
-                    </TextureKeyframes>
-
-                    <SizeKeyframes>
-                        <Keyframe>0,0.4</Keyframe>
-                    </SizeKeyframes>
-
-                    <ColourKeyframes>
-                        <Keyframe>
-                            <Time>0</Time>
-                            <Value>255,255,255</Value>
-                        </Keyframe>
-                        <Keyframe>
-                            <Time>0.3</Time>
-                            <Value>255,255,0</Value>
-                        </Keyframe>
-                        <Keyframe>
-                            <Time>1</Time>
-                            <Value>255,0,0</Value>
-                        </Keyframe>
-                    </ColourKeyframes>
-
-                    <AlphaKeyframes>
-                        <Keyframe>0,0.6</Keyframe>
-                        <Keyframe>0.1,0.7</Keyframe>
-                        <Keyframe>0.6,0.7</Keyframe>
-                        <Keyframe>1,0</Keyframe>
-                    </AlphaKeyframes>
-                </Particle>
-                <Particle>
-                    <Lifetime>1.5</Lifetime>
-                    <LifetimeOffset>0.5</LifetimeOffset>
-
-                    <TextureKeyframes>
-                        <Keyframe>0,Particle/ember_2</Keyframe>
-                    </TextureKeyframes>
-
-                    <SizeKeyframes>
-                        <Keyframe>0,0.4</Keyframe>
-                    </SizeKeyframes>
-
-                    <ColourKeyframes>
-                        <Keyframe>
-                            <Time>0</Time>
-                            <Value>255,255,255</Value>
-                        </Keyframe>
-                        <Keyframe>
-                            <Time>0.3</Time>
-                            <Value>255,255,0</Value>
-                        </Keyframe>
-                        <Keyframe>
-                            <Time>1</Time>
-                            <Value>255,0,0</Value>
-                        </Keyframe>
-                    </ColourKeyframes>
-
-                    <AlphaKeyframes>
-                        <Keyframe>0,0.6</Keyframe>
                         <Keyframe>0.1,0.7</Keyframe>
                         <Keyframe>0.6,0.7</Keyframe>
                         <Keyframe>1,0</Keyframe>
