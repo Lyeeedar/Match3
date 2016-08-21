@@ -18,12 +18,8 @@
 
                 <Collection Name="BuyCost">
                     <Pair>
-                        <Key>
-                            <String Name="Item" />
-                        </Key>
-                        <Value>
-                            <Number Name="Count" Type="Int" />
-                        </Value>
+                        <String Name="Item" />
+                        <Number Name="Count" Type="Int" />
                     </Pair>
                 </Collection>
 
@@ -44,12 +40,8 @@
 
                 <Collection Name="Data" VisibleIf="DataType==Effect">
                     <Pair Name="Data">
-                        <Key>
-                            <String Name="Key" />
-                        </Key>
-                        <Value>
-                            <Number Name="Value" />
-                        </Value>
+                        <String Name="Key" />
+                        <Number Name="Value" />
                     </Pair>
                 </Collection>
 

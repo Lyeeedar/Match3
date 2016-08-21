@@ -1,0 +1,33 @@
+<Definitions>
+
+    <EnumDef Name="CompletionCondition" EnumValues="None,Kill,Matches,Sink,Time,Turns" />
+
+    <Struct Name="Level">
+
+        <Collection Name="Grid">
+
+            <MultilineString Name="Rows" ElementPerLine="true" />
+
+        </Collection>
+
+        <String Name="Faction" />
+
+        <Collection Name="AllowedVictories">
+            <Enum Name="Victory" Key="CompletionCondition" ValueAsName="true" />
+        </Collection>
+
+        <Collection Name="AllowedDefeats">
+            <Enum Name="Defeat" Key="CompletionCondition" ValueAsName="true" />
+        </Collection>
+
+        <String Name="Type" />
+
+        <Enum Name="Category" EnumValues="Empty,Good,Bad,Boss" />
+
+        <Struct Name="UncompletedMapSprite" Key="Sprite" />
+
+        <struct Name="CompletedMapSprite" Key="Sprite" />
+
+    </Struct>
+
+</Definitions>

@@ -12,12 +12,8 @@
 				<Number Name="HP" Type="Int" Default="10" />
 				<Collection Name="Reward">
 					<Pair>
-						<Key>
-							<String Name="Item" />
-						</Key>
-						<Value>
-							<Number Name="Count" Type="Int" />
-						</Value>
+                        <String Name="Item" />
+                        <Number Name="Count" Type="Int" />
 					</Pair>
 				</Collection>
 			</Struct>

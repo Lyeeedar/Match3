@@ -1,8 +1,28 @@
 <Definitions>
 	<StructDef Name="Sprite" DescriptionChild="Name">
-		<File BasePath="Sprites" AllowedFileTypes="png" DefaultValue="white" Name="Name" />
+		<File Name="Name" BasePath="Sprites" AllowedFileTypes="png" DefaultValue="white" />
 		<Boolean Name="DrawActualSize" />
 		<Number Name="UpdateRate" Default="0.5" Min="0" />
 		<Colour Name="Colour" />
 	</StructDef>
+
+    <StructDef Name="TilingSprite" DescriptionChild="Name">
+
+        <String Name="Name" />
+
+        <Enum Name="Mode" EnumValues="Masked,Premade" />
+
+        <File Name="Mask" BasePath="Sprites" AllowedFileTypes="png" VisibleIf="Mode==Masked" />
+        <Struct Name="Sprite" Key="Sprite" VisibleIf="Mode==Masked" />
+
+        <Struct Name="Front" Key="Sprite" VisibleIf="Mode==Premade" />
+        <Struct Name="Top" Key="Sprite" VisibleIf="Mode==Premade" />
+        <Struct Name="Overhang" Key="Sprite" VisibleIf="Mode==Premade" />
+
+    </StructDef>
+
+    <StructDef Name="DirectedSprite" Collapse="true">
+        <File Name="Path" BasePath="Sprites" AllowedFileTypes="png" />
+    </StructDef>
+
 </Definitions>

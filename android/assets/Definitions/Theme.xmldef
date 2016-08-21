@@ -1,0 +1,52 @@
+<Definitions>
+
+    <StructDef Name="SpriteWrapper">
+        <Struct Name="Sprite" Key="Sprite" />
+        <Struct Name="TilingSprite" Key="TilingSprite" />
+    </StructDef>
+
+    <Struct Name="Theme">
+
+        <Struct Name="Floor" Key="SpriteWrapper" />
+        <Struct Name="Wall" Key="SpriteWrapper" />
+        <Struct Name="Pit" Key="SpriteWrapper" />
+
+        <Struct Name="Chest">
+            <Struct Name="Full" Key="Sprite" />
+            <Struct Name="Empty" Key="Sprite" />
+        </Struct>
+
+        <Struct Name="Coin" Key="Sprite" />
+
+        <Collection Name="Block" MinCount="1" >
+            <Struct Name="Sprite" Key="Sprite" />
+        </Collection>
+
+        <Collection Name="Seal" MinCount="1" >
+            <Struct Name="Sprite" Key="Sprite" />
+        </Collection>
+
+        <Struct Name="Map">
+            <Struct Name="Room" Key="DirectedSprite" />
+            <Struct Name="Corridor" Key="DirectedSprite" />
+        </Struct>
+
+        <Struct Name="RoomWeights">
+            <Collection Name="Good">
+                <Pair Name="Data">
+                    <String Name="Type" />
+                    <Number Name="Weight" />
+                </Pair>
+            </Collection>
+            <Collection Name="Bad">
+                <Pair Name="Data">
+                    <String Name="Type" />
+                    <Number Name="Weight" />
+                </Pair>
+            </Collection>
+        </Struct>
+    </Struct>
+
+
+
+</Definitions>
