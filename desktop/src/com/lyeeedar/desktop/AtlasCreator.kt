@@ -13,6 +13,7 @@ import com.lyeeedar.Renderables.Sprite.TilingSprite
 import com.lyeeedar.Sprite.DirectedSprite
 import com.lyeeedar.Util.EnumBitflag
 import com.lyeeedar.Util.ImageUtils
+import com.lyeeedar.Util.getChildrenByAttributeRecursively
 
 import java.awt.image.BufferedImage
 import java.io.File
@@ -176,11 +177,7 @@ class AtlasCreator
 
 		val spriteElements = Array<XmlReader.Element>()
 
-		spriteElements.addAll(xml.getChildrenByNameRecursively("Sprite"))
-		spriteElements.addAll(xml.getChildrenByNameRecursively("Icon"))
-		spriteElements.addAll(xml.getChildrenByNameRecursively("Death"))
-		spriteElements.addAll(xml.getChildrenByNameRecursively("UncompletedMapSprite"))
-		spriteElements.addAll(xml.getChildrenByNameRecursively("CompletedMapSprite"))
+		spriteElements.addAll(xml.getChildrenByAttributeRecursively("Key", "Sprite"))
 
 		for (el in spriteElements)
 		{
@@ -191,7 +188,7 @@ class AtlasCreator
 			}
 		}
 
-		val tilingSpriteElements = xml.getChildrenByNameRecursively("TilingSprite")
+		val tilingSpriteElements = xml.getChildrenByAttributeRecursively("Key", "TilingSprite")
 
 		for (el in tilingSpriteElements)
 		{
@@ -202,7 +199,7 @@ class AtlasCreator
 			}
 		}
 
-		val directedSpriteElements = xml.getChildrenByNameRecursively("DirectedSprite")
+		val directedSpriteElements = xml.getChildrenByAttributeRecursively("Key", "DirectedSprite")
 
 		for (el in directedSpriteElements)
 		{

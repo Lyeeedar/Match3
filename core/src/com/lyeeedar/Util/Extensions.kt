@@ -133,8 +133,6 @@ operator fun IntIntMap.get(key: Int) = this.get(key, 0)
 operator fun IntIntMap.set(key: Int, value: Int) = this.put(key, value)
 operator fun <K, V> ObjectMap<K, V>.set(key: K, value: V) = this.put(key, value)
 
-fun XmlReader.Element.ranChild() = this.getChild(MathUtils.random(this.childCount-1))!!
-
 fun <T> Sequence<T>.random() = if (this.count() > 0) this.elementAt(MathUtils.random(this.count()-1)) else null
 fun <T> Sequence<T>.random(ran: Random) = if (this.count() > 0) this.elementAt(ran.nextInt(this.count())) else null
 inline fun <reified T> Sequence<T>.random(num: Int): Sequence<T>
@@ -170,4 +168,31 @@ fun Color.toHSV(out: FloatArray? = null): FloatArray
 	output[2] = value
 
 	return output
+}
+
+fun XmlReader.Element.ranChild() = this.getChild(MathUtils.random(this.childCount-1))!!
+
+fun XmlReader.Element.children(): Array<XmlReader.Element>
+{
+	val els = Array<XmlReader.Element>()
+
+	for (i in 0..this.childCount-1)
+	{
+		els.add(this.getChild(i))
+	}
+
+	return els
+}
+
+fun XmlReader.Element.getChildrenByAttributeRecursively(attribute: String, value: String, result: Array<XmlReader.Element> = Array()): Array<XmlReader.Element>
+{
+	if (this.children().count() == 0) return result
+	for (child in this.children())
+	{
+		if (child.getAttribute(attribute, null) == value) result.add(child)
+
+		child.getChildrenByAttributeRecursively(attribute, value, result)
+	}
+
+	return result
 }
