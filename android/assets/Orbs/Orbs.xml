@@ -2,12 +2,12 @@
 
     <Template>
 
-        <Sprite>
+        <Sprite Key="Sprite">
             <Name>Oryx/uf_split/uf_items/crystal_cloud</Name>
             <DrawActualSize>true</DrawActualSize>
         </Sprite>
 
-        <Death>
+        <Death Key="Sprite">
             <Name>EffectSprites/Splatter/Splatter</Name>
             <UpdateRate>0.06</UpdateRate>
         </Death>
@@ -17,27 +17,27 @@
     <Types>
 
         <Red>
-            <Colour><RGB>209,27,27</RGB></Colour>
+            <Colour>209,27,27</Colour>
         </Red>
 
         <Green>
-            <Colour><RGB>45,209,27</RGB></Colour>
+            <Colour>45,209,27</Colour>
         </Green>
 
         <Blue>
-            <Colour><RGB>83,128,238</RGB></Colour>
+            <Colour>83,128,238</Colour>
         </Blue>
 
         <Yellow>
-            <Colour><RGB>253,253,41</RGB></Colour>
+            <Colour>253,253,41</Colour>
         </Yellow>
 
         <Grey>
-            <Colour><RGB>205,205,205</RGB></Colour>
+            <Colour>205,205,205</Colour>
         </Grey>
 
         <Purple>
-            <Colour><RGB>165,35,212</RGB></Colour>
+            <Colour>165,35,212</Colour>
         </Purple>
 
     </Types>

@@ -1,82 +1,91 @@
 <Theme>
-    <Floor>
-        <Sprite>
-            <Name>Oryx/uf_split/uf_terrain/floor_extra_8</Name>
-        </Sprite>
-    </Floor>
-
-    <Wall>
-        <TilingSprite>
-            <Name>Wall</Name>
-
-            <Front>
-                <Name>Oryx/uf_split/uf_terrain/wall_dungeon_14</Name>
-            </Front>
-
-            <Top>
-                <Name>Oryx/uf_split/uf_terrain/wall_dungeon_7</Name>
-            </Top>
-
-            <Overhang>
-                <Name>Oryx/uf_split/uf_terrain/wall_dungeon_1</Name>
-            </Overhang>
-        </TilingSprite>
-    </Wall>
-
-    <Pit>
-        <Sprite>
-            <Name>Oryx/uf_split/uf_terrain/water_green</Name>
-        </Sprite>
-    </Pit>
-
-    <Chest>
-        <Sprite>
-            <Name>Oryx/uf_split/uf_items/chest_silver_open</Name>
-            <DrawActualSize>true</DrawActualSize>
-        </Sprite>
-        <Sprite>
-            <Name>Oryx/uf_split/uf_items/chest_silver_empty</Name>
-            <DrawActualSize>true</DrawActualSize>
-        </Sprite>
-    </Chest>
-
-    <Coin>
-        <Sprite>
-            <Name>Oryx/uf_split/uf_items/coin_gold</Name>
-            <DrawActualSize>true</DrawActualSize>
-        </Sprite>
-    </Coin>
-
-    <Block>
-        <Sprite>
-            <Name>Oryx/uf_split/uf_terrain/crate</Name>
-            <DrawActualSize>true</DrawActualSize>
-        </Sprite>
-    </Block>
-
-    <Seal>
-        <Sprite>
-            <Name>Oryx/uf_split/uf_items/shield_vorpal_buckler</Name>
-            <DrawActualSize>true</DrawActualSize>
-        </Sprite>
-    </Seal>
-
-    <Map>
-        <Room><DirectedSprite>Oryx/Custom/dungeonmap/stone_room</DirectedSprite></Room>
-        <Corridor><DirectedSprite>Oryx/Custom/dungeonmap/stone_corridor</DirectedSprite></Corridor>
-    </Map>
-
-    <RoomWeights>
-
-        <Good>
-            <Treasure>1</Treasure>
-        </Good>
-
-        <Bad>
-            <Encounter>2</Encounter>
-            <Trap>1</Trap>
-        </Bad>
-
-    </RoomWeights>
-
+	<Floor Key="SpriteWrapper">
+		<Sprite Key="Sprite">
+			<Name>Oryx/uf_split/uf_terrain/floor_extra_8</Name>
+			<DrawActualSize>false</DrawActualSize>
+			<UpdateRate>0.5</UpdateRate>
+			<Colour>255,255,255,255</Colour>
+		</Sprite>
+	</Floor>
+	<Wall Key="SpriteWrapper">
+		<TilingSprite Key="TilingSprite">
+			<Name>Wall</Name>
+			<Mode>Premade</Mode>
+			<Front Key="Sprite">
+				<Name>Oryx/uf_split/uf_terrain/wall_dungeon_14</Name>
+				<DrawActualSize>false</DrawActualSize>
+				<UpdateRate>0.5</UpdateRate>
+				<Colour>255,255,255,255</Colour>
+			</Front>
+			<Top Key="Sprite">
+				<Name>Oryx/uf_split/uf_terrain/wall_dungeon_7</Name>
+				<DrawActualSize>false</DrawActualSize>
+				<UpdateRate>0.5</UpdateRate>
+				<Colour>255,255,255,255</Colour>
+			</Top>
+			<Overhang Key="Sprite">
+				<Name>Oryx/uf_split/uf_terrain/wall_dungeon_1</Name>
+				<DrawActualSize>false</DrawActualSize>
+				<UpdateRate>0.5</UpdateRate>
+				<Colour>255,255,255,255</Colour>
+			</Overhang>
+		</TilingSprite>
+	</Wall>
+	<Pit Key="SpriteWrapper">
+		<Sprite Key="Sprite">
+			<Name>Oryx/uf_split/uf_terrain/water_green</Name>
+			<DrawActualSize>false</DrawActualSize>
+			<UpdateRate>0.5</UpdateRate>
+			<Colour>255,255,255,255</Colour>
+		</Sprite>
+	</Pit>
+	<Chest>
+		<Full Key="Sprite">
+			<Name>Oryx/uf_split/uf_items/chest_silver_open</Name>
+			<DrawActualSize>true</DrawActualSize>
+			<UpdateRate>0.5</UpdateRate>
+			<Colour>255,255,255,255</Colour>
+		</Full>
+		<Empty Key="Sprite">
+			<Name>Oryx/uf_split/uf_items/chest_silver_empty</Name>
+			<DrawActualSize>true</DrawActualSize>
+			<UpdateRate>0.5</UpdateRate>
+			<Colour>255,255,255,255</Colour>
+		</Empty>
+	</Chest>
+	<Coin Key="Sprite">
+		<Name>Oryx/uf_split/uf_items/coin_gold</Name>
+		<DrawActualSize>true</DrawActualSize>
+		<UpdateRate>0.5</UpdateRate>
+		<Colour>255,255,255,255</Colour>
+	</Coin>
+	<Block>
+		<Sprite Key="Sprite">
+			<Name>Oryx/uf_split/uf_terrain/crate</Name>
+			<DrawActualSize>true</DrawActualSize>
+			<UpdateRate>0.5</UpdateRate>
+			<Colour>255,255,255,255</Colour>
+		</Sprite>
+	</Block>
+	<Seal>
+		<Sprite Key="Sprite">
+			<Name>Oryx/uf_split/uf_items/shield_vorpal_buckler</Name>
+			<DrawActualSize>true</DrawActualSize>
+			<UpdateRate>0.5</UpdateRate>
+			<Colour>255,255,255,255</Colour>
+		</Sprite>
+	</Seal>
+	<Map>
+		<Room Key="DirectedSprite">Oryx/Custom/dungeonmap/stone_room</Room>
+		<Corridor Key="DirectedSprite">Oryx/Custom/dungeonmap/stone_corridor</Corridor>
+	</Map>
+	<RoomWeights>
+		<Good>
+			<Treasure>1</Treasure>
+		</Good>
+		<Bad>
+			<Encounter>2</Encounter>
+			<Trap>1</Trap>
+		</Bad>
+	</RoomWeights>
 </Theme>

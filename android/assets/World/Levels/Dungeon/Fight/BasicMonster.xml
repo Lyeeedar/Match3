@@ -1,4 +1,3 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
 <Level>
 	<Grid>
 		<Rows>
@@ -132,13 +131,13 @@
 	</AllowedDefeats>
 	<Type>Encounter</Type>
 	<Category>Bad</Category>
-	<UncompletedMapSprite>
+	<UncompletedMapSprite Key="Sprite">
 		<Name>Oryx/Custom/dungeonmap/combat</Name>
 		<DrawActualSize>false</DrawActualSize>
 		<UpdateRate>0.5</UpdateRate>
 		<Colour>255,255,255,255</Colour>
 	</UncompletedMapSprite>
-	<CompletedMapSprite>
+	<CompletedMapSprite Key="Sprite">
 		<Name>Oryx/Custom/dungeonmap/combat_complete</Name>
 		<DrawActualSize>false</DrawActualSize>
 		<UpdateRate>0.5</UpdateRate>

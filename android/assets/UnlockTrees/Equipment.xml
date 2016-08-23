@@ -1,331 +1,362 @@
-﻿<UnlockTree>
-
-    <Icon>
-        <Name>Icons/FireTree</Name>
-    </Icon>
-
-    <Unlockables>
-
-        <!-- Weapon Tree -->
-
-        <Pitchfork>
-            <Name>Pitchfork</Name>
-            <Description>A wooden pitchfork with cast iron prongs. Not very useful as a weapon but better than nothing.</Description>
-            <Icon><Name>Oryx/uf_split/uf_items/weapon_spear</Name></Icon>
-            <UnboughtDescription>A pitchfork used by farmers</UnboughtDescription>
-            <BuyCost>
-                <Gold>50</Gold>
-            </BuyCost>
-            <DataType>Equipment</DataType>
-            <MatchDam>0</MatchDam>
-            <AbilityDam>1</AbilityDam>
-            <Slot>Weapon</Slot>
-        </Pitchfork>
-
-        <ReinforcedPitchfork>
-            <Name>Reinforced Pitchfork</Name>
-            <Description>A wooden pitchfork with cast iron prongs. The prongs are further enforced to be a better weapon.</Description>
-            <Icon><Name>Oryx/uf_split/uf_items/weapon_spear</Name></Icon>
-            <UnboughtDescription>A pitchfork reinforced with iron to be a better weapon</UnboughtDescription>
-            <BuyCost>
-                <Gold>100</Gold>
-            </BuyCost>
-            <DataType>Equipment</DataType>
-            <Upgrades>Pitchfork</Upgrades>
-            <MatchDam>0</MatchDam>
-            <AbilityDam>2</AbilityDam>
-            <Slot>Weapon</Slot>
-        </ReinforcedPitchfork>
-
-        <Trident>
-            <Name>Trident</Name>
-            <Description>A metallic trident, flashy and slightly cumbersome.</Description>
-            <Icon><Name>Oryx/uf_split/uf_items/weapon_spear</Name></Icon>
-            <UnboughtDescription>A metal trident</UnboughtDescription>
-            <BuyCost>
-                <Gold>250</Gold>
-                <IronIngot>5</IronIngot>
-            </BuyCost>
-            <DataType>Equipment</DataType>
-            <Upgrades>Pitchfork</Upgrades>
-            <MatchDam>1</MatchDam>
-            <AbilityDam>3</AbilityDam>
-            <Slot>Weapon</Slot>
-        </Trident>
-
-        <Knife>
-            <Name>Iron Knife</Name>
-            <Description>A small but sharp iron knife</Description>
-            <Icon><Name>Oryx/uf_split/uf_items/weapon_sword</Name></Icon>
-            <UnboughtDescription>A knife</UnboughtDescription>
-            <BuyCost>
-                <Gold>250</Gold>
-                <IronIngot>5</IronIngot>
-            </BuyCost>
-            <DataType>Equipment</DataType>
-            <MatchDam>2</MatchDam>
-            <AbilityDam>0</AbilityDam>
-            <Slot>Weapon</Slot>
-        </Knife>
-
-        <Sword>
-            <Name>Steel Sword</Name>
-            <Description>A carefully honed steel sword</Description>
-            <Icon><Name>Oryx/uf_split/uf_items/weapon_sword</Name></Icon>
-            <UnboughtDescription>A sword</UnboughtDescription>
-            <BuyCost>
-                <Gold>500</Gold>
-                <IronIngot>10</IronIngot>
-            </BuyCost>
-            <DataType>Equipment</DataType>
-            <Upgrades>Iron Knife</Upgrades>
-            <MatchDam>3</MatchDam>
-            <AbilityDam>0</AbilityDam>
-            <Slot>Weapon</Slot>
-        </Sword>
-
-        <OakStaff>
-            <Name>Oak Staff</Name>
-            <Description>A staff, made out of oak. Good for channelling abilities</Description>
-            <Icon><Name>Oryx/uf_split/uf_items/weapon_staff_branch</Name></Icon>
-            <UnboughtDescription>A solid oaken staff</UnboughtDescription>
-            <BuyCost>
-                <Gold>250</Gold>
-                <HeartWood>5</HeartWood>
-            </BuyCost>
-            <DataType>Equipment</DataType>
-            <MatchDam>0</MatchDam>
-            <AbilityDam>5</AbilityDam>
-            <Slot>Weapon</Slot>
-        </OakStaff>
-
-        <EmberFocus>
-            <Name>Ember Focus</Name>
-            <Description>A burning focus, perfect for channelling abilities</Description>
-            <Icon><Name>Oryx/uf_split/uf_items/weapon_staff_jeweled</Name></Icon>
-            <UnboughtDescription>A burning focus</UnboughtDescription>
-            <BuyCost>
-                <Gold>250</Gold>
-                <FlameHeart>5</FlameHeart>
-            </BuyCost>
-            <DataType>Equipment</DataType>
-            <Upgrades>Oak Staff</Upgrades>
-            <MatchDam>0</MatchDam>
-            <AbilityDam>7</AbilityDam>
-            <Slot>Weapon</Slot>
-        </EmberFocus>
-
-        <!-- Armour Tree -->
-
-        <FarmersRags>
-            <Name>Farmers Rags</Name>
-            <Description>Rags worn by a farmer, crudely stiched together where it has been ripped</Description>
-            <Icon><Name>Oryx/uf_split/uf_items/cloak_tattered</Name></Icon>
-            <UnboughtDescription>Ragged rags</UnboughtDescription>
-            <BuyCost>
-                <Gold>10</Gold>
-            </BuyCost>
-            <DataType>Equipment</DataType>
-            <MaxHP>5</MaxHP>
-            <Regen>1</Regen>
-            <Slot>Armour</Slot>
-        </FarmersRags>
-
-        <PaddedCloth>
-            <Name>Padded Cloth</Name>
-            <Description>Cloth clothing padded with layers of reeds and wool. The protection is minor, but it does keep you warm.</Description>
-            <Icon><Name>Oryx/uf_split/uf_items/cloak_leather</Name></Icon>
-            <UnboughtDescription>Padded cloth armour. A slight improvement</UnboughtDescription>
-            <BuyCost>
-                <Gold>100</Gold>
-            </BuyCost>
-            <DataType>Equipment</DataType>
-            <Upgrades>Farmers Rags</Upgrades>
-            <MaxHP>10</MaxHP>
-            <Regen>2</Regen>
-            <Slot>Armour</Slot>
-        </PaddedCloth>
-
-        <Leather>
-            <Name>Leather Armour</Name>
-            <Description>Armour made from cured leather. Tough yet flexible.</Description>
-            <Icon><Name>Oryx/uf_split/uf_items/armor_leather_chest</Name></Icon>
-            <UnboughtDescription>Leather armour yo</UnboughtDescription>
-            <BuyCost>
-                <Gold>250</Gold>
-                <RatSkin>3</RatSkin>
-                <GoblinSkin>3</GoblinSkin>
-            </BuyCost>
-            <DataType>Equipment</DataType>
-            <Upgrades>Farmers Rags</Upgrades>
-            <MaxHP>20</MaxHP>
-            <Regen>4</Regen>
-            <Slot>Armour</Slot>
-        </Leather>
-
-        <Lamellar>
-            <Name>Lamellar Armour</Name>
-            <Description>Armour made from layers of leather and hard wood. Easy to repair and easy to move in.</Description>
-            <Icon><Name>Oryx/uf_split/uf_items/armor_wild_chest</Name></Icon>
-            <UnboughtDescription>Lamellar armour</UnboughtDescription>
-            <BuyCost>
-                <Gold>250</Gold>
-                <HeartWood>5</HeartWood>
-            </BuyCost>
-            <DataType>Equipment</DataType>
-            <MaxHP>15</MaxHP>
-            <Regen>8</Regen>
-            <Slot>Armour</Slot>
-        </Lamellar>
-
-        <ChainMail>
-            <Name>Chain Mail</Name>
-            <Description>Armour made from tiny interlinked rings of iron.</Description>
-            <Icon><Name>Oryx/uf_split/uf_items/armor_chain_chest</Name></Icon>
-            <UnboughtDescription>Chainmail yo</UnboughtDescription>
-            <BuyCost>
-                <Gold>250</Gold>
-                <IronIngot>10</IronIngot>
-            </BuyCost>
-            <DataType>Equipment</DataType>
-            <MaxHP>30</MaxHP>
-            <Regen>1</Regen>
-            <Slot>Armour</Slot>
-        </ChainMail>
-
-        <!-- Charm Tree -->
-
-        <WoodenCharm>
-            <Name>Wooden Charm</Name>
-            <Description>A small charm intricately carved with swirling patterns.</Description>
-            <Icon><Name>Oryx/uf_split/uf_items/ring_copper</Name></Icon>
-            <UnboughtDescription>A wooden charm</UnboughtDescription>
-            <BuyCost>
-                <Gold>50</Gold>
-            </BuyCost>
-            <DataType>Equipment</DataType>
-            <Stats>
-                <MaxPower>0</MaxPower>
-                <StartPower>5</StartPower>
-            </Stats>
-            <Slot>Charm</Slot>
-        </WoodenCharm>
-
-        <BronzeCharm>
-            <Name>Bronze Charm</Name>
-            <Description>A small charm cast from bronze and patterned with swirling patterns.</Description>
-            <Icon><Name>Oryx/uf_split/uf_items/ring_ornate</Name></Icon>
-            <UnboughtDescription>A bronze charm</UnboughtDescription>
-            <BuyCost>
-                <Gold>100</Gold>
-            </BuyCost>
-            <DataType>Equipment</DataType>
-            <Upgrades>Wooden Charm</Upgrades>
-            <Stats>
-                <MaxPower>5</MaxPower>
-                <StartPower>10</StartPower>
-            </Stats>
-            <Slot>Charm</Slot>
-        </BronzeCharm>
-
-        <SilverCharm>
-            <Name>Silver Charm</Name>
-            <Description>A small charm cast from silver and patterned with swirling patterns.</Description>
-            <Icon><Name>Oryx/uf_split/uf_items/ring_diamond</Name></Icon>
-            <UnboughtDescription>A silver charm</UnboughtDescription>
-            <BuyCost>
-                <Gold>500</Gold>
-            </BuyCost>
-            <DataType>Equipment</DataType>
-            <Upgrades>Wooden Charm</Upgrades>
-            <Stats>
-                <MaxPower>10</MaxPower>
-                <StartPower>20</StartPower>
-            </Stats>
-            <Slot>Charm</Slot>
-        </SilverCharm>
-
-        <CrystalCharm>
-            <Name>Crystal Charm</Name>
-            <Description>A clear charm carved from crystal.</Description>
-            <Icon><Name>Oryx/uf_split/uf_items/necklace_eye</Name></Icon>
-            <UnboughtDescription>A crystak charm</UnboughtDescription>
-            <BuyCost>
-                <Gold>500</Gold>
-                <SoulStone>1</SoulStone>
-            </BuyCost>
-            <DataType>Equipment</DataType>
-            <Stats>
-                <MaxPower>20</MaxPower>
-                <StartPower>0</StartPower>
-            </Stats>
-            <Slot>Charm</Slot>
-        </CrystalCharm>
-
-        <BloodyCharm>
-            <Name>Bloody Charm</Name>
-            <Description>A wooden charm bathed in the blood of powerful creatures. The repeated treatments give it a red sheen.</Description>
-            <Icon><Name>Oryx/uf_split/uf_items/necklace_ruby</Name></Icon>
-            <UnboughtDescription>A bloody charm</UnboughtDescription>
-            <BuyCost>
-                <Gold>500</Gold>
-                <HeartWood>5</HeartWood>
-            </BuyCost>
-            <DataType>Equipment</DataType>
-            <Stats>
-                <MaxPower>10</MaxPower>
-                <StartPower>30</StartPower>
-            </Stats>
-            <Slot>Charm</Slot>
-        </BloodyCharm>
-
-    </Unlockables>
-
-    <Tree>
-
-        <Pitchfork>
-            <ReinforcedPitchfork>
-                <Trident>
-                </Trident>
-
-                <Knife>
-                    <Sword>
-                    </Sword>
-                </Knife>
-
-                <OakStaff>
-                    <EmberFocus>
-                    </EmberFocus>
-                </OakStaff>
-            </ReinforcedPitchfork>
-        </Pitchfork>
-
-        <FarmersRags>
-            <PaddedCloth>
-                <Leather>
-                </Leather>
-
-                <Lamellar>
-                </Lamellar>
-
-                <ChainMail>
-                </ChainMail>
-            </PaddedCloth>
-        </FarmersRags>
-
-        <WoodenCharm>
-            <BronzeCharm>
-                <SilverCharm>
-                </SilverCharm>
-
-                <CrystalCharm>
-                </CrystalCharm>
-
-                <BloodyCharm>
-                </BloodyCharm>
-            </BronzeCharm>
-        </WoodenCharm>
-
-    </Tree>
-
+<UnlockTree>
+	<Icon Key="Sprite">
+		<Name>Icons/FireTree</Name>
+		<DrawActualSize>false</DrawActualSize>
+		<UpdateRate>0.5</UpdateRate>
+		<Colour>255,255,255,255</Colour>
+	</Icon>
+	<Unlockables>
+		<Pitchfork>
+			<Name>Pitchfork</Name>
+			<Description>A wooden pitchfork with cast iron prongs. Not very useful as a weapon but better than nothing.</Description>
+			<Icon Key="Sprite">
+				<Name>Oryx/uf_split/uf_items/weapon_spear</Name>
+				<DrawActualSize>false</DrawActualSize>
+				<UpdateRate>0.5</UpdateRate>
+				<Colour>255,255,255,255</Colour>
+			</Icon>
+			<UnboughtDescription>A pitchfork used by farmers</UnboughtDescription>
+			<BuyCost>
+				<Gold>50</Gold>
+			</BuyCost>
+			<DataType>Equipment</DataType>
+			<Slot>Weapon</Slot>
+			<MatchDam>0</MatchDam>
+			<AbilityDam>1</AbilityDam>
+		</Pitchfork>
+		<ReinforcedPitchfork>
+			<Name>Reinforced Pitchfork</Name>
+			<Description>A wooden pitchfork with cast iron prongs. The prongs are further enforced to be a better weapon.</Description>
+			<Icon Key="Sprite">
+				<Name>Oryx/uf_split/uf_items/weapon_spear</Name>
+				<DrawActualSize>false</DrawActualSize>
+				<UpdateRate>0.5</UpdateRate>
+				<Colour>255,255,255,255</Colour>
+			</Icon>
+			<UnboughtDescription>A pitchfork reinforced with iron to be a better weapon</UnboughtDescription>
+			<BuyCost>
+				<Gold>100</Gold>
+			</BuyCost>
+			<Upgrades>Pitchfork</Upgrades>
+			<DataType>Equipment</DataType>
+			<Slot>Weapon</Slot>
+			<MatchDam>0</MatchDam>
+			<AbilityDam>2</AbilityDam>
+		</ReinforcedPitchfork>
+		<Trident>
+			<Name>Trident</Name>
+			<Description>A metallic trident, flashy and slightly cumbersome.</Description>
+			<Icon Key="Sprite">
+				<Name>Oryx/uf_split/uf_items/weapon_spear</Name>
+				<DrawActualSize>false</DrawActualSize>
+				<UpdateRate>0.5</UpdateRate>
+				<Colour>255,255,255,255</Colour>
+			</Icon>
+			<UnboughtDescription>A metal trident</UnboughtDescription>
+			<BuyCost>
+				<Gold>250</Gold>
+				<IronIngot>5</IronIngot>
+			</BuyCost>
+			<Upgrades>Pitchfork</Upgrades>
+			<DataType>Equipment</DataType>
+			<Slot>Weapon</Slot>
+			<MatchDam>1</MatchDam>
+			<AbilityDam>3</AbilityDam>
+		</Trident>
+		<Knife>
+			<Name>Iron Knife</Name>
+			<Description>A small but sharp iron knife</Description>
+			<Icon Key="Sprite">
+				<Name>Oryx/uf_split/uf_items/weapon_sword</Name>
+				<DrawActualSize>false</DrawActualSize>
+				<UpdateRate>0.5</UpdateRate>
+				<Colour>255,255,255,255</Colour>
+			</Icon>
+			<UnboughtDescription>A knife</UnboughtDescription>
+			<BuyCost>
+				<Gold>250</Gold>
+				<IronIngot>5</IronIngot>
+			</BuyCost>
+			<DataType>Equipment</DataType>
+			<Slot>Weapon</Slot>
+			<MatchDam>2</MatchDam>
+			<AbilityDam>0</AbilityDam>
+		</Knife>
+		<Sword>
+			<Name>Steel Sword</Name>
+			<Description>A carefully honed steel sword</Description>
+			<Icon Key="Sprite">
+				<Name>Oryx/uf_split/uf_items/weapon_sword</Name>
+				<DrawActualSize>false</DrawActualSize>
+				<UpdateRate>0.5</UpdateRate>
+				<Colour>255,255,255,255</Colour>
+			</Icon>
+			<UnboughtDescription>A sword</UnboughtDescription>
+			<BuyCost>
+				<Gold>500</Gold>
+				<IronIngot>10</IronIngot>
+			</BuyCost>
+			<Upgrades>Iron Knife</Upgrades>
+			<DataType>Equipment</DataType>
+			<Slot>Weapon</Slot>
+			<MatchDam>3</MatchDam>
+			<AbilityDam>0</AbilityDam>
+		</Sword>
+		<OakStaff>
+			<Name>Oak Staff</Name>
+			<Description>A staff, made out of oak. Good for channelling abilities</Description>
+			<Icon Key="Sprite">
+				<Name>Oryx/uf_split/uf_items/weapon_staff_branch</Name>
+				<DrawActualSize>false</DrawActualSize>
+				<UpdateRate>0.5</UpdateRate>
+				<Colour>255,255,255,255</Colour>
+			</Icon>
+			<UnboughtDescription>A solid oaken staff</UnboughtDescription>
+			<BuyCost>
+				<Gold>250</Gold>
+				<HeartWood>5</HeartWood>
+			</BuyCost>
+			<DataType>Equipment</DataType>
+			<Slot>Weapon</Slot>
+			<MatchDam>0</MatchDam>
+			<AbilityDam>5</AbilityDam>
+		</OakStaff>
+		<EmberFocus>
+			<Name>Ember Focus</Name>
+			<Description>A burning focus, perfect for channelling abilities</Description>
+			<Icon Key="Sprite">
+				<Name>Oryx/uf_split/uf_items/weapon_staff_jeweled</Name>
+				<DrawActualSize>false</DrawActualSize>
+				<UpdateRate>0.5</UpdateRate>
+				<Colour>255,255,255,255</Colour>
+			</Icon>
+			<UnboughtDescription>A burning focus</UnboughtDescription>
+			<BuyCost>
+				<Gold>250</Gold>
+				<FlameHeart>5</FlameHeart>
+			</BuyCost>
+			<Upgrades>Oak Staff</Upgrades>
+			<DataType>Equipment</DataType>
+			<Slot>Weapon</Slot>
+			<MatchDam>0</MatchDam>
+			<AbilityDam>7</AbilityDam>
+		</EmberFocus>
+		<FarmersRags>
+			<Name>Farmers Rags</Name>
+			<Description>Rags worn by a farmer, crudely stiched together where it has been ripped</Description>
+			<Icon Key="Sprite">
+				<Name>Oryx/uf_split/uf_items/cloak_tattered</Name>
+				<DrawActualSize>false</DrawActualSize>
+				<UpdateRate>0.5</UpdateRate>
+				<Colour>255,255,255,255</Colour>
+			</Icon>
+			<UnboughtDescription>Ragged rags</UnboughtDescription>
+			<BuyCost>
+				<Gold>10</Gold>
+			</BuyCost>
+			<DataType>Equipment</DataType>
+			<Slot>Armour</Slot>
+			<MaxHP>5</MaxHP>
+			<Regen>1</Regen>
+		</FarmersRags>
+		<PaddedCloth>
+			<Name>Padded Cloth</Name>
+			<Description>Cloth clothing padded with layers of reeds and wool. The protection is minor, but it does keep you warm.</Description>
+			<Icon Key="Sprite">
+				<Name>Oryx/uf_split/uf_items/cloak_leather</Name>
+				<DrawActualSize>false</DrawActualSize>
+				<UpdateRate>0.5</UpdateRate>
+				<Colour>255,255,255,255</Colour>
+			</Icon>
+			<UnboughtDescription>Padded cloth armour. A slight improvement</UnboughtDescription>
+			<BuyCost>
+				<Gold>100</Gold>
+			</BuyCost>
+			<Upgrades>Farmers Rags</Upgrades>
+			<DataType>Equipment</DataType>
+			<Slot>Armour</Slot>
+			<MaxHP>10</MaxHP>
+			<Regen>2</Regen>
+		</PaddedCloth>
+		<Leather>
+			<Name>Leather Armour</Name>
+			<Description>Armour made from cured leather. Tough yet flexible.</Description>
+			<Icon Key="Sprite">
+				<Name>Oryx/uf_split/uf_items/armor_leather_chest</Name>
+				<DrawActualSize>false</DrawActualSize>
+				<UpdateRate>0.5</UpdateRate>
+				<Colour>255,255,255,255</Colour>
+			</Icon>
+			<UnboughtDescription>Leather armour yo</UnboughtDescription>
+			<BuyCost>
+				<Gold>250</Gold>
+				<RatSkin>3</RatSkin>
+				<GoblinSkin>3</GoblinSkin>
+			</BuyCost>
+			<Upgrades>Farmers Rags</Upgrades>
+			<DataType>Equipment</DataType>
+			<Slot>Armour</Slot>
+			<MaxHP>20</MaxHP>
+			<Regen>4</Regen>
+		</Leather>
+		<Lamellar>
+			<Name>Lamellar Armour</Name>
+			<Description>Armour made from layers of leather and hard wood. Easy to repair and easy to move in.</Description>
+			<Icon Key="Sprite">
+				<Name>Oryx/uf_split/uf_items/armor_wild_chest</Name>
+				<DrawActualSize>false</DrawActualSize>
+				<UpdateRate>0.5</UpdateRate>
+				<Colour>255,255,255,255</Colour>
+			</Icon>
+			<UnboughtDescription>Lamellar armour</UnboughtDescription>
+			<BuyCost>
+				<Gold>250</Gold>
+				<HeartWood>5</HeartWood>
+			</BuyCost>
+			<DataType>Equipment</DataType>
+			<Slot>Armour</Slot>
+			<MaxHP>15</MaxHP>
+			<Regen>8</Regen>
+		</Lamellar>
+		<ChainMail>
+			<Name>Chain Mail</Name>
+			<Description>Armour made from tiny interlinked rings of iron.</Description>
+			<Icon Key="Sprite">
+				<Name>Oryx/uf_split/uf_items/armor_chain_chest</Name>
+				<DrawActualSize>false</DrawActualSize>
+				<UpdateRate>0.5</UpdateRate>
+				<Colour>255,255,255,255</Colour>
+			</Icon>
+			<UnboughtDescription>Chainmail yo</UnboughtDescription>
+			<BuyCost>
+				<Gold>250</Gold>
+				<IronIngot>10</IronIngot>
+			</BuyCost>
+			<DataType>Equipment</DataType>
+			<Slot>Armour</Slot>
+			<MaxHP>30</MaxHP>
+			<Regen>1</Regen>
+		</ChainMail>
+		<WoodenCharm>
+			<Name>Wooden Charm</Name>
+			<Description>A small charm intricately carved with swirling patterns.</Description>
+			<Icon Key="Sprite">
+				<Name>Oryx/uf_split/uf_items/ring_copper</Name>
+				<DrawActualSize>false</DrawActualSize>
+				<UpdateRate>0.5</UpdateRate>
+				<Colour>255,255,255,255</Colour>
+			</Icon>
+			<UnboughtDescription>A wooden charm</UnboughtDescription>
+			<BuyCost>
+				<Gold>50</Gold>
+			</BuyCost>
+			<DataType>Equipment</DataType>
+			<Slot>Charm</Slot>
+			<MaxPower>5</MaxPower>
+			<PowerBonus>1</PowerBonus>
+		</WoodenCharm>
+		<BronzeCharm>
+			<Name>Bronze Charm</Name>
+			<Description>A small charm cast from bronze and patterned with swirling patterns.</Description>
+			<Icon Key="Sprite">
+				<Name>Oryx/uf_split/uf_items/ring_ornate</Name>
+				<DrawActualSize>false</DrawActualSize>
+				<UpdateRate>0.5</UpdateRate>
+				<Colour>255,255,255,255</Colour>
+			</Icon>
+			<UnboughtDescription>A bronze charm</UnboughtDescription>
+			<BuyCost>
+				<Gold>100</Gold>
+			</BuyCost>
+			<Upgrades>Wooden Charm</Upgrades>
+			<DataType>Equipment</DataType>
+			<Slot>Charm</Slot>
+			<MaxPower>5</MaxPower>
+			<PowerBonus>2</PowerBonus>
+		</BronzeCharm>
+		<SilverCharm>
+			<Name>Silver Charm</Name>
+			<Description>A small charm cast from silver and patterned with swirling patterns.</Description>
+			<Icon Key="Sprite">
+				<Name>Oryx/uf_split/uf_items/ring_diamond</Name>
+				<DrawActualSize>false</DrawActualSize>
+				<UpdateRate>0.5</UpdateRate>
+				<Colour>255,255,255,255</Colour>
+			</Icon>
+			<UnboughtDescription>A silver charm</UnboughtDescription>
+			<BuyCost>
+				<Gold>500</Gold>
+			</BuyCost>
+			<Upgrades>Wooden Charm</Upgrades>
+			<DataType>Equipment</DataType>
+			<Slot>Charm</Slot>
+			<MaxPower>5</MaxPower>
+			<PowerBonus>5</PowerBonus>
+		</SilverCharm>
+		<CrystalCharm>
+			<Name>Crystal Charm</Name>
+			<Description>A clear charm carved from crystal.</Description>
+			<Icon Key="Sprite">
+				<Name>Oryx/uf_split/uf_items/necklace_eye</Name>
+				<DrawActualSize>false</DrawActualSize>
+				<UpdateRate>0.5</UpdateRate>
+				<Colour>255,255,255,255</Colour>
+			</Icon>
+			<UnboughtDescription>A crystak charm</UnboughtDescription>
+			<BuyCost>
+				<Gold>500</Gold>
+				<SoulStone>1</SoulStone>
+			</BuyCost>
+			<DataType>Equipment</DataType>
+			<Slot>Charm</Slot>
+			<MaxPower>20</MaxPower>
+			<PowerBonus>0</PowerBonus>
+		</CrystalCharm>
+		<BloodyCharm>
+			<Name>Bloody Charm</Name>
+			<Description>A wooden charm bathed in the blood of powerful creatures. The repeated treatments give it a red sheen.</Description>
+			<Icon Key="Sprite">
+				<Name>Oryx/uf_split/uf_items/necklace_ruby</Name>
+				<DrawActualSize>false</DrawActualSize>
+				<UpdateRate>0.5</UpdateRate>
+				<Colour>255,255,255,255</Colour>
+			</Icon>
+			<UnboughtDescription>A bloody charm</UnboughtDescription>
+			<BuyCost>
+				<Gold>500</Gold>
+				<HeartWood>5</HeartWood>
+			</BuyCost>
+			<DataType>Equipment</DataType>
+			<Slot>Charm</Slot>
+			<MaxPower>0</MaxPower>
+			<PowerBonus>10</PowerBonus>
+		</BloodyCharm>
+	</Unlockables>
+	<Tree>
+		<Pitchfork>
+			<ReinforcedPitchfork>
+				<Trident />
+				<Knife>
+					<Sword />
+				</Knife>
+				<OakStaff>
+					<EmberFocus />
+				</OakStaff>
+			</ReinforcedPitchfork>
+		</Pitchfork>
+		<FarmersRags>
+			<PaddedCloth>
+				<Leather />
+				<Lamellar />
+				<ChainMail />
+			</PaddedCloth>
+		</FarmersRags>
+		<WoodenCharm>
+			<BronzeCharm>
+				<SilverCharm />
+				<CrystalCharm />
+				<BloodyCharm />
+			</BronzeCharm>
+		</WoodenCharm>
+	</Tree>
 </UnlockTree>

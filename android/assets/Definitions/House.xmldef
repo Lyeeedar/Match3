@@ -1,0 +1,15 @@
+<Definitions>
+
+    <Struct Name="House">
+        <Struct Name="Sprite" Key="Sprite" />
+
+        <Collection Name="Dialogue">
+            <Struct Name="Line" ChildAsName="Type">
+                <Enum Name="Type" EnumValues="Line,Tree" />
+                <String Name="Text" VisibleIf="Type == Line" />
+                <String Name="Tree" VisibleIf="Type == Tree" />
+            </Struct>
+        </Collection>
+    </Struct>
+
+</Definitions>

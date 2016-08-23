@@ -22,6 +22,6 @@ class HouseInteractionLine : AbstractHouseInteraction()
 
 	override fun parse(xml: XmlReader.Element)
 	{
-		line = xml.text
+		line = xml.get("Text")
 	}
 }

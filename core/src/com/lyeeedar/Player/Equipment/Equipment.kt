@@ -21,6 +21,8 @@ class Equipment : Unlockable()
 		CHARM
 	}
 
+	private val StatNames = arrayOf( "MatchDam", "AbilityDam", "MaxHP", "Regen", "MaxPower", "PowerBonus" )
+
 	lateinit var slot: EquipmentSlot
 	val stats = ObjectMap<String, Int>()
 	var specialEffect: Sprite? = null
@@ -37,11 +39,10 @@ class Equipment : Unlockable()
 	override fun parse(xml: XmlReader.Element, resources: ObjectMap<String, XmlReader.Element>)
 	{
 		slot = EquipmentSlot.valueOf(xml.get("Slot").toUpperCase())
-		val statsEl = xml.getChildByName("Stats")
-		for (i in 0..statsEl.childCount-1)
+		for (stat in StatNames)
 		{
-			val el = statsEl.getChild(i)
-			stats[el.name] = el.text.toInt()
+			val el = xml.getChildByName(stat)
+			if (el != null) stats[el.name] = el.text.toInt()
 		}
 
 		val specialEl = xml.getChildByName("Sprite")

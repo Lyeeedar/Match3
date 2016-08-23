@@ -1,6 +1,15 @@
 <Definitions>
 
-    <EnumDef Name="CompletionCondition" EnumValues="None,Kill,Matches,Sink,Time,Turns" />
+    <StructDef Name="CompletionCondition" ChildAsName="Condition">
+        <EnumDef Name="Condition" EnumValues="None,Kill,Matches,Sink,Time,Turns" />
+
+        <Collection Name="Orbs" MinCount="1" VisibleIf="Condition == Matches">
+            <Number Name="Count" Type="Int" Default="10" />
+        </Collection>
+        <Number Name="Sink" Type="Int" Default="4" VisibleIf="Condition == Sink" />
+        <Number Name="Time" Type="Int" Default="60" VisibleIf="Condition == Time" />
+        <Number Name="Turns" Type="Int" Default="30" VisibleIf="Condition == Turns" />
+    </StructDef>
 
     <Struct Name="Level">
 
@@ -13,11 +22,11 @@
         <String Name="Faction" />
 
         <Collection Name="AllowedVictories">
-            <Enum Name="Victory" Key="CompletionCondition" ValueAsName="true" />
+            <Struct Name="Victory" Key="CompletionCondition" />
         </Collection>
 
         <Collection Name="AllowedDefeats">
-            <Enum Name="Defeat" Key="CompletionCondition" ValueAsName="true" />
+            <Struct Name="Defeat" Key="CompletionCondition" />
         </Collection>
 
         <String Name="Type" />

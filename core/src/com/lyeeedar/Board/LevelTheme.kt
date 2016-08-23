@@ -49,9 +49,9 @@ class LevelTheme
 			theme.pit = SpriteWrapper.load(xml.getChildByName("Pit"))
 
 			val chestEl = xml.getChildByName("Chest")
-			theme.chestFull = AssetManager.loadSprite(chestEl.getChild(0))
-			theme.chestEmpty = AssetManager.loadSprite(chestEl.getChild(1))
-			theme.coin = AssetManager.loadSprite(xml.getChildByName("Coin").getChild(0))
+			theme.chestFull = AssetManager.loadSprite(chestEl.getChildByName("Full"))
+			theme.chestEmpty = AssetManager.loadSprite(chestEl.getChildByName("Empty"))
+			theme.coin = AssetManager.loadSprite(xml.getChildByName("Coin"))
 
 			val blockEls = xml.getChildByName("Block")
 			for (i in 0..blockEls.childCount-1)
@@ -66,8 +66,8 @@ class LevelTheme
 			}
 
 			val mapEl = xml.getChildByName("Map")
-			theme.mapRoom = DirectedSprite.load(mapEl.getChildByName("Room").getChild(0))
-			theme.mapCorridor = DirectedSprite.load(mapEl.getChildByName("Corridor").getChild(0))
+			theme.mapRoom = DirectedSprite.load(mapEl.getChildByName("Room"))
+			theme.mapCorridor = DirectedSprite.load(mapEl.getChildByName("Corridor"))
 
 			val weightsEl = xml.getChildByName("RoomWeights")
 			for (i in 0..weightsEl.childCount-1)

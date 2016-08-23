@@ -354,21 +354,7 @@ class AssetManager
 
 		fun loadColour(xml: Element): Color
 		{
-			val colour = Color()
-			colour.a = 1f
-
-			val rgb = xml.get("RGB", null) ?: xml.text
-			if (rgb != null)
-			{
-				loadColour(rgb, colour)
-			}
-
-			colour.r = xml.getFloat("Red", colour.r)
-			colour.g = xml.getFloat("Green", colour.g)
-			colour.b = xml.getFloat("Blue", colour.b)
-			colour.a = xml.getFloat("Alpha", colour.a)
-
-			return colour
+			return loadColour(xml.text)
 		}
 
 		fun loadTilingSprite(xml: Element): TilingSprite

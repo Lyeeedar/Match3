@@ -1,11 +1,19 @@
 <House>
-    <Sprite>
-        <Name>Oryx/Custom/townmap/pyro</Name>
-    </Sprite>
-
-    <Dialogue>
-        <Line>What a hot day it is today. Time to burn some things.</Line>
-        <Tree>Fire</Tree>
-        <Line>Have fun.</Line>
-    </Dialogue>
+	<Sprite Key="Sprite">
+		<Name>Oryx/Custom/townmap/pyro</Name>
+		<DrawActualSize>false</DrawActualSize>
+		<UpdateRate>0.5</UpdateRate>
+		<Colour>255,255,255,255</Colour>
+	</Sprite>
+	<Dialogue>
+		<Line>
+			<Text>What a hot day it is today. Time to burn some things.</Text>
+		</Line>
+		<Tree>
+			<Tree>Fire</Tree>
+		</Tree>
+		<Line>
+			<Text>Have fun.</Text>
+		</Line>
+	</Dialogue>
 </House>
