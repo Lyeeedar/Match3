@@ -9,25 +9,4 @@
 &lt;string&gt;D:\Users\Philip\workspace\Match3\android\assets\ProjectRoot.xml&lt;/string&gt;</string>
     </value>
   </item>
-  <item>
-    <key>
-      <string>RecentFiles</string>
-    </key>
-    <value>
-      <string>&lt;?xml version="1.0" encoding="utf-16"?&gt;
-&lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
-  &lt;string&gt;D:\Users\Philip\workspace\Match3\android\assets\World\Levels\Dungeon\Trap\BasicTrap.xml&lt;/string&gt;
-  &lt;string&gt;D:\Users\Philip\workspace\Match3\android\assets\Houses\Warrior.xml&lt;/string&gt;
-  &lt;string&gt;D:\Users\Philip\workspace\Match3\android\assets\Houses\Pyro.xml&lt;/string&gt;
-  &lt;string&gt;D:\Users\Philip\workspace\Match3\android\assets\Houses\Blacksmith.xml&lt;/string&gt;
-  &lt;string&gt;D:\Users\Philip\workspace\Match3\android\assets\Orbs\Orbs.xml&lt;/string&gt;
-  &lt;string&gt;D:\Users\Philip\workspace\Match3\android\assets\Factions\Spider.xml&lt;/string&gt;
-  &lt;string&gt;D:\Users\Philip\workspace\Match3\android\assets\Themes\Dungeon.xml&lt;/string&gt;
-  &lt;string&gt;D:\Users\Philip\workspace\Match3\android\assets\UnlockTrees\Fire.xml&lt;/string&gt;
-  &lt;string&gt;D:\Users\Philip\workspace\Match3\android\assets\Factions\Rats.xml&lt;/string&gt;
-  &lt;string&gt;D:\Users\Philip\workspace\Match3\android\assets\UnlockTrees\Equipment.xml&lt;/string&gt;
-  &lt;string&gt;D:\Users\Philip\workspace\Match3\android\assets\World\Levels\Dungeon\Fight\BasicMonster.xml&lt;/string&gt;
-&lt;/ArrayOfString&gt;</string>
-    </value>
-  </item>
 </dictionary>

@@ -2,11 +2,9 @@
     <Struct Name="Effect">
         <Boolean Name="Repeat" />
         <Number Name="Warmup" />
-
         <Collection Name="Emitters" MinCount="1">
             <Struct Name="Emitter" DescriptionChild="Name">
                 <String Name="Name" />
-
                 <Enum Name="Space" EnumValues="World,Local" />
                 <Enum Name="Shape" EnumValues="Box,Circle" />
                 <Number Name="Width" DefaultValue="1" />
@@ -17,7 +15,7 @@
                 <Number Name="ParticleRotation" />
 
                 <Collection Name="RateKeyframes">
-                    <Collection Name="Stream">
+                    <Collection Name="Stream" MinCount="1">
                         <Struct Name="Keyframe" Collapse="true">
                             <Number Name="Time" Min="0" Max="1" />
                             <Number Name="Rate" />
@@ -25,7 +23,7 @@
                     </Collection>
                 </Collection>
 
-                <Collection Name="Particles">
+                <Collection Name="Particles" MinCount="1">
 
                     <Struct Name="Particle">
 
@@ -33,7 +31,7 @@
                         <Number Name="LifetimeOffset" />
 
                         <Collection Name="TextureKeyframes">
-                            <Collection Name="Stream">
+                            <Collection Name="Stream" MinCount="1">
                                 <Struct Name="Keyframe" Collapse="true">
                                     <Number Name="Time" Min="0" Max="1" />
                                     <File Name="Path" BasePath="Sprites" AllowedFileTypes="png" DefaultValue="Particle/glow" />
@@ -42,7 +40,7 @@
                         </Collection>
 
                         <Collection Name="SizeKeyframes">
-                            <Collection Name="Stream">
+                            <Collection Name="Stream" MinCount="1">
                                 <Struct Name="Keyframe" Collapse="true">
                                     <Number Name="Time" Min="0" Max="1" />
                                     <Number Name="Size" />
@@ -51,7 +49,7 @@
                         </Collection>
 
                         <Collection Name="RotationSpeedKeyframes">
-                            <Collection Name="Stream">
+                            <Collection Name="Stream" MinCount="1">
                                 <Struct Name="Keyframe" Collapse="true">
                                     <Number Name="Time" Min="0" Max="1" />
                                     <Number Name="RotationSpeed" Min="-10000000" />
@@ -60,7 +58,7 @@
                         </Collection>
 
                         <Collection Name="ColourKeyframes">
-                            <Collection Name="Stream">
+                            <Collection Name="Stream" MinCount="1">
                                 <Struct Name="Keyframe" Collapse="true" Seperator="|">
                                     <Number Name="Time" Min="0" Max="1" />
                                     <Colour Name="Colour" HasAlpha="false" />
@@ -69,7 +67,7 @@
                         </Collection>
 
                         <Collection Name="AlphaKeyframes">
-                            <Collection Name="Stream">
+                            <Collection Name="Stream" MinCount="1">
                                 <Struct Name="Keyframe" Collapse="true">
                                     <Number Name="Time" Min="0" Max="1" />
                                     <Number Name="Alpha" Min="0" Max="1" />

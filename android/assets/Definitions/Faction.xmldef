@@ -1,23 +1,21 @@
 <Definitions>
-	<Struct Name="Faction">
-		<Collection Name="Monsters">
-
-			<Struct ChildAsName="MonsterName" DescriptionChild="MonsterName">
-				<String Name="MonsterName" />
-				<Struct Name="Sprite" Key="Sprite" DescriptionChild="Name" />
-				<Struct Name="Death" Key="Sprite" DescriptionChild="Name" />
-				<Number Name="AttackDelay" />
-				<Number Name="AttackSpeed" />
-				<Number Name="Size" Type="Int" Default="1" />
-				<Number Name="HP" Type="Int" Default="10" />
-				<Collection Name="Reward">
-					<Pair>
-                        <String Name="Item" />
-                        <Number Name="Count" Type="Int" />
+	<Struct Name="Faction" RefKey="Struct">
+		<Collection Name="Monsters" MinCount="1" RefKey="Collection">
+			<Struct Name="Monster" ChildAsName="Name" DescriptionChild="Name" RefKey="Struct">
+				<String Name="Name" RefKey="String" />
+				<Reference Name="Reference" Keys="Sprite" RefKey="Reference" />
+				<Reference Name="Death" Keys="Sprite" RefKey="Reference" />
+				<Number Name="AttackDelay" Min="0" RefKey="Number" />
+				<Number Name="AttackSpeed" Type="Int" Min="0" RefKey="Number" />
+				<Number Name="Size" Type="Int" Min="1" Default="1" RefKey="Number" />
+				<Number Name="HP" Type="Int" Min="1" Default="10" RefKey="Number" />
+				<Collection Name="Rewards" RefKey="Collection">
+					<Pair Name="Reward" RefKey="Pair">
+						<String Name="Key" RefKey="String" />
+						<Number Name="Value" Type="Int" Min="1" Default="1" RefKey="Number" />
 					</Pair>
 				</Collection>
 			</Struct>
-
 		</Collection>
 	</Struct>
 </Definitions>

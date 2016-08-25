@@ -1,19 +1,19 @@
 <House>
-	<Sprite Key="Sprite">
+	<Sprite RefKey="Sprite">
 		<Name>Oryx/Custom/townmap/blacksmith</Name>
 		<DrawActualSize>false</DrawActualSize>
 		<UpdateRate>0.5</UpdateRate>
 		<Colour>255,255,255,255</Colour>
 	</Sprite>
 	<Dialogue>
-		<Line>
+		<DialogueLineText RefKey="DialogueLineText">
 			<Text>Good morning! What can I craft for you today?</Text>
-		</Line>
-		<Tree>
+		</DialogueLineText>
+		<DialogueLineTree RefKey="DialogueLineTree">
 			<Tree>Equipment</Tree>
-		</Tree>
-		<Line>
-			<Text>Be careful out there, I don't want to see my work squandered.</Text>
-		</Line>
+		</DialogueLineTree>
+		<DialogueLineText RefKey="DialogueLineText">
+			<Text>Be careful out there, I don't want to see me work squandered.</Text>
+		</DialogueLineText>
 	</Dialogue>
 </House>

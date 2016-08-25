@@ -1,46 +1,46 @@
 <Faction>
 	<Monsters>
 		<SmallRat>
-			<Sprite Key="Sprite">
+			<Sprite RefKey="Sprite">
 				<Name>Oryx/uf_split/uf_heroes/rat</Name>
 				<DrawActualSize>true</DrawActualSize>
 				<UpdateRate>0.5</UpdateRate>
 				<Colour>255,255,255,255</Colour>
 			</Sprite>
-			<Death Key="Sprite">
+			<Sprite RefKey="Sprite">
 				<Name>EffectSprites/Splatter/Splatter</Name>
 				<DrawActualSize>false</DrawActualSize>
 				<UpdateRate>0.1</UpdateRate>
-				<Colour>158,25,25,255</Colour>
-			</Death>
+				<Colour>189,9,9,255</Colour>
+			</Sprite>
 			<AttackDelay>5.5</AttackDelay>
 			<AttackSpeed>7</AttackSpeed>
 			<Size>1</Size>
 			<HP>7</HP>
-			<Reward>
-				<Gold>5</Gold>
-			</Reward>
+			<Rewards>
+				<Gold>10</Gold>
+			</Rewards>
 		</SmallRat>
 		<GiantRat>
-			<Sprite Key="Sprite">
+			<Sprite RefKey="Sprite">
 				<Name>Oryx/uf_split/uf_heroes/rat_giant</Name>
 				<DrawActualSize>true</DrawActualSize>
 				<UpdateRate>0.5</UpdateRate>
 				<Colour>255,255,255,255</Colour>
 			</Sprite>
-			<Death Key="Sprite">
+			<Sprite RefKey="Sprite">
 				<Name>EffectSprites/Splatter/Splatter</Name>
 				<DrawActualSize>false</DrawActualSize>
 				<UpdateRate>0.1</UpdateRate>
-				<Colour>255,255,255,255</Colour>
-			</Death>
+				<Colour>189,9,9,255</Colour>
+			</Sprite>
 			<AttackDelay>4</AttackDelay>
 			<AttackSpeed>6</AttackSpeed>
 			<Size>2</Size>
 			<HP>20</HP>
-			<Reward>
-				<Gold>15</Gold>
-			</Reward>
+			<Rewards>
+				<Gold>25</Gold>
+			</Rewards>
 		</GiantRat>
 	</Monsters>
 </Faction>
