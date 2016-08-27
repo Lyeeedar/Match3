@@ -1,71 +1,49 @@
 <Definitions>
-    <Struct Name="UnlockTree">
-
-        <Struct Name="Icon" Key="Sprite" />
-
-        <Collection Name="Unlockables">
-
-            <Struct ChildAsName="Key" DescriptionChild="Name">
-
-                <String Name="Name" />
-                <String Name="Key" />
-
-                <String Name="Description" />
-
-                <Struct Name="Icon" Key="Sprite" />
-
-                <String Name="UnboughtDescription" />
-
-                <Collection Name="BuyCost">
-                    <Pair>
-                        <String Name="Item" />
-                        <Number Name="Count" Type="Int" />
-                    </Pair>
-                </Collection>
-
-                <String Name="Upgrades" />
-
-                <Enum Name="DataType" EnumValues="None,Effect,Equipment" />
-
-
-
-                <Number Name="Cost" VisibleIf="DataType==Effect" />
-
-                <Struct Name="Effect" Collapse="true" VisibleIf="DataType==Effect">
-                    <Number Name="Target Count" Type="Int" />
-                    <Enum Name="Targetter" EnumValues="Orb,Special,Block,Empty,Sealed,Monster,Attack,Tile" />
-                    <Enum Name="Permuter" EnumValues="Single,AllOfType,NofType,Column,Row,Cross,Block,Diamond,Random" />
-                    <Enum Name="Effect" EnumValues="Pop,Convert" />
-                </Struct>
-
-                <Collection Name="Data" VisibleIf="DataType==Effect">
-                    <Pair Name="Data">
-                        <String Name="Key" />
-                        <Number Name="Value" />
-                    </Pair>
-                </Collection>
-
-                <Struct Name="FlightSprite" Key="Sprite" VisibleIf="DataType==Effect" />
-                <Struct Name="HitSprite" Key="Sprite" VisibleIf="DataType==Effect" />
-
-
-
-                <Enum Name="Slot" EnumValues="Weapon,Armour,Charm" VisibleIf="DataType==Equipment" />
-
-                <Number Name="MatchDam" Type="Int" VisibleIf="DataType==Equipment &amp;&amp; Slot==Weapon" />
-                <Number Name="AbilityDam" Type="Int" VisibleIf="DataType==Equipment &amp;&amp; Slot==Weapon" />
-
-                <Number Name="MaxHP" Type="Int" VisibleIf="DataType==Equipment &amp;&amp; Slot==Armour" />
-                <Number Name="Regen" Type="Int" VisibleIf="DataType==Equipment &amp;&amp; Slot==Armour" />
-
-                <Number Name="MaxPower" Type="Int" VisibleIf="DataType==Equipment &amp;&amp; Slot==Charm" />
-                <Number Name="PowerBonus" Type="Int" VisibleIf="DataType==Equipment &amp;&amp; Slot==Charm" />
-
-            </Struct>
-
-        </Collection>
-
-        <Tree Name="Tree" />
-
-    </Struct>
+	<Struct Name="UnlockTree" RefKey="Struct">
+		<Reference Name="Icon" Keys="Sprite" Nullable="False" RefKey="Reference" />
+		<Collection Name="Unlockables" MinCount="1" RefKey="Collection">
+			<Struct Name="Unlockable" ChildAsName="Key" DescriptionChild="Name" RefKey="Struct">
+				<String Name="Name" RefKey="String" />
+				<Boolean Name="Key" RefKey="Boolean" />
+				<String Name="Description" RefKey="String" />
+				<Reference Name="Icon" Keys="Sprite" Nullable="False" RefKey="Reference" />
+				<String Name="UnboughtDescription" RefKey="String" />
+				<Collection Name="BuyCost" RefKey="Collection">
+					<Pair Name="Pair" RefKey="Pair">
+						<String Name="Item" RefKey="String" />
+						<Number Name="Count" Type="Int" Min="1" Default="1" RefKey="Number" />
+					</Pair>
+				</Collection>
+				<String Name="Upgrades" RefKey="String" />
+				<Reference Name="UnlockableData" Keys="EffectData,EquipmentData" RefKey="Reference" />
+			</Struct>
+		</Collection>
+		<Tree Name="Tree" RefKey="Tree" />
+	</Struct>
+	<StructDef Name="EffectData" RefKey="StructDef">
+		<Number Name="Cost" Type="Int" Min="1" Default="1" RefKey="Number" />
+		<Struct Name="Effect" Collapse="True" RefKey="Struct">
+			<Number Name="Target Count" Type="Int" Min="0" SkipIfDefault="False" RefKey="Number" />
+			<Enum Name="Targetter" EnumValues="Orb,Special,Block,Empty,Sealed,Monster,Attack,Tile" RefKey="Enum" />
+			<Enum Name="Permuter" EnumValues="Single,AllOfType,NofType,Column,Row,Cross,Block,Diamond,Random" RefKey="Enum" />
+			<Enum Name="Effect" EnumValues="Pop,Convert" RefKey="Enum" />
+			<Collection Name="Data" RefKey="Collection">
+				<Pair Name="Pair" RefKey="Pair">
+					<String Name="Key" RefKey="String" />
+					<Number Name="Value" RefKey="Number" />
+				</Pair>
+			</Collection>
+		</Struct>
+		<Reference Name="FlightSprite" Keys="Sprite" RefKey="Reference" />
+		<Reference Name="HitSprite" Keys="Sprite" RefKey="Reference" />
+	</StructDef>
+	<StructDef Name="EquipmentData" RefKey="StructDef">
+		<Enum Name="Slot" EnumValues="Weapon,Armour,Charm" RefKey="Enum" />
+		<Number Name="MatchDam" Type="Int" Min="0" VisibleIf="Slot==Weapon" RefKey="Number" />
+		<Number Name="AbilityDam" Type="Int" Min="0" VisibleIf="Slot==Weapon" RefKey="Number" />
+		<Number Name="MaxHP" Type="Int" Min="0" VisibleIf="Slot==Armour" RefKey="Number" />
+		<Number Name="Regen" Type="Int" Min="0" VisibleIf="Slot==Armour" RefKey="Number" />
+		<Number Name="MaxPower" Type="Int" Min="0" VisibleIf="Slot==Charm" RefKey="Number" />
+		<Number Name="PowerBonus" Type="Int" Min="0" VisibleIf="Slot==Charm" RefKey="Number" />
+	</StructDef>
 </Definitions>
