@@ -1,85 +1,72 @@
 <Definitions>
-    <Struct Name="Effect">
-        <Boolean Name="Repeat" />
-        <Number Name="Warmup" />
-        <Collection Name="Emitters" MinCount="1">
-            <Struct Name="Emitter" DescriptionChild="Name">
-                <String Name="Name" />
-                <Enum Name="Space" EnumValues="World,Local" />
-                <Enum Name="Shape" EnumValues="Box,Circle" />
-                <Number Name="Width" DefaultValue="1" />
-                <Number Name="Height" DefaultValue="1" />
-                <Enum Name="Area" EnumValues="Interior,Border" />
-                <Enum Name="Direction" EnumValues="Radial,Random,Up,Down,Left,Right" />
-                <Number Name="ParticleSpeed" />
-                <Number Name="ParticleRotation" />
-
-                <Collection Name="RateKeyframes">
-                    <Collection Name="Stream" MinCount="1">
-                        <Struct Name="Keyframe" Collapse="true">
-                            <Number Name="Time" Min="0" Max="1" />
-                            <Number Name="Rate" />
-                        </Struct>
-                    </Collection>
-                </Collection>
-
-                <Collection Name="Particles" MinCount="1">
-
-                    <Struct Name="Particle">
-
-                        <Number Name="Lifetime" />
-                        <Number Name="LifetimeOffset" />
-
-                        <Collection Name="TextureKeyframes">
-                            <Collection Name="Stream" MinCount="1">
-                                <Struct Name="Keyframe" Collapse="true">
-                                    <Number Name="Time" Min="0" Max="1" />
-                                    <File Name="Path" BasePath="Sprites" AllowedFileTypes="png" DefaultValue="Particle/glow" />
-                                </Struct>
-                            </Collection>
-                        </Collection>
-
-                        <Collection Name="SizeKeyframes">
-                            <Collection Name="Stream" MinCount="1">
-                                <Struct Name="Keyframe" Collapse="true">
-                                    <Number Name="Time" Min="0" Max="1" />
-                                    <Number Name="Size" />
-                                </Struct>
-                            </Collection>
-                        </Collection>
-
-                        <Collection Name="RotationSpeedKeyframes">
-                            <Collection Name="Stream" MinCount="1">
-                                <Struct Name="Keyframe" Collapse="true">
-                                    <Number Name="Time" Min="0" Max="1" />
-                                    <Number Name="RotationSpeed" Min="-10000000" />
-                                </Struct>
-                            </Collection>
-                        </Collection>
-
-                        <Collection Name="ColourKeyframes">
-                            <Collection Name="Stream" MinCount="1">
-                                <Struct Name="Keyframe" Collapse="true" Seperator="|">
-                                    <Number Name="Time" Min="0" Max="1" />
-                                    <Colour Name="Colour" HasAlpha="false" />
-                                </Struct>
-                            </Collection>
-                        </Collection>
-
-                        <Collection Name="AlphaKeyframes">
-                            <Collection Name="Stream" MinCount="1">
-                                <Struct Name="Keyframe" Collapse="true">
-                                    <Number Name="Time" Min="0" Max="1" />
-                                    <Number Name="Alpha" Min="0" Max="1" />
-                                </Struct>
-                            </Collection>
-                        </Collection>
-
-                    </Struct>
-
-                </Collection>
-
-            </Struct>
-        </Collection>
-    </Struct>
+	<Struct Name="Effect" RefKey="Struct">
+		<Number Name="Warmup" Min="0" RefKey="Number" />
+		<Collection Name="Emitters" MinCount="1" RefKey="Collection">
+			<Struct Name="Emitter" DescriptionChild="Name" RefKey="Struct">
+				<String Name="Name" RefKey="String" />
+				<Enum Name="Space" EnumValues="World,Local" RefKey="Enum" />
+				<Enum Name="Shape" EnumValues="Box,Circle" RefKey="Enum" />
+				<Number Name="Width" Min="0" Default="1" RefKey="Number" />
+				<Number Name="Height" Min="0" Default="1" RefKey="Number" />
+				<Enum Name="Area" EnumValues="Interior,Border" RefKey="Enum" />
+				<Enum Name="Direction" EnumValues="Radial,Random,Up,Down,Left,Right" RefKey="Enum" />
+				<Number Name="ParticleSpeed" Default="1" RefKey="Number" />
+				<Number Name="ParticleRotation" Min="0" Max="360" RefKey="Number" />
+				<Collection Name="RateKeyframes" MinCount="1" RefKey="Collection">
+					<Collection Name="Stream" MinCount="1" RefKey="Collection">
+						<Struct Name="Keyframe" Collapse="True" RefKey="Struct">
+							<Number Name="Time" Min="0" Max="1" RefKey="Number" />
+							<Number Name="Rate" Min="0" RefKey="Number" />
+						</Struct>
+					</Collection>
+				</Collection>
+				<Collection Name="Particles" MinCount="1" RefKey="Collection">
+					<Struct Name="Particle" RefKey="Struct">
+						<Number Name="Lifetime" Min="0" Default="1" RefKey="Number" />
+						<Number Name="LifetimeOffset" RefKey="Number" />
+						<Collection Name="TextureKeyframes" MinCount="1" RefKey="Collection">
+							<Collection Name="Stream" MinCount="1" RefKey="Collection">
+								<Struct Name="Keyframe" Collapse="True" RefKey="Struct">
+									<Number Name="Time" Min="0" Max="1" RefKey="Number" />
+									<File Name="Path" BasePath="Sprites" AllowedFileTypes="png" Default="Particle/glow" RefKey="File" />
+								</Struct>
+							</Collection>
+						</Collection>
+						<Collection Name="SizeKeyframes" MinCount="1" RefKey="Collection">
+							<Collection Name="Stream" MinCount="1" RefKey="Collection">
+								<Struct Name="Keyframe" Collapse="True" RefKey="Struct">
+									<Number Name="Time" Min="0" Max="1" RefKey="Number" />
+									<Number Name="Size" Min="0" Default="1" RefKey="Number" />
+								</Struct>
+							</Collection>
+						</Collection>
+						<Collection Name="RotationSpeedKeyframes" RefKey="Collection">
+							<Collection Name="Stream" MinCount="1" RefKey="Collection">
+								<Struct Name="Keyframe" Collapse="True" RefKey="Struct">
+									<Number Name="Time" Min="0" Max="1" RefKey="Number" />
+									<Number Name="RotationSpeed" RefKey="Number" />
+								</Struct>
+							</Collection>
+						</Collection>
+						<Collection Name="ColourKeyframes" MinCount="1" RefKey="Collection">
+							<Collection Name="Stream" MinCount="1" RefKey="Collection">
+								<Struct Name="Keyframe" Collapse="True" RefKey="Struct">
+									<Number Name="Time" Min="0" Max="1" RefKey="Number" />
+									<Colour Name="Colour" RefKey="Colour" />
+								</Struct>
+							</Collection>
+						</Collection>
+						<Collection Name="AlphaKeyframes" MinCount="1" RefKey="Collection">
+							<Collection Name="Stream" MinCount="1" RefKey="Collection">
+								<Struct Name="Keyframe" Collapse="True" RefKey="Struct">
+									<Number Name="Time" Min="0" Max="1" RefKey="Number" />
+									<Number Name="Alpha" Min="0" Max="1" Default="1" RefKey="Number" />
+								</Struct>
+							</Collection>
+						</Collection>
+					</Struct>
+				</Collection>
+			</Struct>
+		</Collection>
+	</Struct>
 </Definitions>
