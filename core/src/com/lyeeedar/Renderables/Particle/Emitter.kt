@@ -2,6 +2,7 @@ package com.lyeeedar.Renderables.Particle
 
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
+import com.badlogic.gdx.math.Interpolation
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.Array
@@ -12,6 +13,12 @@ import com.lyeeedar.Util.vectorToAngle
 internal class Emitter
 {
 	val MAX_DELTA = 1f / 15f // dont update faster than 15fps
+
+	enum class EmissionType
+	{
+		ABSOLUTE,
+		ACCUMULATED
+	}
 
 	enum class SimulationSpace
 	{
@@ -47,10 +54,11 @@ internal class Emitter
 
 	val position = Vector2()
 
+	lateinit var type: EmissionType
 	lateinit var simulationSpace: SimulationSpace
 	val emissionRate = LerpTimeline()
-	var particleSpeed: Float = 0f
-	var particleRotation: Float = 0f
+	lateinit var particleSpeed: Range
+	lateinit var particleRotation: Range
 	lateinit var shape: EmissionShape
 	var width: Float = 0f
 	var height: Float = 0f
@@ -77,24 +85,25 @@ internal class Emitter
 			val duration = emissionRate.length()
 			val rate = emissionRate.valAt(0, time)
 
-			// Keep particle count to emission rate
-			if (duration == 0f)
+			if (duration == 0f || time <= duration)
 			{
-				val toSpawn = Math.max(0f, rate - particles.sumBy { it.particleCount() }).toInt()
-				for (i in 1..toSpawn)
+				if (type == EmissionType.ABSOLUTE)
 				{
-					spawn()
+					val toSpawn = Math.max(0f, rate - particles.sumBy { it.particleCount() }).toInt()
+					for (i in 1..toSpawn)
+					{
+						spawn()
+					}
 				}
-			}
-			// use accumulator to spawn constantly
-			else if (time < duration)
-			{
-				emissionAccumulator += scaledDelta * rate
-
-				while (emissionAccumulator > 1f)
+				else
 				{
-					emissionAccumulator -= 1f
-					spawn()
+					emissionAccumulator += scaledDelta * rate
+
+					while (emissionAccumulator > 1f)
+					{
+						emissionAccumulator -= 1f
+						spawn()
+					}
 				}
 			}
 		}
@@ -125,8 +134,8 @@ internal class Emitter
 			else -> throw RuntimeException("Invalid emitter direction type! $dir")
 		}
 
-		val speed = particleSpeed
-		val rotation = particleRotation
+		val speed = particleSpeed.lerp(MathUtils.random())
+		val rotation = particleRotation.lerp(MathUtils.random())
 
 		if (simulationSpace == SimulationSpace.WORLD)
 		{
@@ -228,14 +237,15 @@ internal class Emitter
 		{
 			val emitter = Emitter()
 
+			emitter.type = EmissionType.valueOf(xml.get("Type", "Absolute").toUpperCase())
 			emitter.simulationSpace = SimulationSpace.valueOf(xml.get("Space", "World").toUpperCase())
-			emitter.particleSpeed = xml.getFloat("ParticleSpeed", 0f)
-			emitter.particleRotation = xml.getFloat("ParticleRotation", 0f)
 			emitter.shape = EmissionShape.valueOf(xml.get("Shape", "Box").toUpperCase())
 			emitter.width = xml.get("Size", null)?.toFloat() ?: xml.getFloat("Width", 1f)
 			emitter.height = xml.get("Size", null)?.toFloat() ?: xml.getFloat("Height", 1f)
 			emitter.area = EmissionArea.valueOf(xml.get("Area", "Interior").toUpperCase())
 			emitter.dir = EmissionDirection.valueOf(xml.get("Direction", "Radial").toUpperCase())
+			emitter.particleSpeed = Range(xml.get("ParticleSpeed"))
+			emitter.particleRotation = Range(xml.get("ParticleRotation"))
 
 			val rateEls = xml.getChildByName("RateKeyframes")
 			emitter.emissionRate.parse(rateEls, { it.toFloat() })

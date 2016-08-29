@@ -5,15 +5,14 @@
 			<Name>Trail</Name>
 			<Shape>Circle</Shape>
 			<Direction>Random</Direction>
-			<ParticleSpeed>0.005</ParticleSpeed>
-			<ParticleRotation>200</ParticleRotation>
+			<ParticleSpeed>1,1</ParticleSpeed>
+			<ParticleRotation>0,360</ParticleRotation>
 			<RateKeyframes>
 				<Keyframe>0|200</Keyframe>
 			</RateKeyframes>
 			<Particles>
 				<Particle>
-					<Lifetime>1.5</Lifetime>
-					<LifetimeOffset>0.5</LifetimeOffset>
+					<Lifetime>1,1</Lifetime>
 					<TextureKeyframes>
 						<Stream>
 							<Keyframe>0|Particle/ember_1</Keyframe>
@@ -27,17 +26,17 @@
 					</TextureKeyframes>
 					<SizeKeyframes>
 						<Stream>
-							<Keyframe>0|0.1</Keyframe>
-							<Keyframe>0.2|1.2</Keyframe>
-							<Keyframe>1|0.5</Keyframe>
+							<Keyframe>0|1|1</Keyframe>
+							<Keyframe>0|1|1</Keyframe>
+							<Keyframe>0|1|1</Keyframe>
 						</Stream>
 					</SizeKeyframes>
 					<RotationSpeedKeyframes>
 						<Stream>
-							<Keyframe>0|100</Keyframe>
+							<Keyframe>0|0|0</Keyframe>
 						</Stream>
 						<Stream>
-							<Keyframe>0|-100</Keyframe>
+							<Keyframe>0|0|0</Keyframe>
 						</Stream>
 					</RotationSpeedKeyframes>
 					<ColourKeyframes>
@@ -66,14 +65,14 @@
 			<Width>0</Width>
 			<Height>0</Height>
 			<Direction>Random</Direction>
-			<ParticleSpeed>0</ParticleSpeed>
+			<ParticleSpeed>0,1</ParticleSpeed>
+			<ParticleRotation>0,1</ParticleRotation>
 			<RateKeyframes>
 				<Keyframe>0|5</Keyframe>
 			</RateKeyframes>
 			<Particles>
 				<Particle>
-					<Lifetime>1.5</Lifetime>
-					<LifetimeOffset>0.5</LifetimeOffset>
+					<Lifetime>1,1</Lifetime>
 					<TextureKeyframes>
 						<Stream>
 							<Keyframe>0|Particle/glow</Keyframe>
@@ -81,7 +80,7 @@
 					</TextureKeyframes>
 					<SizeKeyframes>
 						<Stream>
-							<Keyframe>0|1</Keyframe>
+							<Keyframe>0|1|1</Keyframe>
 						</Stream>
 					</SizeKeyframes>
 					<ColourKeyframes>

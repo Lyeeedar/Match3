@@ -1,6 +1,8 @@
 package com.lyeeedar.Renderables.Particle
 
 import com.badlogic.gdx.graphics.Color
+import com.badlogic.gdx.graphics.GL20
+import com.badlogic.gdx.graphics.Pixmap
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.Array
@@ -51,11 +53,7 @@ class Effect : Renderable()
 
 		if (complete())
 		{
-			if (repeat)
-			{
-				for (emitter in emitters) emitter.time = 0f
-			}
-
+			for (emitter in emitters) emitter.time = 0f
 			complete = true
 		}
 		else
@@ -79,6 +77,8 @@ class Effect : Renderable()
 		val colour = animation?.renderColour() ?: Color.WHITE
 
 		for (emitter in emitters) emitter.draw(batch, x, y, tileSize * scale, colour)
+
+		batch.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA)
 	}
 
 	companion object

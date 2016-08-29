@@ -4,14 +4,21 @@
 		<Collection Name="Emitters" MinCount="1" RefKey="Collection">
 			<Struct Name="Emitter" DescriptionChild="Name" RefKey="Struct">
 				<String Name="Name" RefKey="String" />
+				<Enum Name="Type" EnumValues="Absolute,Accumulator" RefKey="Enum" />
 				<Enum Name="Space" EnumValues="World,Local" RefKey="Enum" />
 				<Enum Name="Shape" EnumValues="Box,Circle" RefKey="Enum" />
 				<Number Name="Width" Min="0" Default="1" RefKey="Number" />
 				<Number Name="Height" Min="0" Default="1" RefKey="Number" />
 				<Enum Name="Area" EnumValues="Interior,Border" RefKey="Enum" />
 				<Enum Name="Direction" EnumValues="Radial,Random,Up,Down,Left,Right" RefKey="Enum" />
-				<Number Name="ParticleSpeed" Default="1" RefKey="Number" />
-				<Number Name="ParticleRotation" Min="0" Max="360" RefKey="Number" />
+				<Struct Name="ParticleSpeed" Collapse="True" RefKey="Struct">
+					<Number Name="Min" SkipIfDefault="False" RefKey="Number" />
+					<Number Name="Max" Default="1" SkipIfDefault="False" RefKey="Number" />
+				</Struct>
+				<Struct Name="ParticleRotation" Collapse="True" RefKey="Struct">
+					<Number Name="Min" Min="0" Max="360" SkipIfDefault="False" RefKey="Number" />
+					<Number Name="Max" Min="0" Max="360" Default="1" SkipIfDefault="False" RefKey="Number" />
+				</Struct>
 				<Collection Name="RateKeyframes" MinCount="1" RefKey="Collection">
 					<Struct Name="Keyframe" Collapse="True" Seperator="|" RefKey="Struct">
 						<Number Name="Time" Min="0" Max="1" SkipIfDefault="False" RefKey="Number" />
@@ -20,8 +27,13 @@
 				</Collection>
 				<Collection Name="Particles" MinCount="1" RefKey="Collection">
 					<Struct Name="Particle" RefKey="Struct">
-						<Number Name="Lifetime" Min="0" Default="1" RefKey="Number" />
-						<Number Name="LifetimeOffset" RefKey="Number" />
+						<Struct Name="Lifetime" Collapse="True" SkipIfDefault="False" RefKey="Struct">
+							<Number Name="Offset" Min="0" Default="1" SkipIfDefault="False" RefKey="Number" />
+							<Number Name="Lifetime" Min="0" Default="1" SkipIfDefault="False" RefKey="Number" />
+						</Struct>
+						<Enum Name="BlendMode" EnumValues="Additive,Multiplicative" SkipIfDefault="False" RefKey="Enum" />
+						<Number Name="Drag" RefKey="Number" />
+						<Boolean Name="VelocityAligned" RefKey="Boolean" />
 						<Collection Name="TextureKeyframes" MinCount="1" RefKey="Collection">
 							<Collection Name="Stream" MinCount="1" RefKey="Collection">
 								<Struct Name="Keyframe" Collapse="True" Seperator="|" RefKey="Struct">
@@ -34,7 +46,8 @@
 							<Collection Name="Stream" MinCount="1" RefKey="Collection">
 								<Struct Name="Keyframe" Collapse="True" Seperator="|" RefKey="Struct">
 									<Number Name="Time" Min="0" Max="1" SkipIfDefault="False" RefKey="Number" />
-									<Number Name="Size" Min="0" Default="1" SkipIfDefault="False" RefKey="Number" />
+									<Number Name="Min" Min="0" Default="1" SkipIfDefault="False" RefKey="Number" />
+									<Number Name="Max" Min="0" Default="1" SkipIfDefault="False" RefKey="Number" />
 								</Struct>
 							</Collection>
 						</Collection>
@@ -42,7 +55,8 @@
 							<Collection Name="Stream" MinCount="1" RefKey="Collection">
 								<Struct Name="Keyframe" Collapse="True" Seperator="|" RefKey="Struct">
 									<Number Name="Time" Min="0" Max="1" SkipIfDefault="False" RefKey="Number" />
-									<Number Name="RotationSpeed" SkipIfDefault="False" RefKey="Number" />
+									<Number Name="Min" SkipIfDefault="False" RefKey="Number" />
+									<Number Name="Max" SkipIfDefault="False" RefKey="Number" />
 								</Struct>
 							</Collection>
 						</Collection>

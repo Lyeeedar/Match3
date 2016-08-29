@@ -102,6 +102,33 @@ internal class LerpTimeline : Timeline<Float>()
 	override fun lerpValue(prev: Float, next: Float, alpha: Float): Float = Interpolation.linear.apply(prev, next, alpha)
 }
 
+internal data class Range(var v1: Float, var v2: Float)
+{
+	constructor(asString: String)
+		: this(0f, 0f)
+	{
+		val seperator = if (asString.contains("|")) "|" else ","
+
+		val split = asString.split(seperator)
+		v1 = split[0].toFloat()
+		v2 = split[1].toFloat()
+	}
+
+	fun lerp(alpha: Float) = Interpolation.linear.apply(v1, v2, alpha)
+}
+
+internal class RangeLerpTimeline : Timeline<Range>()
+{
+	val temp = Range(0f, 0f)
+	override fun lerpValue(prev: Range, next: Range, alpha: Float): Range
+	{
+		temp.v1 = Interpolation.linear.apply(prev.v1, next.v1, alpha)
+		temp.v2 = Interpolation.linear.apply(prev.v2, next.v2, alpha)
+
+		return temp
+	}
+}
+
 internal class ColourTimeline : Timeline<Color>()
 {
 	val temp = Color()

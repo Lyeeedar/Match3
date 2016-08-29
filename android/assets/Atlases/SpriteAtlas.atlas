@@ -1287,14 +1287,14 @@ Oryx/uf_split/uf_heroes/rat_giant_3
   index: -1
 Oryx/uf_split/uf_interface/uf_interface_680
   rotate: false
-  xy: 1196, 178
+  xy: 1236, 178
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 Oryx/uf_split/uf_interface/uf_interface_681
   rotate: false
-  xy: 1216, 178
+  xy: 1256, 178
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
@@ -1770,21 +1770,35 @@ Oryx/uf_split/uf_terrain/water_green_4
   index: -1
 Particle/ember_1
   rotate: false
-  xy: 1116, 178
+  xy: 1156, 178
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 Particle/ember_2
   rotate: false
-  xy: 1136, 178
+  xy: 1176, 178
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 Particle/glow
   rotate: false
-  xy: 1156, 178
+  xy: 1196, 178
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+Particle/plasma_1
+  rotate: false
+  xy: 1116, 178
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+Particle/plasma_2
+  rotate: false
+  xy: 1136, 178
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
@@ -1819,7 +1833,7 @@ Oryx/uf_split/uf_terrain/ground_grass_1
   index: -1
 white
   rotate: false
-  xy: 1176, 178
+  xy: 1216, 178
   size: 16, 16
   orig: 16, 16
   offset: 0, 0

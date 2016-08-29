@@ -20,13 +20,13 @@
 		</Struct>
 		<Struct Name="RoomWeights" RefKey="Struct">
 			<Collection Name="Good" RefKey="Collection">
-				<Pair Name="Data" RefKey="Pair">
+				<Pair Name="Data" RefKey="DataPair">
 					<String Name="Type" RefKey="String" />
 					<Number Name="Weight" Min="0" RefKey="Number" />
 				</Pair>
 			</Collection>
 			<Collection Name="Bad" RefKey="Collection">
-				<Pair Name="Data" RefKey="Pair">
+				<Pair Name="Data" RefKey="DataPair">
 					<String Name="Type" RefKey="String" />
 					<Number Name="Weight" Min="0" RefKey="Number" />
 				</Pair>

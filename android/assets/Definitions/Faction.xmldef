@@ -10,7 +10,7 @@
 				<Number Name="Size" Type="Int" Min="1" Default="1" RefKey="Number" />
 				<Number Name="HP" Type="Int" Min="1" Default="10" RefKey="Number" />
 				<Collection Name="Rewards" RefKey="Collection">
-					<Pair Name="Reward" RefKey="Pair">
+					<Pair Name="Reward" RefKey="DataPair">
 						<String Name="Key" RefKey="String" />
 						<Number Name="Value" Type="Int" Min="1" Default="1" RefKey="Number" />
 					</Pair>

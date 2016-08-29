@@ -1,8 +1,10 @@
 package com.lyeeedar.Renderables.Particle
 
 import com.badlogic.gdx.graphics.Color
+import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.g2d.TextureRegion
+import com.badlogic.gdx.math.Interpolation
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.Array
@@ -19,19 +21,25 @@ import com.lyeeedar.Util.vectorToAngle
 
 internal class Particle
 {
+	enum class BlendMode
+	{
+		ADDITIVE,
+		MULTIPLICATIVE
+	}
+
 	private val temp = Vector2()
 
 	private val particles = Array<ParticleData>(false, 16)
 
-	private var lifetime = 0f
-	private var lifetimeOffset = 0f
+	private lateinit var lifetime: Range
+	private lateinit var blend: BlendMode
 	private var drag = 0f
 	private var velocityAligned = false
 	private val texture = StepTimeline<TextureRegion>()
 	private val colour = ColourTimeline()
 	private val alpha = LerpTimeline()
-	private val rotationSpeed = LerpTimeline()
-	private val size = LerpTimeline()
+	private val rotationSpeed = RangeLerpTimeline()
+	private val size = RangeLerpTimeline()
 
 	fun particleCount() = particles.size
 	fun complete() = particles.size == 0
@@ -43,7 +51,7 @@ internal class Particle
 		{
 			val particle = itr.next()
 			particle.life += delta
-			if (particle.life > lifetime)
+			if (particle.life > lifetime.v2)
 			{
 				itr.remove()
 				particle.free()
@@ -56,7 +64,7 @@ internal class Particle
 				}
 				else
 				{
-					val rotation = rotationSpeed.valAt(particle.rotStream, particle.life)
+					val rotation = rotationSpeed.valAt(particle.rotStream, particle.life).lerp(particle.ranVal)
 					particle.rotation += rotation * delta
 				}
 
@@ -73,20 +81,29 @@ internal class Particle
 
 	fun render(batch: SpriteBatch, offsetx: Float, offsety: Float, tileSize: Float, modifierColour: Color)
 	{
-		for ((position, veocity, speed, rotation, life, texStream, colStream, alphaStream, rotStream, sizeStream) in particles)
+		if (blend == BlendMode.ADDITIVE)
 		{
-			val tex = texture.valAt(texStream, life)
-			val col = colour.valAt(colStream, life)
-			col.a = alpha.valAt(alphaStream, life)
-			val size = size.valAt(sizeStream, life) * tileSize
+			batch.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE)
+		}
+		else if (blend == BlendMode.MULTIPLICATIVE)
+		{
+			batch.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA)
+		}
+
+		for (particle in particles)
+		{
+			val tex = texture.valAt(particle.texStream, particle.life)
+			val col = colour.valAt(particle.colStream, particle.life)
+			col.a = alpha.valAt(particle.alphaStream, particle.life)
+			val size = size.valAt(particle.sizeStream, particle.life).lerp(particle.ranVal) * tileSize
 
 			col.mul(modifierColour)
 
-			val drawx = position.x * tileSize + offsetx
-			val drawy = position.y * tileSize + offsety
+			val drawx = particle.position.x * tileSize + offsetx
+			val drawy = particle.position.y * tileSize + offsety
 
 			batch.color = col
-			batch.draw(tex, drawx, drawy, 0.5f, 0.5f, 1f, 1f, size, size, rotation)
+			batch.draw(tex, drawx, drawy, 0.5f, 0.5f, 1f, 1f, size, size, particle.rotation)
 		}
 	}
 
@@ -94,12 +111,13 @@ internal class Particle
 	{
 		val particle = ParticleData.obtain().set(
 				position, velocity,
-				speed, rotation, lifetimeOffset * MathUtils.random(),
+				speed, rotation, lifetime.v1 * MathUtils.random(),
 				MathUtils.random(texture.streams.size-1),
 				MathUtils.random(colour.streams.size-1),
 				MathUtils.random(alpha.streams.size-1),
 				MathUtils.random(rotationSpeed.streams.size-1),
-				MathUtils.random(size.streams.size-1))
+				MathUtils.random(size.streams.size-1),
+				MathUtils.random())
 
 		particles.add(particle)
 	}
@@ -110,15 +128,15 @@ internal class Particle
 		{
 			val particle = Particle()
 
-			particle.lifetime = xml.getFloat("Lifetime")
-			particle.lifetimeOffset = xml.getFloat("LifetimeOffset", 0f)
+			particle.lifetime = Range(xml.get("Lifetime"))
+			particle.blend = BlendMode.valueOf(xml.get("BlendMode", "Additive").toUpperCase())
 			particle.drag = xml.getFloat("Drag", 0f)
 			particle.velocityAligned = xml.getBoolean("VelocityAligned", false)
 
 			val textureEls = xml.getChildByName("TextureKeyframes")
 			if (textureEls != null)
 			{
-				particle.texture.parse(textureEls, { AssetManager.loadTextureRegion(it) ?: throw RuntimeException("Failed to find texture $it!") }, particle.lifetime)
+				particle.texture.parse(textureEls, { AssetManager.loadTextureRegion(it) ?: throw RuntimeException("Failed to find texture $it!") }, particle.lifetime.v2)
 			}
 			else
 			{
@@ -128,7 +146,7 @@ internal class Particle
 			val colourEls = xml.getChildByName("ColourKeyframes")
 			if (colourEls != null)
 			{
-				particle.colour.parse(colourEls, { AssetManager.loadColour(it) }, particle.lifetime)
+				particle.colour.parse(colourEls, { AssetManager.loadColour(it) }, particle.lifetime.v2)
 			}
 			else
 			{
@@ -138,7 +156,7 @@ internal class Particle
 			val alphaEls = xml.getChildByName("AlphaKeyframes")
 			if (alphaEls != null)
 			{
-				particle.alpha.parse(alphaEls, { it.toFloat() }, particle.lifetime)
+				particle.alpha.parse(alphaEls, { it.toFloat() }, particle.lifetime.v2)
 			}
 			else
 			{
@@ -148,21 +166,21 @@ internal class Particle
 			val rotationSpeedEls = xml.getChildByName("RotationSpeedKeyframes")
 			if (rotationSpeedEls != null)
 			{
-				particle.rotationSpeed.parse(rotationSpeedEls, { it.toFloat() }, particle.lifetime)
+				particle.rotationSpeed.parse(rotationSpeedEls, { Range(it) }, particle.lifetime.v2)
 			}
 			else
 			{
-				particle.rotationSpeed[0, 0f] = 0f
+				particle.rotationSpeed[0, 0f] = Range(0f, 0f)
 			}
 
 			val sizeEls = xml.getChildByName("SizeKeyframes")
 			if (sizeEls != null)
 			{
-				particle.size.parse(sizeEls, { it.toFloat() }, particle.lifetime)
+				particle.size.parse(sizeEls, { Range(it) }, particle.lifetime.v2)
 			}
 			else
 			{
-				particle.size[0, 0f] = 1f
+				particle.size[0, 0f] = Range(1f, 1f)
 			}
 
 			return particle
@@ -172,11 +190,12 @@ internal class Particle
 
 internal data class ParticleData(val position: Vector2, val velocity: Vector2,
 								 var speed: Float, var rotation: Float, var life: Float,
-								 var texStream: Int, var colStream: Int, var alphaStream: Int, var rotStream: Int, var sizeStream: Int)
+								 var texStream: Int, var colStream: Int, var alphaStream: Int, var rotStream: Int, var sizeStream: Int,
+								 var ranVal: Float)
 {
-	constructor(): this(Vector2(), Vector2(0f, 1f), 0f, 0f, 0f, 0, 0, 0, 0, 0)
+	constructor(): this(Vector2(), Vector2(0f, 1f), 0f, 0f, 0f, 0, 0, 0, 0, 0, 0f)
 
-	fun set(position: Vector2, velocity: Vector2, speed: Float, rotation: Float, life: Float, texStream: Int, colStream: Int, alphaStream: Int, rotStream: Int, sizeStream: Int): ParticleData
+	fun set(position: Vector2, velocity: Vector2, speed: Float, rotation: Float, life: Float, texStream: Int, colStream: Int, alphaStream: Int, rotStream: Int, sizeStream: Int, ranVal: Float): ParticleData
 	{
 		this.position.set(position)
 		this.velocity.set(velocity)
@@ -188,6 +207,7 @@ internal data class ParticleData(val position: Vector2, val velocity: Vector2,
 		this.alphaStream = alphaStream
 		this.rotStream = rotStream
 		this.sizeStream = sizeStream
+		this.ranVal = ranVal
 		return this
 	}
 
