@@ -38,14 +38,17 @@ class Equipment : Unlockable()
 
 	override fun parse(xml: XmlReader.Element, resources: ObjectMap<String, XmlReader.Element>)
 	{
-		slot = EquipmentSlot.valueOf(xml.get("Slot").toUpperCase())
+		val dataEl = xml.getChildByName("UnlockableData")
+
+		slot = EquipmentSlot.valueOf(dataEl.get("Slot", "Weapon").toUpperCase())
 		for (stat in StatNames)
 		{
-			val el = xml.getChildByName(stat)
-			if (el != null) stats[el.name] = el.text.toInt()
+			val el = dataEl.getChildByName(stat)
+			if (el != null) stats[stat] = el.text.toInt()
+			else stats[stat] = 0
 		}
 
-		val specialEl = xml.getChildByName("Sprite")
+		val specialEl = dataEl.getChildByName("Sprite")
 		if (specialEl != null)
 		{
 			specialEffect = AssetManager.tryLoadSpriteWithResources(specialEl, resources)

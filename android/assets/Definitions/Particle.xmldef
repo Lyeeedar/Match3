@@ -13,12 +13,10 @@
 				<Number Name="ParticleSpeed" Default="1" RefKey="Number" />
 				<Number Name="ParticleRotation" Min="0" Max="360" RefKey="Number" />
 				<Collection Name="RateKeyframes" MinCount="1" RefKey="Collection">
-					<Collection Name="Stream" MinCount="1" RefKey="Collection">
-						<Struct Name="Keyframe" Collapse="True" RefKey="Struct">
-							<Number Name="Time" Min="0" Max="1" RefKey="Number" />
-							<Number Name="Rate" Min="0" RefKey="Number" />
-						</Struct>
-					</Collection>
+					<Struct Name="Keyframe" Collapse="True" Seperator="|" RefKey="Struct">
+						<Number Name="Time" Min="0" Max="1" SkipIfDefault="False" RefKey="Number" />
+						<Number Name="Rate" Min="0" Default="1" SkipIfDefault="False" RefKey="Number" />
+					</Struct>
 				</Collection>
 				<Collection Name="Particles" MinCount="1" RefKey="Collection">
 					<Struct Name="Particle" RefKey="Struct">
@@ -26,41 +24,41 @@
 						<Number Name="LifetimeOffset" RefKey="Number" />
 						<Collection Name="TextureKeyframes" MinCount="1" RefKey="Collection">
 							<Collection Name="Stream" MinCount="1" RefKey="Collection">
-								<Struct Name="Keyframe" Collapse="True" RefKey="Struct">
-									<Number Name="Time" Min="0" Max="1" RefKey="Number" />
-									<File Name="Path" BasePath="Sprites" AllowedFileTypes="png" Default="Particle/glow" RefKey="File" />
+								<Struct Name="Keyframe" Collapse="True" Seperator="|" RefKey="Struct">
+									<Number Name="Time" Min="0" Max="1" SkipIfDefault="False" RefKey="Number" />
+									<File Name="Path" BasePath="Sprites" AllowedFileTypes="png" Default="Particle/glow" SkipIfDefault="False" RefKey="File" />
 								</Struct>
 							</Collection>
 						</Collection>
 						<Collection Name="SizeKeyframes" MinCount="1" RefKey="Collection">
 							<Collection Name="Stream" MinCount="1" RefKey="Collection">
-								<Struct Name="Keyframe" Collapse="True" RefKey="Struct">
-									<Number Name="Time" Min="0" Max="1" RefKey="Number" />
-									<Number Name="Size" Min="0" Default="1" RefKey="Number" />
+								<Struct Name="Keyframe" Collapse="True" Seperator="|" RefKey="Struct">
+									<Number Name="Time" Min="0" Max="1" SkipIfDefault="False" RefKey="Number" />
+									<Number Name="Size" Min="0" Default="1" SkipIfDefault="False" RefKey="Number" />
 								</Struct>
 							</Collection>
 						</Collection>
 						<Collection Name="RotationSpeedKeyframes" RefKey="Collection">
 							<Collection Name="Stream" MinCount="1" RefKey="Collection">
-								<Struct Name="Keyframe" Collapse="True" RefKey="Struct">
-									<Number Name="Time" Min="0" Max="1" RefKey="Number" />
-									<Number Name="RotationSpeed" RefKey="Number" />
+								<Struct Name="Keyframe" Collapse="True" Seperator="|" RefKey="Struct">
+									<Number Name="Time" Min="0" Max="1" SkipIfDefault="False" RefKey="Number" />
+									<Number Name="RotationSpeed" SkipIfDefault="False" RefKey="Number" />
 								</Struct>
 							</Collection>
 						</Collection>
 						<Collection Name="ColourKeyframes" MinCount="1" RefKey="Collection">
 							<Collection Name="Stream" MinCount="1" RefKey="Collection">
-								<Struct Name="Keyframe" Collapse="True" RefKey="Struct">
-									<Number Name="Time" Min="0" Max="1" RefKey="Number" />
-									<Colour Name="Colour" RefKey="Colour" />
+								<Struct Name="Keyframe" Collapse="True" Seperator="|" RefKey="Struct">
+									<Number Name="Time" Min="0" Max="1" SkipIfDefault="False" RefKey="Number" />
+									<Colour Name="Colour" SkipIfDefault="False" RefKey="Colour" />
 								</Struct>
 							</Collection>
 						</Collection>
 						<Collection Name="AlphaKeyframes" MinCount="1" RefKey="Collection">
 							<Collection Name="Stream" MinCount="1" RefKey="Collection">
-								<Struct Name="Keyframe" Collapse="True" RefKey="Struct">
-									<Number Name="Time" Min="0" Max="1" RefKey="Number" />
-									<Number Name="Alpha" Min="0" Max="1" Default="1" RefKey="Number" />
+								<Struct Name="Keyframe" Collapse="True" Seperator="|" RefKey="Struct">
+									<Number Name="Time" Min="0" Max="1" SkipIfDefault="False" RefKey="Number" />
+									<Number Name="Alpha" Min="0" Max="1" Default="1" SkipIfDefault="False" RefKey="Number" />
 								</Struct>
 							</Collection>
 						</Collection>

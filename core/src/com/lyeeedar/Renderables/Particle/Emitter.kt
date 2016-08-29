@@ -228,14 +228,14 @@ internal class Emitter
 		{
 			val emitter = Emitter()
 
-			emitter.simulationSpace = SimulationSpace.valueOf(xml.get("Space").toUpperCase())
+			emitter.simulationSpace = SimulationSpace.valueOf(xml.get("Space", "World").toUpperCase())
 			emitter.particleSpeed = xml.getFloat("ParticleSpeed", 0f)
 			emitter.particleRotation = xml.getFloat("ParticleRotation", 0f)
-			emitter.shape = EmissionShape.valueOf(xml.get("Shape").toUpperCase())
-			emitter.width = xml.get("Size", null)?.toFloat() ?: xml.getFloat("Width")
-			emitter.height = xml.get("Size", null)?.toFloat() ?: xml.getFloat("Height")
-			emitter.area = EmissionArea.valueOf(xml.get("Area").toUpperCase())
-			emitter.dir = EmissionDirection.valueOf(xml.get("Direction").toUpperCase())
+			emitter.shape = EmissionShape.valueOf(xml.get("Shape", "Box").toUpperCase())
+			emitter.width = xml.get("Size", null)?.toFloat() ?: xml.getFloat("Width", 1f)
+			emitter.height = xml.get("Size", null)?.toFloat() ?: xml.getFloat("Height", 1f)
+			emitter.area = EmissionArea.valueOf(xml.get("Area", "Interior").toUpperCase())
+			emitter.dir = EmissionDirection.valueOf(xml.get("Direction", "Radial").toUpperCase())
 
 			val rateEls = xml.getChildByName("RateKeyframes")
 			emitter.emissionRate.parse(rateEls, { it.toFloat() })

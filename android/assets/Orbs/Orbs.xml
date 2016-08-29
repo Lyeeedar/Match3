@@ -2,12 +2,12 @@
 
     <Template>
 
-        <Sprite Key="Sprite">
+        <Sprite RefKey="Sprite">
             <Name>Oryx/uf_split/uf_items/crystal_cloud</Name>
             <DrawActualSize>true</DrawActualSize>
         </Sprite>
 
-        <Death Key="Sprite">
+        <Death RefKey="Sprite">
             <Name>EffectSprites/Splatter/Splatter</Name>
             <UpdateRate>0.06</UpdateRate>
         </Death>

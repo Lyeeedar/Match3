@@ -75,9 +75,9 @@ internal abstract class Timeline<T>
 
 			if (el.text != null)
 			{
-				val split = el.text.split(",")
+				val split = el.text.split("|")
 				val time = split[0].toFloat()
-				val rest = el.text.replaceFirst(split[0]+",", "")
+				val rest = el.text.replaceFirst(split[0]+"|", "")
 				val value = createFunc(rest)
 				this[stream, time * timeScale] = value
 			}

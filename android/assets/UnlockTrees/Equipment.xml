@@ -1,56 +1,46 @@
 <UnlockTree>
-	<Icon Key="Sprite">
-		<Name>Icons/FireTree</Name>
-		<DrawActualSize>false</DrawActualSize>
-		<UpdateRate>0.5</UpdateRate>
-		<Colour>255,255,255,255</Colour>
+	<Icon RefKey="Sprite">
+		<Name>white</Name>
 	</Icon>
 	<Unlockables>
 		<Pitchfork>
 			<Name>Pitchfork</Name>
 			<Description>A wooden pitchfork with cast iron prongs. Not very useful as a weapon but better than nothing.</Description>
-			<Icon Key="Sprite">
-				<Name>Oryx/uf_split/uf_items/weapon_spear</Name>
-				<DrawActualSize>false</DrawActualSize>
-				<UpdateRate>0.5</UpdateRate>
-				<Colour>255,255,255,255</Colour>
+			<Icon RefKey="Sprite">
+				<Name>white</Name>
 			</Icon>
 			<UnboughtDescription>A pitchfork used by farmers</UnboughtDescription>
 			<BuyCost>
 				<Gold>50</Gold>
 			</BuyCost>
-			<DataType>Equipment</DataType>
-			<Slot>Weapon</Slot>
-			<MatchDam>0</MatchDam>
-			<AbilityDam>1</AbilityDam>
+			<UnlockableData RefKey="EquipmentData">
+				<MatchDam>0</MatchDam>
+				<AbilityDam>1</AbilityDam>
+				<Reference2 />
+			</UnlockableData>
 		</Pitchfork>
 		<ReinforcedPitchfork>
 			<Name>Reinforced Pitchfork</Name>
 			<Description>A wooden pitchfork with cast iron prongs. The prongs are further enforced to be a better weapon.</Description>
-			<Icon Key="Sprite">
-				<Name>Oryx/uf_split/uf_items/weapon_spear</Name>
-				<DrawActualSize>false</DrawActualSize>
-				<UpdateRate>0.5</UpdateRate>
-				<Colour>255,255,255,255</Colour>
+			<Icon RefKey="Sprite">
+				<Name>white</Name>
 			</Icon>
 			<UnboughtDescription>A pitchfork reinforced with iron to be a better weapon</UnboughtDescription>
 			<BuyCost>
 				<Gold>100</Gold>
 			</BuyCost>
 			<Upgrades>Pitchfork</Upgrades>
-			<DataType>Equipment</DataType>
-			<Slot>Weapon</Slot>
-			<MatchDam>0</MatchDam>
-			<AbilityDam>2</AbilityDam>
+			<UnlockableData RefKey="EquipmentData">
+				<MatchDam>0</MatchDam>
+				<AbilityDam>2</AbilityDam>
+				<Reference2 />
+			</UnlockableData>
 		</ReinforcedPitchfork>
 		<Trident>
 			<Name>Trident</Name>
 			<Description>A metallic trident, flashy and slightly cumbersome.</Description>
-			<Icon Key="Sprite">
-				<Name>Oryx/uf_split/uf_items/weapon_spear</Name>
-				<DrawActualSize>false</DrawActualSize>
-				<UpdateRate>0.5</UpdateRate>
-				<Colour>255,255,255,255</Colour>
+			<Icon RefKey="Sprite">
+				<Name>white</Name>
 			</Icon>
 			<UnboughtDescription>A metal trident</UnboughtDescription>
 			<BuyCost>
@@ -58,38 +48,34 @@
 				<IronIngot>5</IronIngot>
 			</BuyCost>
 			<Upgrades>Pitchfork</Upgrades>
-			<DataType>Equipment</DataType>
-			<Slot>Weapon</Slot>
-			<MatchDam>1</MatchDam>
-			<AbilityDam>3</AbilityDam>
+			<UnlockableData RefKey="EquipmentData">
+				<MatchDam>1</MatchDam>
+				<AbilityDam>3</AbilityDam>
+				<Reference2 />
+			</UnlockableData>
 		</Trident>
-		<Knife>
+		<IronKnife>
 			<Name>Iron Knife</Name>
 			<Description>A small but sharp iron knife</Description>
-			<Icon Key="Sprite">
-				<Name>Oryx/uf_split/uf_items/weapon_sword</Name>
-				<DrawActualSize>false</DrawActualSize>
-				<UpdateRate>0.5</UpdateRate>
-				<Colour>255,255,255,255</Colour>
+			<Icon RefKey="Sprite">
+				<Name>white</Name>
 			</Icon>
 			<UnboughtDescription>A knife</UnboughtDescription>
 			<BuyCost>
 				<Gold>250</Gold>
 				<IronIngot>5</IronIngot>
 			</BuyCost>
-			<DataType>Equipment</DataType>
-			<Slot>Weapon</Slot>
-			<MatchDam>2</MatchDam>
-			<AbilityDam>0</AbilityDam>
-		</Knife>
-		<Sword>
+			<UnlockableData RefKey="EquipmentData">
+				<MatchDam>2</MatchDam>
+				<AbilityDam>0</AbilityDam>
+				<Reference2 />
+			</UnlockableData>
+		</IronKnife>
+		<SteelSword>
 			<Name>Steel Sword</Name>
 			<Description>A carefully honed steel sword</Description>
-			<Icon Key="Sprite">
-				<Name>Oryx/uf_split/uf_items/weapon_sword</Name>
-				<DrawActualSize>false</DrawActualSize>
-				<UpdateRate>0.5</UpdateRate>
-				<Colour>255,255,255,255</Colour>
+			<Icon RefKey="Sprite">
+				<Name>white</Name>
 			</Icon>
 			<UnboughtDescription>A sword</UnboughtDescription>
 			<BuyCost>
@@ -97,38 +83,34 @@
 				<IronIngot>10</IronIngot>
 			</BuyCost>
 			<Upgrades>Iron Knife</Upgrades>
-			<DataType>Equipment</DataType>
-			<Slot>Weapon</Slot>
-			<MatchDam>3</MatchDam>
-			<AbilityDam>0</AbilityDam>
-		</Sword>
+			<UnlockableData RefKey="EquipmentData">
+				<MatchDam>3</MatchDam>
+				<AbilityDam>0</AbilityDam>
+				<Reference2 />
+			</UnlockableData>
+		</SteelSword>
 		<OakStaff>
 			<Name>Oak Staff</Name>
 			<Description>A staff, made out of oak. Good for channelling abilities</Description>
-			<Icon Key="Sprite">
-				<Name>Oryx/uf_split/uf_items/weapon_staff_branch</Name>
-				<DrawActualSize>false</DrawActualSize>
-				<UpdateRate>0.5</UpdateRate>
-				<Colour>255,255,255,255</Colour>
+			<Icon RefKey="Sprite">
+				<Name>white</Name>
 			</Icon>
 			<UnboughtDescription>A solid oaken staff</UnboughtDescription>
 			<BuyCost>
 				<Gold>250</Gold>
 				<HeartWood>5</HeartWood>
 			</BuyCost>
-			<DataType>Equipment</DataType>
-			<Slot>Weapon</Slot>
-			<MatchDam>0</MatchDam>
-			<AbilityDam>5</AbilityDam>
+			<UnlockableData RefKey="EquipmentData">
+				<MatchDam>0</MatchDam>
+				<AbilityDam>5</AbilityDam>
+				<Reference2 />
+			</UnlockableData>
 		</OakStaff>
 		<EmberFocus>
 			<Name>Ember Focus</Name>
 			<Description>A burning focus, perfect for channelling abilities</Description>
-			<Icon Key="Sprite">
-				<Name>Oryx/uf_split/uf_items/weapon_staff_jeweled</Name>
-				<DrawActualSize>false</DrawActualSize>
-				<UpdateRate>0.5</UpdateRate>
-				<Colour>255,255,255,255</Colour>
+			<Icon RefKey="Sprite">
+				<Name>white</Name>
 			</Icon>
 			<UnboughtDescription>A burning focus</UnboughtDescription>
 			<BuyCost>
@@ -136,56 +118,50 @@
 				<FlameHeart>5</FlameHeart>
 			</BuyCost>
 			<Upgrades>Oak Staff</Upgrades>
-			<DataType>Equipment</DataType>
-			<Slot>Weapon</Slot>
-			<MatchDam>0</MatchDam>
-			<AbilityDam>7</AbilityDam>
+			<UnlockableData RefKey="EquipmentData">
+				<MatchDam>0</MatchDam>
+				<AbilityDam>8</AbilityDam>
+				<Reference2 />
+			</UnlockableData>
 		</EmberFocus>
 		<FarmersRags>
 			<Name>Farmers Rags</Name>
 			<Description>Rags worn by a farmer, crudely stiched together where it has been ripped</Description>
-			<Icon Key="Sprite">
-				<Name>Oryx/uf_split/uf_items/cloak_tattered</Name>
-				<DrawActualSize>false</DrawActualSize>
-				<UpdateRate>0.5</UpdateRate>
-				<Colour>255,255,255,255</Colour>
+			<Icon RefKey="Sprite">
+				<Name>white</Name>
 			</Icon>
 			<UnboughtDescription>Ragged rags</UnboughtDescription>
 			<BuyCost>
 				<Gold>10</Gold>
 			</BuyCost>
-			<DataType>Equipment</DataType>
-			<Slot>Armour</Slot>
-			<MaxHP>5</MaxHP>
-			<Regen>1</Regen>
+			<UnlockableData RefKey="EquipmentData">
+				<Slot>Armour</Slot>
+				<MaxHP>5</MaxHP>
+				<Regen>1</Regen>
+			</UnlockableData>
 		</FarmersRags>
 		<PaddedCloth>
 			<Name>Padded Cloth</Name>
 			<Description>Cloth clothing padded with layers of reeds and wool. The protection is minor, but it does keep you warm.</Description>
-			<Icon Key="Sprite">
-				<Name>Oryx/uf_split/uf_items/cloak_leather</Name>
-				<DrawActualSize>false</DrawActualSize>
-				<UpdateRate>0.5</UpdateRate>
-				<Colour>255,255,255,255</Colour>
+			<Icon RefKey="Sprite">
+				<Name>white</Name>
 			</Icon>
 			<UnboughtDescription>Padded cloth armour. A slight improvement</UnboughtDescription>
 			<BuyCost>
 				<Gold>100</Gold>
 			</BuyCost>
 			<Upgrades>Farmers Rags</Upgrades>
-			<DataType>Equipment</DataType>
-			<Slot>Armour</Slot>
-			<MaxHP>10</MaxHP>
-			<Regen>2</Regen>
+			<UnlockableData RefKey="EquipmentData">
+				<Slot>Armour</Slot>
+				<MaxHP>10</MaxHP>
+				<Regen>3</Regen>
+			</UnlockableData>
 		</PaddedCloth>
-		<Leather>
+		<LeatherArmour>
 			<Name>Leather Armour</Name>
 			<Description>Armour made from cured leather. Tough yet flexible.</Description>
-			<Icon Key="Sprite">
-				<Name>Oryx/uf_split/uf_items/armor_leather_chest</Name>
-				<DrawActualSize>false</DrawActualSize>
-				<UpdateRate>0.5</UpdateRate>
-				<Colour>255,255,255,255</Colour>
+			<Icon RefKey="Sprite">
+				<Name>white</Name>
 			</Icon>
 			<UnboughtDescription>Leather armour yo</UnboughtDescription>
 			<BuyCost>
@@ -194,151 +170,138 @@
 				<GoblinSkin>3</GoblinSkin>
 			</BuyCost>
 			<Upgrades>Farmers Rags</Upgrades>
-			<DataType>Equipment</DataType>
-			<Slot>Armour</Slot>
-			<MaxHP>20</MaxHP>
-			<Regen>4</Regen>
-		</Leather>
-		<Lamellar>
+			<UnlockableData RefKey="EquipmentData">
+				<Slot>Armour</Slot>
+				<MaxHP>15</MaxHP>
+				<Regen>6</Regen>
+			</UnlockableData>
+		</LeatherArmour>
+		<LamellarArmour>
 			<Name>Lamellar Armour</Name>
 			<Description>Armour made from layers of leather and hard wood. Easy to repair and easy to move in.</Description>
-			<Icon Key="Sprite">
-				<Name>Oryx/uf_split/uf_items/armor_wild_chest</Name>
-				<DrawActualSize>false</DrawActualSize>
-				<UpdateRate>0.5</UpdateRate>
-				<Colour>255,255,255,255</Colour>
+			<Icon RefKey="Sprite">
+				<Name>white</Name>
 			</Icon>
 			<UnboughtDescription>Lamellar armour</UnboughtDescription>
 			<BuyCost>
 				<Gold>250</Gold>
 				<HeartWood>5</HeartWood>
 			</BuyCost>
-			<DataType>Equipment</DataType>
-			<Slot>Armour</Slot>
-			<MaxHP>15</MaxHP>
-			<Regen>8</Regen>
-		</Lamellar>
+			<UnlockableData RefKey="EquipmentData">
+				<Slot>Armour</Slot>
+				<MaxHP>0</MaxHP>
+				<Regen>10</Regen>
+			</UnlockableData>
+		</LamellarArmour>
 		<ChainMail>
 			<Name>Chain Mail</Name>
 			<Description>Armour made from tiny interlinked rings of iron.</Description>
-			<Icon Key="Sprite">
-				<Name>Oryx/uf_split/uf_items/armor_chain_chest</Name>
-				<DrawActualSize>false</DrawActualSize>
-				<UpdateRate>0.5</UpdateRate>
-				<Colour>255,255,255,255</Colour>
+			<Icon RefKey="Sprite">
+				<Name>white</Name>
 			</Icon>
 			<UnboughtDescription>Chainmail yo</UnboughtDescription>
 			<BuyCost>
 				<Gold>250</Gold>
 				<IronIngot>10</IronIngot>
 			</BuyCost>
-			<DataType>Equipment</DataType>
-			<Slot>Armour</Slot>
-			<MaxHP>30</MaxHP>
-			<Regen>1</Regen>
+			<UnlockableData RefKey="EquipmentData">
+				<Slot>Armour</Slot>
+				<MaxHP>25</MaxHP>
+				<Regen>0</Regen>
+			</UnlockableData>
 		</ChainMail>
 		<WoodenCharm>
 			<Name>Wooden Charm</Name>
 			<Description>A small charm intricately carved with swirling patterns.</Description>
-			<Icon Key="Sprite">
-				<Name>Oryx/uf_split/uf_items/ring_copper</Name>
-				<DrawActualSize>false</DrawActualSize>
-				<UpdateRate>0.5</UpdateRate>
-				<Colour>255,255,255,255</Colour>
+			<Icon RefKey="Sprite">
+				<Name>white</Name>
 			</Icon>
 			<UnboughtDescription>A wooden charm</UnboughtDescription>
 			<BuyCost>
 				<Gold>50</Gold>
 			</BuyCost>
-			<DataType>Equipment</DataType>
-			<Slot>Charm</Slot>
-			<MaxPower>5</MaxPower>
-			<PowerBonus>1</PowerBonus>
+			<UnlockableData RefKey="EquipmentData">
+				<Slot>Charm</Slot>
+				<MaxPower>5</MaxPower>
+				<PowerBonus>1</PowerBonus>
+			</UnlockableData>
 		</WoodenCharm>
 		<BronzeCharm>
 			<Name>Bronze Charm</Name>
 			<Description>A small charm cast from bronze and patterned with swirling patterns.</Description>
-			<Icon Key="Sprite">
-				<Name>Oryx/uf_split/uf_items/ring_ornate</Name>
-				<DrawActualSize>false</DrawActualSize>
-				<UpdateRate>0.5</UpdateRate>
-				<Colour>255,255,255,255</Colour>
+			<Icon RefKey="Sprite">
+				<Name>white</Name>
 			</Icon>
 			<UnboughtDescription>A bronze charm</UnboughtDescription>
 			<BuyCost>
 				<Gold>100</Gold>
 			</BuyCost>
 			<Upgrades>Wooden Charm</Upgrades>
-			<DataType>Equipment</DataType>
-			<Slot>Charm</Slot>
-			<MaxPower>5</MaxPower>
-			<PowerBonus>2</PowerBonus>
+			<UnlockableData RefKey="EquipmentData">
+				<Slot>Charm</Slot>
+				<MaxPower>5</MaxPower>
+				<PowerBonus>2</PowerBonus>
+			</UnlockableData>
 		</BronzeCharm>
 		<SilverCharm>
 			<Name>Silver Charm</Name>
 			<Description>A small charm cast from silver and patterned with swirling patterns.</Description>
-			<Icon Key="Sprite">
-				<Name>Oryx/uf_split/uf_items/ring_diamond</Name>
-				<DrawActualSize>false</DrawActualSize>
-				<UpdateRate>0.5</UpdateRate>
-				<Colour>255,255,255,255</Colour>
+			<Icon RefKey="Sprite">
+				<Name>white</Name>
 			</Icon>
 			<UnboughtDescription>A silver charm</UnboughtDescription>
 			<BuyCost>
 				<Gold>500</Gold>
 			</BuyCost>
 			<Upgrades>Wooden Charm</Upgrades>
-			<DataType>Equipment</DataType>
-			<Slot>Charm</Slot>
-			<MaxPower>5</MaxPower>
-			<PowerBonus>5</PowerBonus>
+			<UnlockableData RefKey="EquipmentData">
+				<Slot>Charm</Slot>
+				<MaxPower>5</MaxPower>
+				<PowerBonus>5</PowerBonus>
+			</UnlockableData>
 		</SilverCharm>
 		<CrystalCharm>
 			<Name>Crystal Charm</Name>
 			<Description>A clear charm carved from crystal.</Description>
-			<Icon Key="Sprite">
-				<Name>Oryx/uf_split/uf_items/necklace_eye</Name>
-				<DrawActualSize>false</DrawActualSize>
-				<UpdateRate>0.5</UpdateRate>
-				<Colour>255,255,255,255</Colour>
+			<Icon RefKey="Sprite">
+				<Name>white</Name>
 			</Icon>
 			<UnboughtDescription>A crystak charm</UnboughtDescription>
 			<BuyCost>
 				<Gold>500</Gold>
 				<SoulStone>1</SoulStone>
 			</BuyCost>
-			<DataType>Equipment</DataType>
-			<Slot>Charm</Slot>
-			<MaxPower>20</MaxPower>
-			<PowerBonus>0</PowerBonus>
+			<UnlockableData RefKey="EquipmentData">
+				<Slot>Charm</Slot>
+				<MaxPower>20</MaxPower>
+				<PowerBonus>0</PowerBonus>
+			</UnlockableData>
 		</CrystalCharm>
 		<BloodyCharm>
 			<Name>Bloody Charm</Name>
 			<Description>A wooden charm bathed in the blood of powerful creatures. The repeated treatments give it a red sheen.</Description>
-			<Icon Key="Sprite">
-				<Name>Oryx/uf_split/uf_items/necklace_ruby</Name>
-				<DrawActualSize>false</DrawActualSize>
-				<UpdateRate>0.5</UpdateRate>
-				<Colour>255,255,255,255</Colour>
+			<Icon RefKey="Sprite">
+				<Name>white</Name>
 			</Icon>
 			<UnboughtDescription>A bloody charm</UnboughtDescription>
 			<BuyCost>
 				<Gold>500</Gold>
 				<HeartWood>5</HeartWood>
 			</BuyCost>
-			<DataType>Equipment</DataType>
-			<Slot>Charm</Slot>
-			<MaxPower>0</MaxPower>
-			<PowerBonus>10</PowerBonus>
+			<UnlockableData RefKey="EquipmentData">
+				<Slot>Charm</Slot>
+				<MaxPower>10</MaxPower>
+				<PowerBonus>10</PowerBonus>
+			</UnlockableData>
 		</BloodyCharm>
 	</Unlockables>
 	<Tree>
 		<Pitchfork>
 			<ReinforcedPitchfork>
 				<Trident />
-				<Knife>
-					<Sword />
-				</Knife>
+				<IronKnife>
+					<SteelSword />
+				</IronKnife>
 				<OakStaff>
 					<EmberFocus />
 				</OakStaff>
@@ -346,8 +309,8 @@
 		</Pitchfork>
 		<FarmersRags>
 			<PaddedCloth>
-				<Leather />
-				<Lamellar />
+				<LeatherArmour />
+				<LamellarArmour />
 				<ChainMail />
 			</PaddedCloth>
 		</FarmersRags>
@@ -359,4 +322,5 @@
 			</BronzeCharm>
 		</WoodenCharm>
 	</Tree>
+	<Resources />
 </UnlockTree>

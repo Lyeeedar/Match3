@@ -36,8 +36,8 @@ abstract class AbstractHouseInteraction
 		private fun getClass(name: String): Class<out AbstractHouseInteraction>
 		{
 			val type = when(name) {
-				"LINE" -> HouseInteractionLine::class.java
-				"TREE" -> HouseInteractionTree::class.java
+				"DIALOGUELINETEXT" -> HouseInteractionLine::class.java
+				"DIALOGUELINETREE" -> HouseInteractionTree::class.java
 
 			// ARGH everything broke
 				else -> throw RuntimeException("Invalid house action type: $name")

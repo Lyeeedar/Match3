@@ -70,9 +70,9 @@ class MonsterDesc
 			desc.attackDelay = xml.getFloat("AttackDelay")
 			desc.attackSpeed = xml.getInt("AttackSpeed")
 
-			desc.size = xml.getInt("Size")
+			desc.size = xml.getInt("Size", 1)
 
-			desc.hp = xml.getInt("HP")
+			desc.hp = xml.getInt("HP", 10)
 
 			val rewardsEl = xml.getChildByName("Reward")
 			for (i in 0..rewardsEl.childCount-1)

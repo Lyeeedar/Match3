@@ -1,13 +1,13 @@
 <House>
-	<Sprite Key="Sprite">
+	<Sprite RefKey="Sprite">
 		<Name>Oryx/Custom/townmap/warrior</Name>
 		<DrawActualSize>false</DrawActualSize>
 		<UpdateRate>0.5</UpdateRate>
 		<Colour>255,255,255,255</Colour>
 	</Sprite>
 	<Dialogue>
-		<Line>
+		<DialogueLineText RefKey="DialogueLineText">
 			<Text>Piss off</Text>
-		</Line>
+		</DialogueLineText>
 	</Dialogue>
 </House>

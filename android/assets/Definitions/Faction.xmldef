@@ -3,7 +3,7 @@
 		<Collection Name="Monsters" MinCount="1" RefKey="Collection">
 			<Struct Name="Monster" ChildAsName="Name" DescriptionChild="Name" RefKey="Struct">
 				<String Name="Name" RefKey="String" />
-				<Reference Name="Reference" Keys="Sprite" RefKey="Reference" />
+				<Reference Name="Sprite" Keys="Sprite" RefKey="Reference" />
 				<Reference Name="Death" Keys="Sprite" RefKey="Reference" />
 				<Number Name="AttackDelay" Min="0" RefKey="Number" />
 				<Number Name="AttackSpeed" Type="Int" Min="0" RefKey="Number" />

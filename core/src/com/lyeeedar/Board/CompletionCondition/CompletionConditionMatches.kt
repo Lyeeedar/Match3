@@ -125,9 +125,10 @@ class CompletionConditionMatches(): AbstractCompletionCondition()
 
 	override fun parse(xml: XmlReader.Element)
 	{
-		for (i in 0..xml.childCount-1)
+		val orbsEl = xml.getChildByName("Orbs")
+		for (i in 0..orbsEl.childCount-1)
 		{
-			val el = xml.getChild(i)
+			val el = orbsEl.getChild(i)
 			val count = el.text.toInt()
 
 			toBeMatched[i] = count

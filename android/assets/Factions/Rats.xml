@@ -4,18 +4,14 @@
 			<Sprite RefKey="Sprite">
 				<Name>Oryx/uf_split/uf_heroes/rat</Name>
 				<DrawActualSize>true</DrawActualSize>
-				<UpdateRate>0.5</UpdateRate>
-				<Colour>255,255,255,255</Colour>
 			</Sprite>
-			<Sprite RefKey="Sprite">
+			<Death RefKey="Sprite">
 				<Name>EffectSprites/Splatter/Splatter</Name>
-				<DrawActualSize>false</DrawActualSize>
 				<UpdateRate>0.1</UpdateRate>
 				<Colour>189,9,9,255</Colour>
-			</Sprite>
+			</Death>
 			<AttackDelay>5.5</AttackDelay>
 			<AttackSpeed>7</AttackSpeed>
-			<Size>1</Size>
 			<HP>7</HP>
 			<Rewards>
 				<Gold>10</Gold>
@@ -25,15 +21,12 @@
 			<Sprite RefKey="Sprite">
 				<Name>Oryx/uf_split/uf_heroes/rat_giant</Name>
 				<DrawActualSize>true</DrawActualSize>
-				<UpdateRate>0.5</UpdateRate>
-				<Colour>255,255,255,255</Colour>
 			</Sprite>
-			<Sprite RefKey="Sprite">
+			<Death RefKey="Sprite">
 				<Name>EffectSprites/Splatter/Splatter</Name>
-				<DrawActualSize>false</DrawActualSize>
 				<UpdateRate>0.1</UpdateRate>
 				<Colour>189,9,9,255</Colour>
-			</Sprite>
+			</Death>
 			<AttackDelay>4</AttackDelay>
 			<AttackSpeed>6</AttackSpeed>
 			<Size>2</Size>

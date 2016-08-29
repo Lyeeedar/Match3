@@ -1,19 +1,19 @@
 <House>
-	<Sprite Key="Sprite">
+	<Sprite RefKey="Sprite">
 		<Name>Oryx/Custom/townmap/pyro</Name>
 		<DrawActualSize>false</DrawActualSize>
 		<UpdateRate>0.5</UpdateRate>
 		<Colour>255,255,255,255</Colour>
 	</Sprite>
 	<Dialogue>
-		<Line>
+		<DialogueLineText RefKey="DialogueLineText">
 			<Text>What a hot day it is today. Time to burn some things.</Text>
-		</Line>
-		<Tree>
+		</DialogueLineText>
+		<DialogueLineTree RefKey="DialogueLineTree">
 			<Tree>Fire</Tree>
-		</Tree>
-		<Line>
+		</DialogueLineTree>
+		<DialogueLineText RefKey="DialogueLineText">
 			<Text>Have fun.</Text>
-		</Line>
+		</DialogueLineText>
 	</Dialogue>
 </House>

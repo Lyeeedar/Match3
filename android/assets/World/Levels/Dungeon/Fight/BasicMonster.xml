@@ -124,23 +124,17 @@
 	</Grid>
 	<Faction>Rats</Faction>
 	<AllowedVictories>
-		<Kill />
+		<Kill RefKey="CompletionCondition" />
 	</AllowedVictories>
 	<AllowedDefeats>
-		<None />
+		<None RefKey="CompletionCondition" />
 	</AllowedDefeats>
 	<Type>Encounter</Type>
 	<Category>Bad</Category>
-	<UncompletedMapSprite Key="Sprite">
+	<UncompletedMapSprite RefKey="Sprite">
 		<Name>Oryx/Custom/dungeonmap/combat</Name>
-		<DrawActualSize>false</DrawActualSize>
-		<UpdateRate>0.5</UpdateRate>
-		<Colour>255,255,255,255</Colour>
 	</UncompletedMapSprite>
-	<CompletedMapSprite Key="Sprite">
+	<CompletedMapSprite RefKey="Sprite">
 		<Name>Oryx/Custom/dungeonmap/combat_complete</Name>
-		<DrawActualSize>false</DrawActualSize>
-		<UpdateRate>0.5</UpdateRate>
-		<Colour>255,255,255,255</Colour>
 	</CompletedMapSprite>
 </Level>

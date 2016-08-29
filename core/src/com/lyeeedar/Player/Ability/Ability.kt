@@ -111,12 +111,14 @@ class Ability() : Unlockable()
 
 	override fun parse(xml: XmlReader.Element, resources: ObjectMap<String, XmlReader.Element>)
 	{
-		hitSprite = AssetManager.tryLoadSpriteWithResources(xml.getChildByName("HitSprite"), resources)
-		flightSprite = if (xml.getChildByName("FlightSprite") != null) AssetManager.tryLoadSpriteWithResources(xml.getChildByName("FlightSprite"), resources) else null
+		val dataEl = xml.getChildByName("UnlockableData")
 
-		cost = xml.getInt("Cost")
+		hitSprite = AssetManager.tryLoadSpriteWithResources(dataEl.getChildByName("HitSprite"), resources)
+		flightSprite = if (dataEl.getChildByName("FlightSprite") != null) AssetManager.tryLoadSpriteWithResources(dataEl.getChildByName("FlightSprite"), resources) else null
 
-		val effectDesc = xml.get("Effect")
+		cost = dataEl.getInt("Cost", 0)
+
+		val effectDesc = dataEl.get("Effect")
 		val split = effectDesc.toUpperCase().split(",")
 
 		targets = split[0].toInt()
@@ -124,12 +126,12 @@ class Ability() : Unlockable()
 		permuter = Permuter(Permuter.Type.valueOf(split[2]))
 		effect = Effect(Effect.Type.valueOf(split[3]))
 
-		val dataEl = xml.getChildByName("Data")
-		if (dataEl != null)
+		val dEl = dataEl.getChildByName("Data")
+		if (dEl != null)
 		{
-			for (i in 0..dataEl.childCount-1)
+			for (i in 0..dEl.childCount-1)
 			{
-				val el = dataEl.getChild(i)
+				val el = dEl.getChild(i)
 				data[el.name.toUpperCase()] = el.text.toUpperCase()
 			}
 		}

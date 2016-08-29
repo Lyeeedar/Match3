@@ -36,7 +36,7 @@ class CompletionConditionTurns(): AbstractCompletionCondition()
 
 	override fun parse(xml: XmlReader.Element)
 	{
-		turnCount = xml.text.toInt()
+		turnCount = xml.getInt("Turns")
 	}
 
 	override fun attachHandlers(grid: Grid)

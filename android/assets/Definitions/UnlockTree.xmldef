@@ -3,8 +3,8 @@
 		<Reference Name="Icon" Keys="Sprite" Nullable="False" RefKey="Reference" />
 		<Collection Name="Unlockables" MinCount="1" RefKey="Collection">
 			<Struct Name="Unlockable" ChildAsName="Key" DescriptionChild="Name" RefKey="Struct">
+				<String Name="Key" RefKey="String" />
 				<String Name="Name" RefKey="String" />
-				<Boolean Name="Key" RefKey="Boolean" />
 				<String Name="Description" RefKey="String" />
 				<Reference Name="Icon" Keys="Sprite" Nullable="False" RefKey="Reference" />
 				<String Name="UnboughtDescription" RefKey="String" />
@@ -19,6 +19,9 @@
 			</Struct>
 		</Collection>
 		<Tree Name="Tree" RefKey="Tree" />
+		<Collection Name="Resources" SkipIfDefault="False" RefKey="Collection">
+			<Reference Name="" Keys="Sprite,TilingSprite" Nullable="False" RefKey="Reference" />
+		</Collection>
 	</Struct>
 	<StructDef Name="EffectData" RefKey="StructDef">
 		<Number Name="Cost" Type="Int" Min="1" Default="1" RefKey="Number" />
@@ -27,23 +30,24 @@
 			<Enum Name="Targetter" EnumValues="Orb,Special,Block,Empty,Sealed,Monster,Attack,Tile" RefKey="Enum" />
 			<Enum Name="Permuter" EnumValues="Single,AllOfType,NofType,Column,Row,Cross,Block,Diamond,Random" RefKey="Enum" />
 			<Enum Name="Effect" EnumValues="Pop,Convert" RefKey="Enum" />
-			<Collection Name="Data" RefKey="Collection">
-				<Pair Name="Pair" RefKey="Pair">
-					<String Name="Key" RefKey="String" />
-					<Number Name="Value" RefKey="Number" />
-				</Pair>
-			</Collection>
 		</Struct>
+		<Collection Name="Data" RefKey="Collection">
+			<Pair Name="Pair" RefKey="Pair">
+				<String Name="Key" RefKey="String" />
+				<Number Name="Value" RefKey="Number" />
+			</Pair>
+		</Collection>
 		<Reference Name="FlightSprite" Keys="Sprite" RefKey="Reference" />
 		<Reference Name="HitSprite" Keys="Sprite" RefKey="Reference" />
 	</StructDef>
 	<StructDef Name="EquipmentData" RefKey="StructDef">
 		<Enum Name="Slot" EnumValues="Weapon,Armour,Charm" RefKey="Enum" />
-		<Number Name="MatchDam" Type="Int" Min="0" VisibleIf="Slot==Weapon" RefKey="Number" />
-		<Number Name="AbilityDam" Type="Int" Min="0" VisibleIf="Slot==Weapon" RefKey="Number" />
-		<Number Name="MaxHP" Type="Int" Min="0" VisibleIf="Slot==Armour" RefKey="Number" />
-		<Number Name="Regen" Type="Int" Min="0" VisibleIf="Slot==Armour" RefKey="Number" />
-		<Number Name="MaxPower" Type="Int" Min="0" VisibleIf="Slot==Charm" RefKey="Number" />
-		<Number Name="PowerBonus" Type="Int" Min="0" VisibleIf="Slot==Charm" RefKey="Number" />
+		<Number Name="MatchDam" Type="Int" Min="0" SkipIfDefault="False" VisibleIf="Slot==Weapon" RefKey="Number" />
+		<Number Name="AbilityDam" Type="Int" Min="0" SkipIfDefault="False" VisibleIf="Slot==Weapon" RefKey="Number" />
+		<Number Name="MaxHP" Type="Int" Min="0" SkipIfDefault="False" VisibleIf="Slot==Armour" RefKey="Number" />
+		<Number Name="Regen" Type="Int" Min="0" SkipIfDefault="False" VisibleIf="Slot==Armour" RefKey="Number" />
+		<Number Name="MaxPower" Type="Int" Min="0" SkipIfDefault="False" VisibleIf="Slot==Charm" RefKey="Number" />
+		<Number Name="PowerBonus" Type="Int" Min="0" SkipIfDefault="False" VisibleIf="Slot==Charm" RefKey="Number" />
+		<Reference Name="Sprite" Keys="Sprite" VisibleIf="Slot==Weapon" RefKey="Reference" />
 	</StructDef>
 </Definitions>

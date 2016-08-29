@@ -177,7 +177,7 @@ class AtlasCreator
 
 		val spriteElements = Array<XmlReader.Element>()
 
-		spriteElements.addAll(xml.getChildrenByAttributeRecursively("Key", "Sprite"))
+		spriteElements.addAll(xml.getChildrenByAttributeRecursively("RefKey", "Sprite"))
 
 		for (el in spriteElements)
 		{
@@ -188,7 +188,7 @@ class AtlasCreator
 			}
 		}
 
-		val tilingSpriteElements = xml.getChildrenByAttributeRecursively("Key", "TilingSprite")
+		val tilingSpriteElements = xml.getChildrenByAttributeRecursively("RefKey", "TilingSprite")
 
 		for (el in tilingSpriteElements)
 		{
@@ -199,7 +199,7 @@ class AtlasCreator
 			}
 		}
 
-		val directedSpriteElements = xml.getChildrenByAttributeRecursively("Key", "DirectedSprite")
+		val directedSpriteElements = xml.getChildrenByAttributeRecursively("RefKey", "DirectedSprite")
 
 		for (el in directedSpriteElements)
 		{
@@ -249,7 +249,7 @@ class AtlasCreator
 
 			if (el.text != null)
 			{
-				val split = el.text.split(",")
+				val split = el.text.split("|")
 				path = split[1]
 			}
 			else
