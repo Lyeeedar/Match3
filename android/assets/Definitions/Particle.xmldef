@@ -11,11 +11,11 @@
 				<Number Name="Height" Min="0" Default="1" RefKey="Number" />
 				<Enum Name="Area" EnumValues="Interior,Border" RefKey="Enum" />
 				<Enum Name="Direction" EnumValues="Radial,Random,Up,Down,Left,Right" RefKey="Enum" />
-				<Struct Name="ParticleSpeed" Collapse="True" RefKey="Struct">
+				<Struct Name="ParticleSpeed" Nullable="False" Collapse="True" RefKey="Struct">
 					<Number Name="Min" SkipIfDefault="False" RefKey="Number" />
 					<Number Name="Max" Default="1" SkipIfDefault="False" RefKey="Number" />
 				</Struct>
-				<Struct Name="ParticleRotation" Collapse="True" RefKey="Struct">
+				<Struct Name="ParticleRotation" Nullable="False" Collapse="True" RefKey="Struct">
 					<Number Name="Min" Min="0" Max="360" SkipIfDefault="False" RefKey="Number" />
 					<Number Name="Max" Min="0" Max="360" Default="1" SkipIfDefault="False" RefKey="Number" />
 				</Struct>
@@ -27,7 +27,7 @@
 				</Collection>
 				<Collection Name="Particles" MinCount="1" RefKey="Collection">
 					<Struct Name="Particle" RefKey="Struct">
-						<Struct Name="Lifetime" Collapse="True" SkipIfDefault="False" RefKey="Struct">
+						<Struct Name="Lifetime" Nullable="False" Collapse="True" SkipIfDefault="False" RefKey="Struct">
 							<Number Name="Offset" Min="0" Default="1" SkipIfDefault="False" RefKey="Number" />
 							<Number Name="Lifetime" Min="0" Default="1" SkipIfDefault="False" RefKey="Number" />
 						</Struct>

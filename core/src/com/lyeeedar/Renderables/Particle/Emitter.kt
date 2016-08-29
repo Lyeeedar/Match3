@@ -70,7 +70,7 @@ internal class Emitter
 
 	var stopped = false
 
-	fun complete() = particles.firstOrNull{ !it.complete() } != null
+	fun complete() = time > emissionRate.length() && particles.firstOrNull{ !it.complete() } == null
 	fun stop() { stopped = true }
 	fun start() { stopped = false }
 

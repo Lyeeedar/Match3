@@ -6,17 +6,17 @@
 			<Width>0.1</Width>
 			<Height>0.1</Height>
 			<Direction>Random</Direction>
-			<ParticleSpeed>0.03,0.13</ParticleSpeed>
+			<ParticleSpeed>0.07,0.13</ParticleSpeed>
 			<ParticleRotation>0,360</ParticleRotation>
 			<RateKeyframes>
-				<Keyframe>0|10</Keyframe>
+				<Keyframe>0|20</Keyframe>
 				<Keyframe>0.1|0</Keyframe>
 			</RateKeyframes>
 			<Particles>
 				<Particle>
-					<Lifetime>0.1,0.5</Lifetime>
+					<Lifetime>0.3,1</Lifetime>
 					<BlendMode>Additive</BlendMode>
-					<Drag>0.5</Drag>
+					<Drag>0.15</Drag>
 					<TextureKeyframes>
 						<Stream>
 							<Keyframe>0|Particle/plasma_1</Keyframe>
@@ -24,12 +24,15 @@
 						<Stream>
 							<Keyframe>0|Particle/plasma_2</Keyframe>
 						</Stream>
+						<Stream>
+							<Keyframe>0|Particle/plasma_3</Keyframe>
+						</Stream>
 					</TextureKeyframes>
 					<SizeKeyframes>
 						<Stream>
 							<Keyframe>0|0.1|0.3</Keyframe>
-							<Keyframe>0.1|1.5|2</Keyframe>
-							<Keyframe>1|0.5|0.8</Keyframe>
+							<Keyframe>0.1|1|2</Keyframe>
+							<Keyframe>1|2|3</Keyframe>
 						</Stream>
 					</SizeKeyframes>
 					<RotationSpeedKeyframes>
@@ -39,16 +42,102 @@
 					</RotationSpeedKeyframes>
 					<ColourKeyframes>
 						<Stream>
-							<Keyframe>0|255,249,184,255</Keyframe>
-							<Keyframe>0.6|255,235,33,255</Keyframe>
-							<Keyframe>1|255,124,4,255</Keyframe>
+							<Keyframe>0|255,251,212,255</Keyframe>
+							<Keyframe>0.1|255,235,33,255</Keyframe>
+							<Keyframe>0.2|255,124,4,255</Keyframe>
+							<Keyframe>0.4|28,28,28,255</Keyframe>
+							<Keyframe>1|0,0,0,255</Keyframe>
 						</Stream>
 					</ColourKeyframes>
 					<AlphaKeyframes>
 						<Stream>
 							<Keyframe>0|0</Keyframe>
-							<Keyframe>0.1|0.7</Keyframe>
-							<Keyframe>0.8|0.5</Keyframe>
+							<Keyframe>0.1|0.9</Keyframe>
+							<Keyframe>0.7|0.8</Keyframe>
+							<Keyframe>1|0</Keyframe>
+						</Stream>
+					</AlphaKeyframes>
+				</Particle>
+			</Particles>
+		</Emitter>
+		<Emitter>
+			<Name>Flash</Name>
+			<Width>0</Width>
+			<Height>0</Height>
+			<ParticleSpeed>0,0</ParticleSpeed>
+			<ParticleRotation>0,360</ParticleRotation>
+			<RateKeyframes>
+				<Keyframe>0|3</Keyframe>
+				<Keyframe>0.1|0</Keyframe>
+			</RateKeyframes>
+			<Particles>
+				<Particle>
+					<Lifetime>0.05,0.1</Lifetime>
+					<BlendMode>Additive</BlendMode>
+					<TextureKeyframes>
+						<Stream>
+							<Keyframe>0|Particle/star</Keyframe>
+						</Stream>
+					</TextureKeyframes>
+					<SizeKeyframes>
+						<Stream>
+							<Keyframe>0|0|0</Keyframe>
+							<Keyframe>0.2|5|5</Keyframe>
+							<Keyframe>1|5|5</Keyframe>
+						</Stream>
+					</SizeKeyframes>
+					<ColourKeyframes>
+						<Stream>
+							<Keyframe>0|247,239,150,255</Keyframe>
+						</Stream>
+					</ColourKeyframes>
+					<AlphaKeyframes>
+						<Stream>
+							<Keyframe>0|0.6</Keyframe>
+							<Keyframe>0.5|0.6</Keyframe>
+							<Keyframe>1|0</Keyframe>
+						</Stream>
+					</AlphaKeyframes>
+				</Particle>
+			</Particles>
+		</Emitter>
+		<Emitter>
+			<Name>Sparks</Name>
+			<Shape>Circle</Shape>
+			<Width>0</Width>
+			<Height>0</Height>
+			<Direction>Random</Direction>
+			<ParticleSpeed>0.3,0.5</ParticleSpeed>
+			<ParticleRotation>0,1</ParticleRotation>
+			<RateKeyframes>
+				<Keyframe>0|20</Keyframe>
+				<Keyframe>0.1|0</Keyframe>
+			</RateKeyframes>
+			<Particles>
+				<Particle>
+					<Lifetime>0.2,0.3</Lifetime>
+					<BlendMode>Additive</BlendMode>
+					<Drag>0.1</Drag>
+					<VelocityAligned>true</VelocityAligned>
+					<TextureKeyframes>
+						<Stream>
+							<Keyframe>0|Particle/spark</Keyframe>
+						</Stream>
+					</TextureKeyframes>
+					<SizeKeyframes>
+						<Stream>
+							<Keyframe>0|1|1</Keyframe>
+						</Stream>
+					</SizeKeyframes>
+					<ColourKeyframes>
+						<Stream>
+							<Keyframe>0|235,187,62,255</Keyframe>
+						</Stream>
+					</ColourKeyframes>
+					<AlphaKeyframes>
+						<Stream>
+							<Keyframe>0|0.6</Keyframe>
+							<Keyframe>0.7|0.6</Keyframe>
 							<Keyframe>1|0</Keyframe>
 						</Stream>
 					</AlphaKeyframes>

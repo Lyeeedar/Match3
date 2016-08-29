@@ -64,7 +64,7 @@ class Effect : Renderable()
 		return complete
 	}
 
-	fun complete() = emitters.firstOrNull{ !it.complete() } != null
+	fun complete() = emitters.firstOrNull{ !it.complete() } == null
 
 	fun setPosition(x: Float, y: Float)
 	{
