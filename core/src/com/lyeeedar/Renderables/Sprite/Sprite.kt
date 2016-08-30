@@ -267,7 +267,7 @@ class Sprite(val fileName: String, var animationDelay: Float, var textures: Arra
 	val currentTexture: TextureRegion
 		get() = textures.get(animationState.texIndex)
 
-	fun copy(): Sprite
+	override fun copy(): Sprite
 	{
 		val sprite = Sprite(fileName, animationDelay, textures, colour, animationState.mode, sound, drawActualSize)
 		sprite.referenceSize = referenceSize

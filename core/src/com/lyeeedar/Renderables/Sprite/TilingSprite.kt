@@ -34,7 +34,7 @@ class TilingSprite() : Renderable()
 
 	var hasAllElements: Boolean = false
 
-	fun copy(): TilingSprite
+	override fun copy(): TilingSprite
 	{
 		val copy = TilingSprite()
 		copy.checkID = checkID

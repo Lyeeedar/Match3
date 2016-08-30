@@ -6,7 +6,7 @@
 			<Width>0.1</Width>
 			<Height>0.1</Height>
 			<Direction>Random</Direction>
-			<ParticleSpeed>0.07,0.13</ParticleSpeed>
+			<ParticleSpeed>2,4</ParticleSpeed>
 			<ParticleRotation>0,360</ParticleRotation>
 			<RateKeyframes>
 				<Keyframe>0|20</Keyframe>
@@ -15,7 +15,8 @@
 			<Particles>
 				<Particle>
 					<Lifetime>0.3,1</Lifetime>
-					<BlendMode>Additive</BlendMode>
+					<BlendMode>Multiplicative</BlendMode>
+					<Collision>Slide</Collision>
 					<Drag>0.15</Drag>
 					<TextureKeyframes>
 						<Stream>
@@ -43,8 +44,8 @@
 					<ColourKeyframes>
 						<Stream>
 							<Keyframe>0|255,251,212,255</Keyframe>
-							<Keyframe>0.1|255,235,33,255</Keyframe>
-							<Keyframe>0.2|255,124,4,255</Keyframe>
+							<Keyframe>0.2|255,235,33,255</Keyframe>
+							<Keyframe>0.3|255,124,4,255</Keyframe>
 							<Keyframe>0.4|28,28,28,255</Keyframe>
 							<Keyframe>1|0,0,0,255</Keyframe>
 						</Stream>
@@ -52,8 +53,8 @@
 					<AlphaKeyframes>
 						<Stream>
 							<Keyframe>0|0</Keyframe>
-							<Keyframe>0.1|0.9</Keyframe>
-							<Keyframe>0.7|0.8</Keyframe>
+							<Keyframe>0.1|0.6</Keyframe>
+							<Keyframe>0.7|0.3</Keyframe>
 							<Keyframe>1|0</Keyframe>
 						</Stream>
 					</AlphaKeyframes>
@@ -107,7 +108,7 @@
 			<Width>0</Width>
 			<Height>0</Height>
 			<Direction>Random</Direction>
-			<ParticleSpeed>0.3,0.5</ParticleSpeed>
+			<ParticleSpeed>10,15</ParticleSpeed>
 			<ParticleRotation>0,1</ParticleRotation>
 			<RateKeyframes>
 				<Keyframe>0|20</Keyframe>
@@ -115,8 +116,9 @@
 			</RateKeyframes>
 			<Particles>
 				<Particle>
-					<Lifetime>0.2,0.3</Lifetime>
+					<Lifetime>0.2,0.4</Lifetime>
 					<BlendMode>Additive</BlendMode>
+					<Collision>Bounce</Collision>
 					<Drag>0.1</Drag>
 					<VelocityAligned>true</VelocityAligned>
 					<TextureKeyframes>

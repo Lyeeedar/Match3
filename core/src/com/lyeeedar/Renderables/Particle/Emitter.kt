@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Direction
+import com.lyeeedar.Util.Array2D
 import com.lyeeedar.Util.vectorToAngle
 
 internal class Emitter
@@ -74,7 +75,7 @@ internal class Emitter
 	fun stop() { stopped = true }
 	fun start() { stopped = false }
 
-	fun update(delta: Float)
+	fun update(delta: Float, collisionGrid: Array2D<Boolean>?)
 	{
 		time += delta
 
@@ -110,7 +111,7 @@ internal class Emitter
 
 		for (particle in particles)
 		{
-			particle.simulate(scaledDelta)
+			particle.simulate(scaledDelta, collisionGrid)
 		}
 	}
 

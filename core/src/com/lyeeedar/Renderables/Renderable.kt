@@ -75,4 +75,6 @@ abstract class Renderable
 
 	abstract fun doUpdate(delta: Float): Boolean
 	abstract fun doRender(batch: SpriteBatch, x: Float, y: Float, tileSize: Float)
+
+	abstract fun copy(): Renderable
 }

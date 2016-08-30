@@ -32,6 +32,7 @@
 							<Number Name="Lifetime" Min="0" Default="1" SkipIfDefault="False" RefKey="Number" />
 						</Struct>
 						<Enum Name="BlendMode" EnumValues="Additive,Multiplicative" SkipIfDefault="False" RefKey="Enum" />
+						<Enum Name="Collision" EnumValues="None,Slide,Bounce,Die" RefKey="Enum" />
 						<Number Name="Drag" RefKey="Number" />
 						<Boolean Name="VelocityAligned" RefKey="Boolean" />
 						<Collection Name="TextureKeyframes" MinCount="1" RefKey="Collection">

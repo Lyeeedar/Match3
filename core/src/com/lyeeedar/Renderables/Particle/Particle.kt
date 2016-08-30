@@ -6,14 +6,14 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.math.Interpolation
 import com.badlogic.gdx.math.MathUtils
+import com.badlogic.gdx.math.Rectangle
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.Pool
 import com.badlogic.gdx.utils.Pools
 import com.badlogic.gdx.utils.XmlReader
-import com.lyeeedar.Util.AssetManager
-import com.lyeeedar.Util.getPool
-import com.lyeeedar.Util.vectorToAngle
+import com.lyeeedar.Direction
+import com.lyeeedar.Util.*
 
 /**
  * Created by Philip on 14-Aug-16.
@@ -27,7 +27,20 @@ internal class Particle
 		MULTIPLICATIVE
 	}
 
+	enum class CollisionAction
+	{
+		NONE,
+		SLIDE,
+		BOUNCE,
+		DIE
+	}
+
+	private val moveVec = Vector2()
+	private val oldPos = Vector2()
+	private val normal = Vector2()
+	private val reflection = Vector2()
 	private val temp = Vector2()
+	private val collisionList = Array<Direction>(false, 16)
 
 	private val particles = Array<ParticleData>(false, 16)
 
@@ -35,6 +48,7 @@ internal class Particle
 	private lateinit var blend: BlendMode
 	private var drag = 0f
 	private var velocityAligned = false
+	private lateinit var collision: CollisionAction
 	private val texture = StepTimeline<TextureRegion>()
 	private val colour = ColourTimeline()
 	private val alpha = LerpTimeline()
@@ -44,7 +58,7 @@ internal class Particle
 	fun particleCount() = particles.size
 	fun complete() = particles.size == 0
 
-	fun simulate(delta: Float)
+	fun simulate(delta: Float, collisionGrid: Array2D<Boolean>?)
 	{
 		val itr = particles.iterator()
 		while (itr.hasNext())
@@ -68,15 +82,128 @@ internal class Particle
 					particle.rotation += rotation * delta
 				}
 
-				particle.speed -= drag * delta
+				particle.speed -= drag * particle.speed * delta
 				if (particle.speed < 0f) particle.speed = 0f
 
-				temp.set(particle.velocity)
-				temp.scl(particle.speed)
+				if (particle.velocity.isZero)
+				{
+					particle.velocity.setToRandomDirection()
+				}
 
-				particle.position.add(temp)
+				moveVec.set(particle.velocity)
+				moveVec.scl(particle.speed * delta)
+
+				oldPos.set(particle.position)
+
+				particle.position.add(moveVec)
+
+				if (collisionGrid != null && collision != CollisionAction.NONE)
+				{
+					val aabb = getBoundingBox(particle)
+
+					collisionList.clear()
+
+					for (x in aabb.x.toInt()..(aabb.x+aabb.width).toInt())
+					{
+						for (y in aabb.y.toInt()..(aabb.y+aabb.height).toInt())
+						{
+							if (collisionGrid.tryGet(x, y, false))
+							{
+								// calculate collision normal
+
+								val wy = (aabb.width + 1f) * ((aabb.y+aabb.height*0.5f) - (y+0.5f))
+								val hx = (aabb.height + 1f) * ((aabb.x+aabb.width*0.5f) - (x+0.5f))
+
+								var dir: Direction
+
+								if (wy > hx)
+								{
+									if (wy > -hx)
+									{
+										/* top */
+										dir = Direction.SOUTH
+									}
+									else
+									{
+										/* left */
+										dir = Direction.WEST
+									}
+								}
+								else
+								{
+									if (wy > -hx)
+									{
+										/* right */
+										dir = Direction.EAST
+									}
+									else
+									{
+										/* bottom */
+										dir = Direction.NORTH
+									}
+								}
+
+								collisionList.add(dir)
+							}
+						}
+					}
+
+					if (collisionList.size > 0)
+					{
+						if (collision == CollisionAction.DIE)
+						{
+							itr.remove()
+							particle.free()
+						}
+						else if (collision == CollisionAction.BOUNCE || collision == CollisionAction.SLIDE)
+						{
+							// calculate average collision normal
+							normal.x = collisionList.sumBy { it.x }.toFloat()
+							normal.y = collisionList.sumBy { it.y }.toFloat()
+							normal.nor()
+
+							// reflect vector around normal
+							val reflected = reflection.set(moveVec).sub(temp.set(normal).scl(2 * moveVec.dot(normal)))
+
+							// handle based on collision action
+							if (collision == CollisionAction.BOUNCE)
+							{
+								particle.position.set(oldPos)
+								particle.velocity.set(reflected)
+								particle.velocity.nor()
+							}
+							else
+							{
+								val projected = normal.scl(particle.velocity.dot(normal))
+
+								particle.velocity.sub(projected)
+								particle.velocity.nor()
+
+
+								moveVec.set(particle.velocity)
+								moveVec.scl(particle.speed * delta)
+
+								particle.position.set(oldPos).add(moveVec)
+							}
+						}
+						else
+						{
+							throw NotImplementedError("Forgot to add code to deal with collision action")
+						}
+					}
+
+					Pools.free(aabb)
+				}
 			}
 		}
+	}
+
+	fun getBoundingBox(particle: ParticleData): Rectangle
+	{
+		val size = size.valAt(particle.sizeStream, particle.life).lerp(particle.ranVal)
+		val s2 = size * 0.5f
+
+		return Pools.obtain(Rectangle::class.java).set(particle.position.x-s2, particle.position.y-s2,size, size)
 	}
 
 	fun render(batch: SpriteBatch, offsetx: Float, offsety: Float, tileSize: Float, modifierColour: Color)
@@ -130,6 +257,7 @@ internal class Particle
 
 			particle.lifetime = Range(xml.get("Lifetime"))
 			particle.blend = BlendMode.valueOf(xml.get("BlendMode", "Additive").toUpperCase())
+			particle.collision = CollisionAction.valueOf(xml.get("Collision", "None").toUpperCase())
 			particle.drag = xml.getFloat("Drag", 0f)
 			particle.velocityAligned = xml.getBoolean("VelocityAligned", false)
 

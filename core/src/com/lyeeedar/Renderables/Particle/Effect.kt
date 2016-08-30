@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Renderables.Renderable
+import com.lyeeedar.Util.Array2D
 import com.lyeeedar.Util.getXml
 
 /**
@@ -21,6 +22,8 @@ class Effect : Renderable()
 	private var doneWarmup = false
 	private val emitters = Array<Emitter>()
 	private val position = Vector2()
+
+	var collisionGrid: Array2D<Boolean>? = null
 
 	override fun doUpdate(delta: Float): Boolean
 	{
@@ -49,7 +52,7 @@ class Effect : Renderable()
 			}
 		}
 
-		for (emitter in emitters) emitter.update(delta)
+		for (emitter in emitters) emitter.update(delta, collisionGrid)
 
 		if (complete())
 		{
@@ -66,6 +69,8 @@ class Effect : Renderable()
 
 	fun complete() = emitters.firstOrNull{ !it.complete() } == null
 
+	fun getPosition() = position
+
 	fun setPosition(x: Float, y: Float)
 	{
 		position.set(x, y)
@@ -79,6 +84,11 @@ class Effect : Renderable()
 		for (emitter in emitters) emitter.draw(batch, x, y, tileSize * scale, colour)
 
 		batch.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA)
+	}
+
+	override fun copy(): Effect
+	{
+		throw NotImplementedError("I aint done this yet")
 	}
 
 	companion object

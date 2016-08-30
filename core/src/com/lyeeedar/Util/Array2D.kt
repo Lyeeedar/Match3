@@ -21,6 +21,12 @@ class Array2D<T> (val xSize: Int, val ySize: Int, val array: Array<Array<T>>): S
 		}
 	}
 
+	fun tryGet(x:Int, y:Int, fallback:T): T
+	{
+		if (x < 0 || x >= xSize || y < 0 || y >=ySize) return fallback
+		else return this[x, y]
+	}
+
 	operator fun get(x: Int, y: Int): T {
 		return array[x][y]
 	}
