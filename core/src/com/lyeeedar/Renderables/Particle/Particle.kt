@@ -14,12 +14,13 @@ import com.badlogic.gdx.utils.Pools
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Direction
 import com.lyeeedar.Util.*
+import com.sun.org.apache.xpath.internal.operations.Bool
 
 /**
  * Created by Philip on 14-Aug-16.
  */
 
-internal class Particle
+class Particle
 {
 	enum class BlendMode
 	{
@@ -42,18 +43,18 @@ internal class Particle
 	private val temp = Vector2()
 	private val collisionList = Array<Direction>(false, 16)
 
-	private val particles = Array<ParticleData>(false, 16)
+	val particles = Array<ParticleData>(false, 16)
 
-	private lateinit var lifetime: Range
-	private lateinit var blend: BlendMode
-	private var drag = 0f
-	private var velocityAligned = false
-	private lateinit var collision: CollisionAction
-	private val texture = StepTimeline<TextureRegion>()
-	private val colour = ColourTimeline()
-	private val alpha = LerpTimeline()
-	private val rotationSpeed = RangeLerpTimeline()
-	private val size = RangeLerpTimeline()
+	lateinit var lifetime: Range
+	lateinit var blend: BlendMode
+	var drag = 0f
+	var velocityAligned = false
+	lateinit var collision: CollisionAction
+	val texture = StepTimeline<TextureRegion>()
+	val colour = ColourTimeline()
+	val alpha = LerpTimeline()
+	val rotationSpeed = RangeLerpTimeline()
+	val size = RangeLerpTimeline()
 
 	fun particleCount() = particles.size
 	fun complete() = particles.size == 0
@@ -101,54 +102,7 @@ internal class Particle
 				{
 					val aabb = getBoundingBox(particle)
 
-					collisionList.clear()
-
-					for (x in aabb.x.toInt()..(aabb.x+aabb.width).toInt())
-					{
-						for (y in aabb.y.toInt()..(aabb.y+aabb.height).toInt())
-						{
-							if (collisionGrid.tryGet(x, y, false))
-							{
-								// calculate collision normal
-
-								val wy = (aabb.width + 1f) * ((aabb.y+aabb.height*0.5f) - (y+0.5f))
-								val hx = (aabb.height + 1f) * ((aabb.x+aabb.width*0.5f) - (x+0.5f))
-
-								var dir: Direction
-
-								if (wy > hx)
-								{
-									if (wy > -hx)
-									{
-										/* top */
-										dir = Direction.SOUTH
-									}
-									else
-									{
-										/* left */
-										dir = Direction.WEST
-									}
-								}
-								else
-								{
-									if (wy > -hx)
-									{
-										/* right */
-										dir = Direction.EAST
-									}
-									else
-									{
-										/* bottom */
-										dir = Direction.NORTH
-									}
-								}
-
-								collisionList.add(dir)
-							}
-						}
-					}
-
-					if (collisionList.size > 0)
+					if (checkColliding(aabb, collisionGrid))
 					{
 						if (collision == CollisionAction.DIE)
 						{
@@ -168,22 +122,32 @@ internal class Particle
 							// handle based on collision action
 							if (collision == CollisionAction.BOUNCE)
 							{
+								particle.speed *= 0.75f
+
 								particle.position.set(oldPos)
 								particle.velocity.set(reflected)
 								particle.velocity.nor()
 							}
 							else
 							{
-								val projected = normal.scl(particle.velocity.dot(normal))
+								val yaabb = getBoundingBox(particle, temp.set(particle.position.x, oldPos.y))
+								val xaabb = getBoundingBox(particle, temp.set(oldPos.x, particle.position.y))
 
-								particle.velocity.sub(projected)
-								particle.velocity.nor()
-
-
-								moveVec.set(particle.velocity)
-								moveVec.scl(particle.speed * delta)
-
-								particle.position.set(oldPos).add(moveVec)
+								// negate y
+								if (!checkColliding(yaabb, collisionGrid))
+								{
+									particle.position.y = oldPos.y
+								}
+								// negate x
+								else if (!checkColliding(xaabb, collisionGrid))
+								{
+									particle.position.x = oldPos.x
+								}
+								// negate both
+								else
+								{
+									particle.position.set(oldPos)
+								}
 							}
 						}
 						else
@@ -198,12 +162,67 @@ internal class Particle
 		}
 	}
 
-	fun getBoundingBox(particle: ParticleData): Rectangle
+	fun checkColliding(aabb: Rectangle, collisionGrid: Array2D<Boolean>): Boolean
+	{
+		collisionList.clear()
+
+		for (x in aabb.x.toInt()..(aabb.x+aabb.width).toInt())
+		{
+			for (y in aabb.y.toInt()..(aabb.y+aabb.height).toInt())
+			{
+				if (collisionGrid.tryGet(x, y, false))
+				{
+					// calculate collision normal
+
+					val wy = (aabb.width + 1f) * ((aabb.y+aabb.height*0.5f) - (y+0.5f))
+					val hx = (aabb.height + 1f) * ((aabb.x+aabb.width*0.5f) - (x+0.5f))
+
+					var dir: Direction
+
+					if (wy > hx)
+					{
+						if (wy > -hx)
+						{
+							/* top */
+							dir = Direction.SOUTH
+						}
+						else
+						{
+							/* left */
+							dir = Direction.WEST
+						}
+					}
+					else
+					{
+						if (wy > -hx)
+						{
+							/* right */
+							dir = Direction.EAST
+						}
+						else
+						{
+							/* bottom */
+							dir = Direction.NORTH
+						}
+					}
+
+					collisionList.add(dir)
+				}
+			}
+		}
+
+		return collisionList.size > 0
+	}
+
+	fun getBoundingBox(particle: ParticleData, overridePos: Vector2? = null): Rectangle
 	{
 		val size = size.valAt(particle.sizeStream, particle.life).lerp(particle.ranVal)
 		val s2 = size * 0.5f
 
-		return Pools.obtain(Rectangle::class.java).set(particle.position.x-s2, particle.position.y-s2,size, size)
+		val x = if (overridePos == null) particle.position.x else overridePos.x
+		val y = if (overridePos == null) particle.position.y else overridePos.y
+
+		return Pools.obtain(Rectangle::class.java).set(x-s2, y-s2,size, size)
 	}
 
 	fun render(batch: SpriteBatch, offsetx: Float, offsety: Float, tileSize: Float, modifierColour: Color)
@@ -316,7 +335,7 @@ internal class Particle
 	}
 }
 
-internal data class ParticleData(val position: Vector2, val velocity: Vector2,
+data class ParticleData(val position: Vector2, val velocity: Vector2,
 								 var speed: Float, var rotation: Float, var life: Float,
 								 var texStream: Int, var colStream: Int, var alphaStream: Int, var rotStream: Int, var sizeStream: Int,
 								 var ranVal: Float)

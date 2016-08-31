@@ -35,7 +35,7 @@ class ParticleEditorScreen : AbstractScreen()
 	val batch = SpriteBatch()
 	lateinit var background: Array2D<Symbol>
 	lateinit var collision: Array2D<Boolean>
-	val spriteRender = SpriteRenderer(32f, 100f, 100f, 1)
+	val spriteRender = SpriteRenderer(32f, 100f, 100f, 2)
 	var playbackSpeed = 1f
 
 	override fun create()
@@ -112,30 +112,33 @@ class ParticleEditorScreen : AbstractScreen()
 	override fun doRender(delta: Float)
 	{
 		particle.collisionGrid = collision
-		particle.update(delta * playbackSpeed)
+		//particle.update(delta * playbackSpeed)
+
 		for (x in 0..background.xSize-1)
 		{
 			for (y in 0..background.ySize-1)
 			{
 				val symbol = background[x, y]
+				var i = 0
 				for (renderable in symbol.sprites)
 				{
 					if (renderable is Sprite)
 					{
-						spriteRender.queueSprite(renderable, x.toFloat(), y.toFloat(), 0, 0)
+						spriteRender.queueSprite(renderable, x.toFloat(), y.toFloat(), 0, i++)
 					}
 					else if (renderable is TilingSprite)
 					{
-						spriteRender.queueSprite(renderable, x.toFloat(), y.toFloat(), 0, 0)
+						spriteRender.queueSprite(renderable, x.toFloat(), y.toFloat(), 0, i++)
 					}
 				}
 			}
 		}
+		spriteRender.queueParticle(particle, 0f, 0f, 1, 0)
 
 		batch.color = Color.WHITE
 		batch.begin()
-		spriteRender.flush(delta, 0f, 0f, batch)
-		particle.render(batch, 0f, 0f, 32f)
+		spriteRender.flush(delta * playbackSpeed, 0f, 0f, batch)
+		//particle.render(batch, 0f, 0f, 32f)
 		batch.end()
 	}
 

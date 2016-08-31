@@ -9,7 +9,7 @@ import com.badlogic.gdx.utils.XmlReader
  * Created by Philip on 14-Aug-16.
  */
 
-internal abstract class Timeline<T>
+abstract class Timeline<T>
 {
 	val streams = Array<Array<Pair<Float, T>>>()
 
@@ -92,17 +92,17 @@ internal abstract class Timeline<T>
 	}
 }
 
-internal class StepTimeline<T> : Timeline<T>()
+class StepTimeline<T> : Timeline<T>()
 {
 	override fun lerpValue(prev: T, next: T, alpha: Float): T = prev
 }
 
-internal class LerpTimeline : Timeline<Float>()
+class LerpTimeline : Timeline<Float>()
 {
 	override fun lerpValue(prev: Float, next: Float, alpha: Float): Float = Interpolation.linear.apply(prev, next, alpha)
 }
 
-internal data class Range(var v1: Float, var v2: Float)
+data class Range(var v1: Float, var v2: Float)
 {
 	constructor(asString: String)
 		: this(0f, 0f)
@@ -117,7 +117,7 @@ internal data class Range(var v1: Float, var v2: Float)
 	fun lerp(alpha: Float) = Interpolation.linear.apply(v1, v2, alpha)
 }
 
-internal class RangeLerpTimeline : Timeline<Range>()
+class RangeLerpTimeline : Timeline<Range>()
 {
 	val temp = Range(0f, 0f)
 	override fun lerpValue(prev: Range, next: Range, alpha: Float): Range
@@ -129,7 +129,7 @@ internal class RangeLerpTimeline : Timeline<Range>()
 	}
 }
 
-internal class ColourTimeline : Timeline<Color>()
+class ColourTimeline : Timeline<Color>()
 {
 	val temp = Color()
 	override fun lerpValue(prev: Color, next: Color, alpha: Float): Color = temp.set(prev).lerp(next, alpha)

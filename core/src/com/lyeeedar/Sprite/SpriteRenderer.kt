@@ -2,12 +2,19 @@ package com.lyeeedar.Sprite
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Color
+import com.badlogic.gdx.graphics.GL20
+import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
+import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.utils.*
 import com.badlogic.gdx.utils.Array
 import com.lyeeedar.Direction
 import com.lyeeedar.Global
+import com.lyeeedar.Renderables.Particle.Effect
+import com.lyeeedar.Renderables.Particle.Emitter
+import com.lyeeedar.Renderables.Particle.Particle
+import com.lyeeedar.Renderables.Particle.ParticleData
 import com.lyeeedar.Renderables.Sprite.TilingSprite
 import com.lyeeedar.Renderables.Sprite.Sprite
 import com.lyeeedar.Util.EnumBitflag
@@ -42,6 +49,8 @@ class SpriteRenderer(var tileSize: Float, val width: Float, val height: Float, v
 	val MAX_Y_BLOCK_SIZE = Y_BLOCK_SIZE * height
 	val MAX_X_BLOCK_SIZE = X_BLOCK_SIZE * width
 
+	var delta: Float = 0f
+
 	// ----------------------------------------------------------------------
 	fun setScreenShake(amount: Float)
 	{
@@ -54,6 +63,7 @@ class SpriteRenderer(var tileSize: Float, val width: Float, val height: Float, v
 		// do screen shake
 		var offsetx = offsetx
 		var offsety = offsety
+		delta = deltaTime
 
 		if ( screenShakeRadius > 2 )
 		{
@@ -72,6 +82,8 @@ class SpriteRenderer(var tileSize: Float, val width: Float, val height: Float, v
 		while (heap.size > 0)
 		{
 			val rs = heap.pop()
+
+			batch.setBlendFunction(rs.blendSrcFunc, rs.blendDstFunc)
 
 			batch.color = rs.colour
 			rs.sprite?.render(batch, rs.x + offsetx, rs.y + offsety, tileSize * rs.width, tileSize * rs.height )
@@ -94,6 +106,11 @@ class SpriteRenderer(var tileSize: Float, val width: Float, val height: Float, v
 				sprite.render(batch, rs.x + offsetx, rs.y + offsety, tileSize * rs.width, tileSize * rs.height )
 			}
 
+			if (rs.texture != null)
+			{
+				batch.draw(rs.texture, rs.x + offsetx, rs.y + offsety, 0.5f, 0.5f, 1f, 1f, tileSize * rs.width, tileSize * rs.height, rs.rotation)
+			}
+
 			rs.free()
 		}
 
@@ -105,8 +122,11 @@ class SpriteRenderer(var tileSize: Float, val width: Float, val height: Float, v
 			setPool.free(entry.value)
 		}
 		tilingMap.clear()
+
+		batch.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA)
 	}
 
+	// ----------------------------------------------------------------------
 	fun getComparisonVal(x: Float, y: Float, layer: Int, index: Int) : Float
 	{
 		if (index > MAX_INDEX-1) throw RuntimeException("Index too high! $index >= $MAX_INDEX!")
@@ -119,9 +139,77 @@ class SpriteRenderer(var tileSize: Float, val width: Float, val height: Float, v
 	}
 
 	// ----------------------------------------------------------------------
+	fun queueParticle(effect: Effect, ix: Float, iy: Float, layer: Int, index: Int, colour: Color = Color.WHITE, width: Float = 1f, height: Float = 1f)
+	{
+		if (effect.batchID != batchID) effect.update(delta)
+		effect.batchID = batchID
+
+		var x = ix * tileSize
+		var y = iy * tileSize
+
+		if ( effect.animation != null )
+		{
+			val offset = effect.animation?.renderOffset()
+
+			if (offset != null)
+			{
+				x += offset[0] * tileSize
+				y += offset[1] * tileSize
+			}
+		}
+
+		val scale = effect.animation?.renderScale()?.get(0) ?: 1f
+		val animCol = effect.animation?.renderColour() ?: Color.WHITE
+
+		for (emitter in effect.emitters)
+		{
+			for (particle in emitter.particles)
+			{
+				val offsetx = x + if (emitter.simulationSpace == Emitter.SimulationSpace.LOCAL) emitter.position.x * tileSize else 0f
+				val offsety = y + if (emitter.simulationSpace == Emitter.SimulationSpace.LOCAL) emitter.position.y * tileSize else 0f
+
+				var srcBlend: Int
+				var dstBlend: Int
+
+				if (particle.blend == Particle.BlendMode.ADDITIVE)
+				{
+					srcBlend = GL20.GL_SRC_ALPHA
+					dstBlend = GL20.GL_ONE
+				}
+				else // if (particle.blend == Particle.BlendMode.MULTIPLICATIVE)
+				{
+					srcBlend = GL20.GL_SRC_ALPHA
+					dstBlend = GL20.GL_ONE_MINUS_SRC_ALPHA
+				}
+
+				for (pdata in particle.particles)
+				{
+					val tex = particle.texture.valAt(pdata.texStream, pdata.life)
+					val col = particle.colour.valAt(pdata.colStream, pdata.life)
+					col.a = particle.alpha.valAt(pdata.alphaStream, pdata.life)
+					val size = particle.size.valAt(pdata.sizeStream, pdata.life).lerp(pdata.ranVal)
+					val sizex = scale * size * width
+					val sizey = scale * size * height
+
+					col.mul(colour).mul(animCol)
+
+					val drawx = pdata.position.x * tileSize + offsetx
+					val drawy = pdata.position.y * tileSize + offsety
+
+					val comparisonVal = getComparisonVal(drawx-sizex*0.5f*tileSize, drawy-sizey*0.5f*tileSize+5f, layer, index)
+
+					val rs = RenderSprite.obtain().set( null, null, tex, drawx, drawy, ix, iy, col, sizex, sizey, pdata.rotation, srcBlend, dstBlend, comparisonVal )
+
+					heap.add( rs, rs.comparisonVal )
+				}
+			}
+		}
+	}
+
+	// ----------------------------------------------------------------------
 	fun queueSprite(tilingSprite: TilingSprite, ix: Float, iy: Float, layer: Int, index: Int, colour: Color = Color.WHITE, width: Float = 1f, height: Float = 1f)
 	{
-		if (tilingSprite.batchID != batchID) tilingSprite.update(Gdx.app.graphics.deltaTime)
+		if (tilingSprite.batchID != batchID) tilingSprite.update(delta)
 		tilingSprite.batchID = batchID
 
 		var x = ix * tileSize
@@ -140,7 +228,7 @@ class SpriteRenderer(var tileSize: Float, val width: Float, val height: Float, v
 
 		val comparisonVal = getComparisonVal(x, y, layer, index)
 
-		val rs = RenderSprite.obtain().set( null, tilingSprite, x, y, ix, iy, colour, width, height, comparisonVal )
+		val rs = RenderSprite.obtain().set( null, tilingSprite, null, x, y, ix, iy, colour, width, height, 0f, GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA, comparisonVal )
 
 		val point = Point.obtain().set(ix.toInt(), iy.toInt())
 		var keys = tilingMap[point]
@@ -160,7 +248,7 @@ class SpriteRenderer(var tileSize: Float, val width: Float, val height: Float, v
 	{
 		if (update)
 		{
-			if (sprite.batchID != batchID) sprite.update(Gdx.app.graphics.deltaTime)
+			if (sprite.batchID != batchID) sprite.update(delta)
 		}
 		sprite.batchID = batchID
 
@@ -180,52 +268,67 @@ class SpriteRenderer(var tileSize: Float, val width: Float, val height: Float, v
 
 		val comparisonVal = getComparisonVal(x, y, layer, index)
 
-		val rs = RenderSprite.obtain().set( sprite, null, x, y, ix, iy, colour, width, height, comparisonVal )
+		val rs = RenderSprite.obtain().set( sprite, null, null, x, y, ix, iy, colour, width, height, 0f, GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA, comparisonVal )
 
 		heap.add( rs, rs.comparisonVal )
 	}
 
+	// ----------------------------------------------------------------------
 	companion object
 	{
 		val random = Random()
 	}
 }
 
+// ----------------------------------------------------------------------
 class RenderSprite : BinaryHeap.Node(0f)
 {
 	val point = Point()
 	val colour: Color = Color(1f, 1f, 1f, 1f)
 	var sprite: Sprite? = null
 	var tilingSprite: TilingSprite? = null
+	var texture: TextureRegion? = null
 	var x: Float = 0f
 	var y: Float = 0f
 	var width: Float = 1f
 	var height: Float = 1f
+	var rotation: Float = 0f
+	var blendSrcFunc: Int = GL20.GL_SRC_ALPHA
+	var blendDstFunc: Int = GL20.GL_ONE_MINUS_SRC_ALPHA
 
 	var comparisonVal: Float = 0f
 
-	operator fun set(sprite: Sprite?, tilingSprite: TilingSprite?,
+	// ----------------------------------------------------------------------
+	operator fun set(sprite: Sprite?, tilingSprite: TilingSprite?, texture: TextureRegion?,
 					 x: Float, y: Float,
 					 ix: Float, iy: Float,
 					 colour: Color,
 					 width: Float, height: Float,
+					 rotation: Float,
+					 blendSrcFunc: Int, blendDstFunc: Int,
 					 comparisonVal: Float): RenderSprite
 	{
 		point.set(ix.toInt(), iy.toInt())
 		this.colour.set(colour)
 		this.sprite = sprite
 		this.tilingSprite = tilingSprite
+		this.texture = texture
 		this.x = x
 		this.y = y
 		this.width = width
 		this.height = height
 		this.comparisonVal = comparisonVal
+		this.blendSrcFunc = blendSrcFunc
+		this.blendDstFunc = blendDstFunc
+		this.rotation = rotation
 
 		return this
 	}
 
+	// ----------------------------------------------------------------------
 	fun free() = RenderSprite.pool.free(this)
 
+	// ----------------------------------------------------------------------
 	companion object
 	{
 		val pool: Pool<RenderSprite> = Pools.get( RenderSprite::class.java, Int.MAX_VALUE )

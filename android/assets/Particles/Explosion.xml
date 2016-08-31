@@ -108,17 +108,17 @@
 			<Width>0</Width>
 			<Height>0</Height>
 			<Direction>Random</Direction>
-			<ParticleSpeed>10,15</ParticleSpeed>
+			<ParticleSpeed>15,25</ParticleSpeed>
 			<ParticleRotation>0,1</ParticleRotation>
 			<RateKeyframes>
-				<Keyframe>0|20</Keyframe>
+				<Keyframe>0|15</Keyframe>
 				<Keyframe>0.1|0</Keyframe>
 			</RateKeyframes>
 			<Particles>
 				<Particle>
-					<Lifetime>0.2,0.4</Lifetime>
+					<Lifetime>0.1,0.5</Lifetime>
 					<BlendMode>Additive</BlendMode>
-					<Collision>Bounce</Collision>
+					<Collision>Die</Collision>
 					<Drag>0.1</Drag>
 					<VelocityAligned>true</VelocityAligned>
 					<TextureKeyframes>

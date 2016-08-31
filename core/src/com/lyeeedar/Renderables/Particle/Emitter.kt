@@ -11,7 +11,7 @@ import com.lyeeedar.Direction
 import com.lyeeedar.Util.Array2D
 import com.lyeeedar.Util.vectorToAngle
 
-internal class Emitter
+class Emitter
 {
 	val MAX_DELTA = 1f / 15f // dont update faster than 15fps
 

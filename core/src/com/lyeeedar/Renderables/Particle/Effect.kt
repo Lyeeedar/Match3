@@ -20,7 +20,7 @@ class Effect : Renderable()
 	private var repeat = false
 	private var warmupTime = 0f
 	private var doneWarmup = false
-	private val emitters = Array<Emitter>()
+	val emitters = Array<Emitter>()
 	private val position = Vector2()
 
 	var collisionGrid: Array2D<Boolean>? = null
