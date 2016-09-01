@@ -149,17 +149,6 @@ class SpriteRenderer(var tileSize: Float, val width: Float, val height: Float, v
 		var x = ix * tileSize
 		var y = iy * tileSize
 
-		if ( effect.animation != null )
-		{
-			val offset = effect.animation?.renderOffset()
-
-			if (offset != null)
-			{
-				x += offset[0] * tileSize
-				y += offset[1] * tileSize
-			}
-		}
-
 		val scale = effect.animation?.renderScale()?.get(0) ?: 1f
 		val animCol = effect.animation?.renderColour() ?: Color.WHITE
 
