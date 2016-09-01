@@ -83,10 +83,10 @@ class Ability() : Unlockable()
 				p1.scl(1f / 32f)
 				p2.scl(1f / 32f)
 
-				val dist = p1.dst(p2) / 32f
+				val dist = p1.dst(p2)
 
-				fs.animation = MoveAnimation.obtain().set(1f + 0.2f * dist, arrayOf(p1, p2), Interpolation.linear)
-				//fs.rotation = getRotation(p1, p2)
+				fs.animation = MoveAnimation.obtain().set(dist * fs.moveSpeed, arrayOf(p1, p2), Interpolation.linear)
+				fs.rotation = getRotation(p1, p2)
 				delay += fs.lifetime
 
 				target.effects.add(fs)

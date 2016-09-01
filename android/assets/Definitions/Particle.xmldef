@@ -1,6 +1,7 @@
 <Definitions>
 	<Struct Name="Effect" RefKey="Struct">
 		<Number Name="Warmup" Min="0" RefKey="Number" />
+		<Number Name="MoveSpeed" Min="0" Default="1" RefKey="Number" />
 		<Collection Name="Emitters" MinCount="1" RefKey="Collection">
 			<Struct Name="Emitter" DescriptionChild="Name" RefKey="Struct">
 				<String Name="Name" RefKey="String" />
@@ -10,6 +11,7 @@
 				<Number Name="Width" Min="0" Default="1" RefKey="Number" />
 				<Number Name="Height" Min="0" Default="1" RefKey="Number" />
 				<Enum Name="Area" EnumValues="Interior,Border" RefKey="Enum" />
+				<Vector Name="Offset" RefKey="Vector" />
 				<Enum Name="Direction" EnumValues="Radial,Random,Up,Down,Left,Right" RefKey="Enum" />
 				<Struct Name="ParticleSpeed" Nullable="False" Collapse="True" RefKey="Struct">
 					<Number Name="Min" SkipIfDefault="False" RefKey="Number" />

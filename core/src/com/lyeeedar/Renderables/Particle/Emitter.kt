@@ -50,11 +50,16 @@ class Emitter
 	}
 
 	private val temp = Vector2()
+	private val spawnPos = Vector2()
+	private val spawnDir = Vector2()
+	private val spawnOffset = Vector2()
 
 	val particles: Array<Particle> = Array(false, 16)
 
 	val position = Vector2()
+	var rotation: Float = 0f
 
+	val offset = Vector2()
 	lateinit var type: EmissionType
 	lateinit var simulationSpace: SimulationSpace
 	val emissionRate = LerpTimeline()
@@ -118,30 +123,42 @@ class Emitter
 
 	fun spawn()
 	{
-		val pos = when (shape)
+		val pos = spawnPos.set(when (shape)
 		{
 			EmissionShape.CIRCLE -> spawnCircle()
 			EmissionShape.BOX -> spawnBox()
 			else -> throw RuntimeException("Invalid emitter shape! $shape")
-		}
+		})
 
-		val velocity: Vector2 = when (dir)
+		val velocity = when (dir)
 		{
-			EmissionDirection.RADIAL -> Vector2(pos).nor()
-			EmissionDirection.RANDOM -> Vector2().setToRandomDirection()
-			EmissionDirection.UP -> Vector2(Direction.NORTH.x.toFloat(), Direction.NORTH.y.toFloat())
-			EmissionDirection.DOWN -> Vector2(Direction.SOUTH.x.toFloat(), Direction.SOUTH.y.toFloat())
-			EmissionDirection.LEFT -> Vector2(Direction.WEST.x.toFloat(), Direction.WEST.y.toFloat())
-			EmissionDirection.RIGHT -> Vector2(Direction.EAST.x.toFloat(), Direction.EAST.y.toFloat())
+			EmissionDirection.RADIAL -> spawnDir.set(pos).nor()
+			EmissionDirection.RANDOM -> spawnDir.setToRandomDirection()
+			EmissionDirection.UP -> spawnDir.set(Direction.NORTH.x.toFloat(), Direction.NORTH.y.toFloat())
+			EmissionDirection.DOWN -> spawnDir.set(Direction.SOUTH.x.toFloat(), Direction.SOUTH.y.toFloat())
+			EmissionDirection.LEFT -> spawnDir.set(Direction.WEST.x.toFloat(), Direction.WEST.y.toFloat())
+			EmissionDirection.RIGHT -> spawnDir.set(Direction.EAST.x.toFloat(), Direction.EAST.y.toFloat())
 			else -> throw RuntimeException("Invalid emitter direction type! $dir")
 		}
 
 		val speed = particleSpeed.lerp(MathUtils.random())
-		val rotation = particleRotation.lerp(MathUtils.random())
+		val rotation = particleRotation.lerp(MathUtils.random()) + rotation
 
 		if (simulationSpace == SimulationSpace.WORLD)
 		{
+			pos.rotate(rotation)
 			pos.add(position)
+
+			// rotate offset
+			temp.set(offset).rotate(rotation)
+			pos.add(temp)
+
+			velocity.rotate(rotation)
+		}
+		else
+		{
+			// just add offset
+			pos.add(offset)
 		}
 
 		// pick random particle
@@ -248,6 +265,14 @@ class Emitter
 			emitter.dir = EmissionDirection.valueOf(xml.get("Direction", "Radial").toUpperCase())
 			emitter.particleSpeed = Range(xml.get("ParticleSpeed"))
 			emitter.particleRotation = Range(xml.get("ParticleRotation"))
+
+			val offset = xml.get("Offset", null)
+			if (offset != null)
+			{
+				val split = offset.split(",")
+				emitter.offset.x = split[0].toFloat()
+				emitter.offset.y = split[1].toFloat()
+			}
 
 			val rateEls = xml.getChildByName("RateKeyframes")
 			emitter.emissionRate.parse(rateEls, { it.toFloat() })

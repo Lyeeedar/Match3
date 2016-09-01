@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.math.MathUtils
+import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.*
 import com.badlogic.gdx.utils.Array
 import com.lyeeedar.Direction
@@ -31,6 +32,7 @@ class SpriteRenderer(var tileSize: Float, val width: Float, val height: Float, v
 {
 	var batchID: Int = 0
 
+	val tempVec = Vector2()
 	val tempPoint = Point()
 	val bitflag = EnumBitflag<Direction>()
 	val heap: BinaryHeap<RenderSprite> = BinaryHeap()
@@ -165,8 +167,17 @@ class SpriteRenderer(var tileSize: Float, val width: Float, val height: Float, v
 		{
 			for (particle in emitter.particles)
 			{
-				val offsetx = x + if (emitter.simulationSpace == Emitter.SimulationSpace.LOCAL) emitter.position.x * tileSize else 0f
-				val offsety = y + if (emitter.simulationSpace == Emitter.SimulationSpace.LOCAL) emitter.position.y * tileSize else 0f
+				var offsetx = x
+				var offsety = y
+
+				if (emitter.simulationSpace == Emitter.SimulationSpace.LOCAL)
+				{
+					tempVec.set(emitter.offset)
+					tempVec.rotate(emitter.rotation)
+
+					offsetx += (emitter.position.x + tempVec.x) * tileSize
+					offsety += (emitter.position.y + tempVec.y) * tileSize
+				}
 
 				var srcBlend: Int
 				var dstBlend: Int
@@ -190,6 +201,7 @@ class SpriteRenderer(var tileSize: Float, val width: Float, val height: Float, v
 					val size = particle.size.valAt(pdata.sizeStream, pdata.life).lerp(pdata.ranVal)
 					val sizex = scale * size * width
 					val sizey = scale * size * height
+					val rotation = if (emitter.simulationSpace == Emitter.SimulationSpace.LOCAL) pdata.rotation + emitter.rotation else pdata.rotation
 
 					col.mul(colour).mul(animCol)
 
@@ -198,7 +210,7 @@ class SpriteRenderer(var tileSize: Float, val width: Float, val height: Float, v
 
 					val comparisonVal = getComparisonVal(drawx-sizex*0.5f*tileSize, drawy-sizey*0.5f*tileSize+5f, layer, index)
 
-					val rs = RenderSprite.obtain().set( null, null, tex, drawx, drawy, ix, iy, col, sizex, sizey, pdata.rotation, srcBlend, dstBlend, comparisonVal )
+					val rs = RenderSprite.obtain().set( null, null, tex, drawx, drawy, ix, iy, col, sizex, sizey, rotation, srcBlend, dstBlend, comparisonVal )
 
 					heap.add( rs, rs.comparisonVal )
 				}

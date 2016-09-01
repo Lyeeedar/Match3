@@ -23,8 +23,10 @@ class ParticleEffect : Renderable()
 	private var repeat = false
 	private var warmupTime = 0f
 	private var doneWarmup = false
+	var moveSpeed: Float = 1f
 	val emitters = Array<Emitter>()
 	val position = Vector2()
+	var rotation: Float = 0f
 
 	var collisionGrid: Array2D<Boolean>? = null
 
@@ -45,7 +47,11 @@ class ParticleEffect : Renderable()
 		val x = position.x + (posOffset?.get(0) ?: 0f)
 		val y = position.y + (posOffset?.get(1) ?: 0f)
 
-		for (emitter in emitters) emitter.position.set(x, y)
+		for (emitter in emitters)
+		{
+			emitter.rotation = rotation
+			emitter.position.set(x, y)
+		}
 
 		if (warmupTime > 0f && !doneWarmup)
 		{
@@ -109,6 +115,7 @@ class ParticleEffect : Renderable()
 
 			effect.repeat = xml.getBoolean("Repeat", false)
 			effect.warmupTime = xml.getFloat("Warmup", 0f)
+			effect.moveSpeed = xml.getFloat("MoveSpeed", 1f)
 
 			val emittersEl = xml.getChildByName("Emitters")
 			for (i in 0..emittersEl.childCount-1)
