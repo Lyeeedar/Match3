@@ -18,6 +18,7 @@ import com.lyeeedar.Direction
 import com.lyeeedar.Global
 import com.lyeeedar.Player.Ability.Targetter
 import com.lyeeedar.Player.Player
+import com.lyeeedar.Renderables.Particle.ParticleEffect
 import com.lyeeedar.Renderables.Sprite.Sprite
 import com.lyeeedar.Sprite.SpriteRenderer
 import com.lyeeedar.Util.AssetManager
@@ -231,16 +232,33 @@ class GridWidget(val grid: Grid) : Widget()
 					ground.queueSprite(chest.sprite, xi, yi, TILE, 1, tileColour)
 				}
 
-				for (sprite in tile.effects)
+				for (effect in tile.effects)
 				{
-					if (sprite.completed)
+					if (effect is Sprite)
 					{
-						tile.effects.removeValue(sprite, true)
+						if (effect.completed)
+						{
+							tile.effects.removeValue(effect, true)
+						}
+						else
+						{
+							floating.queueSprite(effect, xi, yi, EFFECT, 0)
+						}
 					}
-					else
+					else if (effect is ParticleEffect)
 					{
-						floating.queueSprite(sprite, xi, yi, EFFECT, 0)
+						if (effect.completed)
+						{
+							tile.effects.removeValue(effect, true)
+						}
+						else
+						{
+							effect.setPosition(xi+0.5f, yi+0.5f)
+							floating.queueParticle(effect, 0f, 0f, EFFECT, 0)
+						}
 					}
+
+
 				}
 
 				if (orb != null)

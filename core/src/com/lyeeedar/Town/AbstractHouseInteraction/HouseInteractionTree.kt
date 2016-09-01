@@ -72,7 +72,7 @@ class HouseInteractionTree : AbstractHouseInteraction()
 
 	override fun parse(xml: XmlReader.Element)
 	{
-		tree = xml.get("Tree");
+		tree = xml.get("Tree")
 	}
 
 }

@@ -16,12 +16,8 @@
 			<UnlockableData RefKey="EffectData">
 				<Cost>3</Cost>
 				<Effect>1,Orb,Single,Pop</Effect>
-				<FlightSprite RefKey="Sprite">
-					<Name>EffectSprites/FireBoltMove/FireBoltMove</Name>
-				</FlightSprite>
-				<HitSprite RefKey="Sprite">
-					<Name>EffectSprites/FireBurst/FireBurst</Name>
-				</HitSprite>
+				<FlightEffect>Fire</FlightEffect>
+				<HitEffect>Explosion</HitEffect>
 			</UnlockableData>
 		</Firebolt>
 		<DualFirebolt>
@@ -38,12 +34,6 @@
 			<UnlockableData RefKey="EffectData">
 				<Cost>3</Cost>
 				<Effect>2,Orb,Single,Pop</Effect>
-				<FlightSprite RefKey="Sprite">
-					<Name>EffectSprites/FireBoltMove/FireBoltMove</Name>
-				</FlightSprite>
-				<HitSprite RefKey="Sprite">
-					<Name>EffectSprites/FireBurst/FireBurst</Name>
-				</HitSprite>
 			</UnlockableData>
 		</DualFirebolt>
 		<TriFirebolt>
@@ -60,12 +50,6 @@
 			<UnlockableData RefKey="EffectData">
 				<Cost>3</Cost>
 				<Effect>3,Orb,Single,Pop</Effect>
-				<FlightSprite RefKey="Sprite">
-					<Name>EffectSprites/FireBoltMove/FireBoltMove</Name>
-				</FlightSprite>
-				<HitSprite RefKey="Sprite">
-					<Name>EffectSprites/FireBurst/FireBurst</Name>
-				</HitSprite>
 			</UnlockableData>
 		</TriFirebolt>
 		<QuadFirebolt>
@@ -82,12 +66,6 @@
 			<UnlockableData RefKey="EffectData">
 				<Cost>3</Cost>
 				<Effect>4,Orb,Single,Pop</Effect>
-				<FlightSprite RefKey="Sprite">
-					<Name>EffectSprites/FireBoltMove/FireBoltMove</Name>
-				</FlightSprite>
-				<HitSprite RefKey="Sprite">
-					<Name>EffectSprites/FireBurst/FireBurst</Name>
-				</HitSprite>
 			</UnlockableData>
 		</QuadFirebolt>
 		<FireFlurry>
@@ -109,12 +87,6 @@
 				<Data>
 					<Count>3</Count>
 				</Data>
-				<FlightSprite RefKey="Sprite">
-					<Name>EffectSprites/FireBoltMove/FireBoltMove</Name>
-				</FlightSprite>
-				<HitSprite RefKey="Sprite">
-					<Name>EffectSprites/FireBurst/FireBurst</Name>
-				</HitSprite>
 			</UnlockableData>
 		</FireFlurry>
 		<FireRain>
@@ -137,12 +109,6 @@
 				<Data>
 					<Count>5</Count>
 				</Data>
-				<FlightSprite RefKey="Sprite">
-					<Name>EffectSprites/FireBoltMove/FireBoltMove</Name>
-				</FlightSprite>
-				<HitSprite RefKey="Sprite">
-					<Name>EffectSprites/FireBurst/FireBurst</Name>
-				</HitSprite>
 			</UnlockableData>
 		</FireRain>
 		<Fireball>
@@ -162,12 +128,6 @@
 				<Data>
 					<aoe>1</aoe>
 				</Data>
-				<FlightSprite RefKey="Sprite">
-					<Name>EffectSprites/FireBoltMove/FireBoltMove</Name>
-				</FlightSprite>
-				<HitSprite RefKey="Sprite">
-					<Name>EffectSprites/FireBurst/FireBurst</Name>
-				</HitSprite>
 			</UnlockableData>
 		</Fireball>
 		<GreaterFireball>
@@ -188,12 +148,6 @@
 				<Data>
 					<aoe>2</aoe>
 				</Data>
-				<FlightSprite RefKey="Sprite">
-					<Name>EffectSprites/FireBoltMove/FireBoltMove</Name>
-				</FlightSprite>
-				<HitSprite RefKey="Sprite">
-					<Name>EffectSprites/FireBurst/FireBurst</Name>
-				</HitSprite>
 			</UnlockableData>
 		</GreaterFireball>
 		<GrandFireball>
@@ -214,12 +168,6 @@
 				<Data>
 					<aoe>3</aoe>
 				</Data>
-				<FlightSprite RefKey="Sprite">
-					<Name>EffectSprites/FireBoltMove/FireBoltMove</Name>
-				</FlightSprite>
-				<HitSprite RefKey="Sprite">
-					<Name>EffectSprites/FireBurst/FireBurst</Name>
-				</HitSprite>
 			</UnlockableData>
 		</GrandFireball>
 		<Immolate>
@@ -235,12 +183,6 @@
 			<UnlockableData RefKey="EffectData">
 				<Cost>2</Cost>
 				<Effect>1,Monster,Single,Pop</Effect>
-				<FlightSprite RefKey="Sprite">
-					<Name>EffectSprites/FireBoltMove/FireBoltMove</Name>
-				</FlightSprite>
-				<HitSprite RefKey="Sprite">
-					<Name>EffectSprites/FireBurst/FireBurst</Name>
-				</HitSprite>
 			</UnlockableData>
 		</Immolate>
 		<SoulfireDetonation>
@@ -261,12 +203,6 @@
 				<Data>
 					<aoe>1</aoe>
 				</Data>
-				<FlightSprite RefKey="Sprite">
-					<Name>EffectSprites/FireBoltMove/FireBoltMove</Name>
-				</FlightSprite>
-				<HitSprite RefKey="Sprite">
-					<Name>EffectSprites/FireBurst/FireBurst</Name>
-				</HitSprite>
 			</UnlockableData>
 		</SoulfireDetonation>
 		<FireBeam>
@@ -283,12 +219,6 @@
 			<UnlockableData RefKey="EffectData">
 				<Cost>6</Cost>
 				<Effect>1,Orb,Column,Pop</Effect>
-				<FlightSprite RefKey="Sprite">
-					<Name>EffectSprites/FireBoltMove/FireBoltMove</Name>
-				</FlightSprite>
-				<HitSprite RefKey="Sprite">
-					<Name>EffectSprites/FireBurst/FireBurst</Name>
-				</HitSprite>
 			</UnlockableData>
 		</FireBeam>
 		<PillarsOfDestruction>
@@ -305,12 +235,6 @@
 			<UnlockableData RefKey="EffectData">
 				<Cost>8</Cost>
 				<Effect>3,Orb,Column,Pop</Effect>
-				<FlightSprite RefKey="Sprite">
-					<Name>EffectSprites/FireBoltMove/FireBoltMove</Name>
-				</FlightSprite>
-				<HitSprite RefKey="Sprite">
-					<Name>EffectSprites/FireBurst/FireBurst</Name>
-				</HitSprite>
 			</UnlockableData>
 		</PillarsOfDestruction>
 		<CrossBlaze>
@@ -327,12 +251,6 @@
 			<UnlockableData RefKey="EffectData">
 				<Cost>5</Cost>
 				<Effect>1,Orb,Cross,Pop</Effect>
-				<FlightSprite RefKey="Sprite">
-					<Name>EffectSprites/FireBoltMove/FireBoltMove</Name>
-				</FlightSprite>
-				<HitSprite RefKey="Sprite">
-					<Name>EffectSprites/FireBurst/FireBurst</Name>
-				</HitSprite>
 			</UnlockableData>
 		</CrossBlaze>
 	</Unlockables>

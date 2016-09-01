@@ -10,7 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener
 import com.badlogic.gdx.utils.Array
 import com.lyeeedar.Global
 import com.lyeeedar.Map.World
-import com.lyeeedar.Renderables.Particle.Effect
+import com.lyeeedar.Renderables.Particle.ParticleEffect
 import com.lyeeedar.Player.Player
 import com.lyeeedar.Player.PlayerData
 import com.lyeeedar.Renderables.Animation.MoveAnimation

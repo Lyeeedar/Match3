@@ -9,6 +9,7 @@ import com.lyeeedar.Board.Grid
 import com.lyeeedar.Board.Tile
 import com.lyeeedar.Global
 import com.lyeeedar.Renderables.Animation.MoveAnimation
+import com.lyeeedar.Renderables.Particle.ParticleEffect
 import com.lyeeedar.Renderables.Sprite.Sprite
 import com.lyeeedar.Screens.GridScreen
 import com.lyeeedar.UI.GridWidget
@@ -22,8 +23,8 @@ import com.lyeeedar.Util.*
 
 class Ability() : Unlockable()
 {
-	lateinit var hitSprite: Sprite
-	var flightSprite: Sprite? = null
+	var hitEffect: ParticleEffect? = null
+	var flightEffect: ParticleEffect? = null
 
 	var cost: Int = 2
 
@@ -72,17 +73,20 @@ class Ability() : Unlockable()
 			}
 
 			var delay = 0f
-			if (flightSprite != null)
+			if (flightEffect != null)
 			{
-				val fs = flightSprite!!.copy()
+				val fs = flightEffect!!.copy()
 
 				val p1 = GridScreen.instance.playerPortrait.localToStageCoordinates(Vector2())
 				val p2 = GridWidget.instance.pointToScreenspace(target)
 
+				p1.scl(1f / 32f)
+				p2.scl(1f / 32f)
+
 				val dist = p1.dst(p2) / 32f
 
-				fs.animation = MoveAnimation.obtain().set(0.05f + 0.025f * dist, arrayOf(p1, p2), Interpolation.linear)
-				fs.rotation = getRotation(p1, p2)
+				fs.animation = MoveAnimation.obtain().set(1f + 0.2f * dist, arrayOf(p1, p2), Interpolation.linear)
+				//fs.rotation = getRotation(p1, p2)
 				delay += fs.lifetime
 
 				target.effects.add(fs)
@@ -97,11 +101,14 @@ class Ability() : Unlockable()
 			var delay = selectedDelays[closest]
 			val dst = closest.dist(target)
 
-			val hs = hitSprite.copy()
-			hs.renderDelay = delay + 0.1f * dst
-			delay += hs.lifetime * 0.6f
+			if (hitEffect != null)
+			{
+				val hs = hitEffect!!.copy()
+				hs.renderDelay = delay + 0.1f * dst
+				delay += hs.lifetime * 0.6f
 
-			target.effects.add(hs)
+				target.effects.add(hs)
+			}
 
 			effect.apply(target, grid, delay, data)
 		}
@@ -113,8 +120,10 @@ class Ability() : Unlockable()
 	{
 		val dataEl = xml.getChildByName("UnlockableData")
 
-		hitSprite = AssetManager.tryLoadSpriteWithResources(dataEl.getChildByName("HitSprite"), resources)
-		flightSprite = if (dataEl.getChildByName("FlightSprite") != null) AssetManager.tryLoadSpriteWithResources(dataEl.getChildByName("FlightSprite"), resources) else null
+		val hitEffectName = dataEl.get("HitEffect", null)
+		if (hitEffectName != null) hitEffect = ParticleEffect.load(hitEffectName)
+		val flightEffectName = dataEl.get("FlightEffect", null)
+		if (flightEffectName != null) flightEffect = ParticleEffect.load(flightEffectName)
 
 		cost = dataEl.getInt("Cost", 0)
 

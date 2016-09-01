@@ -60,6 +60,8 @@ class PlayerData
 		unlockedSprites.add(AssetManager.loadSprite("Oryx/Custom/heroes/farmer_f", drawActualSize = true))
 
 		chosenSprite = unlockedSprites[0]
+
+		abilities[0] = "Firebolt"
 	}
 
 	fun getSkillTree(path: String): UnlockTree<Ability>

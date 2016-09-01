@@ -5,6 +5,8 @@ import com.lyeeedar.Global
 import com.lyeeedar.Sprite.SpriteWrapper
 import com.lyeeedar.Util.Point
 import com.badlogic.gdx.utils.Array
+import com.lyeeedar.Renderables.Particle.ParticleEffect
+import com.lyeeedar.Renderables.Renderable
 import com.lyeeedar.Renderables.Sprite.Sprite
 
 /**
@@ -48,7 +50,7 @@ class Tile(x: Int, y: Int) : Point(x, y)
 
 	var isSelected: Boolean = false
 
-	val effects: Array<Sprite> = Array()
+	val effects: Array<Renderable> = Array()
 
 	val associatedMatches = kotlin.Array<Match?>(2) {e -> null}
 

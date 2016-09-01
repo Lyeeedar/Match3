@@ -9,7 +9,7 @@
 				<Reference Name="Icon" Keys="Sprite" Nullable="False" RefKey="Reference" />
 				<String Name="UnboughtDescription" RefKey="String" />
 				<Collection Name="BuyCost" RefKey="Collection">
-					<Pair Name="DataPair" RefKey="DataPair">
+					<Pair Name="DataPair" RefKey="Pair">
 						<String Name="Item" RefKey="String" />
 						<Number Name="Count" Type="Int" Min="1" Default="1" RefKey="Number" />
 					</Pair>
@@ -32,13 +32,13 @@
 			<Enum Name="Effect" EnumValues="Pop,Convert" RefKey="Enum" />
 		</Struct>
 		<Collection Name="Data" RefKey="Collection">
-			<Pair Name="DataPair" RefKey="DataPair">
+			<Pair Name="DataPair" RefKey="Pair">
 				<String Name="Key" RefKey="String" />
 				<Number Name="Value" RefKey="Number" />
 			</Pair>
 		</Collection>
-		<Reference Name="FlightSprite" Keys="Sprite" RefKey="Reference" />
-		<Reference Name="HitSprite" Keys="Sprite" RefKey="Reference" />
+		<File Name="FlightEffect" BasePath="Particles" AllowedFileTypes="xml" RefKey="File" />
+		<File Name="HitEffect" BasePath="Particles" AllowedFileTypes="xml" RefKey="File" />
 	</StructDef>
 	<StructDef Name="EquipmentData" RefKey="StructDef">
 		<Enum Name="Slot" EnumValues="Weapon,Armour,Charm" RefKey="Enum" />

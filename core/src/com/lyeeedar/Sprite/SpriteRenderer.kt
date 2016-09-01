@@ -11,7 +11,7 @@ import com.badlogic.gdx.utils.*
 import com.badlogic.gdx.utils.Array
 import com.lyeeedar.Direction
 import com.lyeeedar.Global
-import com.lyeeedar.Renderables.Particle.Effect
+import com.lyeeedar.Renderables.Particle.ParticleEffect
 import com.lyeeedar.Renderables.Particle.Emitter
 import com.lyeeedar.Renderables.Particle.Particle
 import com.lyeeedar.Renderables.Particle.ParticleData
@@ -139,7 +139,7 @@ class SpriteRenderer(var tileSize: Float, val width: Float, val height: Float, v
 	}
 
 	// ----------------------------------------------------------------------
-	fun queueParticle(effect: Effect, ix: Float, iy: Float, layer: Int, index: Int, colour: Color = Color.WHITE, width: Float = 1f, height: Float = 1f)
+	fun queueParticle(effect: ParticleEffect, ix: Float, iy: Float, layer: Int, index: Int, colour: Color = Color.WHITE, width: Float = 1f, height: Float = 1f)
 	{
 		if (effect.batchID != batchID) effect.update(delta)
 		effect.batchID = batchID

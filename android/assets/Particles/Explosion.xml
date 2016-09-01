@@ -6,7 +6,7 @@
 			<Width>0.1</Width>
 			<Height>0.1</Height>
 			<Direction>Random</Direction>
-			<ParticleSpeed>2,4</ParticleSpeed>
+			<ParticleSpeed>0.5,1.2</ParticleSpeed>
 			<ParticleRotation>0,360</ParticleRotation>
 			<RateKeyframes>
 				<Keyframe>0|20</Keyframe>
@@ -14,7 +14,7 @@
 			</RateKeyframes>
 			<Particles>
 				<Particle>
-					<Lifetime>0.3,1</Lifetime>
+					<Lifetime>0.3,0.8</Lifetime>
 					<BlendMode>Multiplicative</BlendMode>
 					<Collision>Slide</Collision>
 					<Drag>0.15</Drag>
@@ -31,9 +31,9 @@
 					</TextureKeyframes>
 					<SizeKeyframes>
 						<Stream>
-							<Keyframe>0|0.1|0.3</Keyframe>
-							<Keyframe>0.1|1|2</Keyframe>
-							<Keyframe>1|2|3</Keyframe>
+							<Keyframe>0|0.1|0.2</Keyframe>
+							<Keyframe>0.1|0.3|0.5</Keyframe>
+							<Keyframe>1|0.8|1</Keyframe>
 						</Stream>
 					</SizeKeyframes>
 					<RotationSpeedKeyframes>
@@ -45,8 +45,8 @@
 						<Stream>
 							<Keyframe>0|255,251,212,255</Keyframe>
 							<Keyframe>0.2|255,235,33,255</Keyframe>
-							<Keyframe>0.3|255,124,4,255</Keyframe>
-							<Keyframe>0.4|28,28,28,255</Keyframe>
+							<Keyframe>0.4|255,124,4,255</Keyframe>
+							<Keyframe>0.7|28,28,28,255</Keyframe>
 							<Keyframe>1|0,0,0,255</Keyframe>
 						</Stream>
 					</ColourKeyframes>
@@ -83,8 +83,8 @@
 					<SizeKeyframes>
 						<Stream>
 							<Keyframe>0|0|0</Keyframe>
-							<Keyframe>0.2|5|5</Keyframe>
-							<Keyframe>1|5|5</Keyframe>
+							<Keyframe>0.2|2|2</Keyframe>
+							<Keyframe>1|2|2</Keyframe>
 						</Stream>
 					</SizeKeyframes>
 					<ColourKeyframes>
@@ -108,7 +108,7 @@
 			<Width>0</Width>
 			<Height>0</Height>
 			<Direction>Random</Direction>
-			<ParticleSpeed>15,25</ParticleSpeed>
+			<ParticleSpeed>6,8</ParticleSpeed>
 			<ParticleRotation>0,1</ParticleRotation>
 			<RateKeyframes>
 				<Keyframe>0|15</Keyframe>
@@ -128,7 +128,7 @@
 					</TextureKeyframes>
 					<SizeKeyframes>
 						<Stream>
-							<Keyframe>0|1|1</Keyframe>
+							<Keyframe>0|0.2|0.3</Keyframe>
 						</Stream>
 					</SizeKeyframes>
 					<ColourKeyframes>

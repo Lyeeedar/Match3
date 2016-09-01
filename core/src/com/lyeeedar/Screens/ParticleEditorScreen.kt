@@ -15,7 +15,7 @@ import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Global
-import com.lyeeedar.Renderables.Particle.Effect
+import com.lyeeedar.Renderables.Particle.ParticleEffect
 import com.lyeeedar.Renderables.Particle.Particle
 import com.lyeeedar.Renderables.Renderable
 import com.lyeeedar.Renderables.Sprite.Sprite
@@ -31,7 +31,7 @@ import javax.swing.JFileChooser
 class ParticleEditorScreen : AbstractScreen()
 {
 	var currentPath: String? = null
-	lateinit var particle: Effect
+	lateinit var particle: ParticleEffect
 	val batch = SpriteBatch()
 	lateinit var background: Array2D<Symbol>
 	lateinit var collision: Array2D<Boolean>
@@ -65,16 +65,16 @@ class ParticleEditorScreen : AbstractScreen()
 
 				currentPath = file.absolutePath
 
-				val nparticle = Effect.Companion.load(currentPath!!)
-				nparticle.setPosition(particle.getPosition().x, particle.getPosition().y)
+				val nparticle = ParticleEffect.Companion.load(currentPath!!)
+				nparticle.setPosition(particle.position.x, particle.position.y)
 				particle = nparticle
 			}
 		}
 
 		updateButton.addClickListener {
 
-			val nparticle = Effect.Companion.load(currentPath!!)
-			nparticle.setPosition(particle.getPosition().x, particle.getPosition().y)
+			val nparticle = ParticleEffect.Companion.load(currentPath!!)
+			nparticle.setPosition(particle.position.x, particle.position.y)
 			particle = nparticle
 		}
 
@@ -82,7 +82,7 @@ class ParticleEditorScreen : AbstractScreen()
 		mainTable.add(updateButton).expandY().top()
 		mainTable.add(playbackSpeedBox).expandY().top()
 
-		particle = Effect()
+		particle = ParticleEffect()
 
 		loadLevel()
 	}

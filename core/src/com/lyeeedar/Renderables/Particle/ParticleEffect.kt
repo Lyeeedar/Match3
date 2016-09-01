@@ -15,15 +15,21 @@ import com.lyeeedar.Util.getXml
  * Created by Philip on 14-Aug-16.
  */
 
-class Effect : Renderable()
+class ParticleEffect : Renderable()
 {
+	private lateinit var loadPath: String
+
+	var completed = false
 	private var repeat = false
 	private var warmupTime = 0f
 	private var doneWarmup = false
 	val emitters = Array<Emitter>()
-	private val position = Vector2()
+	val position = Vector2()
 
 	var collisionGrid: Array2D<Boolean>? = null
+
+	val lifetime: Float
+		get() = Math.max(animation?.duration() ?: 0f, emitters.maxBy { it.lifetime() }!!.lifetime())
 
 	override fun doUpdate(delta: Float): Boolean
 	{
@@ -48,28 +54,30 @@ class Effect : Renderable()
 			val steps = (warmupTime / deltaStep).toInt()
 			for (i in 0..steps-1)
 			{
-				update(deltaStep)
+				for (emitter in emitters) emitter.update(deltaStep, collisionGrid)
 			}
 		}
 
 		for (emitter in emitters) emitter.update(delta, collisionGrid)
 
-		if (complete())
+		if (animation == null)
 		{
-			for (emitter in emitters) emitter.time = 0f
-			complete = true
-		}
-		else
-		{
-			complete = false
+			if (complete())
+			{
+				for (emitter in emitters) emitter.time = 0f
+				complete = true
+				completed = true
+			}
+			else
+			{
+				complete = false
+			}
 		}
 
 		return complete
 	}
 
 	fun complete() = emitters.firstOrNull{ !it.complete() } == null
-
-	fun getPosition() = position
 
 	fun setPosition(x: Float, y: Float)
 	{
@@ -86,16 +94,18 @@ class Effect : Renderable()
 		batch.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA)
 	}
 
-	override fun copy(): Effect
+	override fun copy(): ParticleEffect
 	{
-		throw NotImplementedError("I aint done this yet")
+		val effect = ParticleEffect.load(loadPath)
+		effect.setPosition(position.x, position.y)
+		return effect
 	}
 
 	companion object
 	{
-		fun load(xml: XmlReader.Element): Effect
+		fun load(xml: XmlReader.Element): ParticleEffect
 		{
-			val effect = Effect()
+			val effect = ParticleEffect()
 
 			effect.repeat = xml.getBoolean("Repeat", false)
 			effect.warmupTime = xml.getFloat("Warmup", 0f)
@@ -111,10 +121,12 @@ class Effect : Renderable()
 			return effect
 		}
 
-		fun load(path: String): Effect
+		fun load(path: String): ParticleEffect
 		{
-			val xml = getXml(path)
-			return load(xml)
+			val xml = getXml("Particles/$path")
+			val effect = load(xml)
+			effect.loadPath = path
+			return effect
 		}
 	}
 }
