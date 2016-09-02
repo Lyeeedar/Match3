@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.*
 import com.badlogic.gdx.utils.Array
+import com.lyeeedar.BlendMode
 import com.lyeeedar.Direction
 import com.lyeeedar.Global
 import com.lyeeedar.Renderables.Particle.ParticleEffect
@@ -45,7 +46,8 @@ class SpriteRenderer(var tileSize: Float, val width: Float, val height: Float, v
 	var screenShakeSpeed: Float = 0f
 	var screenShakeAngle: Float = 0f
 
-	val MAX_INDEX = 3
+	val BLENDMODES = BlendMode.values().size
+	val MAX_INDEX = 3 * BLENDMODES
 	val X_BLOCK_SIZE = layers * MAX_INDEX
 	val Y_BLOCK_SIZE = X_BLOCK_SIZE * width
 	val MAX_Y_BLOCK_SIZE = Y_BLOCK_SIZE * height
@@ -85,7 +87,7 @@ class SpriteRenderer(var tileSize: Float, val width: Float, val height: Float, v
 		{
 			val rs = heap.pop()
 
-			batch.setBlendFunction(rs.blendSrcFunc, rs.blendDstFunc)
+			batch.setBlendFunction(rs.blend.src, rs.blend.dst)
 
 			batch.color = rs.colour
 			rs.sprite?.render(batch, rs.x + offsetx, rs.y + offsety, tileSize * rs.width, tileSize * rs.height )
@@ -129,7 +131,7 @@ class SpriteRenderer(var tileSize: Float, val width: Float, val height: Float, v
 	}
 
 	// ----------------------------------------------------------------------
-	fun getComparisonVal(x: Float, y: Float, layer: Int, index: Int) : Float
+	fun getComparisonVal(x: Float, y: Float, layer: Int, index: Int, blend: BlendMode) : Float
 	{
 		if (index > MAX_INDEX-1) throw RuntimeException("Index too high! $index >= $MAX_INDEX!")
 		if (layer > layers-1) throw RuntimeException("Layer too high! $index >= $layers!")
@@ -137,7 +139,7 @@ class SpriteRenderer(var tileSize: Float, val width: Float, val height: Float, v
 		val sx = (x / tileSize).toInt()
 		val sy = (y / tileSize).toInt()
 
-		return MAX_Y_BLOCK_SIZE - sy * Y_BLOCK_SIZE + (MAX_X_BLOCK_SIZE - sx * X_BLOCK_SIZE) + layer * MAX_INDEX + index
+		return MAX_Y_BLOCK_SIZE - sy * Y_BLOCK_SIZE + (MAX_X_BLOCK_SIZE - sx * X_BLOCK_SIZE) + layer * MAX_INDEX + index * BLENDMODES + blend.ordinal
 	}
 
 	// ----------------------------------------------------------------------
@@ -146,8 +148,8 @@ class SpriteRenderer(var tileSize: Float, val width: Float, val height: Float, v
 		if (effect.batchID != batchID) effect.update(delta)
 		effect.batchID = batchID
 
-		var x = ix * tileSize
-		var y = iy * tileSize
+		val x = ix * tileSize
+		val y = iy * tileSize
 
 		val scale = effect.animation?.renderScale()?.get(0) ?: 1f
 		val animCol = effect.animation?.renderColour() ?: Color.WHITE
@@ -168,20 +170,6 @@ class SpriteRenderer(var tileSize: Float, val width: Float, val height: Float, v
 					offsety += (emitter.position.y + tempVec.y) * tileSize
 				}
 
-				var srcBlend: Int
-				var dstBlend: Int
-
-				if (particle.blend == Particle.BlendMode.ADDITIVE)
-				{
-					srcBlend = GL20.GL_SRC_ALPHA
-					dstBlend = GL20.GL_ONE
-				}
-				else // if (particle.blend == Particle.BlendMode.MULTIPLICATIVE)
-				{
-					srcBlend = GL20.GL_SRC_ALPHA
-					dstBlend = GL20.GL_ONE_MINUS_SRC_ALPHA
-				}
-
 				for (pdata in particle.particles)
 				{
 					val tex = particle.texture.valAt(pdata.texStream, pdata.life)
@@ -197,9 +185,9 @@ class SpriteRenderer(var tileSize: Float, val width: Float, val height: Float, v
 					val drawx = pdata.position.x * tileSize + offsetx
 					val drawy = pdata.position.y * tileSize + offsety
 
-					val comparisonVal = getComparisonVal(drawx-sizex*0.5f*tileSize, drawy-sizey*0.5f*tileSize+5f, layer, index)
+					val comparisonVal = getComparisonVal(drawx-sizex*0.5f*tileSize, drawy-sizey*0.5f*tileSize+5f, layer, index, particle.blend)
 
-					val rs = RenderSprite.obtain().set( null, null, tex, drawx, drawy, ix, iy, col, sizex, sizey, rotation, srcBlend, dstBlend, comparisonVal )
+					val rs = RenderSprite.obtain().set( null, null, tex, drawx, drawy, ix, iy, col, sizex, sizey, rotation, particle.blend, comparisonVal )
 
 					heap.add( rs, rs.comparisonVal )
 				}
@@ -227,9 +215,9 @@ class SpriteRenderer(var tileSize: Float, val width: Float, val height: Float, v
 			}
 		}
 
-		val comparisonVal = getComparisonVal(x, y, layer, index)
+		val comparisonVal = getComparisonVal(x, y, layer, index, BlendMode.MULTIPLICATIVE)
 
-		val rs = RenderSprite.obtain().set( null, tilingSprite, null, x, y, ix, iy, colour, width, height, 0f, GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA, comparisonVal )
+		val rs = RenderSprite.obtain().set( null, tilingSprite, null, x, y, ix, iy, colour, width, height, 0f, BlendMode.MULTIPLICATIVE, comparisonVal )
 
 		val point = Point.obtain().set(ix.toInt(), iy.toInt())
 		var keys = tilingMap[point]
@@ -267,9 +255,9 @@ class SpriteRenderer(var tileSize: Float, val width: Float, val height: Float, v
 			}
 		}
 
-		val comparisonVal = getComparisonVal(x, y, layer, index)
+		val comparisonVal = getComparisonVal(x, y, layer, index, BlendMode.MULTIPLICATIVE)
 
-		val rs = RenderSprite.obtain().set( sprite, null, null, x, y, ix, iy, colour, width, height, 0f, GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA, comparisonVal )
+		val rs = RenderSprite.obtain().set( sprite, null, null, x, y, ix, iy, colour, width, height, 0f, BlendMode.MULTIPLICATIVE, comparisonVal )
 
 		heap.add( rs, rs.comparisonVal )
 	}
@@ -294,8 +282,7 @@ class RenderSprite : BinaryHeap.Node(0f)
 	var width: Float = 1f
 	var height: Float = 1f
 	var rotation: Float = 0f
-	var blendSrcFunc: Int = GL20.GL_SRC_ALPHA
-	var blendDstFunc: Int = GL20.GL_ONE_MINUS_SRC_ALPHA
+	var blend: BlendMode = BlendMode.MULTIPLICATIVE
 
 	var comparisonVal: Float = 0f
 
@@ -306,7 +293,7 @@ class RenderSprite : BinaryHeap.Node(0f)
 					 colour: Color,
 					 width: Float, height: Float,
 					 rotation: Float,
-					 blendSrcFunc: Int, blendDstFunc: Int,
+					 blend: BlendMode,
 					 comparisonVal: Float): RenderSprite
 	{
 		point.set(ix.toInt(), iy.toInt())
@@ -319,8 +306,7 @@ class RenderSprite : BinaryHeap.Node(0f)
 		this.width = width
 		this.height = height
 		this.comparisonVal = comparisonVal
-		this.blendSrcFunc = blendSrcFunc
-		this.blendDstFunc = blendDstFunc
+		this.blend = blend
 		this.rotation = rotation
 
 		return this

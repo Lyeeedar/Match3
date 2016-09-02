@@ -1,5 +1,6 @@
 <Effect>
 	<Warmup>5</Warmup>
+	<MoveSpeed>0.1</MoveSpeed>
 	<Emitters>
 		<Emitter>
 			<Name>Trail</Name>
@@ -10,7 +11,7 @@
 			<ParticleSpeed>0.2,0.6</ParticleSpeed>
 			<ParticleRotation>0,360</ParticleRotation>
 			<RateKeyframes>
-				<Keyframe>0|300</Keyframe>
+				<Keyframe>0|400</Keyframe>
 			</RateKeyframes>
 			<Particles>
 				<Particle>
@@ -31,8 +32,8 @@
 					<SizeKeyframes>
 						<Stream>
 							<Keyframe>0|0|0</Keyframe>
-							<Keyframe>0.3|0.3|0.5</Keyframe>
-							<Keyframe>1|0.1|0.2</Keyframe>
+							<Keyframe>0.3|0.4|0.6</Keyframe>
+							<Keyframe>1|0.1|0.3</Keyframe>
 						</Stream>
 					</SizeKeyframes>
 					<RotationSpeedKeyframes>

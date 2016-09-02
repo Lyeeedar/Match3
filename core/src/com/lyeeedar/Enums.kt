@@ -1,5 +1,6 @@
 package com.lyeeedar
 
+import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.Array
@@ -9,6 +10,13 @@ import com.exp4j.Helpers.EquationHelper
 import com.lyeeedar.Util.FastEnumMap
 import com.lyeeedar.Util.Point
 import com.lyeeedar.Util.vectorToAngle
+
+// ----------------------------------------------------------------------
+enum class BlendMode constructor(val src: Int, val dst: Int)
+{
+	MULTIPLICATIVE(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA),
+	ADDITIVE(GL20.GL_SRC_ALPHA, GL20.GL_ONE);
+}
 
 // ----------------------------------------------------------------------
 enum class Rarity

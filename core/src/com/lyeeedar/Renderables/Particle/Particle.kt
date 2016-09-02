@@ -12,6 +12,7 @@ import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.Pool
 import com.badlogic.gdx.utils.Pools
 import com.badlogic.gdx.utils.XmlReader
+import com.lyeeedar.BlendMode
 import com.lyeeedar.Direction
 import com.lyeeedar.Util.*
 import com.sun.org.apache.xpath.internal.operations.Bool
@@ -22,12 +23,6 @@ import com.sun.org.apache.xpath.internal.operations.Bool
 
 class Particle
 {
-	enum class BlendMode
-	{
-		ADDITIVE,
-		MULTIPLICATIVE
-	}
-
 	enum class CollisionAction
 	{
 		NONE,
@@ -227,14 +222,7 @@ class Particle
 
 	fun render(batch: SpriteBatch, offsetx: Float, offsety: Float, tileSize: Float, modifierColour: Color)
 	{
-		if (blend == BlendMode.ADDITIVE)
-		{
-			batch.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE)
-		}
-		else if (blend == BlendMode.MULTIPLICATIVE)
-		{
-			batch.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA)
-		}
+		batch.setBlendFunction(blend.src, blend.dst)
 
 		for (particle in particles)
 		{

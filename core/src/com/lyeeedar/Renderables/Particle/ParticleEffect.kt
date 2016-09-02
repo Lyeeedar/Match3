@@ -20,7 +20,7 @@ class ParticleEffect : Renderable()
 	private lateinit var loadPath: String
 
 	var completed = false
-	private var repeat = false
+	var killOnAnimComplete = true
 	private var warmupTime = 0f
 	private var doneWarmup = false
 	var moveSpeed: Float = 1f
@@ -33,14 +33,38 @@ class ParticleEffect : Renderable()
 	val lifetime: Float
 		get() = Math.max(animation?.duration() ?: 0f, emitters.maxBy { it.lifetime() }!!.lifetime())
 
+	fun start()
+	{
+		for (emitter in emitters)
+		{
+			emitter.time = 0f
+			emitter.start()
+		}
+	}
+
+	fun stop()
+	{
+		for (emitter in emitters) emitter.stop()
+	}
+
 	override fun doUpdate(delta: Float): Boolean
 	{
-		var complete = animation?.update(delta) ?: false
-		if (complete)
+		var complete = false
+
+		if (moveSpeed == 0f)
 		{
-			for (emitter in emitters) emitter.stop()
 			animation?.free()
 			animation = null
+		}
+		else
+		{
+			complete = animation?.update(delta) ?: false
+			if (complete)
+			{
+				if (killOnAnimComplete) stop()
+				animation?.free()
+				animation = null
+			}
 		}
 
 		val posOffset = animation?.renderOffset()
@@ -113,7 +137,6 @@ class ParticleEffect : Renderable()
 		{
 			val effect = ParticleEffect()
 
-			effect.repeat = xml.getBoolean("Repeat", false)
 			effect.warmupTime = xml.getFloat("Warmup", 0f)
 			effect.moveSpeed = xml.getFloat("MoveSpeed", 1f)
 

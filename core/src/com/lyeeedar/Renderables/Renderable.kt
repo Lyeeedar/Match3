@@ -33,7 +33,13 @@ abstract class Renderable
 					{
 						hybrid.colour = anim
 					}
-					else throw RuntimeException("No entry for anim type")
+					else if (anim is HybridAnimation)
+					{
+						hybrid.offset = anim.offset
+						hybrid.scale = anim.scale
+						hybrid.colour = anim.colour
+					}
+					else throw RuntimeException("No entry for anim type '$anim'")
 				}
 
 				merge(field!!)

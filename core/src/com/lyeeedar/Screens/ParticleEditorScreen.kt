@@ -4,6 +4,9 @@ import com.badlogic.gdx.ApplicationListener
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer
+import com.badlogic.gdx.math.Interpolation
+import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.scenes.scene2d.Actor
 import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.badlogic.gdx.scenes.scene2d.ui.SelectBox
@@ -15,12 +18,14 @@ import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Global
+import com.lyeeedar.Renderables.Animation.MoveAnimation
 import com.lyeeedar.Renderables.Particle.ParticleEffect
 import com.lyeeedar.Renderables.Particle.Particle
 import com.lyeeedar.Renderables.Renderable
 import com.lyeeedar.Renderables.Sprite.Sprite
 import com.lyeeedar.Renderables.Sprite.TilingSprite
 import com.lyeeedar.Sprite.SpriteRenderer
+import com.lyeeedar.UI.GridWidget
 import com.lyeeedar.Util.*
 import javax.swing.JFileChooser
 
@@ -35,8 +40,10 @@ class ParticleEditorScreen : AbstractScreen()
 	val batch = SpriteBatch()
 	lateinit var background: Array2D<Symbol>
 	lateinit var collision: Array2D<Boolean>
-	val spriteRender = SpriteRenderer(32f, 100f, 100f, 2)
+	val tileSize = 32f
+	val spriteRender = SpriteRenderer(tileSize, 100f, 100f, 2)
 	var playbackSpeed = 1f
+	val shape = ShapeRenderer()
 
 	override fun create()
 	{
@@ -63,9 +70,10 @@ class ParticleEditorScreen : AbstractScreen()
 			{
 				val file = fc.selectedFile
 
-				currentPath = file.absolutePath
+				currentPath = file.name
 
 				val nparticle = ParticleEffect.Companion.load(currentPath!!)
+				nparticle.killOnAnimComplete = false
 				nparticle.setPosition(particle.position.x, particle.position.y)
 				particle = nparticle
 			}
@@ -74,6 +82,7 @@ class ParticleEditorScreen : AbstractScreen()
 		updateButton.addClickListener {
 
 			val nparticle = ParticleEffect.Companion.load(currentPath!!)
+			nparticle.killOnAnimComplete = false
 			nparticle.setPosition(particle.position.x, particle.position.y)
 			particle = nparticle
 		}
@@ -112,7 +121,6 @@ class ParticleEditorScreen : AbstractScreen()
 	override fun doRender(delta: Float)
 	{
 		particle.collisionGrid = collision
-		//particle.update(delta * playbackSpeed)
 
 		for (x in 0..background.xSize-1)
 		{
@@ -138,20 +146,31 @@ class ParticleEditorScreen : AbstractScreen()
 		batch.color = Color.WHITE
 		batch.begin()
 		spriteRender.flush(delta * playbackSpeed, 0f, 0f, batch)
-		//particle.render(batch, 0f, 0f, 32f)
 		batch.end()
+
+		shape.projectionMatrix = stage.camera.combined
+		shape.setAutoShapeType(true)
+		shape.begin()
+
+		shape.color = Color.CYAN
+		shape.rect(particle.position.x * tileSize - 5, particle.position.y * tileSize - 5, 10f, 10f)
+
+		shape.end()
 	}
 
 	override fun touchDown(screenX: Int, screenY: Int, pointer: Int, button: Int): Boolean
 	{
-		particle.setPosition(screenX / 32f, (stage.height - screenY) / 32f)
+		val p1 = Vector2(particle.position)
+		val p2 = Vector2(screenX / tileSize, (stage.height - screenY) / tileSize)
 
-		return true
-	}
+		particle.position.set(p2)
 
-	override fun touchDragged(screenX: Int, screenY: Int, pointer: Int): Boolean
-	{
-		particle.setPosition(screenX / 32f, (stage.height - screenY) / 32f)
+		val dist = p1.dst(p2)
+
+		particle.animation = MoveAnimation.obtain().set(dist * particle.moveSpeed, arrayOf(p1, p2), Interpolation.linear)
+		particle.rotation = getRotation(p1, p2)
+
+		particle.start()
 
 		return true
 	}
