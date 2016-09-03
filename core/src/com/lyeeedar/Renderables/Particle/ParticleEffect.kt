@@ -35,6 +35,7 @@ class ParticleEffect : Renderable()
 	var rotation: Float = 0f
 
 	var collisionGrid: Array2D<Boolean>? = null
+	var collisionFun: ((x: Int, y: Int) -> Unit)? = null
 
 	val lifetime: Float
 		get() = (animation?.duration() ?: emitters.maxBy { it.lifetime() }!!.lifetime()) * (1f / speedMultiplier)
@@ -95,6 +96,11 @@ class ParticleEffect : Renderable()
 		}
 
 		for (emitter in emitters) emitter.update(delta * speedMultiplier, collisionGrid)
+
+		if (collisionFun != null)
+		{
+			for (emitter in emitters) emitter.callCollisionFunc(collisionFun!!)
+		}
 
 		if (animation == null)
 		{
@@ -166,11 +172,11 @@ class ParticleEffect : Renderable()
 
 			if (emitter.shape == Emitter.EmissionShape.BOX)
 			{
-				shape.rect(ex-w2, ey-h2, w2, h2, w, h, 1f, 1f, emitter.emitterRotation)
+				shape.rect(ex-w2, ey-h2, w2, h2, w, h, 1f, 1f, emitter.emitterRotation + rotation)
 			}
 			else if (emitter.shape == Emitter.EmissionShape.CIRCLE)
 			{
-				shape.ellipse(ex-w2, ey-h2, w, h, emitter.emitterRotation)
+				shape.ellipse(ex-w2, ey-h2, w, h, emitter.emitterRotation + rotation)
 			}
 			else if (emitter.shape == Emitter.EmissionShape.CONE)
 			{

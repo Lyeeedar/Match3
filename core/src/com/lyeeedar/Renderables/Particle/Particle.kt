@@ -21,7 +21,7 @@ import com.sun.org.apache.xpath.internal.operations.Bool
  * Created by Philip on 14-Aug-16.
  */
 
-class Particle
+class Particle(val emitter: Emitter)
 {
 	enum class CollisionAction
 	{
@@ -150,6 +150,24 @@ class Particle
 		}
 	}
 
+	fun callCollisionFunc(func: (x: Int, y: Int) -> Unit)
+	{
+		for (particle in particles)
+		{
+			val aabb = getBoundingBox(particle)
+
+			for (x in aabb.x.toInt()..(aabb.x+aabb.width).toInt())
+			{
+				for (y in aabb.y.toInt()..(aabb.y + aabb.height).toInt())
+				{
+					func(x, y)
+				}
+			}
+
+			Pools.free(aabb)
+		}
+	}
+
 	fun checkColliding(aabb: Rectangle, collisionGrid: Array2D<Boolean>): Boolean
 	{
 		collisionList.clear()
@@ -210,7 +228,25 @@ class Particle
 		val x = if (overridePos == null) particle.position.x else overridePos.x
 		val y = if (overridePos == null) particle.position.y else overridePos.y
 
-		return Pools.obtain(Rectangle::class.java).set(x-s2, y-s2,size, size)
+		var actualx = x
+		var actualy = y
+
+		if (emitter.simulationSpace == Emitter.SimulationSpace.LOCAL)
+		{
+			temp.set(emitter.offset)
+			temp.rotate(emitter.rotation)
+
+			val ex = temp.x + emitter.position.x
+			val ey = temp.y + emitter.position.y
+
+			temp.set(x, y)
+			temp.rotate(emitter.rotation + emitter.emitterRotation)
+
+			actualx = ex + temp.x
+			actualy = ey + temp.y
+		}
+
+		return Pools.obtain(Rectangle::class.java).set(actualx-s2, actualy-s2,size, size)
 	}
 
 	fun render(batch: SpriteBatch, offsetx: Float, offsety: Float, tileSize: Float, modifierColour: Color)
@@ -251,9 +287,9 @@ class Particle
 
 	companion object
 	{
-		fun load(xml: XmlReader.Element): Particle
+		fun load(xml: XmlReader.Element, emitter: Emitter): Particle
 		{
-			val particle = Particle()
+			val particle = Particle(emitter)
 
 			particle.lifetime = Range(xml.get("Lifetime"))
 			particle.blend = BlendMode.valueOf(xml.get("BlendMode", "Additive").toUpperCase())

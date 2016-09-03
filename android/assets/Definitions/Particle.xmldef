@@ -5,7 +5,8 @@
 		<Collection Name="Emitters" MinCount="1" RefKey="Collection">
 			<Struct Name="Emitter" DescriptionChild="Name" RefKey="Struct">
 				<String Name="Name" RefKey="String" />
-				<Enum Name="Type" EnumValues="Absolute,Accumulator" RefKey="Enum" />
+				<Boolean Name="IsCollisionEmitter" RefKey="Boolean" />
+				<Enum Name="Type" EnumValues="Absolute,Accumulated" RefKey="Enum" />
 				<Enum Name="Space" EnumValues="World,Local" RefKey="Enum" />
 				<Enum Name="Shape" EnumValues="Box,Circle,Cone" RefKey="Enum" />
 				<Number Name="Width" Min="0" Default="1" RefKey="Number" />

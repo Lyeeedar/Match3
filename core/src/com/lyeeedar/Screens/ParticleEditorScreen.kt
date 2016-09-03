@@ -16,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable
 import com.badlogic.gdx.scenes.scene2d.utils.TiledDrawable
 import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.ObjectMap
+import com.badlogic.gdx.utils.ObjectSet
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Global
 import com.lyeeedar.Renderables.Animation.MoveAnimation
@@ -45,6 +46,7 @@ class ParticleEditorScreen : AbstractScreen()
 	val spriteRender = SpriteRenderer(tileSize, 100f, 100f, 2)
 	val shape = ShapeRenderer()
 	var colour: java.awt.Color = java.awt.Color.WHITE
+	val crossedTiles = ObjectSet<Point>()
 
 	override fun create()
 	{
@@ -135,6 +137,7 @@ class ParticleEditorScreen : AbstractScreen()
 		collision = Array2D(width, height) { x, y -> background[x, y].isWall }
 	}
 
+	val tempPoint = Point()
 	override fun doRender(delta: Float)
 	{
 		particle.collisionGrid = collision
@@ -147,13 +150,16 @@ class ParticleEditorScreen : AbstractScreen()
 				var i = 0
 				for (renderable in symbol.sprites)
 				{
+					tempPoint.set(x, y)
+					val col = if (crossedTiles.contains(tempPoint)) Color.GOLD else Color.WHITE
+
 					if (renderable is Sprite)
 					{
-						spriteRender.queueSprite(renderable, x.toFloat(), y.toFloat(), 0, i++)
+						spriteRender.queueSprite(renderable, x.toFloat(), y.toFloat(), 0, i++, col)
 					}
 					else if (renderable is TilingSprite)
 					{
-						spriteRender.queueSprite(renderable, x.toFloat(), y.toFloat(), 0, i++)
+						spriteRender.queueSprite(renderable, x.toFloat(), y.toFloat(), 0, i++, col)
 					}
 				}
 			}
@@ -185,6 +191,10 @@ class ParticleEditorScreen : AbstractScreen()
 
 		particle.animation = MoveAnimation.obtain().set(dist * particle.moveSpeed, arrayOf(p1, p2), Interpolation.linear)
 		if (particle.moveSpeed > 0f) particle.rotation = getRotation(p1, p2)
+
+		Point.freeAll(crossedTiles)
+		crossedTiles.clear()
+		particle.collisionFun = fun(x:Int, y:Int) { crossedTiles.add(Point.obtain().set(x, y)) }
 
 		particle.start()
 

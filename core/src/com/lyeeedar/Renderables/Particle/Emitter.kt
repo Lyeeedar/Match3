@@ -73,6 +73,7 @@ class Emitter
 	lateinit var area: EmissionArea
 	lateinit var dir: EmissionDirection
 	var gravity: Float = 0f
+	var isCollisionEmitter: Boolean = false
 
 	var time: Float = 0f
 	var emissionAccumulator: Float = 0f
@@ -270,6 +271,13 @@ class Emitter
 		return temp
 	}
 
+	fun callCollisionFunc(func: (x: Int, y: Int) -> Unit)
+	{
+		if (!isCollisionEmitter) return
+
+		for (particle in particles) particle.callCollisionFunc(func)
+	}
+
 	fun draw(batch: SpriteBatch, offsetx: Float, offsety: Float, tileSize: Float, colour: Color)
 	{
 		for (particle in particles)
@@ -298,6 +306,7 @@ class Emitter
 			emitter.particleSpeed = Range(xml.get("ParticleSpeed"))
 			emitter.particleRotation = Range(xml.get("ParticleRotation"))
 			emitter.gravity = xml.getFloat("Gravity", 0f)
+			emitter.isCollisionEmitter = xml.getBoolean("IsCollisionEmitter", false)
 
 			val offset = xml.get("Offset", null)
 			if (offset != null)
@@ -314,7 +323,7 @@ class Emitter
 			for (i in 0..particlesEl.childCount-1)
 			{
 				val el = particlesEl.getChild(i)
-				val particle = Particle.load(el)
+				val particle = Particle.load(el, emitter)
 				emitter.particles.add(particle)
 			}
 

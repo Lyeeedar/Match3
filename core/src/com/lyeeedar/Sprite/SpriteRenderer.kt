@@ -149,6 +149,12 @@ class SpriteRenderer(var tileSize: Float, val width: Float, val height: Float, v
 		if (effect.batchID != batchID) effect.update(delta)
 		effect.batchID = batchID
 
+		if (!effect.visible) return
+		if (effect.renderDelay > 0 && !effect.showBeforeRender)
+		{
+			return
+		}
+
 		val x = ix * tileSize
 		val y = iy * tileSize
 
@@ -179,12 +185,16 @@ class SpriteRenderer(var tileSize: Float, val width: Float, val height: Float, v
 					val size = particle.size.valAt(pdata.sizeStream, pdata.life).lerp(pdata.ranVal)
 					val sizex = scale * size * width
 					val sizey = scale * size * height
-					val rotation = if (emitter.simulationSpace == Emitter.SimulationSpace.LOCAL) pdata.rotation + emitter.rotation else pdata.rotation
+					val rotation = if (emitter.simulationSpace == Emitter.SimulationSpace.LOCAL) pdata.rotation + emitter.rotation + emitter.emitterRotation else pdata.rotation
 
 					col.mul(colour).mul(animCol).mul(effect.colour)
 
-					val drawx = pdata.position.x * tileSize + offsetx
-					val drawy = pdata.position.y * tileSize + offsety
+					tempVec.set(pdata.position)
+
+					if (emitter.simulationSpace == Emitter.SimulationSpace.LOCAL) tempVec.rotate(emitter.rotation + emitter.emitterRotation)
+
+					val drawx = tempVec.x * tileSize + offsetx
+					val drawy = tempVec.y * tileSize + offsety
 
 					val comparisonVal = getComparisonVal(drawx-sizex*0.5f*tileSize, drawy-sizey*0.5f*tileSize, layer, index, particle.blend)
 
@@ -201,6 +211,12 @@ class SpriteRenderer(var tileSize: Float, val width: Float, val height: Float, v
 	{
 		if (tilingSprite.batchID != batchID) tilingSprite.update(delta)
 		tilingSprite.batchID = batchID
+
+		if (!tilingSprite.visible) return
+		if (tilingSprite.renderDelay > 0 && !tilingSprite.showBeforeRender)
+		{
+			return
+		}
 
 		var x = ix * tileSize
 		var y = iy * tileSize
@@ -241,6 +257,12 @@ class SpriteRenderer(var tileSize: Float, val width: Float, val height: Float, v
 			if (sprite.batchID != batchID) sprite.update(delta)
 		}
 		sprite.batchID = batchID
+
+		if (!sprite.visible) return
+		if (sprite.renderDelay > 0 && !sprite.showBeforeRender)
+		{
+			return
+		}
 
 		var x = ix * tileSize
 		var y = iy * tileSize

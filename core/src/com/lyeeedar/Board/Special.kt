@@ -1,6 +1,8 @@
 package com.lyeeedar.Board
 
 import com.badlogic.gdx.math.Interpolation
+import com.badlogic.gdx.math.Vector2
+import com.lyeeedar.Direction
 import com.lyeeedar.Global
 import com.lyeeedar.Renderables.Animation.ChromaticAnimation
 import com.lyeeedar.Renderables.Animation.MoveAnimation
@@ -38,18 +40,56 @@ abstract class Special(val orb: Orb)
 		{
 			if (x < 0 || x >= grid.width) return
 
+			fun launchAt(x: Int, y: Int)
+			{
+				val p2 = Vector2(x.toFloat(), sy.toFloat())
+				val p1 = Vector2(x.toFloat(), y.toFloat())
+
+				val dist = p1.dst(p2)
+
+				val effect = AssetManager.loadParticleEffect("SpecialBeam")
+				effect.animation = MoveAnimation.obtain().set(dist * effect.moveSpeed, arrayOf(p1, p2), Interpolation.linear)
+				effect.rotation = getRotation(p1, p2)
+				effect.collisionFun = fun(cx: Int, cy: Int)
+				{
+					if (cx == x) grid.pop(cx, (grid.height-1) - cy, 0f, special, 1+grid.level.player.matchDam)
+				}
+				grid.grid[x, y].effects.add(effect)
+			}
+
+			var launchedUp = false
 			for (y in sy+1..grid.height-1)
 			{
 				val tile = grid.grid[x, y]
-				if (!tile.canHaveOrb && !tile.isPit) break
-				popTile(special, tile, Point(x, sy), grid)
+				if (!tile.canHaveOrb && !tile.isPit)
+				{
+					launchedUp = true
+					launchAt(x, y)
+
+					break
+				}
+			}
+			if (!launchedUp)
+			{
+				launchAt(x, grid.height-1)
 			}
 
+			var launchedDown = false
 			for (y in sy-1 downTo 0)
 			{
 				val tile = grid.grid[x, y]
-				if (!tile.canHaveOrb && !tile.isPit) break
-				popTile(special, tile, Point(x, sy), grid)
+				if (!tile.canHaveOrb && !tile.isPit)
+				{
+					launchedDown = true
+					launchAt(x, y)
+
+					break
+				}
+
+			}
+			if (!launchedDown)
+			{
+				launchAt(x, 0)
 			}
 		}
 
@@ -57,18 +97,57 @@ abstract class Special(val orb: Orb)
 		{
 			if (y < 0 || y >= grid.height) return
 
+			fun launchAt(x: Int, y: Int)
+			{
+				val p1 = Vector2(sx.toFloat(), y.toFloat())
+				val p2 = Vector2(x.toFloat(), y.toFloat())
+
+				val dist = p1.dst(p2)
+
+				val effect = AssetManager.loadParticleEffect("SpecialBeam")
+				effect.animation = MoveAnimation.obtain().set(dist * effect.moveSpeed, arrayOf(p1, p2), Interpolation.linear)
+				effect.rotation = getRotation(p1, p2)
+				effect.collisionFun = fun(cx: Int, pcy: Int)
+				{
+					val cy = (grid.height-1) - pcy
+					if (cy == y) grid.pop(cx, cy, 0f, special, 1+grid.level.player.matchDam)
+
+				}
+				grid.grid[x, y].effects.add(effect)
+			}
+
+			var launchedRight = false
 			for (x in sx+1..grid.width-1)
 			{
 				val tile = grid.grid[x, y]
-				if (!tile.canHaveOrb && !tile.isPit) break
-				popTile(special, tile, Point(sx, y), grid)
+				if (!tile.canHaveOrb && !tile.isPit)
+				{
+					launchedRight = true
+					launchAt(x, y)
+
+					break
+				}
+			}
+			if (!launchedRight)
+			{
+				launchAt(grid.width-1, y)
 			}
 
+			var launchedLeft = false
 			for (x in sx-1 downTo 0)
 			{
 				val tile = grid.grid[x, y]
-				if (!tile.canHaveOrb && !tile.isPit) break
-				popTile(special, tile, Point(sx, y), grid)
+				if (!tile.canHaveOrb && !tile.isPit)
+				{
+					launchedLeft = true
+					launchAt(x, y)
+
+					break
+				}
+			}
+			if (!launchedLeft)
+			{
+				launchAt(0, y)
 			}
 		}
 	}
