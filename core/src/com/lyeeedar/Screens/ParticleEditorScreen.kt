@@ -27,6 +27,7 @@ import com.lyeeedar.Renderables.Sprite.TilingSprite
 import com.lyeeedar.Sprite.SpriteRenderer
 import com.lyeeedar.UI.GridWidget
 import com.lyeeedar.Util.*
+import javax.swing.JColorChooser
 import javax.swing.JFileChooser
 
 /**
@@ -42,8 +43,8 @@ class ParticleEditorScreen : AbstractScreen()
 	lateinit var collision: Array2D<Boolean>
 	val tileSize = 32f
 	val spriteRender = SpriteRenderer(tileSize, 100f, 100f, 2)
-	var playbackSpeed = 1f
 	val shape = ShapeRenderer()
+	var colour: java.awt.Color = java.awt.Color.WHITE
 
 	override fun create()
 	{
@@ -52,14 +53,23 @@ class ParticleEditorScreen : AbstractScreen()
 		val playbackSpeedBox = SelectBox<Float>(Global.skin)
 		playbackSpeedBox.setItems(0.01f, 0.05f, 0.1f, 0.25f, 0.5f, 0.75f, 1f, 1.5f, 2f, 3f, 4f, 5f)
 		playbackSpeedBox.selected = 1f
+
+		val colourButton = TextButton("Colour", Global.skin)
+
 		playbackSpeedBox.addListener(object : ChangeListener()
 		{
 			override fun changed(event: ChangeEvent?, actor: Actor?)
 			{
-				playbackSpeed = playbackSpeedBox.selected
+				particle.speedMultiplier = playbackSpeedBox.selected
 			}
 
 		})
+
+		colourButton.addClickListener {
+			colour = JColorChooser.showDialog(null, "Particle Colour", colour)
+			particle.colour.set(colour.red / 255f, colour.green / 255f, colour.blue / 255f, colour.alpha / 255f)
+			colourButton.color = particle.colour
+		}
 
 		browseButton.addClickListener {
 			val fc = JFileChooser()
@@ -75,6 +85,9 @@ class ParticleEditorScreen : AbstractScreen()
 				val nparticle = ParticleEffect.Companion.load(currentPath!!)
 				nparticle.killOnAnimComplete = false
 				nparticle.setPosition(particle.position.x, particle.position.y)
+				nparticle.rotation = particle.rotation
+				nparticle.speedMultiplier = playbackSpeedBox.selected
+				nparticle.colour.set(colour.red / 255f, colour.green / 255f, colour.blue / 255f, colour.alpha / 255f)
 				particle = nparticle
 			}
 		}
@@ -84,12 +97,16 @@ class ParticleEditorScreen : AbstractScreen()
 			val nparticle = ParticleEffect.Companion.load(currentPath!!)
 			nparticle.killOnAnimComplete = false
 			nparticle.setPosition(particle.position.x, particle.position.y)
+			nparticle.rotation = particle.rotation
+			nparticle.speedMultiplier = playbackSpeedBox.selected
+			nparticle.colour.set(colour.red / 255f, colour.green / 255f, colour.blue / 255f, colour.alpha / 255f)
 			particle = nparticle
 		}
 
 		mainTable.add(browseButton).expandY().top()
 		mainTable.add(updateButton).expandY().top()
 		mainTable.add(playbackSpeedBox).expandY().top()
+		mainTable.add(colourButton).expandY().top()
 
 		particle = ParticleEffect()
 
@@ -145,15 +162,14 @@ class ParticleEditorScreen : AbstractScreen()
 
 		batch.color = Color.WHITE
 		batch.begin()
-		spriteRender.flush(delta * playbackSpeed, 0f, 0f, batch)
+		spriteRender.flush(delta, 0f, 0f, batch)
 		batch.end()
 
 		shape.projectionMatrix = stage.camera.combined
 		shape.setAutoShapeType(true)
 		shape.begin()
 
-		shape.color = Color.CYAN
-		shape.rect(particle.position.x * tileSize - 5, particle.position.y * tileSize - 5, 10f, 10f)
+		particle.debug(shape, 0f, 0f, tileSize)
 
 		shape.end()
 	}
@@ -168,7 +184,7 @@ class ParticleEditorScreen : AbstractScreen()
 		val dist = p1.dst(p2)
 
 		particle.animation = MoveAnimation.obtain().set(dist * particle.moveSpeed, arrayOf(p1, p2), Interpolation.linear)
-		particle.rotation = getRotation(p1, p2)
+		if (particle.moveSpeed > 0f) particle.rotation = getRotation(p1, p2)
 
 		particle.start()
 

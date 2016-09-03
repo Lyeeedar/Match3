@@ -30,7 +30,8 @@ class Emitter
 	enum class EmissionShape
 	{
 		CIRCLE,
-		BOX
+		BOX,
+		CONE
 	}
 
 	enum class EmissionArea
@@ -68,8 +69,10 @@ class Emitter
 	lateinit var shape: EmissionShape
 	var width: Float = 0f
 	var height: Float = 0f
+	var emitterRotation: Float = 0f
 	lateinit var area: EmissionArea
 	lateinit var dir: EmissionDirection
+	var gravity: Float = 0f
 
 	var time: Float = 0f
 	var emissionAccumulator: Float = 0f
@@ -117,22 +120,23 @@ class Emitter
 
 		for (particle in particles)
 		{
-			particle.simulate(scaledDelta, collisionGrid)
+			particle.simulate(scaledDelta, collisionGrid, gravity)
 		}
 	}
 
 	fun spawn()
 	{
-		val pos = spawnPos.set(when (shape)
+		spawnPos.set(when (shape)
 		{
 			EmissionShape.CIRCLE -> spawnCircle()
 			EmissionShape.BOX -> spawnBox()
+			EmissionShape.CONE -> spawnCone()
 			else -> throw RuntimeException("Invalid emitter shape! $shape")
 		})
 
 		val velocity = when (dir)
 		{
-			EmissionDirection.RADIAL -> spawnDir.set(pos).nor()
+			EmissionDirection.RADIAL -> spawnDir.set(spawnPos).nor()
 			EmissionDirection.RANDOM -> spawnDir.setToRandomDirection()
 			EmissionDirection.UP -> spawnDir.set(Direction.NORTH.x.toFloat(), Direction.NORTH.y.toFloat())
 			EmissionDirection.DOWN -> spawnDir.set(Direction.SOUTH.x.toFloat(), Direction.SOUTH.y.toFloat())
@@ -142,28 +146,53 @@ class Emitter
 		}
 
 		val speed = particleSpeed.lerp(MathUtils.random())
-		val rotation = particleRotation.lerp(MathUtils.random()) + rotation
+		val localRot = particleRotation.lerp(MathUtils.random()) + rotation
 
 		if (simulationSpace == SimulationSpace.WORLD)
 		{
-			pos.rotate(rotation)
-			pos.add(position)
+			spawnPos.rotate(rotation)
+			spawnPos.add(position)
 
 			// rotate offset
 			temp.set(offset).rotate(rotation)
-			pos.add(temp)
+			spawnPos.add(temp)
 
 			velocity.rotate(rotation)
 		}
 		else
 		{
 			// just add offset
-			pos.add(offset)
+			spawnPos.add(offset)
 		}
+
+		velocity.scl(speed)
 
 		// pick random particle
 		val particle = particles.random()
-		particle.spawn(pos, velocity, speed, rotation)
+		particle.spawn(spawnPos, velocity, localRot)
+	}
+
+	fun spawnCone(): Vector2
+	{
+		if (area == EmissionArea.INTERIOR)
+		{
+			val angle = -width*0.5f + MathUtils.random() * width
+			val h = MathUtils.random() * height
+
+			temp.set(0f, h)
+			temp.rotate(angle)
+		}
+		else if (area == EmissionArea.BORDER)
+		{
+			val angle = -width*0.5f + MathUtils.random() * width
+			temp.set(0f, height)
+			temp.rotate(angle)
+		}
+		else throw RuntimeException("Invalid emitter area type $area")
+
+		temp.rotate(emitterRotation)
+
+		return temp
 	}
 
 	fun spawnCircle(): Vector2
@@ -236,6 +265,8 @@ class Emitter
 		}
 		else throw RuntimeException("Invalid emitter area type $area")
 
+		temp.rotate(emitterRotation)
+
 		return temp
 	}
 
@@ -259,12 +290,14 @@ class Emitter
 			emitter.type = EmissionType.valueOf(xml.get("Type", "Absolute").toUpperCase())
 			emitter.simulationSpace = SimulationSpace.valueOf(xml.get("Space", "World").toUpperCase())
 			emitter.shape = EmissionShape.valueOf(xml.get("Shape", "Box").toUpperCase())
-			emitter.width = xml.get("Size", null)?.toFloat() ?: xml.getFloat("Width", 1f)
-			emitter.height = xml.get("Size", null)?.toFloat() ?: xml.getFloat("Height", 1f)
+			emitter.width = xml.getFloat("Width", 1f)
+			emitter.height = xml.getFloat("Height", 1f)
+			emitter.emitterRotation = xml.getFloat("Rotation", 0f)
 			emitter.area = EmissionArea.valueOf(xml.get("Area", "Interior").toUpperCase())
 			emitter.dir = EmissionDirection.valueOf(xml.get("Direction", "Radial").toUpperCase())
 			emitter.particleSpeed = Range(xml.get("ParticleSpeed"))
 			emitter.particleRotation = Range(xml.get("ParticleRotation"))
+			emitter.gravity = xml.getFloat("Gravity", 0f)
 
 			val offset = xml.get("Offset", null)
 			if (offset != null)

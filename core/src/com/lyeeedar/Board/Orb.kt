@@ -6,6 +6,7 @@ import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Direction
 import com.lyeeedar.Renderables.Animation.BlinkAnimation
+import com.lyeeedar.Renderables.Particle.ParticleEffect
 import com.lyeeedar.Renderables.Sprite.Sprite
 import com.lyeeedar.Util.AssetManager
 import com.lyeeedar.Util.FastEnumMap
@@ -112,7 +113,7 @@ class Orb(val desc: OrbDesc, val theme: LevelTheme): Point()
 
 			val template = xml.getChildByName("Template")
 			val baseSprite = AssetManager.loadSprite(template.getChildByName("Sprite"))
-			val deathSprite = AssetManager.loadSprite(template.getChildByName("Death"))
+			val deathEffect = AssetManager.loadParticleEffect(template.getChildByName("Death"))
 
 			val types = xml.getChildByName("Types")
 			for (i in 0..types.childCount-1)
@@ -126,7 +127,7 @@ class Orb(val desc: OrbDesc, val theme: LevelTheme): Point()
 				orbDesc.sprite.colour = colour
 				orbDesc.name = name
 
-				orbDesc.death = deathSprite
+				orbDesc.death = deathEffect
 				orbDesc.death.colour = colour
 
 				validOrbs.add(orbDesc)
@@ -137,7 +138,7 @@ class Orb(val desc: OrbDesc, val theme: LevelTheme): Point()
 
 class OrbDesc()
 {
-	constructor(sprite: Sprite, death: Sprite, sinkable: Boolean, key: Int, name: String) : this()
+	constructor(sprite: Sprite, death: ParticleEffect, sinkable: Boolean, key: Int, name: String) : this()
 	{
 		this.sprite = sprite
 		this.death = death
@@ -147,7 +148,7 @@ class OrbDesc()
 	}
 
 	lateinit var sprite: Sprite
-	lateinit var death: Sprite
+	lateinit var death: ParticleEffect
 	var sinkable = false
 	var key: Int = -1
 	var name: String = ""

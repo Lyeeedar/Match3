@@ -54,7 +54,7 @@ class Particle
 	fun particleCount() = particles.size
 	fun complete() = particles.size == 0
 
-	fun simulate(delta: Float, collisionGrid: Array2D<Boolean>?)
+	fun simulate(delta: Float, collisionGrid: Array2D<Boolean>?, gravity: Float)
 	{
 		val itr = particles.iterator()
 		while (itr.hasNext())
@@ -78,16 +78,12 @@ class Particle
 					particle.rotation += rotation * delta
 				}
 
-				particle.speed -= drag * particle.speed * delta
-				if (particle.speed < 0f) particle.speed = 0f
+				temp.set(particle.velocity).scl(drag * delta)
+				particle.velocity.sub(temp)
 
-				if (particle.velocity.isZero)
-				{
-					particle.velocity.setToRandomDirection()
-				}
+				particle.velocity.y += gravity * delta
 
-				moveVec.set(particle.velocity)
-				moveVec.scl(particle.speed * delta)
+				moveVec.set(particle.velocity).scl(delta)
 
 				oldPos.set(particle.position)
 
@@ -117,11 +113,8 @@ class Particle
 							// handle based on collision action
 							if (collision == CollisionAction.BOUNCE)
 							{
-								particle.speed *= 0.75f
-
 								particle.position.set(oldPos)
 								particle.velocity.set(reflected)
-								particle.velocity.nor()
 							}
 							else
 							{
@@ -241,11 +234,11 @@ class Particle
 		}
 	}
 
-	fun spawn(position: Vector2, velocity: Vector2, speed: Float, rotation: Float)
+	fun spawn(position: Vector2, velocity: Vector2, rotation: Float)
 	{
 		val particle = ParticleData.obtain().set(
 				position, velocity,
-				speed, rotation, lifetime.v1 * MathUtils.random(),
+				rotation, lifetime.v1 * MathUtils.random(),
 				MathUtils.random(texture.streams.size-1),
 				MathUtils.random(colour.streams.size-1),
 				MathUtils.random(alpha.streams.size-1),
@@ -324,17 +317,16 @@ class Particle
 }
 
 data class ParticleData(val position: Vector2, val velocity: Vector2,
-								 var speed: Float, var rotation: Float, var life: Float,
+								 var rotation: Float, var life: Float,
 								 var texStream: Int, var colStream: Int, var alphaStream: Int, var rotStream: Int, var sizeStream: Int,
 								 var ranVal: Float)
 {
-	constructor(): this(Vector2(), Vector2(0f, 1f), 0f, 0f, 0f, 0, 0, 0, 0, 0, 0f)
+	constructor(): this(Vector2(), Vector2(0f, 1f), 0f, 0f, 0, 0, 0, 0, 0, 0f)
 
-	fun set(position: Vector2, velocity: Vector2, speed: Float, rotation: Float, life: Float, texStream: Int, colStream: Int, alphaStream: Int, rotStream: Int, sizeStream: Int, ranVal: Float): ParticleData
+	fun set(position: Vector2, velocity: Vector2, rotation: Float, life: Float, texStream: Int, colStream: Int, alphaStream: Int, rotStream: Int, sizeStream: Int, ranVal: Float): ParticleData
 	{
 		this.position.set(position)
 		this.velocity.set(velocity)
-		this.speed = speed
 		this.life = life
 		this.rotation = rotation
 		this.texStream = texStream

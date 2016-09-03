@@ -120,10 +120,10 @@ class Ability() : Unlockable()
 	{
 		val dataEl = xml.getChildByName("UnlockableData")
 
-		val hitEffectName = dataEl.get("HitEffect", null)
-		if (hitEffectName != null) hitEffect = ParticleEffect.load(hitEffectName)
-		val flightEffectName = dataEl.get("FlightEffect", null)
-		if (flightEffectName != null) flightEffect = ParticleEffect.load(flightEffectName)
+		val hitEffectData = dataEl.getChildByName("HitEffect")
+		if (hitEffectData != null) hitEffect = AssetManager.loadParticleEffect(hitEffectData)
+		val flightEffectData = dataEl.getChildByName("FlightEffect")
+		if (flightEffectData != null) flightEffect = AssetManager.loadParticleEffect(flightEffectData)
 
 		cost = dataEl.getInt("Cost", 0)
 

@@ -4,8 +4,11 @@ import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.Pixmap
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.Array
+import com.badlogic.gdx.utils.Pool
+import com.badlogic.gdx.utils.Pools
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Renderables.Renderable
 import com.lyeeedar.Util.Array2D
@@ -19,6 +22,9 @@ class ParticleEffect : Renderable()
 {
 	private lateinit var loadPath: String
 
+	var colour: Color = Color(Color.WHITE)
+	var speedMultiplier: Float = 1f
+
 	var completed = false
 	var killOnAnimComplete = true
 	private var warmupTime = 0f
@@ -31,7 +37,7 @@ class ParticleEffect : Renderable()
 	var collisionGrid: Array2D<Boolean>? = null
 
 	val lifetime: Float
-		get() = Math.max(animation?.duration() ?: 0f, emitters.maxBy { it.lifetime() }!!.lifetime())
+		get() = (animation?.duration() ?: emitters.maxBy { it.lifetime() }!!.lifetime()) * (1f / speedMultiplier)
 
 	fun start()
 	{
@@ -58,7 +64,7 @@ class ParticleEffect : Renderable()
 		}
 		else
 		{
-			complete = animation?.update(delta) ?: false
+			complete = animation?.update(delta * speedMultiplier) ?: false
 			if (complete)
 			{
 				if (killOnAnimComplete) stop()
@@ -88,7 +94,7 @@ class ParticleEffect : Renderable()
 			}
 		}
 
-		for (emitter in emitters) emitter.update(delta, collisionGrid)
+		for (emitter in emitters) emitter.update(delta * speedMultiplier, collisionGrid)
 
 		if (animation == null)
 		{
@@ -124,10 +130,65 @@ class ParticleEffect : Renderable()
 		batch.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA)
 	}
 
+	fun debug(shape: ShapeRenderer, offsetx: Float, offsety: Float, tileSize: Float)
+	{
+		val posOffset = animation?.renderOffset()
+		val x = position.x + (posOffset?.get(0) ?: 0f)
+		val y = position.y + (posOffset?.get(1) ?: 0f)
+
+		val worldx = x * tileSize + offsetx
+		val worldy = y * tileSize + offsety
+
+		// draw effect center
+		shape.color = Color.CYAN
+		shape.rect(worldx - 5f, worldy - 5f,10f, 10f)
+
+		val temp = Pools.obtain(Vector2::class.java)
+
+		// draw emitter volumes
+		shape.color = Color.GOLDENROD
+		for (emitter in emitters)
+		{
+			val emitterx = emitter.position.x * tileSize + offsetx
+			val emittery = emitter.position.y * tileSize + offsety
+
+			temp.set(emitter.offset)
+			temp.rotate(emitter.rotation)
+
+			val ex = emitterx + temp.x * tileSize
+			val ey = emittery + temp.y * tileSize
+
+			val w = emitter.width * tileSize
+			val h = emitter.height * tileSize
+
+			val w2 = w * 0.5f
+			val h2 = h * 0.5f
+
+			if (emitter.shape == Emitter.EmissionShape.BOX)
+			{
+				shape.rect(ex-w2, ey-h2, w2, h2, w, h, 1f, 1f, emitter.emitterRotation)
+			}
+			else if (emitter.shape == Emitter.EmissionShape.CIRCLE)
+			{
+				shape.ellipse(ex-w2, ey-h2, w, h, emitter.emitterRotation)
+			}
+			else if (emitter.shape == Emitter.EmissionShape.CONE)
+			{
+				val start = 45f + w2 + emitter.emitterRotation + emitter.rotation
+				shape.arc(ex, ey, emitter.height * tileSize, start, emitter.width)
+			}
+		}
+
+		Pools.free(temp)
+	}
+
 	override fun copy(): ParticleEffect
 	{
 		val effect = ParticleEffect.load(loadPath)
 		effect.setPosition(position.x, position.y)
+		effect.rotation = rotation
+		effect.colour.set(colour)
+		effect.speedMultiplier = speedMultiplier
 		return effect
 	}
 

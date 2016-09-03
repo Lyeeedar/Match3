@@ -37,8 +37,8 @@
 				<Number Name="Value" RefKey="Number" />
 			</Pair>
 		</Collection>
-		<File Name="FlightEffect" BasePath="Particles" AllowedFileTypes="xml" RefKey="File" />
-		<File Name="HitEffect" BasePath="Particles" AllowedFileTypes="xml" RefKey="File" />
+		<Reference Name="FlightEffect" Keys="ParticleEffect" RefKey="Reference" />
+		<Reference Name="HitEffect" Keys="ParticleEffect" RefKey="Reference" />
 	</StructDef>
 	<StructDef Name="EquipmentData" RefKey="StructDef">
 		<Enum Name="Slot" EnumValues="Weapon,Armour,Charm" RefKey="Enum" />

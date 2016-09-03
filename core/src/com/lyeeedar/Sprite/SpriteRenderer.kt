@@ -35,6 +35,7 @@ class SpriteRenderer(var tileSize: Float, val width: Float, val height: Float, v
 
 	val tempVec = Vector2()
 	val tempPoint = Point()
+	val tempCol = Color()
 	val bitflag = EnumBitflag<Direction>()
 	val heap: BinaryHeap<RenderSprite> = BinaryHeap()
 	var tilingMap: ObjectMap<Point, ObjectSet<Long>> = ObjectMap()
@@ -173,19 +174,19 @@ class SpriteRenderer(var tileSize: Float, val width: Float, val height: Float, v
 				for (pdata in particle.particles)
 				{
 					val tex = particle.texture.valAt(pdata.texStream, pdata.life)
-					val col = particle.colour.valAt(pdata.colStream, pdata.life)
+					val col = tempCol.set(particle.colour.valAt(pdata.colStream, pdata.life))
 					col.a = particle.alpha.valAt(pdata.alphaStream, pdata.life)
 					val size = particle.size.valAt(pdata.sizeStream, pdata.life).lerp(pdata.ranVal)
 					val sizex = scale * size * width
 					val sizey = scale * size * height
 					val rotation = if (emitter.simulationSpace == Emitter.SimulationSpace.LOCAL) pdata.rotation + emitter.rotation else pdata.rotation
 
-					col.mul(colour).mul(animCol)
+					col.mul(colour).mul(animCol).mul(effect.colour)
 
 					val drawx = pdata.position.x * tileSize + offsetx
 					val drawy = pdata.position.y * tileSize + offsety
 
-					val comparisonVal = getComparisonVal(drawx-sizex*0.5f*tileSize, drawy-sizey*0.5f*tileSize+5f, layer, index, particle.blend)
+					val comparisonVal = getComparisonVal(drawx-sizex*0.5f*tileSize, drawy-sizey*0.5f*tileSize, layer, index, particle.blend)
 
 					val rs = RenderSprite.obtain().set( null, null, tex, drawx, drawy, ix, iy, col, sizex, sizey, rotation, particle.blend, comparisonVal )
 

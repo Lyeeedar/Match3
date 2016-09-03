@@ -1,45 +1,32 @@
 <Orbs>
-
-    <Template>
-
-        <Sprite RefKey="Sprite">
-            <Name>Oryx/uf_split/uf_items/crystal_cloud</Name>
-            <DrawActualSize>true</DrawActualSize>
-        </Sprite>
-
-        <Death RefKey="Sprite">
-            <Name>EffectSprites/Splatter/Splatter</Name>
-            <UpdateRate>0.06</UpdateRate>
-        </Death>
-
-    </Template>
-
-    <Types>
-
-        <Red>
-            <Colour>209,27,27</Colour>
-        </Red>
-
-        <Green>
-            <Colour>45,209,27</Colour>
-        </Green>
-
-        <Blue>
-            <Colour>83,128,238</Colour>
-        </Blue>
-
-        <Yellow>
-            <Colour>253,253,41</Colour>
-        </Yellow>
-
-        <Grey>
-            <Colour>205,205,205</Colour>
-        </Grey>
-
-        <Purple>
-            <Colour>165,35,212</Colour>
-        </Purple>
-
-    </Types>
-
+	<Template>
+		<Sprite RefKey="Sprite">
+			<Name>Oryx/uf_split/uf_items/crystal_cloud</Name>
+			<DrawActualSize>true</DrawActualSize>
+		</Sprite>
+		<Death RefKey="ParticleEffect">
+			<Name>Splatter</Name>
+			<SpeedMultiplier>2</SpeedMultiplier>
+		</Death>
+	</Template>
+	<Types>
+		<Red>
+			<Colour>209,27,27,255</Colour>
+		</Red>
+		<Green>
+			<Colour>45,209,27,255</Colour>
+		</Green>
+		<Blue>
+			<Colour>83,128,238,255</Colour>
+		</Blue>
+		<Yellow>
+			<Colour>253,253,41,255</Colour>
+		</Yellow>
+		<Grey>
+			<Colour>205,205,205,255</Colour>
+		</Grey>
+		<Purple>
+			<Colour>165,35,212,255</Colour>
+		</Purple>
+	</Types>
 </Orbs>

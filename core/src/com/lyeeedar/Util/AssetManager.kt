@@ -23,6 +23,7 @@ import com.badlogic.gdx.utils.BufferUtils
 import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.XmlReader.Element
 import com.lyeeedar.Renderables.Animation.AbstractAnimation
+import com.lyeeedar.Renderables.Particle.ParticleEffect
 import com.lyeeedar.Renderables.Sprite.Sprite
 import com.lyeeedar.Renderables.Sprite.TilingSprite
 import com.lyeeedar.Sound.SoundInstance
@@ -144,6 +145,30 @@ class AssetManager
 			loadedTextures.put(path, region)
 
 			return region
+		}
+
+		fun loadParticleEffect(name: String): ParticleEffect
+		{
+			val effect = ParticleEffect.load(name)
+			return effect
+		}
+
+		fun loadParticleEffect(xml: Element): ParticleEffect
+		{
+			val effect = ParticleEffect.load(xml.get("Name"))
+
+			val colourElement = xml.getChildByName("Colour")
+			var colour = Color(1f, 1f, 1f, 1f)
+			if (colourElement != null)
+			{
+				colour = loadColour(colourElement)
+			}
+
+			effect.colour.set(colour)
+
+			effect.speedMultiplier = xml.getFloat("SpeedMultiplier", 1f)
+
+			return effect
 		}
 
 		fun loadSprite(name: String, drawActualSize: Boolean): Sprite

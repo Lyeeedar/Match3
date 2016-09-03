@@ -16,8 +16,13 @@
 			<UnlockableData RefKey="EffectData">
 				<Cost>3</Cost>
 				<Effect>1,Orb,Single,Pop</Effect>
-				<FlightEffect>Fire</FlightEffect>
-				<HitEffect>Explosion</HitEffect>
+				<FlightEffect RefKey="ParticleEffect">
+					<Name>Fire</Name>
+					<SpeedMultiplier>1.5</SpeedMultiplier>
+				</FlightEffect>
+				<HitEffect RefKey="ParticleEffect">
+					<Name>Fireburst</Name>
+				</HitEffect>
 			</UnlockableData>
 		</Firebolt>
 		<DualFirebolt>
@@ -34,6 +39,13 @@
 			<UnlockableData RefKey="EffectData">
 				<Cost>3</Cost>
 				<Effect>2,Orb,Single,Pop</Effect>
+				<FlightEffect RefKey="ParticleEffect">
+					<Name>Fire</Name>
+					<SpeedMultiplier>1.5</SpeedMultiplier>
+				</FlightEffect>
+				<HitEffect RefKey="ParticleEffect">
+					<Name>Fireburst</Name>
+				</HitEffect>
 			</UnlockableData>
 		</DualFirebolt>
 		<TriFirebolt>
@@ -50,6 +62,8 @@
 			<UnlockableData RefKey="EffectData">
 				<Cost>3</Cost>
 				<Effect>3,Orb,Single,Pop</Effect>
+				<Reference2 />
+				<Reference3 />
 			</UnlockableData>
 		</TriFirebolt>
 		<QuadFirebolt>
@@ -66,6 +80,8 @@
 			<UnlockableData RefKey="EffectData">
 				<Cost>3</Cost>
 				<Effect>4,Orb,Single,Pop</Effect>
+				<Reference2 />
+				<Reference3 />
 			</UnlockableData>
 		</QuadFirebolt>
 		<FireFlurry>
@@ -87,6 +103,8 @@
 				<Data>
 					<Count>3</Count>
 				</Data>
+				<Reference2 />
+				<Reference3 />
 			</UnlockableData>
 		</FireFlurry>
 		<FireRain>
@@ -109,6 +127,8 @@
 				<Data>
 					<Count>5</Count>
 				</Data>
+				<Reference2 />
+				<Reference3 />
 			</UnlockableData>
 		</FireRain>
 		<Fireball>
@@ -128,6 +148,8 @@
 				<Data>
 					<aoe>1</aoe>
 				</Data>
+				<Reference3 />
+				<Reference4 />
 			</UnlockableData>
 		</Fireball>
 		<GreaterFireball>
@@ -148,6 +170,8 @@
 				<Data>
 					<aoe>2</aoe>
 				</Data>
+				<Reference3 />
+				<Reference4 />
 			</UnlockableData>
 		</GreaterFireball>
 		<GrandFireball>
@@ -168,6 +192,8 @@
 				<Data>
 					<aoe>3</aoe>
 				</Data>
+				<Reference3 />
+				<Reference4 />
 			</UnlockableData>
 		</GrandFireball>
 		<Immolate>
@@ -183,6 +209,8 @@
 			<UnlockableData RefKey="EffectData">
 				<Cost>2</Cost>
 				<Effect>1,Monster,Single,Pop</Effect>
+				<Reference2 />
+				<Reference3 />
 			</UnlockableData>
 		</Immolate>
 		<SoulfireDetonation>
@@ -203,6 +231,8 @@
 				<Data>
 					<aoe>1</aoe>
 				</Data>
+				<Reference3 />
+				<Reference4 />
 			</UnlockableData>
 		</SoulfireDetonation>
 		<FireBeam>
@@ -219,6 +249,8 @@
 			<UnlockableData RefKey="EffectData">
 				<Cost>6</Cost>
 				<Effect>1,Orb,Column,Pop</Effect>
+				<Reference2 />
+				<Reference3 />
 			</UnlockableData>
 		</FireBeam>
 		<PillarsOfDestruction>
@@ -235,6 +267,8 @@
 			<UnlockableData RefKey="EffectData">
 				<Cost>8</Cost>
 				<Effect>3,Orb,Column,Pop</Effect>
+				<Reference2 />
+				<Reference3 />
 			</UnlockableData>
 		</PillarsOfDestruction>
 		<CrossBlaze>
@@ -251,6 +285,8 @@
 			<UnlockableData RefKey="EffectData">
 				<Cost>5</Cost>
 				<Effect>1,Orb,Cross,Pop</Effect>
+				<Reference2 />
+				<Reference3 />
 			</UnlockableData>
 		</CrossBlaze>
 	</Unlockables>

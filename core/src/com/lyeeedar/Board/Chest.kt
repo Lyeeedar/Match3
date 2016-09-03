@@ -20,7 +20,7 @@ class Chest(val spawnOrbs: Boolean = true, val theme: LevelTheme)
 	val fullSprite = theme.chestFull.copy()
 	val emptySprite = theme.chestEmpty.copy()
 
-	val coinDesc = OrbDesc(theme.coin.copy(), AssetManager.loadSprite("blank"), true, -1, "Coin")
+	val coinDesc = OrbDesc(theme.coin.copy(), AssetManager.loadParticleEffect("Explosion"), true, -1, "Coin")
 
 	fun attachHandlers(grid: Grid)
 	{
