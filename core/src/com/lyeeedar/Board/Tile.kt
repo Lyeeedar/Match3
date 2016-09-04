@@ -25,6 +25,10 @@ class Tile(x: Int, y: Int) : Point(x, y)
 		get() = contents as? Sinkable
 		set(value) { contents = value }
 
+	var shield: Shield?
+		get() = contents as? Shield
+		set(value) { contents = value }
+
 	var swappable: Swappable?
 		get() = contents as? Swappable
 		set(value) { contents = value }

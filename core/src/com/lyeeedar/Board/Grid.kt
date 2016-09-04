@@ -684,6 +684,14 @@ class Grid(val width: Int, val height: Int, val level: Level)
 						tile.effects.add(block.death.copy())
 					}
 				}
+				else if (tile.shield != null)
+				{
+					val shield = tile.shield!!
+					if (shield.count <= 0)
+					{
+						tile.shield = null
+					}
+				}
 				else if (tile.monster != null)
 				{
 					val monster = tile.monster!!
@@ -1201,6 +1209,12 @@ class Grid(val width: Int, val height: Int, val level: Level)
 
 					t.effects.add(hitSprite.copy())
 				}
+				if (t.shield != null)
+				{
+					t.shield!!.count--
+
+					t.effects.add(hitSprite.copy())
+				}
 			}
 		}
 
@@ -1303,6 +1317,18 @@ class Grid(val width: Int, val height: Int, val level: Level)
 		if (tile.block != null)
 		{
 			tile.block!!.count--
+			val hit = hitSprite.copy()
+			hit.renderDelay = delay
+			tile.effects.add(hit)
+			return
+		}
+
+		if (tile.shield != null)
+		{
+			tile.shield!!.count--
+			val hit = hitSprite.copy()
+			hit.renderDelay = delay
+			tile.effects.add(hit)
 			return
 		}
 
@@ -1310,6 +1336,9 @@ class Grid(val width: Int, val height: Int, val level: Level)
 		{
 			tile.monster!!.hp -= if (!tile.monster!!.damSources.contains(damSource)) 1 + bonusDam else 1
 			if (damSource != null) tile.monster!!.damSources.add(damSource)
+			val hit = hitSprite.copy()
+			hit.renderDelay = delay
+			tile.effects.add(hit)
 			onDamaged(tile.monster!!)
 			return
 		}
@@ -1321,8 +1350,9 @@ class Grid(val width: Int, val height: Int, val level: Level)
 		if (orb.sealed)
 		{
 			orb.sealCount--
-			orb.sealBreak.renderDelay = delay
-			tile.effects.add(orb.sealBreak)
+			val hit = hitSprite.copy()
+			hit.renderDelay = delay
+			tile.effects.add(hit)
 			return
 		}
 

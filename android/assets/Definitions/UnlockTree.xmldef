@@ -15,7 +15,7 @@
 					</Pair>
 				</Collection>
 				<String Name="Upgrades" RefKey="String" />
-				<Reference Name="UnlockableData" Keys="EffectData,EquipmentData" RefKey="Reference" />
+				<Reference Name="UnlockableData" Keys="EffectData" Nullable="False" RefKey="Reference" />
 			</Struct>
 		</Collection>
 		<Tree Name="Tree" RefKey="Tree" />
@@ -27,7 +27,7 @@
 		<Number Name="Cost" Type="Int" Min="1" Default="1" RefKey="Number" />
 		<Struct Name="Effect" Collapse="True" RefKey="Struct">
 			<Number Name="Target Count" Type="Int" Min="0" SkipIfDefault="False" RefKey="Number" />
-			<Enum Name="Targetter" EnumValues="Orb,Special,Block,Empty,Sealed,Monster,Attack,Tile" RefKey="Enum" />
+			<Enum Name="Targetter" EnumValues="Orb,Special,Block,Empty,Sealed,Monster,Attack,Tile,Shield" RefKey="Enum" />
 			<Enum Name="Permuter" EnumValues="Single,AllOfType,NofType,Column,Row,Cross,Block,Diamond,Random" RefKey="Enum" />
 			<Enum Name="Effect" EnumValues="Pop,Convert" RefKey="Enum" />
 		</Struct>
@@ -39,15 +39,5 @@
 		</Collection>
 		<Reference Name="FlightEffect" Keys="ParticleEffect" RefKey="Reference" />
 		<Reference Name="HitEffect" Keys="ParticleEffect" RefKey="Reference" />
-	</StructDef>
-	<StructDef Name="EquipmentData" RefKey="StructDef">
-		<Enum Name="Slot" EnumValues="Weapon,Armour,Charm" RefKey="Enum" />
-		<Number Name="MatchDam" Type="Int" Min="0" SkipIfDefault="False" VisibleIf="Slot==Weapon" RefKey="Number" />
-		<Number Name="AbilityDam" Type="Int" Min="0" SkipIfDefault="False" VisibleIf="Slot==Weapon" RefKey="Number" />
-		<Number Name="MaxHP" Type="Int" Min="0" SkipIfDefault="False" VisibleIf="Slot==Armour" RefKey="Number" />
-		<Number Name="Regen" Type="Int" Min="0" SkipIfDefault="False" VisibleIf="Slot==Armour" RefKey="Number" />
-		<Number Name="MaxPower" Type="Int" Min="0" SkipIfDefault="False" VisibleIf="Slot==Charm" RefKey="Number" />
-		<Number Name="PowerBonus" Type="Int" Min="0" SkipIfDefault="False" VisibleIf="Slot==Charm" RefKey="Number" />
-		<Reference Name="Sprite" Keys="Sprite" VisibleIf="Slot==Weapon" RefKey="Reference" />
 	</StructDef>
 </Definitions>

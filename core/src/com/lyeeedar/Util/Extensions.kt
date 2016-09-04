@@ -80,6 +80,10 @@ fun <T> com.badlogic.gdx.utils.Array<T>.removeRandom(ran: Random): T
 
 	return item
 }
+fun <T> com.badlogic.gdx.utils.Array<T>.addAll(collection: Sequence<T>)
+{
+	for (item in collection) this.add(item)
+}
 
 fun vectorToAngle(x: Float, y: Float) : Float
 {

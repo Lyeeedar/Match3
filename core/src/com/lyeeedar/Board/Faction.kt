@@ -52,11 +52,13 @@ class MonsterDesc
 {
 	lateinit var sprite: Sprite
 	lateinit var death: Sprite
-	var attackDelay: Float = 5f
+	var attackDelay: Int = 5
 	var attackSpeed: Int = 6
 	var size: Int = 1
 	var hp: Int = 25
 	val rewards = ObjectMap<String, Int>()
+	val abilities = Array<MonsterAbility>()
+	var abilityRate = 10
 
 	companion object
 	{
@@ -67,8 +69,9 @@ class MonsterDesc
 			desc.sprite = AssetManager.loadSprite(xml.getChildByName("Sprite"))
 			desc.death = AssetManager.loadSprite(xml.getChildByName("Death"))
 
-			desc.attackDelay = xml.getFloat("AttackDelay")
+			desc.attackDelay = xml.getInt("AttackDelay")
 			desc.attackSpeed = xml.getInt("AttackSpeed")
+			desc.abilityRate = xml.getInt("AbilityRate", 10)
 
 			desc.size = xml.getInt("Size", 1)
 
@@ -79,6 +82,17 @@ class MonsterDesc
 			{
 				val el = rewardsEl.getChild(i)
 				desc.rewards[el.name] = el.text.toInt()
+			}
+
+			val abilitiesEl = xml.getChildByName("Abilities")
+			if (abilitiesEl != null)
+			{
+				for (i in 0..abilitiesEl.childCount-1)
+				{
+					val el = abilitiesEl.getChild(i)
+					val ability = MonsterAbility.load(el)
+					desc.abilities.add(ability)
+				}
 			}
 
 			return desc

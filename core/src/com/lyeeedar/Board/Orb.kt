@@ -46,7 +46,6 @@ class Orb(val desc: OrbDesc, val theme: LevelTheme): Swappable()
 	var skipPowerOrb = false
 
 	var sealSprite: Sprite = theme.sealSprites.tryGet(0).copy()
-	val sealBreak = AssetManager.loadSprite("EffectSprites/Aegis/Aegis", 0.1f, Color(0.2f, 0f, 0.2f, 1f), Sprite.AnimationMode.TEXTURE, null, false, true)
 	var sealCount = 0
 		set(value)
 		{

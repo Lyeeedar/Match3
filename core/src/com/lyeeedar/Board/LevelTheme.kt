@@ -29,6 +29,7 @@ class LevelTheme
 	lateinit var coin: Sprite
 	val blockSprites = Array<Sprite>()
 	val sealSprites = Array<Sprite>()
+	val shieldSprites = Array<Sprite>()
 
 	lateinit var mapRoom: DirectedSprite
 	lateinit var mapCorridor: DirectedSprite
@@ -63,6 +64,12 @@ class LevelTheme
 			for (i in 0..sealEls.childCount-1)
 			{
 				theme.sealSprites.add(AssetManager.loadSprite(sealEls.getChild(i)))
+			}
+
+			val shieldEls = xml.getChildByName("Shield")
+			for (i in 0..shieldEls.childCount-1)
+			{
+				theme.shieldSprites.add(AssetManager.loadSprite(shieldEls.getChild(i)))
 			}
 
 			val mapEl = xml.getChildByName("Map")
