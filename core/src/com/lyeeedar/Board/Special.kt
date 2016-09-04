@@ -30,11 +30,7 @@ abstract class Special(val orb: Orb)
 		fun popTile(special: Special, tile: Tile, point: Point, grid: Grid, offset: Float = 0f)
 		{
 			val delay = tile.dist(point) * 0.1f + offset
-			grid.pop(tile, delay + 0.2f, special, 1 + grid.level.player.matchDam)
-
-			val sprite = grid.level.player.specialHitEffect.copy()
-			sprite.renderDelay = delay
-			tile.effects.add(sprite)
+			grid.pop(tile, delay + 0.2f, special, 1 + 2)
 		}
 
 		fun popColumn(special: Special, x: Int, sy: Int, grid: Grid)
@@ -60,7 +56,7 @@ abstract class Special(val orb: Orb)
 					if (tile != null && cx == x && !hitSet.contains(tile))
 					{
 						hitSet.add(tile)
-						grid.pop(cx, cy, 0f, special, 1+grid.level.player.matchDam)
+						grid.pop(cx, cy, 0f, special, 1+2)
 					}
 				}
 				grid.grid[x, y].effects.add(effect)
@@ -125,7 +121,7 @@ abstract class Special(val orb: Orb)
 					if (tile != null && cy == y && !hitSet.contains(tile))
 					{
 						hitSet.add(tile)
-						grid.pop(cx, cy, 0f, special, 1 + grid.level.player.matchDam)
+						grid.pop(cx, cy, 0f, special, 1 + 2)
 					}
 
 				}
@@ -241,7 +237,7 @@ class DualMatch(orb: Orb) : Special(orb)
 						if (tile != null && !hitSet.contains(tile) && tile.dist(point) < 4)
 						{
 							hitSet.add(tile)
-							grid.pop(cx, cy, 0f, this@DualMatch, 1+grid.level.player.matchDam)
+							grid.pop(cx, cy, 0f, this@DualMatch, 1+2)
 						}
 					}
 
@@ -288,7 +284,7 @@ class DualMatch(orb: Orb) : Special(orb)
 			if (tile != null && !hitSet.contains(tile) && tile.dist(point) < 3)
 			{
 				hitSet.add(tile)
-				grid.pop(cx, cy, 0f, this@DualMatch, 1+grid.level.player.matchDam)
+				grid.pop(cx, cy, 0f, this@DualMatch, 1+2)
 			}
 		}
 

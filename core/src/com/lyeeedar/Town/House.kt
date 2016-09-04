@@ -3,7 +3,6 @@ package com.lyeeedar.Town
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.utils.Array
 import com.lyeeedar.Player.Ability.Ability
-import com.lyeeedar.Player.Equipment.Equipment
 import com.lyeeedar.Player.PlayerData
 import com.lyeeedar.Renderables.Sprite.Sprite
 import com.lyeeedar.Town.AbstractHouseInteraction.AbstractHouseInteraction

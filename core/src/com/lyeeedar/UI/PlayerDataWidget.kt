@@ -5,7 +5,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.*
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable
 import com.lyeeedar.Global
 import com.lyeeedar.Player.Ability.Ability
-import com.lyeeedar.Player.Equipment.Equipment
 import com.lyeeedar.Player.PlayerData
 import com.lyeeedar.Renderables.Sprite.Sprite
 import com.lyeeedar.Util.AssetManager
@@ -114,41 +113,6 @@ class PlayerDataWidget(val playerData: PlayerData) : FullscreenTable()
 		}
 
 		table.add(abilityTable).expandX().fillX().pad(10f)
-		table.row()
-
-		table.add(Seperator(Global.skin)).expandX().fillX()
-		table.row()
-
-		table.add(Label("Equipment", Global.skin, "title")).padTop(5f)
-		table.row()
-
-		val equipmentTable = Table()
-
-		for (slot in Equipment.EquipmentSlot.values())
-		{
-			val equip = playerData.equipment[slot.ordinal]
-			var sprite: Sprite
-
-			if (equip != null)
-			{
-				val ability = playerData.getEquipment(equip)
-				sprite = ability?.icon?.copy() ?: emptySlot.copy()
-			}
-			else
-			{
-				sprite = emptySlot.copy()
-			}
-
-			val widget = SpriteWidget(sprite, 48f, 48f)
-			equipmentTable.add(widget).expandX()
-
-			widget.addClickListener {
-				val trees = arrayOf(playerData.equipTree)
-				UnlockablesList<Equipment>(equip, trees, { it -> playerData.equipment[slot.ordinal] = it; buildUI()}, { it.slot == slot })
-			}
-		}
-
-		table.add(equipmentTable).expandX().fillX().pad(10f)
 		table.row()
 
 		table.add(Seperator(Global.skin)).expandX().fillX()

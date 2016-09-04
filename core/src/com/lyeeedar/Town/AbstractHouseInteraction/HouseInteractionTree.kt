@@ -20,54 +20,28 @@ class HouseInteractionTree : AbstractHouseInteraction()
 
 	override fun apply(house: House, playerData: PlayerData)
 	{
-		if (tree == "Equipment")
-		{
-			val widget = Table()
-			val closeButton = Button(Global.skin, "close")
-			closeButton.setSize(24f, 24f)
+		val unlockTree = playerData.getSkillTree("UnlockTrees/$tree")
 
-			val skills = UnlockTreeWidget(playerData.equipTree, playerData)
-			val scroll = ScrollPane(skills)
-			scroll.setFlingTime(0f)
-			scroll.setOverscroll(false, false)
-			widget.add(scroll).expand().fill()
+		val widget = Table()
+		val closeButton = Button(Global.skin, "close")
+		closeButton.setSize(24f, 24f)
 
-			widget.setFillParent(true)
-			Global.stage.addActor(widget)
+		val skills = UnlockTreeWidget(unlockTree, playerData)
+		val scroll = ScrollPane(skills)
+		scroll.setFlingTime(0f)
+		scroll.setOverscroll(false, false)
+		widget.add(scroll).expand().fill()
 
-			scroll.layout()
-			scroll.scrollTo(skills.prefWidth/3, 0f, 1f, 1f, true, true)
-			scroll.act(1f)
+		widget.setFillParent(true)
+		Global.stage.addActor(widget)
 
-			closeButton.addClickListener({ widget.remove(); closeButton.remove(); house.advance(playerData) })
-			Global.stage.addActor(closeButton)
-			closeButton.setPosition(Global.stage.width - 50, Global.stage.height - 50)
-		}
-		else
-		{
-			val unlockTree = playerData.getSkillTree("UnlockTrees/$tree")
+		scroll.layout()
+		scroll.scrollTo(skills.prefWidth/3, 0f, 1f, 1f, true, true)
+		scroll.act(1f)
 
-			val widget = Table()
-			val closeButton = Button(Global.skin, "close")
-			closeButton.setSize(24f, 24f)
-
-			val skills = UnlockTreeWidget(unlockTree, playerData)
-			val scroll = ScrollPane(skills)
-			scroll.setFlingTime(0f)
-			scroll.setOverscroll(false, false)
-			widget.add(scroll).expand().fill()
-
-			widget.setFillParent(true)
-			Global.stage.addActor(widget)
-
-			scroll.layout()
-			scroll.scrollTo(skills.prefWidth/3, 0f, 1f, 1f, true, true)
-			scroll.act(1f)
-
-			closeButton.addClickListener({ widget.remove(); closeButton.remove(); house.advance(playerData) })
-			Global.stage.addActor(closeButton)
-			closeButton.setPosition(Global.stage.width - 50, Global.stage.height - 50)
-		}
+		closeButton.addClickListener({ widget.remove(); closeButton.remove(); house.advance(playerData) })
+		Global.stage.addActor(closeButton)
+		closeButton.setPosition(Global.stage.width - 50, Global.stage.height - 50)
 	}
 
 	override fun parse(xml: XmlReader.Element)

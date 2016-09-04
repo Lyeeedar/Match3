@@ -1184,7 +1184,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 				}
 				if (t.monster != null)
 				{
-					t.monster!!.hp -= if (!t.monster!!.damSources.contains(this)) 1 + level.player.matchDam else 1
+					t.monster!!.hp -= if (!t.monster!!.damSources.contains(this)) 1 else 1
 					t.monster!!.damSources.add(this)
 					onDamaged(t.monster!!)
 

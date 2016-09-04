@@ -6,7 +6,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable
 import com.lyeeedar.Global
 import com.lyeeedar.MainGame
 import com.lyeeedar.Map.Objective.AbstractObjective
-import com.lyeeedar.Player.Equipment.Equipment
 import com.lyeeedar.Player.Player
 import com.lyeeedar.Renderables.Sprite.Sprite
 import com.lyeeedar.Screens.TownScreen
@@ -130,42 +129,6 @@ class PlayerWidget(val player: Player, val objective: AbstractObjective): Fullsc
 		}
 
 		table.add(abilityTable).expandX().fillX().pad(10f)
-		table.row()
-
-		table.add(Seperator(Global.skin)).expandX().fillX()
-		table.row()
-
-		table.add(Label("Equipment", Global.skin, "title")).padTop(5f)
-		table.row()
-
-		val equipmentTable = Table()
-
-		for (slot in Equipment.EquipmentSlot.values())
-		{
-			val equip = player.equipment[slot.ordinal]
-			var sprite: Sprite
-
-			if (equip != null)
-			{
-				sprite = equip.icon.copy()
-			}
-			else
-			{
-				sprite = emptySlot.copy()
-			}
-
-			val widget = SpriteWidget(sprite, 48f, 48f)
-			equipmentTable.add(widget).expandX()
-
-			if (equip != null)
-			{
-				widget.addClickListener {
-					MessageBox(equip.name, equip.description + "\n" + equip.stats(), Pair("Okay", {}))
-				}
-			}
-		}
-
-		table.add(equipmentTable).expandX().fillX().pad(10f)
 		table.row()
 
 		table.add(Seperator(Global.skin)).expandX().fillX()
