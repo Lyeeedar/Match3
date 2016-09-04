@@ -1,10 +1,7 @@
 package com.lyeeedar.Player.Ability
 
 import com.badlogic.gdx.utils.ObjectMap
-import com.lyeeedar.Board.Grid
-import com.lyeeedar.Board.Match5
-import com.lyeeedar.Board.Orb
-import com.lyeeedar.Board.Tile
+import com.lyeeedar.Board.*
 
 /**
  * Created by Philip on 21-Jul-16.
@@ -27,7 +24,7 @@ class Effect(val type: Type)
 		{
 			Type.POP -> fun (tile: Tile, grid: Grid, delay: Float, data: ObjectMap<String, String>) { grid.pop(tile, delay, damSource = this, bonusDam = grid.level.player.abilityDam, skipPowerOrb = true) }
 			Type.CONVERT -> fun (tile: Tile, grid: Grid, delay: Float, data: ObjectMap<String, String>) { val orb = tile.orb ?: return; tile.orb = if(data["CONVERTTO"] == "RANDOM") Orb(Orb.validOrbs.random(), grid.level.theme) else Orb(Orb.getOrb(data["CONVERTTO"]), grid.level.theme); tile.orb!!.setAttributes(orb) }
-			Type.TEST ->  fun (tile: Tile, grid: Grid, delay: Float, data: ObjectMap<String, String>) { val orb = tile.orb ?: return; orb.special = Match5(orb) }
+			Type.TEST ->  fun (tile: Tile, grid: Grid, delay: Float, data: ObjectMap<String, String>) { val orb = tile.orb ?: return; orb.special = DualMatch(orb) }
 			else -> throw Exception("Invalid effect type $type")
 		}
 	}

@@ -21,7 +21,7 @@
 				</Struct>
 				<Struct Name="ParticleRotation" Nullable="False" Collapse="True" RefKey="Struct">
 					<Number Name="Min" Min="0" Max="360" SkipIfDefault="False" RefKey="Number" />
-					<Number Name="Max" Min="0" Max="360" Default="1" SkipIfDefault="False" RefKey="Number" />
+					<Number Name="Max" Min="0" Max="360" Default="360" SkipIfDefault="False" RefKey="Number" />
 				</Struct>
 				<Number Name="Gravity" RefKey="Number" />
 				<Collection Name="RateKeyframes" MinCount="1" RefKey="Collection">

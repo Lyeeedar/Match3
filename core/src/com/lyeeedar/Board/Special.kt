@@ -2,6 +2,7 @@ package com.lyeeedar.Board
 
 import com.badlogic.gdx.math.Interpolation
 import com.badlogic.gdx.math.Vector2
+import com.badlogic.gdx.utils.ObjectSet
 import com.lyeeedar.Direction
 import com.lyeeedar.Global
 import com.lyeeedar.Renderables.Animation.ChromaticAnimation
@@ -47,12 +48,20 @@ abstract class Special(val orb: Orb)
 
 				val dist = p1.dst(p2)
 
+				val hitSet = ObjectSet<Tile>()
+
 				val effect = AssetManager.loadParticleEffect("SpecialBeam")
 				effect.animation = MoveAnimation.obtain().set(dist * effect.moveSpeed, arrayOf(p1, p2), Interpolation.linear)
 				effect.rotation = getRotation(p1, p2)
-				effect.collisionFun = fun(cx: Int, cy: Int)
+				effect.collisionFun = fun(cx: Int, pcy: Int)
 				{
-					if (cx == x) grid.pop(cx, (grid.height-1) - cy, 0f, special, 1+grid.level.player.matchDam)
+					val cy = (grid.height-1) - pcy
+					val tile = grid.tile(cx, cy)
+					if (tile != null && cx == x && !hitSet.contains(tile))
+					{
+						hitSet.add(tile)
+						grid.pop(cx, cy, 0f, special, 1+grid.level.player.matchDam)
+					}
 				}
 				grid.grid[x, y].effects.add(effect)
 			}
@@ -104,13 +113,20 @@ abstract class Special(val orb: Orb)
 
 				val dist = p1.dst(p2)
 
+				val hitSet = ObjectSet<Tile>()
+
 				val effect = AssetManager.loadParticleEffect("SpecialBeam")
 				effect.animation = MoveAnimation.obtain().set(dist * effect.moveSpeed, arrayOf(p1, p2), Interpolation.linear)
 				effect.rotation = getRotation(p1, p2)
 				effect.collisionFun = fun(cx: Int, pcy: Int)
 				{
 					val cy = (grid.height-1) - pcy
-					if (cy == y) grid.pop(cx, cy, 0f, special, 1+grid.level.player.matchDam)
+					val tile = grid.tile(cx, cy)
+					if (tile != null && cy == y && !hitSet.contains(tile))
+					{
+						hitSet.add(tile)
+						grid.pop(cx, cy, 0f, special, 1 + grid.level.player.matchDam)
+					}
 
 				}
 				grid.grid[x, y].effects.add(effect)
@@ -211,13 +227,26 @@ class DualMatch(orb: Orb) : Special(orb)
 			{
 				return fun (point: Point, grid: Grid)
 				{
-					for (tile in grid.grid)
+					val coreTile = grid.tile(point)
+
+					val hitSet = ObjectSet<Tile>()
+
+					val effect = AssetManager.loadParticleEffect("SpecialExplosion")
+					effect.size = 4f
+					effect.collisionFun = fun(cx: Int, pcy: Int)
 					{
-						if (tile.taxiDist(point) < 4)
+
+						val cy = (grid.height-1) - pcy
+						val tile = grid.tile(cx, cy)
+						if (tile != null && !hitSet.contains(tile) && tile.dist(point) < 4)
 						{
-							popTile(this, tile, point, grid)
+							hitSet.add(tile)
+							grid.pop(cx, cy, 0f, this@DualMatch, 1+grid.level.player.matchDam)
 						}
 					}
+
+
+					coreTile?.effects?.add(effect)
 				}
 			}
 			else if (special is Horizontal4)
@@ -245,13 +274,26 @@ class DualMatch(orb: Orb) : Special(orb)
 
 	override fun apply() = fun (point: Point, grid: Grid)
 	{
-		for (tile in grid.grid)
+		val coreTile = grid.tile(point)
+
+		val hitSet = ObjectSet<Tile>()
+
+		val effect = AssetManager.loadParticleEffect("SpecialExplosion")
+		effect.size = 3f
+		effect.collisionFun = fun(cx: Int, pcy: Int)
 		{
-			if (tile.dist(point) < 3)
+
+			val cy = (grid.height-1) - pcy
+			val tile = grid.tile(cx, cy)
+			if (tile != null && !hitSet.contains(tile) && tile.dist(point) < 3)
 			{
-				popTile(this, tile, point, grid)
+				hitSet.add(tile)
+				grid.pop(cx, cy, 0f, this@DualMatch, 1+grid.level.player.matchDam)
 			}
 		}
+
+
+		coreTile?.effects?.add(effect)
 	}
 }
 

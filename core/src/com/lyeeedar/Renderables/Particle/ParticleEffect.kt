@@ -33,6 +33,7 @@ class ParticleEffect : Renderable()
 	val emitters = Array<Emitter>()
 	val position = Vector2()
 	var rotation: Float = 0f
+	var size: Float = 1f
 
 	var collisionGrid: Array2D<Boolean>? = null
 	var collisionFun: ((x: Int, y: Int) -> Unit)? = null
@@ -78,10 +79,16 @@ class ParticleEffect : Renderable()
 		val x = position.x + (posOffset?.get(0) ?: 0f)
 		val y = position.y + (posOffset?.get(1) ?: 0f)
 
+		val scale = animation?.renderScale()
+		val sx = size * (scale?.get(0) ?: 1f)
+		val sy = size * (scale?.get(1) ?: 1f)
+
 		for (emitter in emitters)
 		{
 			emitter.rotation = rotation
 			emitter.position.set(x, y)
+			emitter.size.x = sx
+			emitter.size.y = sy
 		}
 
 		if (warmupTime > 0f && !doneWarmup)
@@ -128,12 +135,7 @@ class ParticleEffect : Renderable()
 
 	override fun doRender(batch: SpriteBatch, x: Float, y: Float, tileSize: Float)
 	{
-		val scale = animation?.renderScale()?.get(0) ?: 1f
-		val colour = animation?.renderColour() ?: Color.WHITE
 
-		for (emitter in emitters) emitter.draw(batch, x, y, tileSize * scale, colour)
-
-		batch.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA)
 	}
 
 	fun debug(shape: ShapeRenderer, offsetx: Float, offsety: Float, tileSize: Float)
@@ -159,13 +161,14 @@ class ParticleEffect : Renderable()
 			val emittery = emitter.position.y * tileSize + offsety
 
 			temp.set(emitter.offset)
+			temp.scl(emitter.size)
 			temp.rotate(emitter.rotation)
 
 			val ex = emitterx + temp.x * tileSize
 			val ey = emittery + temp.y * tileSize
 
-			val w = emitter.width * tileSize
-			val h = emitter.height * tileSize
+			val w = emitter.width * tileSize * emitter.size.x
+			val h = emitter.height * tileSize * emitter.size.y
 
 			val w2 = w * 0.5f
 			val h2 = h * 0.5f
@@ -180,7 +183,7 @@ class ParticleEffect : Renderable()
 			}
 			else if (emitter.shape == Emitter.EmissionShape.CONE)
 			{
-				val start = 45f + w2 + emitter.emitterRotation + emitter.rotation
+				val start = w + emitter.emitterRotation + emitter.rotation
 				shape.arc(ex, ey, emitter.height * tileSize, start, emitter.width)
 			}
 		}

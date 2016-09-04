@@ -171,6 +171,7 @@ class SpriteRenderer(var tileSize: Float, val width: Float, val height: Float, v
 				if (emitter.simulationSpace == Emitter.SimulationSpace.LOCAL)
 				{
 					tempVec.set(emitter.offset)
+					tempVec.scl(emitter.size)
 					tempVec.rotate(emitter.rotation)
 
 					offsetx += (emitter.position.x + tempVec.x) * tileSize
@@ -183,15 +184,15 @@ class SpriteRenderer(var tileSize: Float, val width: Float, val height: Float, v
 					val col = tempCol.set(particle.colour.valAt(pdata.colStream, pdata.life))
 					col.a = particle.alpha.valAt(pdata.alphaStream, pdata.life)
 					val size = particle.size.valAt(pdata.sizeStream, pdata.life).lerp(pdata.ranVal)
-					val sizex = scale * size * width
-					val sizey = scale * size * height
+					val sizex = scale * size * width * emitter.size.x
+					val sizey = scale * size * height * emitter.size.y
 					val rotation = if (emitter.simulationSpace == Emitter.SimulationSpace.LOCAL) pdata.rotation + emitter.rotation + emitter.emitterRotation else pdata.rotation
 
 					col.mul(colour).mul(animCol).mul(effect.colour)
 
 					tempVec.set(pdata.position)
 
-					if (emitter.simulationSpace == Emitter.SimulationSpace.LOCAL) tempVec.rotate(emitter.rotation + emitter.emitterRotation)
+					if (emitter.simulationSpace == Emitter.SimulationSpace.LOCAL) tempVec.scl(emitter.size).rotate(emitter.rotation + emitter.emitterRotation)
 
 					val drawx = tempVec.x * tileSize + offsetx
 					val drawy = tempVec.y * tileSize + offsety

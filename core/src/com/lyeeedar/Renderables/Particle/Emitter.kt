@@ -59,6 +59,7 @@ class Emitter
 
 	val position = Vector2()
 	var rotation: Float = 0f
+	val size: Vector2 = Vector2(1f, 1f)
 
 	val offset = Vector2()
 	lateinit var type: EmissionType
@@ -155,8 +156,10 @@ class Emitter
 			spawnPos.add(position)
 
 			// rotate offset
-			temp.set(offset).rotate(rotation)
+			temp.set(offset).scl(size).rotate(rotation)
 			spawnPos.add(temp)
+
+			velocity.scl(size)
 
 			velocity.rotate(rotation)
 		}
@@ -276,17 +279,6 @@ class Emitter
 		if (!isCollisionEmitter) return
 
 		for (particle in particles) particle.callCollisionFunc(func)
-	}
-
-	fun draw(batch: SpriteBatch, offsetx: Float, offsety: Float, tileSize: Float, colour: Color)
-	{
-		for (particle in particles)
-		{
-			val offsetx = offsetx + if (simulationSpace == SimulationSpace.LOCAL) position.x * tileSize else 0f
-			val offsety = offsety + if (simulationSpace == SimulationSpace.LOCAL) position.y * tileSize else 0f
-
-			particle.render(batch, offsetx, offsety, tileSize, colour)
-		}
 	}
 
 	companion object

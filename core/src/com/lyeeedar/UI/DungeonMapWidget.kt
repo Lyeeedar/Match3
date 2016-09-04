@@ -46,8 +46,8 @@ class DungeonMapWidget(val map: DungeonMap, val player: Player): Widget()
 
 	val ROOMBASE = 0
 	val ROOMDETAIL = 1
-	val ARROWS = 2
-	val FOG = 3
+	val ARROWS = 3
+	val FOG = 2
 	val PLAYER = 4
 
 	val renderer = SpriteRenderer(tileSize, map.width.toFloat(), map.height.toFloat(), 5)

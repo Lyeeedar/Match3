@@ -222,8 +222,9 @@ class Particle(val emitter: Emitter)
 
 	fun getBoundingBox(particle: ParticleData, overridePos: Vector2? = null): Rectangle
 	{
-		val size = size.valAt(particle.sizeStream, particle.life).lerp(particle.ranVal)
-		val s2 = size * 0.5f
+		val scale = size.valAt(particle.sizeStream, particle.life).lerp(particle.ranVal)
+		val sx = scale * emitter.size.x
+		val sy = scale * emitter.size.y
 
 		val x = if (overridePos == null) particle.position.x else overridePos.x
 		val y = if (overridePos == null) particle.position.y else overridePos.y
@@ -234,6 +235,7 @@ class Particle(val emitter: Emitter)
 		if (emitter.simulationSpace == Emitter.SimulationSpace.LOCAL)
 		{
 			temp.set(emitter.offset)
+			temp.scl(emitter.size)
 			temp.rotate(emitter.rotation)
 
 			val ex = temp.x + emitter.position.x
@@ -246,28 +248,7 @@ class Particle(val emitter: Emitter)
 			actualy = ey + temp.y
 		}
 
-		return Pools.obtain(Rectangle::class.java).set(actualx-s2, actualy-s2,size, size)
-	}
-
-	fun render(batch: SpriteBatch, offsetx: Float, offsety: Float, tileSize: Float, modifierColour: Color)
-	{
-		batch.setBlendFunction(blend.src, blend.dst)
-
-		for (particle in particles)
-		{
-			val tex = texture.valAt(particle.texStream, particle.life)
-			val col = colour.valAt(particle.colStream, particle.life)
-			col.a = alpha.valAt(particle.alphaStream, particle.life)
-			val size = size.valAt(particle.sizeStream, particle.life).lerp(particle.ranVal) * tileSize
-
-			col.mul(modifierColour)
-
-			val drawx = particle.position.x * tileSize + offsetx
-			val drawy = particle.position.y * tileSize + offsety
-
-			batch.color = col
-			batch.draw(tex, drawx, drawy, 0.5f, 0.5f, 1f, 1f, size, size, particle.rotation)
-		}
+		return Pools.obtain(Rectangle::class.java).set(actualx-sx*0.5f, actualy-sy*0.5f, sx, sy)
 	}
 
 	fun spawn(position: Vector2, velocity: Vector2, rotation: Float)

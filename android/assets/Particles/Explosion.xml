@@ -2,6 +2,7 @@
 	<Emitters>
 		<Emitter>
 			<Name>Fire</Name>
+			<IsCollisionEmitter>true</IsCollisionEmitter>
 			<Shape>Circle</Shape>
 			<Width>0.1</Width>
 			<Height>0.1</Height>
@@ -63,6 +64,7 @@
 		</Emitter>
 		<Emitter>
 			<Name>Flash</Name>
+			<IsCollisionEmitter>true</IsCollisionEmitter>
 			<Width>0</Width>
 			<Height>0</Height>
 			<ParticleSpeed>0,0</ParticleSpeed>

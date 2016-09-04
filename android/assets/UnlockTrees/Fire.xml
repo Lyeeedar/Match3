@@ -14,8 +14,8 @@
 				<Gold>50</Gold>
 			</BuyCost>
 			<UnlockableData RefKey="EffectData">
-				<Cost>3</Cost>
-				<Effect>1,Orb,Single,Pop</Effect>
+				<Cost>1</Cost>
+				<Effect>1,Orb,Single,Test</Effect>
 				<FlightEffect RefKey="ParticleEffect">
 					<Name>Fire</Name>
 					<SpeedMultiplier>1.5</SpeedMultiplier>
