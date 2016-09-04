@@ -139,7 +139,7 @@ class GridWidget(val grid: Grid) : Widget()
 			for (y in 0..grid.height-1)
 			{
 				val tile = grid.grid[x, y]
-				val orb = tile.orb
+				val orb = tile.swappable
 				val block = tile.block
 				val chest = tile.chest
 				val monster = tile.monster
@@ -200,7 +200,7 @@ class GridWidget(val grid: Grid) : Widget()
 						else if (grid.activeAbility!!.targetter.type == Targetter.Type.SEALED)
 						{
 							tileColour = Color.DARK_GRAY
-							orbColour = if (orb != null && orb.sealed) Color.WHITE else Color.DARK_GRAY
+							orbColour = if (orb != null && orb is Orb && orb.sealed) Color.WHITE else Color.DARK_GRAY
 							blockColour = Color.DARK_GRAY
 							monsterColour = Color.DARK_GRAY
 						}
@@ -265,35 +265,38 @@ class GridWidget(val grid: Grid) : Widget()
 				{
 					ground.queueSprite(orb.sprite, xi, yi, ORB, 1, orbColour)
 
-					if (orb.sealed)
+					if (orb is Orb)
 					{
-						ground.queueSprite(orb.sealSprite, xi, yi, ORB, 2, orbColour)
-					}
-
-					if (orb.armed != null)
-					{
-						ground.queueSprite(glow, xi, yi, ORB, 0)
-					}
-
-					if (orb.hasAttack)
-					{
-						val cx = xi + (orb.sprite.animation?.renderOffset()?.get(0) ?: 0f)
-						val cy = yi + 0.15f + (orb.sprite.animation?.renderOffset()?.get(1) ?: 0f)
-
-						val currentPoint = Vector2(0f, 0.4f)
-
-						val maxdots = 10
-						val degreesStep = 360f / maxdots
-						for (i in 0..maxdots-1)
+						if (orb.sealed)
 						{
-							val sprite = if(i < orb.attackTimer) atk_full else atk_empty
-
-							floating.queueSprite(sprite, cx + currentPoint.x, cy + currentPoint.y, ORB, 2, orbColour)
-
-							currentPoint.rotate(degreesStep)
+							ground.queueSprite(orb.sealSprite, xi, yi, ORB, 2, orbColour)
 						}
 
-						//foreground.queueSprite(orb.attackIcon, xi, yi, xp, yp, SpaceSlot.ORB, 2, orbColour)
+						if (orb.armed != null)
+						{
+							ground.queueSprite(glow, xi, yi, ORB, 0)
+						}
+
+						if (orb.hasAttack)
+						{
+							val cx = xi + (orb.sprite.animation?.renderOffset()?.get(0) ?: 0f)
+							val cy = yi + 0.15f + (orb.sprite.animation?.renderOffset()?.get(1) ?: 0f)
+
+							val currentPoint = Vector2(0f, 0.4f)
+
+							val maxdots = 10
+							val degreesStep = 360f / maxdots
+							for (i in 0..maxdots - 1)
+							{
+								val sprite = if (i < orb.attackTimer) atk_full else atk_empty
+
+								floating.queueSprite(sprite, cx + currentPoint.x, cy + currentPoint.y, ORB, 2, orbColour)
+
+								currentPoint.rotate(degreesStep)
+							}
+
+							//foreground.queueSprite(orb.attackIcon, xi, yi, xp, yp, SpaceSlot.ORB, 2, orbColour)
+						}
 					}
 				}
 

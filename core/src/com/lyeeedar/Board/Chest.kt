@@ -20,8 +20,6 @@ class Chest(val spawnOrbs: Boolean = true, val theme: LevelTheme)
 	val fullSprite = theme.chestFull.copy()
 	val emptySprite = theme.chestEmpty.copy()
 
-	val coinDesc = OrbDesc(theme.coin.copy(), AssetManager.loadParticleEffect("Explosion"), true, -1, "Coin")
-
 	fun attachHandlers(grid: Grid)
 	{
 		val victory = grid.level.victory
@@ -29,9 +27,9 @@ class Chest(val spawnOrbs: Boolean = true, val theme: LevelTheme)
 		{
 			// ensure we dont spawn too many orbs
 			grid.onSpawn += {
-				if (it.sinkable == true)
+				if (it is Sinkable)
 				{
-					val coinsOnBoard = grid.grid.filter { it.orb?.sinkable ?: false }.count() + 1
+					val coinsOnBoard = grid.grid.filter { it.sinkable != null }.count() + 1
 					val allowedToSpawn = victory.count - coinsOnBoard
 
 					if (allowedToSpawn < numToSpawn)
@@ -43,14 +41,14 @@ class Chest(val spawnOrbs: Boolean = true, val theme: LevelTheme)
 		}
 	}
 
-	fun spawn(grid: Grid): Orb?
+	fun spawn(grid: Grid): Swappable?
 	{
 		if (spawnOrbs)
 		{
 			if (numToSpawn <= 0) return Orb(Orb.validOrbs.random(), theme)
 
 			// make sure we dont flood the board
-			val coinsOnBoard = grid.grid.filter { it.orb?.sinkable ?: false }.count() + 1
+			val coinsOnBoard = grid.grid.filter { it.sinkable != null }.count() + 1
 			if (coinsOnBoard >= 7) return Orb(Orb.validOrbs.random(), theme)
 
 			if (spacingCounter < spacing)
@@ -61,13 +59,13 @@ class Chest(val spawnOrbs: Boolean = true, val theme: LevelTheme)
 			else
 			{
 				spacingCounter = 0
-				return Orb(coinDesc, theme)
+				return Sinkable(theme.coin.copy())
 			}
 		}
 		else
 		{
 			if (numToSpawn <= 0) return null
-			return Orb(coinDesc, theme)
+			return Sinkable(theme.coin.copy())
 		}
 	}
 }

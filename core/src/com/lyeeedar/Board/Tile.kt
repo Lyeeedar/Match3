@@ -21,6 +21,14 @@ class Tile(x: Int, y: Int) : Point(x, y)
 		get() = contents as? Orb
 		set(value) { contents = value }
 
+	var sinkable: Sinkable?
+		get() = contents as? Sinkable
+		set(value) { contents = value }
+
+	var swappable: Swappable?
+		get() = contents as? Swappable
+		set(value) { contents = value }
+
 	var block: Block?
 		get() = contents as? Block
 		set(value) { contents = value }
@@ -57,6 +65,7 @@ class Tile(x: Int, y: Int) : Point(x, y)
 	override fun toString(): String
 	{
 		if (orb != null) return "o"
+		if (sinkable != null) return "c"
 		if (block != null) return "="
 		if (monster != null) return "!"
 		if (chest != null) return "£"

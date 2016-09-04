@@ -307,8 +307,6 @@ class Match5(orb: Orb) : Special(orb)
 
 	override fun merge(other: Orb): ((point: Point, grid: Grid) -> Unit)?
 	{
-		if (other.sinkable) return null
-
 		val special = other.special
 		if (special != null)
 		{

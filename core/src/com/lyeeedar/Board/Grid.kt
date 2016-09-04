@@ -48,9 +48,9 @@ class Grid(val width: Int, val height: Int, val level: Level)
 	val onTurn = Event0Arg()
 	val onTime = Event1Arg<Float>()
 	val onPop = Event2Arg<Orb, Float>()
-	val onSunk = Event1Arg<Orb>()
+	val onSunk = Event1Arg<Sinkable>()
 	val onDamaged = Event1Arg<Monster>()
-	val onSpawn = Event1Arg<Orb>()
+	val onSpawn = Event1Arg<Swappable>()
 	val onAttacked = Event1Arg<Orb>()
 
 	// ----------------------------------------------------------------------
@@ -220,17 +220,17 @@ class Grid(val width: Int, val height: Int, val level: Level)
 			spawnCount[x, y] = 0
 
 			val tile = grid[x, y]
-			val orb = tile.orb
+			val swappable = tile.swappable
 
-			if (orb != null)
+			if (swappable != null)
 			{
-				if (orb.cascadeCount == -1)
+				if (swappable.cascadeCount == -1)
 				{
-					orb.cascadeCount = 1
+					swappable.cascadeCount = 1
 				}
 				else
 				{
-					orb.cascadeCount = 0
+					swappable.cascadeCount = 0
 				}
 			}
 		}
@@ -268,7 +268,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 			val tile = grid[x, currentY]
 
 			// read up column, find first gap
-			if (tile.canHaveOrb && tile.orb == null && tile.monster == null)
+			if (tile.canHaveOrb && tile.swappable == null && tile.monster == null)
 			{
 				// if gap found read up until solid / spawner
 				var found: Tile? = null
@@ -281,10 +281,11 @@ class Grid(val width: Int, val height: Int, val level: Level)
 						found = tile
 						break
 					}
-					else if (stile.orb != null)
+					else if (stile.swappable != null)
 					{
-						val orb = stile.orb!!
-						if (orb.armed == null && !orb.sealed) found = stile
+						val swappable = stile.swappable!!
+						val orb = swappable as? Orb
+						if (orb == null || (orb.armed == null && !orb.sealed)) found = stile
 						break
 					}
 					else if (stile.chest != null)
@@ -309,7 +310,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 				// pull solid / spawn new down
 				if (found != null)
 				{
-					var orb: Orb? = null
+					var orb: Swappable? = null
 
 					if (found == tile)
 					{
@@ -337,15 +338,15 @@ class Grid(val width: Int, val height: Int, val level: Level)
 					}
 					else
 					{
-						orb = found.orb!!
-						found.orb = null
+						orb = found.swappable!!
+						found.swappable = null
 						if (orb.movePoints.size == 0) orb.movePoints.add(found)
 					}
 
 					if (orb != null)
 					{
 						orb.movePoints.add(tile)
-						tile.orb = orb
+						tile.swappable = orb
 						orb.cascadeCount = cascadeCount
 
 						complete = false
@@ -366,7 +367,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 			while (currentY < height)
 			{
 				val tile = grid[x, currentY]
-				if (tile.canHaveOrb && tile.orb == null && tile.block == null && tile.monster == null)
+				if (tile.canHaveOrb && tile.swappable == null && tile.block == null && tile.monster == null)
 				{
 					if (lookingForOrb == 0)
 					{
@@ -377,7 +378,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 				{
 					lookingForOrb = 0
 				}
-				else if (tile.orb != null)
+				else if (tile.swappable != null)
 				{
 					lookingForOrb = 0
 				}
@@ -390,19 +391,19 @@ class Grid(val width: Int, val height: Int, val level: Level)
 					val diagR = tile(x + 1, currentY - 1)
 					val diagRBelow = tile(x + 1, currentY)
 
-					val diagLValid = diagL != null && diagL.orb != null && diagL.orb!!.armed == null && !diagL.orb!!.sealed && (diagLBelow == null || !diagLBelow.canHaveOrb || diagLBelow.contents != null)
-					val diagRValid = diagR != null && diagR.orb != null && diagR.orb!!.armed == null && !diagR.orb!!.sealed && (diagRBelow == null || !diagRBelow.canHaveOrb || diagRBelow.contents != null)
+					val diagLValid = diagL != null && diagL.swappable != null && diagL.swappable!!.canMove && (diagLBelow == null || !diagLBelow.canHaveOrb || diagLBelow.contents != null)
+					val diagRValid = diagR != null && diagR.swappable != null && diagR.swappable!!.canMove && (diagRBelow == null || !diagRBelow.canHaveOrb || diagRBelow.contents != null)
 
 					if (diagLValid || diagRValid)
 					{
 						fun pullIn(t: Tile)
 						{
-							val orb = t.orb!!
-							t.orb = null
+							val orb = t.swappable!!
+							t.swappable = null
 
 							if (orb.movePoints.size == 0) orb.movePoints.add(t)
 
-							tile.orb = orb
+							tile.swappable = orb
 							orb.cascadeCount = cascadeCount
 
 							orb.movePoints.add(tile)
@@ -453,7 +454,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 		{
 			for (y in 0..height-1)
 			{
-				val orb = grid[x, y].orb ?: continue
+				val orb = grid[x, y].swappable ?: continue
 
 				if (orb.movePoints.size > 0)
 				{
@@ -503,7 +504,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 					break
 				}
 
-				val orb = tile.orb
+				val orb = tile.swappable
 				if (orb != null && orb.sprite.animation != null)
 				{
 					hasAnim = true
@@ -582,51 +583,58 @@ class Grid(val width: Int, val height: Int, val level: Level)
 
 		if (oldTile == null || newTile == null) return false
 
-		val oldOrb = oldTile.orb ?: return false
-		val newOrb = newTile.orb ?: return false
-		if (oldOrb.sealed || newOrb.sealed) return false
+		val oldSwap = oldTile.swappable ?: return false
+		val newSwap = newTile.swappable ?: return false
 
-		oldOrb.cascadeCount = -1
-		newOrb.cascadeCount = -1
+		val oldOrb = oldSwap as? Orb
+		val newOrb = newSwap as? Orb
 
-		// check for merges
-		if (newOrb.special != null || oldOrb.special != null)
+		if ((oldOrb?.sealed ?: false) || (newOrb?.sealed ?: false)) return false
+
+		oldSwap.cascadeCount = -1
+		newSwap.cascadeCount = -1
+
+		if (oldOrb != null && newOrb != null)
 		{
-			val armfun = newOrb.special?.merge(oldOrb) ?: oldOrb.special?.merge(newOrb)
-			if (armfun != null)
+			// check for merges
+			if (newOrb.special != null || oldOrb.special != null)
 			{
-				val sprite = oldOrb.sprite.copy()
-				sprite.animation = MoveAnimation.obtain().set(animSpeed, UnsmoothedPath(newTile.getPosDiff(oldTile)), Interpolation.linear)
-				newTile.effects.add(sprite)
+				val armfun = newOrb.special?.merge(oldOrb) ?: oldOrb.special?.merge(newOrb)
+				if (armfun != null)
+				{
+					val sprite = oldOrb.sprite.copy()
+					sprite.animation = MoveAnimation.obtain().set(animSpeed, UnsmoothedPath(newTile.getPosDiff(oldTile)), Interpolation.linear)
+					newTile.effects.add(sprite)
 
-				onPop(oldOrb, 0f)
-				oldTile.orb = null
+					onPop(oldOrb, 0f)
+					oldTile.orb = null
 
-				newOrb.armed = armfun
-				newOrb.markedForDeletion = true
+					newOrb.armed = armfun
+					newOrb.markedForDeletion = true
 
-				return false
+					return false
+				}
 			}
 		}
 
-		oldTile.orb = newOrb
-		newTile.orb = oldOrb
+		oldTile.swappable = newSwap
+		newTile.swappable = oldSwap
 
 		val matches = findMatches()
 		if (matches.size == 0)
 		{
-			oldTile.orb = oldOrb
-			newTile.orb = newOrb
+			oldTile.swappable = oldSwap
+			newTile.swappable = newSwap
 
-			oldOrb.sprite.animation = BumpAnimation.obtain().set(animSpeed, Direction.Companion.getDirection(oldTile, newTile))
+			oldSwap.sprite.animation = BumpAnimation.obtain().set(animSpeed, Direction.Companion.getDirection(oldTile, newTile))
 			return false
 		}
 		else
 		{
 			lastSwapped = newTile
 
-			oldOrb.sprite.animation = MoveAnimation.obtain().set(animSpeed, UnsmoothedPath(newTile.getPosDiff(oldTile)), Interpolation.linear)
-			newOrb.sprite.animation = MoveAnimation.obtain().set(animSpeed, UnsmoothedPath(oldTile.getPosDiff(newTile)), Interpolation.linear)
+			oldSwap.sprite.animation = MoveAnimation.obtain().set(animSpeed, UnsmoothedPath(newTile.getPosDiff(oldTile)), Interpolation.linear)
+			newSwap.sprite.animation = MoveAnimation.obtain().set(animSpeed, UnsmoothedPath(oldTile.getPosDiff(newTile)), Interpolation.linear)
 			return true
 		}
 	}
@@ -757,7 +765,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 			fun checkSurrounding(point: Point, dir: Direction, key: Int): Pair<Point, Point>?
 			{
 				val targetTile = tile(point)
-				if (targetTile == null || targetTile.block != null || targetTile.monster != null || targetTile.orb?.sealed ?: false || !targetTile.canHaveOrb || targetTile.contents == null) return null
+				if (targetTile == null || targetTile.block != null || targetTile.monster != null || targetTile.swappable?.canMove ?: false || !targetTile.canHaveOrb || targetTile.contents == null) return null
 
 				fun canMatch(point: Point): Boolean
 				{
@@ -884,11 +892,14 @@ class Grid(val width: Int, val height: Int, val level: Level)
 		for (x in 0..width-1)
 		{
 			val tile = grid[x, height-1]
-			val orb = tile.orb
-			if (orb != null && orb.sinkable)
+			val sink = tile.sinkable
+			if (sink != null)
 			{
-				tile.orb = null
-				onSunk(orb)
+				sink.x = x
+				sink.y = height-1
+
+				tile.sinkable = null
+				onSunk(sink)
 
 				complete = false
 			}
@@ -915,8 +926,8 @@ class Grid(val width: Int, val height: Int, val level: Level)
 		{
 			for (y in 0..height - 1)
 			{
-				val oldorb = tempgrid[x, y].orb
-				if (oldorb == null || oldorb.sinkable) grid[x, y].contents = tempgrid[x, y].contents
+				val oldorb = tempgrid[x, y].swappable
+				if (oldorb == null || oldorb !is Orb) grid[x, y].contents = tempgrid[x, y].contents
 				else
 				{
 					val orb = grid[x, y].orb!!
@@ -1305,7 +1316,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 
 		val orb = tile.orb ?: return
 		if (orb.markedForDeletion) return // already completed, dont do it again
-		if (orb.sinkable) return
+		if (orb !is Orb) return
 
 		if (orb.sealed)
 		{

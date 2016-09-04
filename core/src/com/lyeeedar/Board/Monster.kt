@@ -82,7 +82,7 @@ class Monster(val desc: MonsterDesc)
 			attackAccumulator -= attackDelay
 
 			// do attack
-			val tile = grid.grid.filter { it.orb != null && !it.orb!!.sinkable && it.orb!!.special == null && !it.orb!!.hasAttack }.random()
+			val tile = grid.grid.filter { it.orb != null && it.orb!!.special == null && !it.orb!!.hasAttack }.random()
 
 			if (tile != null)
 			{

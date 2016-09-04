@@ -17,15 +17,18 @@ import com.lyeeedar.Util.tryGet
  * Created by Philip on 04-Jul-16.
  */
 
-class Orb(val desc: OrbDesc, val theme: LevelTheme): Point()
+class Orb(val desc: OrbDesc, val theme: LevelTheme): Swappable()
 {
+	init
+	{
+		sprite = desc.sprite.copy()
+	}
+
 	var armed: ((point: Point, grid: Grid) -> Unit)? = null
 
 	var special: Special? = null
 		set(value)
 		{
-			if (sinkable) return
-
 			field = value
 
 			if (value != null)
@@ -67,17 +70,11 @@ class Orb(val desc: OrbDesc, val theme: LevelTheme): Point()
 
 	var attackTimer = 0
 
-	val sinkable: Boolean
-		get() = desc.sinkable
-
 	val key: Int
 		get() = if (special is Match5) -1 else desc.key
 
-	var sprite: Sprite = desc.sprite.copy()
-
-	val movePoints = Array<Point>()
-	var spawnCount = -1
-	var cascadeCount = 0
+	override val canMove: Boolean
+		get() = !sealed && armed == null
 
 	override fun toString(): String
 	{
@@ -138,18 +135,16 @@ class Orb(val desc: OrbDesc, val theme: LevelTheme): Point()
 
 class OrbDesc()
 {
-	constructor(sprite: Sprite, death: ParticleEffect, sinkable: Boolean, key: Int, name: String) : this()
+	constructor(sprite: Sprite, death: ParticleEffect, key: Int, name: String) : this()
 	{
 		this.sprite = sprite
 		this.death = death
-		this.sinkable = sinkable
 		this.name = name
 		this.key = key
 	}
 
 	lateinit var sprite: Sprite
 	lateinit var death: ParticleEffect
-	var sinkable = false
 	var key: Int = -1
 	var name: String = ""
 		set(value)
