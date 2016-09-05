@@ -122,7 +122,7 @@
 			<Line>#.......~~#</Line>
 		</Rows>
 	</Grid>
-	<Faction>Rats</Faction>
+	<Faction>Rats,Spider</Faction>
 	<AllowedVictories>
 		<Kill RefKey="CompletionCondition" />
 	</AllowedVictories>

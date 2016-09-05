@@ -14,19 +14,22 @@
 		<Collection Name="Seal" MinCount="1" RefKey="Collection">
 			<Reference Name="Sprite" Keys="Sprite" Nullable="False" RefKey="Reference" />
 		</Collection>
+		<Collection Name="Shield" MinCount="1" RefKey="Collection">
+			<Reference Name="Sprite" Keys="Sprite" Nullable="False" RefKey="Reference" />
+		</Collection>
 		<Struct Name="Map" RefKey="Struct">
 			<Reference Name="Room" Keys="DirectedSprite" Nullable="False" RefKey="Reference" />
 			<Reference Name="Corridor" Keys="DirectedSprite" Nullable="False" RefKey="Reference" />
 		</Struct>
 		<Struct Name="RoomWeights" RefKey="Struct">
 			<Collection Name="Good" RefKey="Collection">
-				<Pair Name="Data" RefKey="DataPair">
+				<Pair Name="Data" RefKey="Pair">
 					<String Name="Type" RefKey="String" />
 					<Number Name="Weight" Min="0" RefKey="Number" />
 				</Pair>
 			</Collection>
 			<Collection Name="Bad" RefKey="Collection">
-				<Pair Name="Data" RefKey="DataPair">
+				<Pair Name="Pair" RefKey="Pair">
 					<String Name="Type" RefKey="String" />
 					<Number Name="Weight" Min="0" RefKey="Number" />
 				</Pair>

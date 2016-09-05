@@ -1,0 +1,52 @@
+<Faction>
+	<Monsters>
+		<SmallSpider>
+			<Sprite RefKey="Sprite">
+				<Name>Oryx/uf_split/uf_heroes/spider_brown</Name>
+				<DrawActualSize>true</DrawActualSize>
+			</Sprite>
+			<Death RefKey="Sprite">
+				<Name>EffectSprites/Splatter/Splatter</Name>
+				<UpdateRate>0.1</UpdateRate>
+				<Colour>189,9,9,255</Colour>
+			</Death>
+			<AttackDelay>6</AttackDelay>
+			<AttackSpeed>8</AttackSpeed>
+			<HP>6</HP>
+			<Rewards>
+				<Gold>10</Gold>
+			</Rewards>
+			<AbilityRate>6</AbilityRate>
+			<Abilities>
+				<Ability>
+					<Effect>Seal</Effect>
+				</Ability>
+			</Abilities>
+		</SmallSpider>
+		<GiantSpider>
+			<Sprite RefKey="Sprite">
+				<Name>Oryx/uf_split/uf_heroes/spider_brown_giant</Name>
+				<DrawActualSize>true</DrawActualSize>
+			</Sprite>
+			<Death RefKey="Sprite">
+				<Name>EffectSprites/Splatter/Splatter</Name>
+				<UpdateRate>0.1</UpdateRate>
+				<Colour>189,9,9,255</Colour>
+			</Death>
+			<AttackDelay>5</AttackDelay>
+			<AttackSpeed>7</AttackSpeed>
+			<Size>2</Size>
+			<HP>15</HP>
+			<Rewards>
+				<Gold>10</Gold>
+			</Rewards>
+			<AbilityRate>6</AbilityRate>
+			<Abilities>
+				<Ability>
+					<Count>2</Count>
+					<Effect>Seal</Effect>
+				</Ability>
+			</Abilities>
+		</GiantSpider>
+	</Monsters>
+</Faction>

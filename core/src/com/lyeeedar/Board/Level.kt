@@ -49,7 +49,7 @@ class Level(val loadPath: String)
 	var uncompletedMapSprite: Sprite? = null
 	var completedMapSprite: Sprite? = null
 
-	lateinit var faction: String
+	val factions = Array<String>()
 
 	// Active state data
 	lateinit var theme: LevelTheme
@@ -123,7 +123,7 @@ class Level(val loadPath: String)
 
 		if (hasMonster)
 		{
-			val chosenFaction = Faction.load(faction)
+			val chosenFaction = Faction.load(factions.random())
 
 			// iterate through and find groups
 			val blocks = Array<Array<Tile>>()
@@ -348,7 +348,7 @@ class Level(val loadPath: String)
 				level.sealStrength = xml.getInt("SealStrength", 1)
 				level.blockStrength = xml.getInt("BlockStrength", 1)
 
-				level.faction = xml.get("Faction", "")
+				level.factions.addAll(xml.get("Faction", "").split(",").asSequence())
 
 				level.uncompletedMapSprite = AssetManager.tryLoadSprite(xml.getChildByName("UncompletedMapSprite"))
 				level.completedMapSprite = AssetManager.tryLoadSprite(xml.getChildByName("CompletedMapSprite"))
