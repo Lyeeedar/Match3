@@ -24,9 +24,9 @@ import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.XmlReader.Element
 import com.lyeeedar.Renderables.Animation.AbstractAnimation
 import com.lyeeedar.Renderables.Particle.ParticleEffect
+import com.lyeeedar.Renderables.Sprite.DirectionalSprite
 import com.lyeeedar.Renderables.Sprite.Sprite
 import com.lyeeedar.Renderables.Sprite.TilingSprite
-import com.lyeeedar.Sound.SoundInstance
 
 class AssetManager
 {
@@ -158,7 +158,7 @@ class AssetManager
 			val effect = ParticleEffect.load(xml.get("Name"))
 
 			val colourElement = xml.getChildByName("Colour")
-			var colour = Color(1f, 1f, 1f, 1f)
+			var colour = Colour(1f, 1f, 1f, 1f)
 			if (colourElement != null)
 			{
 				colour = loadColour(colourElement)
@@ -168,25 +168,23 @@ class AssetManager
 
 			effect.speedMultiplier = xml.getFloat("SpeedMultiplier", 1f)
 
+			effect.flipX = xml.getBoolean("FlipX", false)
+			effect.flipY = xml.getBoolean("FlipY", false)
+
 			return effect
 		}
 
 		fun loadSprite(name: String, drawActualSize: Boolean): Sprite
 		{
-			return loadSprite(name, 0.5f, Color(1f, 1f, 1f, 1f), Sprite.AnimationMode.TEXTURE, null, drawActualSize)
-		}
-
-		fun loadSprite(name: String, updateTime: Float, sound: String): Sprite
-		{
-			return loadSprite(name, updateTime, Color(1f, 1f, 1f, 1f), Sprite.AnimationMode.TEXTURE, SoundInstance.getSound(sound), false)
+			return loadSprite(name, 0.5f, Colour(1f, 1f, 1f, 1f), Sprite.AnimationMode.TEXTURE, drawActualSize)
 		}
 
 		fun loadSprite(name: String, updateTime: Float, reverse: Boolean): Sprite
 		{
-			return loadSprite(name, updateTime, Color(1f, 1f, 1f, 1f), Sprite.AnimationMode.TEXTURE, null, false, reverse)
+			return loadSprite(name, updateTime, Colour(1f, 1f, 1f, 1f), Sprite.AnimationMode.TEXTURE, false, reverse)
 		}
 
-		@JvmOverloads fun loadSprite(name: String, updateTime: Float = 0.5f, colour: Color = Color(1f, 1f, 1f, 1f), mode: Sprite.AnimationMode = Sprite.AnimationMode.TEXTURE, sound: SoundInstance? = null, drawActualSize: Boolean = false, reverse: Boolean = false): Sprite
+		@JvmOverloads fun loadSprite(name: String, updateTime: Float = 0.5f, colour: Colour = Colour(1f, 1f, 1f, 1f), mode: Sprite.AnimationMode = Sprite.AnimationMode.TEXTURE, drawActualSize: Boolean = false, reverse: Boolean = false): Sprite
 		{
 			var updateTime = updateTime
 			val textures = Array<TextureRegion>(false, 1, TextureRegion::class.java)
@@ -260,7 +258,7 @@ class AssetManager
 				}
 			}
 
-			val sprite = Sprite(name, updateTime, textures, colour, mode, sound, drawActualSize)
+			val sprite = Sprite(name, updateTime, textures, colour, mode, drawActualSize)
 
 			return sprite
 		}
@@ -281,17 +279,10 @@ class AssetManager
 		fun loadSprite(xml: Element): Sprite
 		{
 			val colourElement = xml.getChildByName("Colour")
-			var colour = Color(1f, 1f, 1f, 1f)
+			var colour = Colour(1f, 1f, 1f, 1f)
 			if (colourElement != null)
 			{
 				colour = loadColour(colourElement)
-			}
-
-			val soundElement = xml.getChildByName("Sound")
-			var sound: SoundInstance? = null
-			if (soundElement != null)
-			{
-				sound = SoundInstance.load(soundElement)
 			}
 
 			val sprite = loadSprite(
@@ -299,7 +290,6 @@ class AssetManager
 					xml.getFloat("UpdateRate", 0f),
 					colour,
 					Sprite.AnimationMode.valueOf(xml.get("AnimationMode", "Texture").toUpperCase()),
-					sound,
 					xml.getBoolean("DrawActualSize", false))
 
 			sprite.repeatDelay = xml.getFloat("RepeatDelay", 0f)
@@ -316,17 +306,10 @@ class AssetManager
 		fun loadSprite(xml: Element, texture: TextureRegion): Sprite
 		{
 			val colourElement = xml.getChildByName("Colour")
-			var colour = Color(1f, 1f, 1f, 1f)
+			var colour = Colour(1f, 1f, 1f, 1f)
 			if (colourElement != null)
 			{
 				colour = loadColour(colourElement)
-			}
-
-			val soundElement = xml.getChildByName("Sound")
-			var sound: SoundInstance? = null
-			if (soundElement != null)
-			{
-				sound = SoundInstance.load(soundElement)
 			}
 
 			val textures = Array<TextureRegion>(false, 1, TextureRegion::class.java)
@@ -351,7 +334,6 @@ class AssetManager
 					textures,
 					colour,
 					mode,
-					sound,
 					xml.getBoolean("DrawActualSize", false))
 
 			sprite.repeatDelay = xml.getFloat("RepeatDelay", 0f)
@@ -366,7 +348,7 @@ class AssetManager
 			return sprite
 		}
 
-		fun loadColour(stringCol: String, colour: Color = Color()): Color
+		fun loadColour(stringCol: String, colour: Colour = Colour()): Colour
 		{
 			val cols = stringCol.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
 			colour.r = java.lang.Float.parseFloat(cols[0]) / 255.0f
@@ -377,7 +359,7 @@ class AssetManager
 			return colour
 		}
 
-		fun loadColour(xml: Element): Color
+		fun loadColour(xml: Element): Colour
 		{
 			return loadColour(xml.text)
 		}
@@ -385,6 +367,24 @@ class AssetManager
 		fun loadTilingSprite(xml: Element): TilingSprite
 		{
 			return TilingSprite.load(xml)
+		}
+
+		fun loadDirectionalSprite(xml: Element): DirectionalSprite
+		{
+			val directionalSprite = DirectionalSprite()
+
+			val anims = xml.getChildByName("Animations")
+			for (i in 0.. anims.childCount-1)
+			{
+				val el = anims.getChild(i)
+				val name = el.name
+				val up = AssetManager.loadSprite(el.getChildByName("Up"))
+				val down = AssetManager.loadSprite(el.getChildByName("Down"))
+
+				directionalSprite.addAnim(name, up, down)
+			}
+
+			return directionalSprite
 		}
 	}
 }

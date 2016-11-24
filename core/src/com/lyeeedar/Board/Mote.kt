@@ -8,7 +8,7 @@ import com.badlogic.gdx.utils.Array
 import com.lyeeedar.Global
 import com.lyeeedar.Renderables.Animation.MoveAnimation
 import com.lyeeedar.Renderables.Sprite.Sprite
-import com.lyeeedar.Sprite.SpriteEffectActor
+import com.lyeeedar.Renderables.Sprite.SpriteEffectActor
 
 class Mote(src: Vector2, dst: Vector2, sprite: Sprite, completionFunc: (() -> Unit)? = null) : SpriteEffectActor(sprite, 32f, 32f, Vector2(), { completionFunc?.invoke(); moteCount-- })
 {

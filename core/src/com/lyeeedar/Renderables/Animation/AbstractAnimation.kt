@@ -7,12 +7,15 @@ import java.util.HashMap
 import com.badlogic.gdx.utils.XmlReader.Element
 import com.badlogic.gdx.utils.reflect.ClassReflection
 import com.badlogic.gdx.utils.reflect.ReflectionException
+import com.lyeeedar.Util.Colour
 
 abstract class AbstractAnimation
 {
+	var startDelay = 0f
+
 	abstract fun renderOffset(): FloatArray?
 	abstract fun renderScale(): FloatArray?
-	abstract fun renderColour(): Color?
+	abstract fun renderColour(): Colour?
 
 	abstract fun duration(): Float
 	abstract fun time(): Float

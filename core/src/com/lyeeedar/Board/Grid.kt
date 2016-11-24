@@ -17,8 +17,6 @@ import com.lyeeedar.Renderables.Animation.BumpAnimation
 import com.lyeeedar.Renderables.Animation.ExpandAnimation
 import com.lyeeedar.Renderables.Animation.MoveAnimation
 import com.lyeeedar.Screens.GridScreen
-import com.lyeeedar.Sprite.SpriteRenderer
-import com.lyeeedar.Sprite.SpriteWrapper
 import com.lyeeedar.UI.FullscreenMessage
 import com.lyeeedar.UI.GridWidget
 import com.lyeeedar.UI.PowerBar

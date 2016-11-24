@@ -1,6 +1,7 @@
-package com.lyeeedar.Sprite
+package com.lyeeedar.Renderables.Sprite
 
 import com.badlogic.gdx.graphics.g2d.Batch
+import com.badlogic.gdx.graphics.g2d.HDRColourSpriteBatch
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.scenes.scene2d.Actor
@@ -43,6 +44,6 @@ open class SpriteEffectActor(val sprite: Sprite, val w: Float, val h: Float, val
 			}
 		}
 
-		sprite.render(batch as SpriteBatch, x, y, w, h)
+		sprite.render(batch as HDRColourSpriteBatch, x, y, w, h)
 	}
 }

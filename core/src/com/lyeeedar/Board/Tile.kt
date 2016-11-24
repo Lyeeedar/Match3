@@ -2,12 +2,12 @@ package com.lyeeedar.Board
 
 import com.badlogic.gdx.math.Vector2
 import com.lyeeedar.Global
-import com.lyeeedar.Sprite.SpriteWrapper
 import com.lyeeedar.Util.Point
 import com.badlogic.gdx.utils.Array
 import com.lyeeedar.Renderables.Particle.ParticleEffect
 import com.lyeeedar.Renderables.Renderable
 import com.lyeeedar.Renderables.Sprite.Sprite
+import com.lyeeedar.Renderables.Sprite.SpriteWrapper
 
 /**
  * Created by Philip on 04-Jul-16.

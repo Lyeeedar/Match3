@@ -7,10 +7,16 @@ import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.scenes.scene2d.Actor
 import com.badlogic.gdx.scenes.scene2d.InputEvent
+import com.badlogic.gdx.scenes.scene2d.Stage
+import com.badlogic.gdx.scenes.scene2d.ui.Label
+import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.scenes.scene2d.ui.Widget
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener
 import com.badlogic.gdx.utils.*
 import com.badlogic.gdx.utils.Array
+import com.lyeeedar.Global
+import com.lyeeedar.UI.Tooltip
+import com.lyeeedar.UI.TooltipListener
 import java.util.*
 
 /**
@@ -68,6 +74,20 @@ fun Actor.addClickListener(func: () -> Unit)
 			func()
 		}
 	})
+}
+fun Actor.addToolTip(title: String, body: String, stage: Stage)
+{
+	val titleLabel = Label(title, Global.skin, "title")
+	val bodyLabel = Label(body, Global.skin)
+
+	val table = Table()
+	table.add(titleLabel).expandX().center()
+	table.row()
+	table.add(bodyLabel).expand().fill()
+
+	val tooltip = Tooltip(table, Global.skin, stage)
+
+	this.addListener(TooltipListener(tooltip))
 }
 
 fun <T> com.badlogic.gdx.utils.Array<T>.tryGet(i: Int): T = this[MathUtils.clamp(i, 0, this.size-1)]
@@ -152,6 +172,23 @@ inline fun <reified T> Sequence<T>.random(num: Int): Sequence<T>
 	}
 
 	return outArray.asSequence()
+}
+
+fun <T> Sequence<T>.sequenceEquals(other: Sequence<T>): Boolean
+{
+	if (this.count() != other.count()) return false
+
+	for (item in this)
+	{
+		if (!other.contains(item)) return false
+	}
+
+	for (item in other)
+	{
+		if (!this.contains(item)) return false
+	}
+
+	return true
 }
 
 fun Color.toHSV(out: FloatArray? = null): FloatArray

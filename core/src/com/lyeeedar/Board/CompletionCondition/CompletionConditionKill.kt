@@ -15,12 +15,13 @@ import com.lyeeedar.Board.MonsterDesc
 import com.lyeeedar.Global
 import com.lyeeedar.UI.SpriteWidget
 import com.lyeeedar.Util.AssetManager
+import com.lyeeedar.Util.Colour
 import com.lyeeedar.Util.set
 
 
 class CompletionConditionKill() : AbstractCompletionCondition()
 {
-	val tick = AssetManager.loadSprite("Oryx/uf_split/uf_interface/uf_interface_680", colour = Color.FOREST)
+	val tick = AssetManager.loadSprite("Oryx/uf_split/uf_interface/uf_interface_680", colour = Colour(Color.FOREST))
 
 	var monsters = Array<Monster>()
 	var monsterMap = ObjectMap<MonsterDesc, Int>()

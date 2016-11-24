@@ -16,6 +16,7 @@ import com.lyeeedar.Global
 import com.lyeeedar.Renderables.Sprite.Sprite
 import com.lyeeedar.UI.SpriteWidget
 import com.lyeeedar.Util.AssetManager
+import com.lyeeedar.Util.Colour
 import com.lyeeedar.Util.set
 import com.lyeeedar.Util.get
 
@@ -25,7 +26,7 @@ import com.lyeeedar.Util.get
 
 class CompletionConditionMatches(): AbstractCompletionCondition()
 {
-	val tick = AssetManager.loadSprite("Oryx/uf_split/uf_interface/uf_interface_680", colour = Color.FOREST)
+	val tick = AssetManager.loadSprite("Oryx/uf_split/uf_interface/uf_interface_680", colour = Colour(Color.FOREST))
 
 	val toBeMatched = IntIntMap()
 	val sprites = IntMap<Sprite>()

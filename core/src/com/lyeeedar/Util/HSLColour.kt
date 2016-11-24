@@ -33,7 +33,7 @@ class HSLColour
 	 * Construct a color from the RGB color space as HSL.
 	 * @param color The RGB color to convert to HSL.
 	 */
-	constructor(colour: Color)
+	constructor(colour: Colour)
 	{
 		set(colour)
 	}
@@ -52,7 +52,7 @@ class HSLColour
 
 	fun set(colour: HSLColour): HSLColour = set(colour.h, colour.s, colour.l, colour.a)
 
-	fun set(colour: Color): HSLColour
+	fun set(colour: Colour): HSLColour
 	{
 		val hslVec = rgbToHsl(colour)
 		return set(hslVec.x, hslVec.y, hslVec.z, colour.a)
@@ -85,7 +85,7 @@ class HSLColour
 
 	 * @return The RGB representation
 	 */
-	fun toRGB(color: Color? = null): Color
+	fun toRGB(color: Colour? = null): Colour
 	{
 		val r: Float
 		val g: Float
@@ -106,7 +106,7 @@ class HSLColour
 			b = hue2rgb(p, q, h - 1.0f / 3.0f)
 		}
 
-		val col = color ?: Color()
+		val col = color ?: Colour()
 
 		return col.set(r, g, b, a)
 	}
@@ -132,7 +132,7 @@ class HSLColour
 	 * *
 	 * @return           The HSL representation
 	 */
-	private fun rgbToHsl(rgba: Color): Vector3
+	private fun rgbToHsl(rgba: Colour): Vector3
 	{
 		val r = rgba.r
 		val g = rgba.g
@@ -143,7 +143,7 @@ class HSLColour
 
 		var h: Float = (max + min) / 2.0f
 		var s: Float = h
-		var l: Float = h
+		val l: Float = h
 
 		if (max == min)
 		{

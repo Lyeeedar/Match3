@@ -3,6 +3,7 @@ package com.lyeeedar.Renderables.Particle
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.Pixmap
+import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.math.Vector2
@@ -12,6 +13,7 @@ import com.badlogic.gdx.utils.Pools
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Renderables.Renderable
 import com.lyeeedar.Util.Array2D
+import com.lyeeedar.Util.Colour
 import com.lyeeedar.Util.getXml
 
 /**
@@ -22,7 +24,7 @@ class ParticleEffect : Renderable()
 {
 	private lateinit var loadPath: String
 
-	var colour: Color = Color(Color.WHITE)
+	var colour: Colour = Colour(Color.WHITE)
 	var speedMultiplier: Float = 1f
 
 	var completed = false
@@ -31,9 +33,22 @@ class ParticleEffect : Renderable()
 	private var doneWarmup = false
 	var moveSpeed: Float = 1f
 	val emitters = Array<Emitter>()
+
+	// local stuff
 	val position = Vector2()
 	var rotation: Float = 0f
-	var size: Float = 1f
+	var sizex: Float = 1f
+	var sizey: Float = 1f
+	var flipX: Boolean = false
+	var flipY: Boolean = false
+
+	var size: Float
+		get() = 0f
+		set(value)
+		{
+			sizex = value
+			sizey = value
+		}
 
 	var collisionGrid: Array2D<Boolean>? = null
 	var collisionFun: ((x: Int, y: Int) -> Unit)? = null
@@ -80,8 +95,8 @@ class ParticleEffect : Renderable()
 		val y = position.y + (posOffset?.get(1) ?: 0f)
 
 		val scale = animation?.renderScale()
-		val sx = size * (scale?.get(0) ?: 1f)
-		val sy = size * (scale?.get(1) ?: 1f)
+		val sx = sizex * (scale?.get(0) ?: 1f)
+		val sy = sizey * (scale?.get(1) ?: 1f)
 
 		for (emitter in emitters)
 		{
@@ -133,7 +148,7 @@ class ParticleEffect : Renderable()
 		position.set(x, y)
 	}
 
-	override fun doRender(batch: SpriteBatch, x: Float, y: Float, tileSize: Float)
+	override fun doRender(batch: Batch, x: Float, y: Float, tileSize: Float)
 	{
 
 	}
@@ -160,7 +175,7 @@ class ParticleEffect : Renderable()
 			val emitterx = emitter.position.x * tileSize + offsetx
 			val emittery = emitter.position.y * tileSize + offsety
 
-			temp.set(emitter.offset)
+			temp.set(emitter.offset.valAt(0, emitter.time))
 			temp.scl(emitter.size)
 			temp.rotate(emitter.rotation)
 
@@ -198,6 +213,10 @@ class ParticleEffect : Renderable()
 		effect.rotation = rotation
 		effect.colour.set(colour)
 		effect.speedMultiplier = speedMultiplier
+		effect.flipX = flipX
+		effect.flipY = flipY
+		effect.sizex = sizex
+		effect.sizey = sizey
 		return effect
 	}
 
@@ -214,7 +233,7 @@ class ParticleEffect : Renderable()
 			for (i in 0..emittersEl.childCount-1)
 			{
 				val el = emittersEl.getChild(i)
-				val emitter = Emitter.load(el)
+				val emitter = Emitter.load(el, effect) ?: continue
 				effect.emitters.add(emitter)
 			}
 

@@ -13,14 +13,12 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener
 import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.Pools
 import com.badlogic.gdx.utils.XmlReader
-import com.badlogic.gdx.utils.reflect.ClassReflection
 import com.lyeeedar.Player.PlayerData
 import com.lyeeedar.Renderables.Sprite.Sprite
 import com.lyeeedar.Util.AssetManager
-import com.lyeeedar.Util.addClickListener
+import com.lyeeedar.Util.Colour
 import com.lyeeedar.Util.getXml
 import com.lyeeedar.Util.set
-import kotlin.jvm.javaClass
 
 /**
  * Created by Philip on 05-Aug-16.
@@ -37,7 +35,7 @@ class UnlockTreeWidget<T : Unlockable>(val unlockTree: UnlockTree<T>, val player
 	val iconSize = 40f
 	val circleCol = Color(1f, 1f, 1f, 0.2f)
 	val background = AssetManager.loadTexture("Sprites/Oryx/uf_split/uf_terrain/ground_dirt_dark_1.png", wrapping = Texture.TextureWrap.Repeat)
-	val unbought = AssetManager.loadSprite("Icons/Unknown", colour = Color.LIGHT_GRAY)
+	val unbought = AssetManager.loadSprite("Icons/Unknown", colour = Colour.LIGHT_GRAY)
 	val boughtLineCol = Color(Color.GOLDENROD)
 	val unboughtLineCol = Color(0.5f, 0.5f, 0.5f, 1f)
 

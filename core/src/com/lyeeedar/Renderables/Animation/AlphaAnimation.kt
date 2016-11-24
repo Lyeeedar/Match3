@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.utils.Pool
 import com.badlogic.gdx.utils.Pools
 import com.badlogic.gdx.utils.XmlReader
+import com.lyeeedar.Util.Colour
 
 /**
  * Created by Philip on 31-Jul-16.
@@ -14,13 +15,13 @@ class AlphaAnimation() : AbstractColourAnimation()
 {
 	private var duration: Float = 0f
 	private var time: Float = 0f
-	private val colour: Color = Color()
-	private val startColour: Color = Color()
+	private val colour: Colour = Colour()
+	private val startColour: Colour = Colour()
 	private lateinit var alphas: FloatArray
 
 	override fun duration(): Float = duration
 	override fun time(): Float = time
-	override fun renderColour(): Color = colour
+	override fun renderColour(): Colour = colour
 
 	override fun update(delta: Float): Boolean
 	{
@@ -45,7 +46,7 @@ class AlphaAnimation() : AbstractColourAnimation()
 	{
 	}
 
-	fun set(alphas: FloatArray, start: Color, duration: Float, oneTime: Boolean = true): AlphaAnimation
+	fun set(alphas: FloatArray, start: Colour, duration: Float, oneTime: Boolean = true): AlphaAnimation
 	{
 		this.startColour.set(start)
 		this.alphas = alphas

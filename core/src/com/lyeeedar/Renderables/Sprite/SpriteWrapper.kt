@@ -1,4 +1,4 @@
-package com.lyeeedar.Sprite
+package com.lyeeedar.Renderables.Sprite
 
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Renderables.Sprite.Sprite

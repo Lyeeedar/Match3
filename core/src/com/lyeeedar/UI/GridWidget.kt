@@ -3,6 +3,7 @@ package com.lyeeedar.UI
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.Batch
+import com.badlogic.gdx.graphics.g2d.HDRColourSpriteBatch
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.scenes.scene2d.InputEvent
@@ -19,12 +20,9 @@ import com.lyeeedar.Global
 import com.lyeeedar.Player.Ability.Targetter
 import com.lyeeedar.Player.Player
 import com.lyeeedar.Renderables.Particle.ParticleEffect
+import com.lyeeedar.Renderables.SortedRenderer
 import com.lyeeedar.Renderables.Sprite.Sprite
-import com.lyeeedar.Sprite.SpriteRenderer
-import com.lyeeedar.Util.AssetManager
-import com.lyeeedar.Util.EnumBitflag
-import com.lyeeedar.Util.Future
-import com.lyeeedar.Util.Point
+import com.lyeeedar.Util.*
 
 /**
  * Created by Philip on 05-Jul-16.
@@ -41,8 +39,8 @@ class GridWidget(val grid: Grid) : Widget()
 		}
 
 	val glow: Sprite = AssetManager.loadSprite("glow")
-	val frame: Sprite = AssetManager.loadSprite("GUI/frame", colour = Color(0.6f, 0.7f, 0.9f, 0.6f))
-	val border: Sprite = AssetManager.loadSprite("GUI/border", colour = Color(0.6f, 0.9f, 0.6f, 0.6f))
+	val frame: Sprite = AssetManager.loadSprite("GUI/frame", colour = Colour(Color(0.6f, 0.7f, 0.9f, 0.6f)))
+	val border: Sprite = AssetManager.loadSprite("GUI/border", colour = Colour(Color(0.6f, 0.9f, 0.6f, 0.6f)))
 	val hp_full: Sprite = AssetManager.loadSprite("GUI/health_full")
 	val hp_empty: Sprite = AssetManager.loadSprite("GUI/health_empty")
 	val atk_full: Sprite = AssetManager.loadSprite("GUI/attack_full")
@@ -52,8 +50,8 @@ class GridWidget(val grid: Grid) : Widget()
 	val ORB = 1
 	val EFFECT = 2
 
-	val ground: SpriteRenderer = SpriteRenderer(tileSize, grid.width.toFloat(), grid.height.toFloat(), 3)
-	val floating: SpriteRenderer = SpriteRenderer(tileSize, grid.width.toFloat(), grid.height.toFloat(), 3)
+	val ground = SortedRenderer(tileSize, grid.width.toFloat(), grid.height.toFloat(), 3)
+	val floating = SortedRenderer(tileSize, grid.width.toFloat(), grid.height.toFloat(), 3)
 
 	val tempCol = Color()
 
@@ -144,10 +142,10 @@ class GridWidget(val grid: Grid) : Widget()
 				val chest = tile.chest
 				val monster = tile.monster
 
-				var tileColour = Color.WHITE
-				var orbColour = Color.WHITE
-				var blockColour = Color.WHITE
-				var monsterColour = Color.WHITE
+				var tileColour = Colour.WHITE
+				var orbColour = Colour.WHITE
+				var blockColour = Colour.WHITE
+				var monsterColour = Colour.WHITE
 
 				if (grid.activeAbility != null)
 				{
@@ -155,42 +153,42 @@ class GridWidget(val grid: Grid) : Widget()
 					{
 						if (grid.activeAbility!!.targetter.type == Targetter.Type.ORB)
 						{
-							tileColour = Color.DARK_GRAY
-							orbColour = Color.WHITE
-							blockColour = Color.DARK_GRAY
-							monsterColour = Color.DARK_GRAY
+							tileColour = Colour.DARK_GRAY
+							orbColour = Colour.WHITE
+							blockColour = Colour.DARK_GRAY
+							monsterColour = Colour.DARK_GRAY
 						}
 						else if (grid.activeAbility!!.targetter.type == Targetter.Type.BLOCK)
 						{
-							tileColour = Color.DARK_GRAY
-							orbColour = Color.DARK_GRAY
-							blockColour = Color.WHITE
-							monsterColour = Color.DARK_GRAY
+							tileColour = Colour.DARK_GRAY
+							orbColour = Colour.DARK_GRAY
+							blockColour = Colour.WHITE
+							monsterColour = Colour.DARK_GRAY
 						}
 						else if (grid.activeAbility!!.targetter.type == Targetter.Type.EMPTY)
 						{
-							tileColour = Color.WHITE
-							orbColour = Color.DARK_GRAY
-							blockColour = Color.DARK_GRAY
-							monsterColour = Color.DARK_GRAY
+							tileColour = Colour.WHITE
+							orbColour = Colour.DARK_GRAY
+							blockColour = Colour.DARK_GRAY
+							monsterColour = Colour.DARK_GRAY
 						}
 						else if (grid.activeAbility!!.targetter.type == Targetter.Type.MONSTER)
 						{
-							tileColour = Color.DARK_GRAY
-							orbColour = Color.DARK_GRAY
-							blockColour = Color.DARK_GRAY
-							monsterColour = Color.WHITE
+							tileColour = Colour.DARK_GRAY
+							orbColour = Colour.DARK_GRAY
+							blockColour = Colour.DARK_GRAY
+							monsterColour = Colour.WHITE
 						}
 						else if (grid.activeAbility!!.targetter.type == Targetter.Type.ATTACK)
 						{
-							tileColour = Color.DARK_GRAY
-							orbColour = Color.WHITE
-							blockColour = Color.DARK_GRAY
-							monsterColour = Color.DARK_GRAY
+							tileColour = Colour.DARK_GRAY
+							orbColour = Colour.WHITE
+							blockColour = Colour.DARK_GRAY
+							monsterColour = Colour.DARK_GRAY
 						}
 						else if (grid.activeAbility!!.targetter.type == Targetter.Type.TILE)
 						{
-							val col = if (tile.canHaveOrb) Color.WHITE else Color.DARK_GRAY
+							val col = if (tile.canHaveOrb) Colour.WHITE else Colour.DARK_GRAY
 
 							tileColour = col
 							orbColour = col
@@ -199,18 +197,18 @@ class GridWidget(val grid: Grid) : Widget()
 						}
 						else if (grid.activeAbility!!.targetter.type == Targetter.Type.SEALED)
 						{
-							tileColour = Color.DARK_GRAY
-							orbColour = if (orb != null && orb is Orb && orb.sealed) Color.WHITE else Color.DARK_GRAY
-							blockColour = Color.DARK_GRAY
-							monsterColour = Color.DARK_GRAY
+							tileColour = Colour.DARK_GRAY
+							orbColour = if (orb != null && orb is Orb && orb.sealed) Colour.WHITE else Colour.DARK_GRAY
+							blockColour = Colour.DARK_GRAY
+							monsterColour = Colour.DARK_GRAY
 						}
 					}
 					else
 					{
-						tileColour = Color.DARK_GRAY
-						orbColour = Color.DARK_GRAY
-						blockColour = Color.DARK_GRAY
-						monsterColour = Color.DARK_GRAY
+						tileColour = Colour.DARK_GRAY
+						orbColour = Colour.DARK_GRAY
+						blockColour = Colour.DARK_GRAY
+						monsterColour = Colour.DARK_GRAY
 					}
 				}
 
@@ -340,8 +338,8 @@ class GridWidget(val grid: Grid) : Widget()
 			}
 		}
 
-		ground.flush(Gdx.app.graphics.deltaTime, xp, yp, batch as SpriteBatch)
-		floating.flush(Gdx.app.graphics.deltaTime, xp, yp, batch as SpriteBatch)
+		ground.flush(Gdx.app.graphics.deltaTime, xp, yp, batch as HDRColourSpriteBatch)
+		floating.flush(Gdx.app.graphics.deltaTime, xp, yp, batch as HDRColourSpriteBatch)
 	}
 
 	companion object

@@ -27,7 +27,7 @@ class Monster(val desc: MonsterDesc)
 		{
 			if (value < field)
 			{
-				sprite.colourAnimation = BlinkAnimation.obtain().set(Color.RED, sprite.colour, 0.15f, true)
+				sprite.colourAnimation = BlinkAnimation.obtain().set(Colour(Color.RED), sprite.colour, 0.15f, true)
 			}
 
 			field = value
@@ -107,7 +107,7 @@ class Monster(val desc: MonsterDesc)
 				val beam = AssetManager.loadSprite("EffectSprites/Beam/Beam")
 				beam.rotation = getRotation(tiles[0, 0], tile) * -1
 				beam.animation = ExtendAnimation.obtain().set(0.25f, tile.getPosDiff(tiles[0, 0]))
-				beam.colour = Color.RED
+				beam.colour = Colour(Color.RED)
 				tiles[0, 0].effects.add(beam)
 			}
 		}
@@ -207,7 +207,7 @@ class MonsterAbility
 				val beam = AssetManager.loadSprite("EffectSprites/Beam/Beam")
 				beam.rotation = getRotation(monster.tiles[0, 0], target) * -1
 				beam.animation = ExtendAnimation.obtain().set(0.25f, target.getPosDiff(monster.tiles[0, 0]))
-				beam.colour = Color.RED
+				beam.colour = Colour(Color.RED)
 				monster.tiles[0, 0].effects.add(beam)
 			}
 			else if (effect == Effect.SHIELD)

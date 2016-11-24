@@ -139,7 +139,9 @@ open class Point : Pool.Poolable, Comparable<Point>
 	fun euclideanDist2(other: Point) = Vector2.dst2(x.toFloat(), y.toFloat(), other.x.toFloat(), other.y.toFloat())
 	fun euclideanDist2(ox: Float, oy:Float) = Vector2.dst2(x.toFloat(), y.toFloat(), ox, oy)
 
-	fun liesBetween(p1: Point, p2: Point): Boolean
+	fun liesInRect(min: Point, max: Point): Boolean = x >= min.x && x <= max.x && y >= min.y&& y <= max.y
+
+	fun liesOnLine(p1: Point, p2: Point): Boolean
 	{
 		// early out
 		if (p1 == p2) return this == p1
@@ -223,6 +225,13 @@ open class Point : Pool.Poolable, Comparable<Point>
 	operator fun timesAssign(other: Point) { x *= other.x; y *= other.y }
 	operator fun divAssign(other: Point) { x /= other.x; y /= other.y }
 
+	operator fun get(x: Int) = when (x)
+	{
+		0 -> x
+		1 -> y
+		else -> throw IndexOutOfBoundsException()
+	}
+
 	override fun equals(other: Any?): Boolean
 	{
 		if (other == null || other !is Point) return false
@@ -265,7 +274,7 @@ class PointRange(override val endInclusive: Point, override val start: Point) : 
 {
 	override fun contains(value: Point): Boolean
 	{
-		return value.liesBetween(start, endInclusive)
+		return value.liesInRect(start, endInclusive)
 	}
 
 	override fun isEmpty(): Boolean = start == endInclusive
@@ -282,30 +291,39 @@ open class PointProgression
 
 class PointIterator(val start: Point, val end: Point): Iterator<Point>
 {
-	var xstep: Float = 0f
-	var ystep: Float = 0f
-	var steps: Int = 0
-	var i: Int = 0
+	lateinit var xRange: MinMax
+	lateinit var yRange: MinMax
+	var x: Int = 0
+	var y: Int = 0
 
 	init
 	{
-		val xdiff = end.x - start.x
-		val ydiff = end.y - start.y
+		val minx = Math.min(start.x, end.x)
+		val maxx = Math.max(start.x, end.x)
 
-		steps = Math.max(Math.abs(xdiff), Math.abs(ydiff))
+		val miny = Math.min(start.y, end.y)
+		val maxy = Math.max(start.y, end.y)
 
-		xstep = xdiff.toFloat() / steps.toFloat()
-		ystep = ydiff.toFloat() / steps.toFloat()
+		xRange = MinMax(minx, maxx)
+		x = xRange.min-1
+
+		yRange = MinMax(miny, maxy)
+		y = yRange.min
 	}
 
-	override fun hasNext(): Boolean = i <= steps
+	override fun hasNext(): Boolean = y <= yRange.max
 
 	override fun next(): Point
 	{
-		val x = start.x + Math.round(xstep * i.toFloat()).toInt()
-		val y = start.y + Math.round(ystep * i.toFloat()).toInt()
-		i++
+		x++
+		if (x > xRange.max)
+		{
+			x = xRange.min
+			y++
+		}
 
 		return Point.obtain().set(x, y)
 	}
 }
+
+data class MinMax(val min: Int, val max: Int)

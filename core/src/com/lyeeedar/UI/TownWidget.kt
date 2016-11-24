@@ -2,6 +2,7 @@ package com.lyeeedar.UI
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.g2d.Batch
+import com.badlogic.gdx.graphics.g2d.HDRColourSpriteBatch
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.scenes.scene2d.InputEvent
@@ -14,9 +15,9 @@ import com.lyeeedar.Renderables.Particle.ParticleEffect
 import com.lyeeedar.Player.Player
 import com.lyeeedar.Player.PlayerData
 import com.lyeeedar.Renderables.Animation.MoveAnimation
+import com.lyeeedar.Renderables.SortedRenderer
 import com.lyeeedar.Renderables.Sprite.Sprite
 import com.lyeeedar.Renderables.Sprite.TilingSprite
-import com.lyeeedar.Sprite.SpriteRenderer
 import com.lyeeedar.Town.House
 import com.lyeeedar.Town.Town
 import com.lyeeedar.Util.*
@@ -41,7 +42,7 @@ class TownWidget(val town: Town, val player: PlayerData) : Widget()
 
 	var playerSprite: Sprite = player.chosenSprite.copy()
 
-	lateinit var renderer: SpriteRenderer
+	lateinit var renderer: SortedRenderer
 
 	init
 	{
@@ -117,7 +118,7 @@ class TownWidget(val town: Town, val player: PlayerData) : Widget()
 			}
 		})
 
-		renderer = SpriteRenderer(tileSize, tilesWidth.toFloat(), tilesHeight.toFloat(), 2)
+		renderer = SortedRenderer(tileSize, tilesWidth.toFloat(), tilesHeight.toFloat(), 2)
 	}
 
 	fun moveTo(x: Int, y: Int, arrivalFun: (() -> Unit)? = null)
@@ -279,7 +280,7 @@ class TownWidget(val town: Town, val player: PlayerData) : Widget()
 			}
 		}
 
-		renderer.flush(Gdx.app.graphics.deltaTime, offsetx, offsety, batch as SpriteBatch)
+		renderer.flush(Gdx.app.graphics.deltaTime, offsetx, offsety, batch as HDRColourSpriteBatch)
 		playerSprite.render(batch, x + width / 2 - tileSize * 0.5f, y + height / 2 - tileSize * 0.2f, tileSize, tileSize)
 	}
 }

@@ -3,6 +3,7 @@ package com.lyeeedar.Screens
 import com.badlogic.gdx.ApplicationListener
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Color
+import com.badlogic.gdx.graphics.g2d.HDRColourSpriteBatch
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.math.Interpolation
@@ -23,9 +24,9 @@ import com.lyeeedar.Renderables.Animation.MoveAnimation
 import com.lyeeedar.Renderables.Particle.ParticleEffect
 import com.lyeeedar.Renderables.Particle.Particle
 import com.lyeeedar.Renderables.Renderable
+import com.lyeeedar.Renderables.SortedRenderer
 import com.lyeeedar.Renderables.Sprite.Sprite
 import com.lyeeedar.Renderables.Sprite.TilingSprite
-import com.lyeeedar.Sprite.SpriteRenderer
 import com.lyeeedar.UI.GridWidget
 import com.lyeeedar.Util.*
 import javax.swing.JColorChooser
@@ -39,11 +40,11 @@ class ParticleEditorScreen : AbstractScreen()
 {
 	var currentPath: String? = null
 	lateinit var particle: ParticleEffect
-	val batch = SpriteBatch()
+	val batch = HDRColourSpriteBatch()
 	lateinit var background: Array2D<Symbol>
 	lateinit var collision: Array2D<Boolean>
 	val tileSize = 32f
-	val spriteRender = SpriteRenderer(tileSize, 100f, 100f, 2)
+	val spriteRender = SortedRenderer(tileSize, 100f, 100f, 2)
 	val shape = ShapeRenderer()
 	var colour: java.awt.Color = java.awt.Color.WHITE
 	val crossedTiles = ObjectSet<Point>()
@@ -70,7 +71,7 @@ class ParticleEditorScreen : AbstractScreen()
 		colourButton.addClickListener {
 			colour = JColorChooser.showDialog(null, "Particle Colour", colour)
 			particle.colour.set(colour.red / 255f, colour.green / 255f, colour.blue / 255f, colour.alpha / 255f)
-			colourButton.color = particle.colour
+			colourButton.color = particle.colour.color()
 		}
 
 		browseButton.addClickListener {
@@ -155,11 +156,11 @@ class ParticleEditorScreen : AbstractScreen()
 
 					if (renderable is Sprite)
 					{
-						spriteRender.queueSprite(renderable, x.toFloat(), y.toFloat(), 0, i++, col)
+						spriteRender.queueSprite(renderable, x.toFloat(), y.toFloat(), 0, i++, Colour(col))
 					}
 					else if (renderable is TilingSprite)
 					{
-						spriteRender.queueSprite(renderable, x.toFloat(), y.toFloat(), 0, i++, col)
+						spriteRender.queueSprite(renderable, x.toFloat(), y.toFloat(), 0, i++, Colour(col))
 					}
 				}
 			}

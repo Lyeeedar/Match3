@@ -3,6 +3,7 @@ package com.lyeeedar.UI
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.Batch
+import com.badlogic.gdx.graphics.g2d.HDRColourSpriteBatch
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.scenes.scene2d.InputEvent
@@ -14,11 +15,11 @@ import com.lyeeedar.MainGame
 import com.lyeeedar.Map.DungeonMap
 import com.lyeeedar.Player.Player
 import com.lyeeedar.Renderables.Animation.MoveAnimation
+import com.lyeeedar.Renderables.SortedRenderer
 import com.lyeeedar.Renderables.Sprite.Sprite
 import com.lyeeedar.Renderables.Sprite.TilingSprite
 import com.lyeeedar.Screens.GridScreen
 import com.lyeeedar.Screens.TownScreen
-import com.lyeeedar.Sprite.SpriteRenderer
 import com.lyeeedar.Util.*
 import sun.applet.Main
 
@@ -50,7 +51,7 @@ class DungeonMapWidget(val map: DungeonMap, val player: Player): Widget()
 	val FOG = 2
 	val PLAYER = 4
 
-	val renderer = SpriteRenderer(tileSize, map.width.toFloat(), map.height.toFloat(), 5)
+	val renderer = SortedRenderer(tileSize, map.width.toFloat(), map.height.toFloat(), 5)
 	val bitflag = EnumBitflag<Direction>()
 	var waitingOnTransition: Boolean = false
 	var dungeonComplete = false
@@ -280,7 +281,7 @@ class DungeonMapWidget(val map: DungeonMap, val player: Player): Widget()
 			{
 				buildTilingBitflag(bitflag, entry.point)
 				val fsprite = fog.getSprite(bitflag)
-				renderer.queueSprite(fsprite, entry.point.x.toFloat(), entry.point.y.toFloat(), FOG, 0, colour = Color.BLACK)
+				renderer.queueSprite(fsprite, entry.point.x.toFloat(), entry.point.y.toFloat(), FOG, 0, colour = Colour(Color.BLACK))
 			}
 
 			if (entry.point == map.playerPos && moveTo == null && playerSprite.animation == null && !waitingOnTransition)
@@ -305,7 +306,7 @@ class DungeonMapWidget(val map: DungeonMap, val player: Player): Widget()
 			}
 		}
 
-		renderer.flush(Gdx.app.graphics.deltaTime, offsetx, offsety, batch as SpriteBatch)
+		renderer.flush(Gdx.app.graphics.deltaTime, offsetx, offsety, batch as HDRColourSpriteBatch)
 	}
 
 	// ----------------------------------------------------------------------

@@ -1,9 +1,8 @@
-package com.lyeeedar.Sprite
+package com.lyeeedar.Renderables.Sprite
 
 import com.badlogic.gdx.utils.IntMap
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Direction
-import com.lyeeedar.Renderables.Sprite.Sprite
 import com.lyeeedar.Util.AssetManager
 import com.lyeeedar.Util.EnumBitflag
 

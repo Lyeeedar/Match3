@@ -40,6 +40,7 @@ class Particle(val emitter: Emitter)
 
 	val particles = Array<ParticleData>(false, 16)
 
+	var allowResize: Boolean = true
 	lateinit var lifetime: Range
 	lateinit var blend: BlendMode
 	var drag = 0f
@@ -74,7 +75,17 @@ class Particle(val emitter: Emitter)
 				}
 				else
 				{
-					val rotation = rotationSpeed.valAt(particle.rotStream, particle.life).lerp(particle.ranVal)
+					var rotation = rotationSpeed.valAt(particle.rotStream, particle.life).lerp(particle.ranVal)
+
+					if (emitter.particleEffect.flipX && emitter.particleEffect.flipY)
+					{
+
+					}
+					else if (emitter.particleEffect.flipX || emitter.particleEffect.flipY)
+					{
+						rotation *= -1f
+					}
+
 					particle.rotation += rotation * delta
 				}
 
@@ -234,8 +245,18 @@ class Particle(val emitter: Emitter)
 
 		if (emitter.simulationSpace == Emitter.SimulationSpace.LOCAL)
 		{
-			temp.set(emitter.offset)
+			temp.set(emitter.offset.valAt(0, emitter.time))
 			temp.scl(emitter.size)
+
+			if (emitter.particleEffect.flipX)
+			{
+				temp.x *= -1
+			}
+			if (emitter.particleEffect.flipY)
+			{
+				temp.y *= -1
+			}
+
 			temp.rotate(emitter.rotation)
 
 			val ex = temp.x + emitter.position.x
@@ -277,6 +298,7 @@ class Particle(val emitter: Emitter)
 			particle.collision = CollisionAction.valueOf(xml.get("Collision", "None").toUpperCase())
 			particle.drag = xml.getFloat("Drag", 0f)
 			particle.velocityAligned = xml.getBoolean("VelocityAligned", false)
+			particle.allowResize = xml.getBoolean("AllowResize", true)
 
 			val textureEls = xml.getChildByName("TextureKeyframes")
 			if (textureEls != null)
@@ -295,7 +317,7 @@ class Particle(val emitter: Emitter)
 			}
 			else
 			{
-				particle.colour[0, 0f] = Color(1f, 1f, 1f, 1f)
+				particle.colour[0, 0f] = Colour(1f, 1f, 1f, 1f)
 			}
 
 			val alphaEls = xml.getChildByName("AlphaKeyframes")

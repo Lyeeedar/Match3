@@ -2,8 +2,10 @@ package com.lyeeedar.Renderables.Particle
 
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.Interpolation
+import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.XmlReader
+import com.lyeeedar.Util.Colour
 
 /**
  * Created by Philip on 14-Aug-16.
@@ -129,8 +131,14 @@ class RangeLerpTimeline : Timeline<Range>()
 	}
 }
 
-class ColourTimeline : Timeline<Color>()
+class ColourTimeline : Timeline<Colour>()
 {
-	val temp = Color()
-	override fun lerpValue(prev: Color, next: Color, alpha: Float): Color = temp.set(prev).lerp(next, alpha)
+	val temp = Colour()
+	override fun lerpValue(prev: Colour, next: Colour, alpha: Float): Colour = temp.set(prev).lerp(next, alpha)
+}
+
+class VectorTimeline: Timeline<Vector2>()
+{
+	val temp = Vector2()
+	override fun lerpValue(prev: Vector2, next: Vector2, alpha: Float): Vector2 = temp.set(prev).lerp(next, alpha)
 }

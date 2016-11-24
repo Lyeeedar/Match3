@@ -18,12 +18,10 @@ import com.lyeeedar.Global
 import com.lyeeedar.Player.Player
 import com.lyeeedar.Renderables.Animation.MoveAnimation
 import com.lyeeedar.Renderables.Sprite.Sprite
+import com.lyeeedar.Renderables.Sprite.SpriteEffectActor
 
-import com.lyeeedar.Sprite.SpriteEffectActor
-import com.lyeeedar.Sprite.SpriteRenderer
 import com.lyeeedar.UI.*
 import com.lyeeedar.Util.AssetManager
-import java.awt.event.MouseListener
 
 /**
  * Created by Philip on 20-Mar-16.

@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.utils.Pool
 import com.badlogic.gdx.utils.Pools
 import com.badlogic.gdx.utils.XmlReader
+import com.lyeeedar.Util.Colour
 import com.lyeeedar.Util.HSLColour
 import com.lyeeedar.Util.random
 
@@ -18,12 +19,12 @@ class ChromaticAnimation() : AbstractColourAnimation()
 {
 	private var duration: Float = 0f
 	private var time: Float = 0f
-	private val colour: Color = Color()
+	private val colour: Colour = Colour()
 	private val hsl: HSLColour = HSLColour()
 
 	override fun duration(): Float = duration
 	override fun time(): Float = time
-	override fun renderColour(): Color = colour
+	override fun renderColour(): Colour = colour
 
 	override fun update(delta: Float): Boolean
 	{

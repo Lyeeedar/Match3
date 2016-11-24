@@ -1,5 +1,7 @@
 package com.lyeeedar.Util
 
+import com.lyeeedar.Direction
+
 /**
  * Created by Philip on 08-Apr-16.
  */
@@ -37,6 +39,10 @@ class Array2D<T> (val xSize: Int, val ySize: Int, val array: Array<Array<T>>): S
 
 	operator fun get(p: Point): T {
 		return array[p.x][p.y]
+	}
+
+	operator fun get(p: Point, dir: Direction): T {
+		return array[p.x + dir.x][p.y + dir.y]
 	}
 
 	operator fun set(p: Point, t: T) {

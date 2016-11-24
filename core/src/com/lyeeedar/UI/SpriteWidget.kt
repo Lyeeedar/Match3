@@ -2,6 +2,7 @@ package com.lyeeedar.UI
 
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.Batch
+import com.badlogic.gdx.graphics.g2d.HDRColourSpriteBatch
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.scenes.scene2d.ui.Widget
@@ -60,7 +61,7 @@ class SpriteWidget(private val drawable: Sprite, width: Float, height: Float, va
 		val scaleX = scaleX
 		val scaleY = scaleY
 
-		drawable.render(batch as SpriteBatch, x + imageX, y + imageY, imageWidth * scaleX, imageHeight * scaleY)
+		drawable.render(batch, x + imageX, y + imageY, imageWidth * scaleX, imageHeight * scaleY)
 	}
 
 	override fun getPrefWidth(): Float
