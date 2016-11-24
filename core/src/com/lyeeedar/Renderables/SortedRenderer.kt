@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.Texture
+import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.HDRColourSpriteBatch
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.g2d.TextureRegion
@@ -61,7 +62,7 @@ class SortedRenderer(var tileSize: Float, val width: Float, val height: Float, v
 	}
 
 	// ----------------------------------------------------------------------
-	fun flush(deltaTime: Float, offsetx: Float, offsety: Float, batch: HDRColourSpriteBatch)
+	fun flush(deltaTime: Float, offsetx: Float, offsety: Float, batch: Batch)
 	{
 		// do screen shake
 		var offsetx = offsetx
@@ -88,7 +89,9 @@ class SortedRenderer(var tileSize: Float, val width: Float, val height: Float, v
 
 			batch.setBlendFunction(rs.blend.src, rs.blend.dst)
 
-			batch.setColor(rs.colour)
+			if (batch is HDRColourSpriteBatch) batch.setColor(rs.colour)
+			else batch.color = rs.colour.color()
+
 			rs.sprite?.render(batch, rs.x + offsetx, rs.y + offsety, tileSize * rs.width, tileSize * rs.height )
 
 			if (rs.tilingSprite != null)
@@ -111,7 +114,14 @@ class SortedRenderer(var tileSize: Float, val width: Float, val height: Float, v
 
 			if (rs.texture != null)
 			{
-				batch.draw(rs.texture, rs.x + offsetx, rs.y + offsety, 0.5f, 0.5f, 1f, 1f, tileSize * rs.width, tileSize * rs.height, rs.rotation, rs.flipX, rs.flipY)
+				if (batch is HDRColourSpriteBatch)
+				{
+					batch.draw(rs.texture, rs.x + offsetx, rs.y + offsety, 0.5f, 0.5f, 1f, 1f, tileSize * rs.width, tileSize * rs.height, rs.rotation, rs.flipX, rs.flipY)
+				}
+				else
+				{
+					batch.draw(rs.texture, rs.x + offsetx, rs.y + offsety, 0.5f, 0.5f, 1f, 1f, tileSize * rs.width, tileSize * rs.height, rs.rotation)
+				}
 			}
 
 			rs.free()

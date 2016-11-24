@@ -7,6 +7,7 @@ import com.badlogic.gdx.Screen
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.HDRColourSpriteBatch
+import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.utils.Scaling
@@ -121,7 +122,7 @@ abstract class AbstractScreen() : Screen, InputProcessor
     // ----------------------------------------------------------------------
     fun baseCreate()
 	{
-        stage = Stage(ScalingViewport(Scaling.fit, 360f, 640f), HDRColourSpriteBatch())
+        stage = Stage(ScalingViewport(Scaling.fit, 360f, 640f), SpriteBatch())
 
         mainTable = Table()
         mainTable.setFillParent(true)

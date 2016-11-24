@@ -306,7 +306,7 @@ class DungeonMapWidget(val map: DungeonMap, val player: Player): Widget()
 			}
 		}
 
-		renderer.flush(Gdx.app.graphics.deltaTime, offsetx, offsety, batch as HDRColourSpriteBatch)
+		renderer.flush(Gdx.app.graphics.deltaTime, offsetx, offsety, batch as SpriteBatch)
 	}
 
 	// ----------------------------------------------------------------------
