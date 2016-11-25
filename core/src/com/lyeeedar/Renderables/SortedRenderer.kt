@@ -90,7 +90,7 @@ class SortedRenderer(var tileSize: Float, val width: Float, val height: Float, v
 			batch.setBlendFunction(rs.blend.src, rs.blend.dst)
 
 			if (batch is HDRColourSpriteBatch) batch.setColor(rs.colour)
-			else batch.color = rs.colour.color()
+			else batch.setColor(rs.colour.toFloatBits())
 
 			rs.sprite?.render(batch, rs.x + offsetx, rs.y + offsety, tileSize * rs.width, tileSize * rs.height )
 
@@ -338,8 +338,12 @@ class RenderSprite : BinaryHeap.Node(0f)
 					 blend: BlendMode,
 					 comparisonVal: Float): RenderSprite
 	{
-		point.set(ix.toInt(), iy.toInt())
-		this.colour.set(colour)
+		this.point.x = ix.toInt()
+		this.point.y = iy.toInt()
+		this.colour.r = colour.r
+		this.colour.g = colour.g
+		this.colour.b = colour.b
+		this.colour.a = colour.a
 		this.sprite = sprite
 		this.tilingSprite = tilingSprite
 		this.texture = texture

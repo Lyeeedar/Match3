@@ -261,21 +261,21 @@ class TownWidget(val town: Town, val player: PlayerData) : Widget()
 			{
 				for (px in x.toInt()..(tilesWidth/2))
 				{
-					renderer.queueSprite(path, px.toFloat(), y.toFloat() - 1f, 0, 1)
+					renderer.queueSprite(path, px.toFloat(), y - 1f, 0, 1)
 				}
 
-				renderer.queueSprite(path, 2f, (y.toFloat()), 0, 1)
-				renderer.queueSprite(path, 3f, (y.toFloat()), 0, 1)
+				renderer.queueSprite(path, 2f, y, 0, 1)
+				renderer.queueSprite(path, 3f, y, 0, 1)
 			}
 			else
 			{
 				for (px in (tilesWidth/2)..tilesWidth-3)
 				{
-					renderer.queueSprite(path, px.toFloat(), y.toFloat() - 1f, 0, 1)
+					renderer.queueSprite(path, px.toFloat(), y - 1f, 0, 1)
 				}
 
-				renderer.queueSprite(path, tilesWidth - 4f, (y.toFloat()), 0, 1)
-				renderer.queueSprite(path, tilesWidth - 3f, (y.toFloat()), 0, 1)
+				renderer.queueSprite(path, tilesWidth - 4f, y, 0, 1)
+				renderer.queueSprite(path, tilesWidth - 3f, y, 0, 1)
 			}
 		}
 

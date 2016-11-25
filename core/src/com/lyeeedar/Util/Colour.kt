@@ -1,6 +1,7 @@
 package com.lyeeedar.Util
 
 import com.badlogic.gdx.graphics.Color
+import com.badlogic.gdx.utils.NumberUtils
 
 /**
  * Created by Philip on 30-Mar-16.
@@ -48,12 +49,21 @@ class Colour()
 		return this
 	}
 
-	fun set(col: Color): Colour
+	fun set(col: Color, packed: Float? = null): Colour
 	{
 		r = col.r
 		g = col.g
 		b = col.b
 		a = col.a
+
+		if (packed != null)
+		{
+			cachedR = r
+			cachedG = g
+			cachedB = b
+			cachedA = a
+			cachedFB = packed
+		}
 
 		return this
 	}
@@ -132,6 +142,28 @@ class Colour()
 
 		return this
 	}
+
+	fun toFloatBits() : Float
+	{
+		if (cachedR == r && cachedG == g && cachedB == b && cachedA == a) return cachedFB
+		else
+		{
+			val intBits = (255 * a).toInt() shl 24 or ((255 * b).toInt() shl 16) or ((255 * g).toInt() shl 8) or (255 * r).toInt()
+			cachedFB = NumberUtils.intToFloatColor(intBits)
+
+			cachedR = r
+			cachedB = b
+			cachedG = g
+			cachedA = a
+
+			return cachedFB
+		}
+	}
+	var cachedR: Float = -1f
+	var cachedG: Float = -1f
+	var cachedB: Float = -1f
+	var cachedA: Float = -1f
+	var cachedFB: Float = -1f
 
 	fun color() : Color
 	{

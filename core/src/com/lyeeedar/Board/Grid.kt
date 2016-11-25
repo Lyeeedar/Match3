@@ -759,9 +759,6 @@ class Grid(val width: Int, val height: Int, val level: Level)
 		// find all 2 matches
 		val matches = findMatches(2)
 
-		// if none then no valid
-		if (matches.size == 0) return null
-
 		for (match in matches)
 		{
 			// check the 3 tiles around each end to see if it contains one of the correct colours
@@ -1013,7 +1010,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 			{
 				val opair = matches[ii]
 
-				if (opair.equals(pair))
+				if (opair == pair)
 				{
 					matches.removeIndex(ii)
 				}

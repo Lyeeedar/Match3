@@ -208,15 +208,15 @@ class Sprite(val fileName: String, var animationDelay: Float, var textures: Arra
 			return
 		}
 
-		val oldCol = (batch as? HDRColourSpriteBatch)?.colour ?: tempCol.set(batch.color)
+		val oldCol = (batch as? HDRColourSpriteBatch)?.colour ?: tempCol.set(batch.color, batch.packedColor)
 
 		val col = tempColour.set(oldCol)
 		col *= colour
-		(batch as? HDRColourSpriteBatch)?.setColor(col) ?: batch.setColor(col.r, col.g, col.b, col.a)
+		(batch as? HDRColourSpriteBatch)?.setColor(col) ?: batch.setColor(col.toFloatBits())
 
 		drawTexture(batch, textures.items[animationState.texIndex], x, y, width, height, scaleX, scaleY, animationState)
 
-		(batch as? HDRColourSpriteBatch)?.setColor(oldCol) ?: batch.setColor(oldCol.r, oldCol.g, oldCol.b, oldCol.a)
+		(batch as? HDRColourSpriteBatch)?.setColor(oldCol) ?: batch.setColor(oldCol.toFloatBits())
 	}
 
 	private fun drawTexture(batch: Batch, texture: TextureRegion, x: Float, y: Float, width: Float, height: Float, scaleX: Float, scaleY: Float, animationState: AnimationState)
@@ -245,15 +245,6 @@ class Sprite(val fileName: String, var animationDelay: Float, var textures: Arra
 			x -= widthOffset
 			width = trueWidth
 			height = trueHeight
-		}
-
-		if (animationState.mode == AnimationMode.SHRINK && animationState.isShrunk)
-		{
-			height *= 0.85f
-		}
-		else if (animationState.mode == AnimationMode.SINE)
-		{
-			y += height / 15f * animationState.sinOffset
 		}
 
 		if (rotation != 0f && fixPosition)

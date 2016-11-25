@@ -65,7 +65,7 @@ class GridWidget(val grid: Grid) : Widget()
 		{
 			override fun touchDown(event: InputEvent?, x: Float, y: Float, pointer: Int, button: Int): Boolean
 			{
-				val xp = x + ((grid.width * tileSize) / 2f) - (width.toFloat() / 2f)
+				val xp = x + ((grid.width * tileSize) / 2f) - (width / 2f)
 
 				val sx = (xp / tileSize).toInt()
 				val sy = (grid.height-1) - (y / tileSize).toInt()
@@ -84,7 +84,7 @@ class GridWidget(val grid: Grid) : Widget()
 
 			override fun touchDragged (event: InputEvent?, x: Float, y: Float, pointer: Int)
 			{
-				val xp = x + ((grid.width * tileSize) / 2f) - (width.toFloat() / 2f)
+				val xp = x + ((grid.width * tileSize) / 2f) - (width / 2f)
 
 				val sx = (xp / tileSize).toInt()
 				val sy = (grid.height - 1) - (y / tileSize).toInt()
@@ -104,7 +104,7 @@ class GridWidget(val grid: Grid) : Widget()
 
 	fun pointToScreenspace(point: Point): Vector2
 	{
-		val xp = x.toFloat() + (width.toFloat() / 2f) - ((grid.width * tileSize) / 2f)
+		val xp = x + (width / 2f) - ((grid.width * tileSize) / 2f)
 
 		val actualx = point.x * tileSize + xp
 		val actualy = ((grid.height-1) - point.y) * tileSize + y
@@ -116,16 +116,16 @@ class GridWidget(val grid: Grid) : Widget()
 	{
 		super.invalidate()
 
-		val w = width.toFloat() / grid.width.toFloat()
-		val h = (height.toFloat() - 16f) / grid.height.toFloat()
+		val w = width / grid.width.toFloat()
+		val h = (height - 16f) / grid.height.toFloat()
 
 		tileSize = Math.min(w, h)
 	}
 
 	override fun draw(batch: Batch?, parentAlpha: Float)
 	{
-		val xp = this.x.toFloat() + (this.width.toFloat() / 2f) - ((grid.width * tileSize) / 2f)
-		val yp = this.y.toFloat()
+		val xp = this.x + (this.width / 2f) - ((grid.width * tileSize) / 2f)
+		val yp = this.y
 
 		if (grid.activeAbility == null)
 		{
@@ -338,8 +338,8 @@ class GridWidget(val grid: Grid) : Widget()
 			}
 		}
 
-		ground.flush(Gdx.app.graphics.deltaTime, xp, yp, batch as HDRColourSpriteBatch)
-		floating.flush(Gdx.app.graphics.deltaTime, xp, yp, batch as HDRColourSpriteBatch)
+		ground.flush(Gdx.app.graphics.deltaTime, xp, yp, batch!!)
+		floating.flush(Gdx.app.graphics.deltaTime, xp, yp, batch)
 	}
 
 	companion object
