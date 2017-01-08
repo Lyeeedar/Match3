@@ -336,6 +336,12 @@ class Emitter(val particleEffect: ParticleEffect)
 					val y = split[1].toFloat()
 					return Vector2(x, y)
 				})
+
+				if (emitter.offset.streams.size == 0)
+				{
+					emitter.offset.streams.add(Array())
+					emitter.offset.streams[0].add(Pair(0f, Vector2()))
+				}
 			}
 			else
 			{

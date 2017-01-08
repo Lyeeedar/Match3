@@ -291,36 +291,29 @@ open class PointProgression
 
 class PointIterator(val start: Point, val end: Point): Iterator<Point>
 {
-	lateinit var xRange: MinMax
-	lateinit var yRange: MinMax
-	var x: Int = 0
-	var y: Int = 0
+	var xstep: Float = 0f
+	var ystep: Float = 0f
+	var steps: Int = 0
+	var i: Int = 0
 
 	init
 	{
-		val minx = Math.min(start.x, end.x)
-		val maxx = Math.max(start.x, end.x)
+		val xdiff = end.x - start.x
+		val ydiff = end.y - start.y
 
-		val miny = Math.min(start.y, end.y)
-		val maxy = Math.max(start.y, end.y)
+		steps = Math.max(Math.abs(xdiff), Math.abs(ydiff))
 
-		xRange = MinMax(minx, maxx)
-		x = xRange.min-1
-
-		yRange = MinMax(miny, maxy)
-		y = yRange.min
+		xstep = xdiff.toFloat() / steps.toFloat()
+		ystep = ydiff.toFloat() / steps.toFloat()
 	}
 
-	override fun hasNext(): Boolean = y <= yRange.max
+	override fun hasNext(): Boolean = i <= steps
 
 	override fun next(): Point
 	{
-		x++
-		if (x > xRange.max)
-		{
-			x = xRange.min
-			y++
-		}
+		val x = start.x + Math.round(xstep * i.toFloat()).toInt()
+		val y = start.y + Math.round(ystep * i.toFloat()).toInt()
+		i++
 
 		return Point.obtain().set(x, y)
 	}

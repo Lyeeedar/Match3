@@ -10,7 +10,7 @@
 				<UpdateRate>0.1</UpdateRate>
 				<Colour>189,9,9,255</Colour>
 			</Death>
-			<AttackDelay>5.5</AttackDelay>
+			<AttackDelay>5</AttackDelay>
 			<AttackSpeed>7</AttackSpeed>
 			<HP>7</HP>
 			<Rewards>
