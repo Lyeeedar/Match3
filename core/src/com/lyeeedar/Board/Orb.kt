@@ -45,6 +45,7 @@ class Orb(val desc: OrbDesc, theme: LevelTheme): Swappable(theme)
 	var deletionEffectDelay: Float = 0f
 	var skipPowerOrb = false
 
+	var delayDisplayAttack: Float = 0f
 	var hasAttack: Boolean = false
 		set(value)
 		{

@@ -520,7 +520,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 		var done = true
 
 		// if in update, do animations
-		cleanup()
+		cleanup(delta)
 
 		if (!hasAnim())
 		{
@@ -638,7 +638,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 	}
 
 	// ----------------------------------------------------------------------
-	fun cleanup()
+	fun cleanup(delta: Float)
 	{
 		for (x in 0..width-1)
 		{
@@ -671,6 +671,15 @@ class Grid(val width: Int, val height: Int, val level: Level)
 						if (!level.completed) onAttacked(orb)
 						tile.orb = null
 						onPop(orb, orb.deletionEffectDelay)
+					}
+					else if (orb.delayDisplayAttack > 0)
+					{
+						orb.delayDisplayAttack -= delta
+
+						if (orb.delayDisplayAttack <= 0)
+						{
+							orb.hasAttack = true
+						}
 					}
 				}
 				else if (tile.block != null)

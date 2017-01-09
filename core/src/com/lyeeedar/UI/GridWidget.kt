@@ -268,7 +268,7 @@ class GridWidget(val grid: Grid) : Widget()
 						ground.queueSprite(orb.sealSprite, xi, yi, ORB, 2, orbColour)
 					}
 
-					if (orb is Orb)
+					if (orb is Orb && orb.sprite.renderDelay <= 0)
 					{
 						if (orb.armed != null)
 						{
@@ -292,8 +292,6 @@ class GridWidget(val grid: Grid) : Widget()
 
 								currentPoint.rotate(degreesStep)
 							}
-
-							//foreground.queueSprite(orb.attackIcon, xi, yi, xp, yp, SpaceSlot.ORB, 2, orbColour)
 						}
 					}
 				}

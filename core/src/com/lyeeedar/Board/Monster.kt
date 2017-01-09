@@ -1,6 +1,7 @@
 package com.lyeeedar.Board
 
 import com.badlogic.gdx.graphics.Color
+import com.badlogic.gdx.math.Interpolation
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.ObjectMap
@@ -10,9 +11,7 @@ import com.lyeeedar.Direction
 import com.lyeeedar.Player.Ability.Effect
 import com.lyeeedar.Player.Ability.Permuter
 import com.lyeeedar.Player.Ability.Targetter
-import com.lyeeedar.Renderables.Animation.BlinkAnimation
-import com.lyeeedar.Renderables.Animation.BumpAnimation
-import com.lyeeedar.Renderables.Animation.ExtendAnimation
+import com.lyeeedar.Renderables.Animation.*
 import com.lyeeedar.Renderables.Sprite.Sprite
 import com.lyeeedar.Util.*
 
@@ -98,17 +97,19 @@ class Monster(val desc: MonsterDesc)
 
 			if (tile != null)
 			{
-				tile.orb!!.hasAttack = true
 				tile.orb!!.attackTimer = attackSpeed
 				val diff = tile.getPosDiff(tiles[0, 0])
 				diff[0].y *= -1
 				sprite.animation = BumpAnimation.obtain().set(0.2f, diff)
 
-				val beam = AssetManager.loadSprite("EffectSprites/Beam/Beam")
-				beam.rotation = getRotation(tiles[0, 0], tile) * -1
-				beam.animation = ExtendAnimation.obtain().set(0.25f, tile.getPosDiff(tiles[0, 0]))
-				beam.colour = Colour(Color.RED)
-				tiles[0, 0].effects.add(beam)
+				val animDuration = 0.2f + tile.euclideanDist2(tiles[0, 0]) * 0.01f
+				val attackSprite = AssetManager.loadSprite("Oryx/uf_split/uf_items/skull_small", drawActualSize = true)
+				attackSprite.colour = tile.orb!!.sprite.colour
+				attackSprite.animation = LeapAnimation.obtain().set(animDuration, tile.getPosDiff(tiles[0, 0]), 1f)
+				attackSprite.animation = ExpandAnimation.obtain().set(animDuration, 0.5f, 1.5f, false)
+				tile.effects.add(attackSprite)
+
+				tile.orb!!.delayDisplayAttack = animDuration
 			}
 		}
 
@@ -195,36 +196,40 @@ class MonsterAbility
 
 		if (effect == Effect.MOVE)
 		{
-			var target = finalTargets.random()
-			var valid = true
-
-			outer@ for (x in 0..monster.size-1)
+			fun isValid(t: Tile): Boolean
 			{
-				for (y in 0..monster.size-1)
+				for (x in 0..monster.size-1)
 				{
-					val tile = grid.tile(x, y)
-					if (tile == null)
+					for (y in 0..monster.size-1)
 					{
-						valid = false
-						break@outer
-					}
+						val tile = grid.tile(t.x + x, t.y + y) ?: return false
 
-					if (tile.monster != null && tile.monster != monster)
-					{
-						valid = false
-						break@outer
-					}
+						if (tile.monster != null && tile.monster != monster)
+						{
+							return false
+						}
 
-					if (tile.orb != tile.contents)
-					{
-						valid = false
-						break@outer
+						if (tile.orb != tile.contents)
+						{
+							return false
+						}
+
+						if (!tile.canHaveOrb)
+						{
+							return false
+						}
 					}
 				}
+
+				return true
 			}
 
-			if (valid)
+			val target = validTargets.filter(::isValid).asSequence().random()
+
+			if (target != null)
 			{
+				val start = monster.tiles.first()
+
 				for (tile in monster.tiles)
 				{
 					tile.monster = null
@@ -233,11 +238,26 @@ class MonsterAbility
 				{
 					for (y in 0..monster.size - 1)
 					{
-						val tile = grid.tile(x, y)!!
+						val tile = grid.tile(target.x + x, target.y + y)!!
+
+						if (tile.orb != null)
+						{
+							val orb = tile.orb!!
+
+							val sprite = orb.desc.death.copy()
+							sprite.colour = orb.sprite.colour
+
+							tile.effects.add(sprite)
+						}
+
 						tile.monster = monster
 						monster.tiles[x, y] = tile
 					}
 				}
+
+				val end = monster.tiles.first()
+
+				monster.sprite.animation = MoveAnimation.obtain().set(0.25f, UnsmoothedPath(end.getPosDiff(start)), Interpolation.linear)
 			}
 
 			return
