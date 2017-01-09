@@ -17,7 +17,7 @@ import com.lyeeedar.Util.tryGet
  * Created by Philip on 04-Jul-16.
  */
 
-class Orb(val desc: OrbDesc, val theme: LevelTheme): Swappable()
+class Orb(val desc: OrbDesc, theme: LevelTheme): Swappable(theme)
 {
 	init
 	{
@@ -44,16 +44,6 @@ class Orb(val desc: OrbDesc, val theme: LevelTheme): Swappable()
 	var markedForDeletion: Boolean = false
 	var deletionEffectDelay: Float = 0f
 	var skipPowerOrb = false
-
-	var sealSprite: Sprite = theme.sealSprites.tryGet(0).copy()
-	var sealCount = 0
-		set(value)
-		{
-			field = value
-			sealSprite = theme.sealSprites.tryGet(sealCount-1).copy()
-		}
-	val sealed: Boolean
-		get() = sealCount > 0
 
 	var hasAttack: Boolean = false
 		set(value)

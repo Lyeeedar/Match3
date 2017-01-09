@@ -16,6 +16,13 @@
 			<Rewards>
 				<Gold>10</Gold>
 			</Rewards>
+            <AbilityRate>6</AbilityRate>
+            <Abilities>
+                <Ability>
+                    <TargetRestriction>BasicOrb</TargetRestriction>
+                    <Effect>Move</Effect>
+                </Ability>
+            </Abilities>
 		</SmallRat>
 		<GiantRat>
 			<Sprite RefKey="Sprite">
@@ -34,6 +41,13 @@
 			<Rewards>
 				<Gold>25</Gold>
 			</Rewards>
+            <AbilityRate>6</AbilityRate>
+            <Abilities>
+                <Ability>
+                    <TargetRestriction>BasicOrb</TargetRestriction>
+                    <Effect>Move</Effect>
+                </Ability>
+            </Abilities>
 		</GiantRat>
 	</Monsters>
 </Faction>

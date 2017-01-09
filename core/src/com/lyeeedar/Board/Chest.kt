@@ -59,13 +59,13 @@ class Chest(val spawnOrbs: Boolean = true, val theme: LevelTheme)
 			else
 			{
 				spacingCounter = 0
-				return Sinkable(theme.coin.copy())
+				return Sinkable(theme.coin.copy(), theme)
 			}
 		}
 		else
 		{
 			if (numToSpawn <= 0) return null
-			return Sinkable(theme.coin.copy())
+			return Sinkable(theme.coin.copy(), theme)
 		}
 	}
 }

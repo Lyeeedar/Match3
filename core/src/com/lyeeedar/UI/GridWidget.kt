@@ -198,7 +198,7 @@ class GridWidget(val grid: Grid) : Widget()
 						else if (grid.activeAbility!!.targetter.type == Targetter.Type.SEALED)
 						{
 							tileColour = Colour.DARK_GRAY
-							orbColour = if (orb != null && orb is Orb && orb.sealed) Colour.WHITE else Colour.DARK_GRAY
+							orbColour = if (orb != null && orb.sealed) Colour.WHITE else Colour.DARK_GRAY
 							blockColour = Colour.DARK_GRAY
 							monsterColour = Colour.DARK_GRAY
 						}
@@ -263,13 +263,13 @@ class GridWidget(val grid: Grid) : Widget()
 				{
 					ground.queueSprite(orb.sprite, xi, yi, ORB, 1, orbColour)
 
+					if (orb.sealed)
+					{
+						ground.queueSprite(orb.sealSprite, xi, yi, ORB, 2, orbColour)
+					}
+
 					if (orb is Orb)
 					{
-						if (orb.sealed)
-						{
-							ground.queueSprite(orb.sealSprite, xi, yi, ORB, 2, orbColour)
-						}
-
 						if (orb.armed != null)
 						{
 							ground.queueSprite(glow, xi, yi, ORB, 0)

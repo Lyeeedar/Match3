@@ -2,7 +2,7 @@ package com.lyeeedar.Board
 
 import com.lyeeedar.Util.tryGet
 
-class Shield(val theme: LevelTheme) : Swappable()
+class Shield(theme: LevelTheme) : Swappable(theme)
 {
 	override val canMove: Boolean
 		get() = true

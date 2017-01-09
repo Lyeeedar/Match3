@@ -141,7 +141,8 @@ class MonsterAbility
 	{
 		ATTACK,
 		SHIELD,
-		SEAL
+		SEAL,
+		MOVE
 	}
 
 	lateinit var target: Target
@@ -192,6 +193,56 @@ class MonsterAbility
 			}
 		}
 
+		if (effect == Effect.MOVE)
+		{
+			var target = finalTargets.random()
+			var valid = true
+
+			outer@ for (x in 0..monster.size-1)
+			{
+				for (y in 0..monster.size-1)
+				{
+					val tile = grid.tile(x, y)
+					if (tile == null)
+					{
+						valid = false
+						break@outer
+					}
+
+					if (tile.monster != null && tile.monster != monster)
+					{
+						valid = false
+						break@outer
+					}
+
+					if (tile.orb != tile.contents)
+					{
+						valid = false
+						break@outer
+					}
+				}
+			}
+
+			if (valid)
+			{
+				for (tile in monster.tiles)
+				{
+					tile.monster = null
+				}
+				for (x in 0..monster.size-1)
+				{
+					for (y in 0..monster.size - 1)
+					{
+						val tile = grid.tile(x, y)!!
+						tile.monster = monster
+						monster.tiles[x, y] = tile
+					}
+				}
+			}
+
+			return
+		}
+
 		for (target in finalTargets)
 		{
 			val strength = data.get("Strength", "1").toInt()
@@ -217,7 +268,11 @@ class MonsterAbility
 			}
 			else if (effect == Effect.SEAL)
 			{
-				target.orb?.sealCount = strength
+				target.swappable?.sealCount = strength
+			}
+			else if (effect == Effect.MOVE)
+			{
+
 			}
 			else throw NotImplementedError()
 		}

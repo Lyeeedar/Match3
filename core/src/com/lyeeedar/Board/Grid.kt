@@ -587,7 +587,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 		val oldOrb = oldSwap as? Orb
 		val newOrb = newSwap as? Orb
 
-		if ((oldOrb?.sealed ?: false) || (newOrb?.sealed ?: false)) return false
+		if (oldSwap.sealed || newSwap.sealed) return false
 
 		oldSwap.cascadeCount = -1
 		newSwap.cascadeCount = -1
@@ -768,20 +768,20 @@ class Grid(val width: Int, val height: Int, val level: Level)
 			fun checkSurrounding(point: Point, dir: Direction, key: Int): Pair<Point, Point>?
 			{
 				val targetTile = tile(point)
-				if (targetTile == null || targetTile.block != null || targetTile.monster != null || targetTile.swappable?.canMove ?: false || !targetTile.canHaveOrb || targetTile.contents == null) return null
+				if (targetTile == null || targetTile.swappable == null || targetTile.swappable!!.canMove) return null
 
 				fun canMatch(point: Point): Boolean
 				{
 					val tile = tile(point) ?: return false
 					val orb = tile.orb ?: return false
-					if (orb.sealed || orb.markedForDeletion) return false
+					if (!orb.canMove || orb.markedForDeletion) return false
 					return orb.key == key
 				}
 
 				// check + dir
 				if (canMatch(point + dir)) return Pair(point, point+dir)
-				if (canMatch(point + dir.clockwise.clockwise)) return Pair(point, point+dir.clockwise.clockwise)
-				if (canMatch(point + dir.anticlockwise.anticlockwise)) return Pair(point, point+dir.anticlockwise.anticlockwise)
+				if (canMatch(point + dir.cardinalClockwise)) return Pair(point, point+dir.cardinalClockwise)
+				if (canMatch(point + dir.cardinalAnticlockwise)) return Pair(point, point+dir.cardinalAnticlockwise)
 
 				return null
 			}
@@ -796,11 +796,11 @@ class Grid(val width: Int, val height: Int, val level: Level)
 			if (afterSecondPair != null) return afterSecondPair
 		}
 
-		fun getTileKey(x: Int, y: Int): Int
+		fun getTileKey(x: Int, y: Int, dir: Direction): Int
 		{
-			val tile = tile(x, y) ?: return -1
+			val tile = tile(x + dir.x, y + dir.y) ?: return -1
 			val orb = tile.orb ?: return -1
-			if (orb.sealed || orb.markedForDeletion) return -1
+			if (!orb.canMove || orb.markedForDeletion) return -1
 
 			return orb.key
 		}
@@ -810,16 +810,17 @@ class Grid(val width: Int, val height: Int, val level: Level)
 		{
 			for (y in 0..height - 1)
 			{
+				val tile = tile(x, y) ?: continue
+				val swappable = tile.swappable ?: continue
+				if (!swappable.canMove) continue
+
 				for (dir in Direction.CardinalValues)
 				{
-					val key = getTileKey(x + dir.x, y + dir.y)
+					val key = getTileKey(x, y, dir)
 					if (key != -1)
 					{
-						val d1 = dir.clockwise.clockwise
-						val k1 = getTileKey(x + d1.x, y + d1.y)
-
-						val d2 = dir.anticlockwise.anticlockwise
-						val k2 = getTileKey(x + d2.x, y + d2.y)
+						val k1 = getTileKey(x, y, dir.cardinalClockwise)
+						val k2 = getTileKey(x, y, dir.cardinalAnticlockwise)
 
 						if (key == k1 && key == k2)
 						{

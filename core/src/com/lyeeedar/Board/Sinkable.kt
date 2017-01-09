@@ -5,10 +5,10 @@ import com.lyeeedar.Renderables.Sprite.Sprite
 class Sinkable : Swappable
 {
 	override val canMove: Boolean
-		get() = true
+		get() = !sealed
 
-	constructor(sprite: Sprite)
-		: super()
+	constructor(sprite: Sprite, theme: LevelTheme)
+		: super(theme)
 	{
 		this.sprite = sprite
 	}

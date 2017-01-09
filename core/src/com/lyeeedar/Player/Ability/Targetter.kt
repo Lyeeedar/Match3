@@ -15,6 +15,7 @@ class Targetter(val type: Type)
 {
 	enum class Type
 	{
+		BASICORB,
 		ORB,
 		SPECIAL,
 		BLOCK,
@@ -32,11 +33,12 @@ class Targetter(val type: Type)
 	{
 		isValid = when(type)
 		{
+			Type.BASICORB -> fun (tile: Tile, data: ObjectMap<String, String>) = tile.orb != null && !tile.orb!!.hasAttack && tile.orb!!.special == null && !tile.orb!!.sealed
 			Type.ORB -> fun (tile: Tile, data: ObjectMap<String, String>) = tile.orb != null && !tile.orb!!.hasAttack && tile.orb?.special !is Match5
 			Type.SPECIAL  -> fun (tile: Tile, data: ObjectMap<String, String>) = tile.orb?.special != null
 			Type.BLOCK -> fun (tile: Tile, data: ObjectMap<String, String>) = tile.block != null
 			Type.EMPTY -> fun (tile: Tile, data: ObjectMap<String, String>) = tile.contents == null && tile.canHaveOrb
-			Type.SEALED -> fun (tile: Tile, data: ObjectMap<String, String>) = tile.orb?.sealed ?: false
+			Type.SEALED -> fun (tile: Tile, data: ObjectMap<String, String>) = tile.swappable?.sealed ?: false
 			Type.MONSTER ->  fun (tile: Tile, data: ObjectMap<String, String>) = tile.monster != null
 			Type.ATTACK ->  fun (tile: Tile, data: ObjectMap<String, String>) = tile.orb?.hasAttack ?: false
 			Type.TILE -> fun (tile: Tile, data: ObjectMap<String, String>) = tile.canHaveOrb
