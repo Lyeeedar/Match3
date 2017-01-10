@@ -777,7 +777,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 			fun checkSurrounding(point: Point, dir: Direction, key: Int): Pair<Point, Point>?
 			{
 				val targetTile = tile(point)
-				if (targetTile == null || targetTile.swappable == null || targetTile.swappable!!.canMove) return null
+				if (targetTile == null || targetTile.swappable == null || !targetTile.swappable!!.canMove) return null
 
 				fun canMatch(point: Point): Boolean
 				{
