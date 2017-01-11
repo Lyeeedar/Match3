@@ -8,10 +8,7 @@ import com.lyeeedar.Global
 import com.lyeeedar.Renderables.Animation.ChromaticAnimation
 import com.lyeeedar.Renderables.Animation.MoveAnimation
 import com.lyeeedar.Renderables.Sprite.Sprite
-import com.lyeeedar.Util.AssetManager
-import com.lyeeedar.Util.Point
-import com.lyeeedar.Util.UnsmoothedPath
-import com.lyeeedar.Util.getRotation
+import com.lyeeedar.Util.*
 
 /**
  * Created by Philip on 30-Jul-16.
@@ -21,8 +18,8 @@ abstract class Special(val orb: Orb)
 {
 	lateinit var sprite: Sprite
 
-	abstract fun merge(other: Orb): ((point: Point, grid: Grid) -> Unit)?
-	abstract fun apply(): (point: Point, grid: Grid) -> Unit
+	abstract fun merge(other: Orb): ((point: Point, grid: Grid, orb: Orb) -> Unit)?
+	abstract fun apply(): (point: Point, grid: Grid, orb: Orb) -> Unit
 	abstract fun copy(orb: Orb): Special
 
 	companion object
@@ -33,7 +30,7 @@ abstract class Special(val orb: Orb)
 			grid.pop(tile, delay + 0.2f, special, 1 + 2)
 		}
 
-		fun popColumn(special: Special, x: Int, sy: Int, grid: Grid)
+		fun popColumn(special: Special, colour: Colour, x: Int, sy: Int, grid: Grid)
 		{
 			if (x < 0 || x >= grid.width) return
 
@@ -47,6 +44,7 @@ abstract class Special(val orb: Orb)
 				val hitSet = ObjectSet<Tile>()
 
 				val effect = AssetManager.loadParticleEffect("SpecialBeam")
+				effect.colour = colour
 				effect.animation = MoveAnimation.obtain().set(dist * effect.moveSpeed, arrayOf(p1, p2), Interpolation.linear)
 				effect.rotation = getRotation(p1, p2)
 				effect.collisionFun = fun(cx: Int, pcy: Int)
@@ -98,7 +96,7 @@ abstract class Special(val orb: Orb)
 			}
 		}
 
-		fun popRow(special: Special, sx: Int, y: Int, grid: Grid)
+		fun popRow(special: Special, colour: Colour, sx: Int, y: Int, grid: Grid)
 		{
 			if (y < 0 || y >= grid.height) return
 
@@ -112,6 +110,7 @@ abstract class Special(val orb: Orb)
 				val hitSet = ObjectSet<Tile>()
 
 				val effect = AssetManager.loadParticleEffect("SpecialBeam")
+				effect.colour = colour
 				effect.animation = MoveAnimation.obtain().set(dist * effect.moveSpeed, arrayOf(p1, p2), Interpolation.linear)
 				effect.rotation = getRotation(p1, p2)
 				effect.collisionFun = fun(cx: Int, pcy: Int)
@@ -167,14 +166,14 @@ abstract class Special(val orb: Orb)
 
 abstract class Match4(orb: Orb) : Special(orb)
 {
-	override fun merge(other: Orb): ((point: Point, grid: Grid) -> Unit)?
+	override fun merge(other: Orb): ((point: Point, grid: Grid, orb: Orb) -> Unit)?
 	{
 		if (other.special != null && other.special is Match4)
 		{
-			return fun (point: Point, grid: Grid)
+			return fun (point: Point, grid: Grid, orb: Orb)
 			{
-				popColumn(this, point.x, point.y, grid)
-				popRow(this, point.x, point.y, grid)
+				popColumn(this, orb.sprite.colour * other.sprite.colour, point.x, point.y, grid)
+				popRow(this, orb.sprite.colour * other.sprite.colour, point.x, point.y, grid)
 			}
 		}
 
@@ -190,7 +189,7 @@ class Horizontal4(orb: Orb) : Match4(orb)
 	}
 
 	override fun copy(orb: Orb): Special = Horizontal4(orb)
-	override fun apply() = fun (point: Point, grid: Grid) {	popColumn(this, point.x, point.y, grid) }
+	override fun apply() = fun (point: Point, grid: Grid, orb: Orb) {	popColumn(this, orb.sprite.colour, point.x, point.y, grid) }
 
 }
 
@@ -202,7 +201,7 @@ class Vertical4(orb: Orb) : Match4(orb)
 	}
 
 	override fun copy(orb: Orb): Special = Vertical4(orb)
-	override fun apply() = fun (point: Point, grid: Grid) {	popRow(this, point.x, point.y, grid) }
+	override fun apply() = fun (point: Point, grid: Grid, orb: Orb) {	popRow(this, orb.sprite.colour, point.x, point.y, grid) }
 }
 
 class DualMatch(orb: Orb) : Special(orb)
@@ -214,20 +213,21 @@ class DualMatch(orb: Orb) : Special(orb)
 
 	override fun copy(orb: Orb): Special = DualMatch(orb)
 
-	override fun merge(other: Orb): ((point: Point, grid: Grid) -> Unit)?
+	override fun merge(other: Orb): ((point: Point, grid: Grid, orb: Orb) -> Unit)?
 	{
 		val special = other.special
 		if (special != null)
 		{
 			if (special is DualMatch)
 			{
-				return fun (point: Point, grid: Grid)
+				return fun (point: Point, grid: Grid, orb: Orb)
 				{
 					val coreTile = grid.tile(point)
 
 					val hitSet = ObjectSet<Tile>()
 
 					val effect = AssetManager.loadParticleEffect("SpecialExplosion")
+					effect.colour = orb.sprite.colour
 					effect.size = 4f
 					effect.collisionFun = fun(cx: Int, pcy: Int)
 					{
@@ -247,20 +247,20 @@ class DualMatch(orb: Orb) : Special(orb)
 			}
 			else if (special is Horizontal4)
 			{
-				return fun (point: Point, grid: Grid)
+				return fun (point: Point, grid: Grid, orb: Orb)
 				{
-					popColumn(this, point.x-1, point.y, grid)
-					popColumn(this, point.x, point.y, grid)
-					popColumn(this, point.x+1, point.y, grid)
+					popColumn(this, orb.sprite.colour, point.x-1, point.y, grid)
+					popColumn(this, orb.sprite.colour, point.x, point.y, grid)
+					popColumn(this, orb.sprite.colour, point.x+1, point.y, grid)
 				}
 			}
 			else if (special is Vertical4)
 			{
-				return fun (point: Point, grid: Grid)
+				return fun (point: Point, grid: Grid, orb: Orb)
 				{
-					popRow(this, point.x, point.y-1, grid)
-					popRow(this, point.x, point.y, grid)
-					popRow(this, point.x, point.y+1, grid)
+					popRow(this, orb.sprite.colour, point.x, point.y-1, grid)
+					popRow(this, orb.sprite.colour, point.x, point.y, grid)
+					popRow(this, orb.sprite.colour, point.x, point.y+1, grid)
 				}
 			}
 		}
@@ -268,13 +268,14 @@ class DualMatch(orb: Orb) : Special(orb)
 		return null
 	}
 
-	override fun apply() = fun (point: Point, grid: Grid)
+	override fun apply() = fun (point: Point, grid: Grid, orb: Orb)
 	{
 		val coreTile = grid.tile(point)
 
 		val hitSet = ObjectSet<Tile>()
 
 		val effect = AssetManager.loadParticleEffect("SpecialExplosion")
+		effect.colour = orb.sprite.colour
 		effect.size = 3f
 		effect.collisionFun = fun(cx: Int, pcy: Int)
 		{
@@ -305,14 +306,14 @@ class Match5(orb: Orb) : Special(orb)
 
 	override fun copy(orb: Orb): Special = Match5(orb)
 
-	override fun merge(other: Orb): ((point: Point, grid: Grid) -> Unit)?
+	override fun merge(other: Orb): ((point: Point, grid: Grid, orb: Orb) -> Unit)?
 	{
 		val special = other.special
 		if (special != null)
 		{
 			if (special is Match5)
 			{
-				return fun (point: Point, grid: Grid)
+				return fun (point: Point, grid: Grid, orb: Orb)
 				{
 					for (tile in grid.grid)
 					{
@@ -327,7 +328,7 @@ class Match5(orb: Orb) : Special(orb)
 			{
 				val key = other.key
 
-				return fun (point: Point, grid: Grid)
+				return fun (point: Point, grid: Grid, orb: Orb)
 				{
 					for (tile in grid.grid)
 					{
@@ -371,7 +372,7 @@ class Match5(orb: Orb) : Special(orb)
 		{
 			val key = other.key
 
-			return fun (point: Point, grid: Grid)
+			return fun (point: Point, grid: Grid, orb: Orb)
 			{
 				for (tile in grid.grid)
 				{
@@ -402,7 +403,7 @@ class Match5(orb: Orb) : Special(orb)
 		}
 	}
 
-	override fun apply(): (Point, Grid) -> Unit
+	override fun apply(): (Point, Grid, orb: Orb) -> Unit
 	{
 		throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
 	}

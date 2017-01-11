@@ -31,7 +31,14 @@ class UnlockableValidator
 			}
 			else if (file.path.endsWith(".xml"))
 			{
-				processFile(file.path)
+				try
+				{
+					processFile(file.path)
+				}
+				catch (ex: Exception)
+				{
+					System.err.println(ex.message)
+				}
 			}
 		}
 	}

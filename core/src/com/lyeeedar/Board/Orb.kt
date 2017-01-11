@@ -24,7 +24,7 @@ class Orb(val desc: OrbDesc, theme: LevelTheme): Swappable(theme)
 		sprite = desc.sprite.copy()
 	}
 
-	var armed: ((point: Point, grid: Grid) -> Unit)? = null
+	var armed: ((point: Point, grid: Grid, orb: Orb) -> Unit)? = null
 
 	var special: Special? = null
 		set(value)

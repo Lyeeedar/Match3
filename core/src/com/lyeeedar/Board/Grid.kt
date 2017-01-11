@@ -888,7 +888,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 
 		for (tile in tilesToDetonate)
 		{
-			tile.orb!!.armed!!.invoke(tile, this)
+			tile.orb!!.armed!!.invoke(tile, this, tile.orb!!)
 
 			tile.orb!!.armed = null
 			complete = false

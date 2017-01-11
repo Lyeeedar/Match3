@@ -24,6 +24,11 @@ class Colour()
 		set(col.r, col.g, col.b, col.a)
 	}
 
+	constructor(col: Colour) : this()
+	{
+		set(col.r, col.g, col.b, col.a)
+	}
+
 	constructor(r: Float, g:Float, b:Float, a:Float) : this()
 	{
 		set(r, g, b, a)
@@ -93,6 +98,17 @@ class Colour()
 		return this
 	}
 
+	operator fun times(other: Colour): Colour
+	{
+		val col = Colour(this)
+		col.r *= other.r
+		col.g *= other.g
+		col.b *= other.b
+		col.a *= other.a
+
+		return col
+	}
+
 	operator fun timesAssign(other: Colour)
 	{
 		r *= other.r
@@ -119,10 +135,10 @@ class Colour()
 
 	operator fun plusAssign(other: Colour)
 	{
-		r += other.r;
-		g += other.g;
-		b += other.b;
-		a += other.a;
+		r += other.r
+		g += other.g
+		b += other.b
+		a += other.a
 	}
 
 	operator fun divAssign(value: Float)
