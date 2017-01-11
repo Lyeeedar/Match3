@@ -102,10 +102,11 @@ class Monster(val desc: MonsterDesc)
 				diff[0].y *= -1
 				sprite.animation = BumpAnimation.obtain().set(0.2f, diff)
 
-				val animDuration = 0.2f + tile.euclideanDist2(tiles[0, 0]) * 0.01f
+				val dst = tile.euclideanDist(tiles[0, 0])
+				val animDuration = 0.25f + tile.euclideanDist(tiles[0, 0]) * 0.025f
 				val attackSprite = AssetManager.loadSprite("Oryx/uf_split/uf_items/skull_small", drawActualSize = true)
 				attackSprite.colour = tile.orb!!.sprite.colour
-				attackSprite.animation = LeapAnimation.obtain().set(animDuration, tile.getPosDiff(tiles[0, 0]), 1f)
+				attackSprite.animation = LeapAnimation.obtain().set(animDuration, tile.getPosDiff(tiles[0, 0]), 1f + dst * 0.25f)
 				attackSprite.animation = ExpandAnimation.obtain().set(animDuration, 0.5f, 1.5f, false)
 				tile.effects.add(attackSprite)
 
@@ -269,17 +270,20 @@ class MonsterAbility
 
 			if (effect == Effect.ATTACK)
 			{
-				target.orb!!.hasAttack = true
 				target.orb!!.attackTimer = monster.attackSpeed
 				val diff = target.getPosDiff(monster.tiles[0, 0])
 				diff[0].y *= -1
 				monster.sprite.animation = BumpAnimation.obtain().set(0.2f, diff)
 
-				val beam = AssetManager.loadSprite("EffectSprites/Beam/Beam")
-				beam.rotation = getRotation(monster.tiles[0, 0], target) * -1
-				beam.animation = ExtendAnimation.obtain().set(0.25f, target.getPosDiff(monster.tiles[0, 0]))
-				beam.colour = Colour(Color.RED)
-				monster.tiles[0, 0].effects.add(beam)
+				val dst = target.euclideanDist(monster.tiles[0, 0])
+				val animDuration = 0.25f + dst * 0.025f
+				val attackSprite = AssetManager.loadSprite("Oryx/uf_split/uf_items/skull_small", drawActualSize = true)
+				attackSprite.colour = target.orb!!.sprite.colour
+				attackSprite.animation = LeapAnimation.obtain().set(animDuration, target.getPosDiff(monster.tiles[0, 0]), 1f + dst * 0.25f)
+				attackSprite.animation = ExpandAnimation.obtain().set(animDuration, 0.5f, 1.5f, false)
+				target.effects.add(attackSprite)
+
+				target.orb!!.delayDisplayAttack = animDuration
 			}
 			else if (effect == Effect.SHIELD)
 			{

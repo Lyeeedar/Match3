@@ -16,6 +16,8 @@ import com.lyeeedar.Board.Level
 import com.lyeeedar.Board.LevelTheme
 import com.lyeeedar.Global
 import com.lyeeedar.Player.Player
+import com.lyeeedar.Renderables.Animation.ExpandAnimation
+import com.lyeeedar.Renderables.Animation.LeapAnimation
 import com.lyeeedar.Renderables.Animation.MoveAnimation
 import com.lyeeedar.Renderables.Sprite.Sprite
 import com.lyeeedar.Renderables.Sprite.SpriteEffectActor
@@ -113,20 +115,19 @@ class GridScreen(): AbstractScreen()
 			val vec = Vector2()
 			vec.set(dst).sub(src).nor().rotate90(1).scl(64f)
 
-			val vec2 = Vector2()
-			vec2.set(src).lerp(dst, 0.5f).add(vec)
-
-			val path = Bezier<Vector2>(src, vec2, dst)
-
 			val diff = src.dst(dst).div(32f)
 
-			sprite.animation = MoveAnimation.obtain().set(0.2f + diff * 0.1f, path, Interpolation.exp5In)
+			val animDuration = 0.25f + diff * 0.025f
+			sprite.animation = LeapAnimation.obtain().set(animDuration, src, dst, (1f + diff * 0.25f) * 32f)
+			sprite.animation = ExpandAnimation.obtain().set(animDuration, 0.5f, 1.5f, false)
 
 			SpriteEffectActor(sprite, 32f, 32f, Vector2(),
 					{
 						player.hp -= 1
 
 						updateHpBar()
+
+						SpriteEffectActor(AssetManager.loadSprite("EffectSprites/Hit/Hit", 0.1f), 32f, 32f, dst)
 					})
 		}
 

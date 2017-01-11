@@ -109,6 +109,18 @@ class Colour()
 		return col
 	}
 
+	operator fun times(other: Float): Colour
+	{
+		val col = Colour(this)
+		col.r *= other
+		col.g *= other
+		col.b *= other
+		col.a *= other
+
+		return col
+	}
+
+
 	operator fun timesAssign(other: Colour)
 	{
 		r *= other.r

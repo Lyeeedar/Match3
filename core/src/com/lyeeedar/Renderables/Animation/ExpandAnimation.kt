@@ -59,6 +59,8 @@ class ExpandAnimation() : AbstractScaleAnimation()
 		endScale[0] = 1f
 		endScale[1] = 1f
 
+		oneway = true
+
 		this.duration = duration
 		this.time = 0f
 		return this
