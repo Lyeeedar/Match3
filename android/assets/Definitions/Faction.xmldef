@@ -1,37 +1,37 @@
-<Definitions>
-	<Struct Name="Faction" RefKey="Struct">
-		<Collection Name="Monsters" MinCount="1" RefKey="Collection">
-			<Struct Name="Monster" ChildAsName="Name" DescriptionChild="Name" RefKey="Struct">
-				<String Name="Name" RefKey="String" />
-				<Reference Name="Sprite" Keys="Sprite" RefKey="Reference" />
-				<Reference Name="Death" Keys="Sprite" RefKey="Reference" />
-				<Number Name="AttackDelay" Type="Int" Min="0" RefKey="Number" />
-				<Number Name="AttackSpeed" Type="Int" Min="0" RefKey="Number" />
-				<Number Name="Size" Type="Int" Min="1" Default="1" RefKey="Number" />
-				<Number Name="HP" Type="Int" Min="1" Default="10" RefKey="Number" />
-				<Collection Name="Rewards" RefKey="Collection">
-					<Pair Name="Item" RefKey="Pair">
-						<String Name="Key" RefKey="String" />
-						<Number Name="Value" Type="Int" Min="1" Default="1" RefKey="Number" />
-					</Pair>
-				</Collection>
-				<Number Name="AbilityRate" Type="Int" Min="0" Default="10" RefKey="Number" />
-				<Collection Name="Abilities" RefKey="Collection">
-					<Struct Name="Ability" RefKey="Struct">
-						<Enum Name="Target" EnumValues="Neighbour,Random" RefKey="Enum" />
-						<Number Name="Count" Type="Int" Min="1" Default="1" RefKey="Number" />
-						<Enum Name="TargetRestriction" EnumValues="Orb,Special,Block,Empty,Sealed,Monster,Attack,Tile,Shield" RefKey="Enum" />
-						<Enum Name="Permuter" EnumValues="Single,AllOfType,NofType,Column,Row,Cross,Block,Diamond,Random" RefKey="Enum" />
-						<Enum Name="Effect" EnumValues="Attack,Seal,Shield" RefKey="Enum" />
-						<Collection Name="Data" RefKey="Collection">
-							<Pair Name="DataPair" RefKey="Pair">
-								<String Name="Key" RefKey="String" />
-								<Number Name="Value" RefKey="Number" />
-							</Pair>
-						</Collection>
-					</Struct>
-				</Collection>
-			</Struct>
-		</Collection>
-	</Struct>
+<Definitions xmlns:meta="Editor">
+	<Definition Name="Faction" meta:RefKey="Struct">
+		<Data Name="Monsters" MinCount="1" meta:RefKey="Collection">
+			<Data Name="Monster" meta:RefKey="Struct">
+				<Data Name="Name" meta:RefKey="String" />
+				<Data Name="Sprite" Keys="Sprite" meta:RefKey="Reference" />
+				<Data Name="Death" Keys="Sprite" meta:RefKey="Reference" />
+				<Data Name="AttackDelay" Type="Int" Min="0" meta:RefKey="Number" />
+				<Data Name="AttackSpeed" Type="Int" Min="0" meta:RefKey="Number" />
+				<Data Name="Size" Type="Int" Min="1" Default="1" meta:RefKey="Number" />
+				<Data Name="HP" Type="Int" Min="1" Default="10" meta:RefKey="Number" />
+				<Data Name="Rewards" meta:RefKey="Collection">
+					<Data Name="Item" Collapse="True" meta:RefKey="Struct">
+						<Data Name="Key" meta:RefKey="String" />
+						<Data Name="Value" Type="Int" Min="1" Default="1" meta:RefKey="Number" />
+					</Data>
+				</Data>
+				<Data Name="AbilityRate" Type="Int" Min="0" Default="10" meta:RefKey="Number" />
+				<Data Name="Abilities" meta:RefKey="Collection">
+					<Data Name="Ability" meta:RefKey="Struct">
+						<Data Name="Target" EnumValues="Neighbour,Random" meta:RefKey="Enum" />
+						<Data Name="Count" Type="Int" Min="1" Default="1" meta:RefKey="Number" />
+						<Data Name="TargetRestriction" EnumValues="Orb,Special,Block,Empty,Sealed,Monster,Attack,Tile,Shield" meta:RefKey="Enum" />
+						<Data Name="Permuter" EnumValues="Single,AllOfType,NofType,Column,Row,Cross,Block,Diamond,Random" meta:RefKey="Enum" />
+						<Data Name="Effect" EnumValues="Attack,Seal,Shield,Move" meta:RefKey="Enum" />
+						<Data Name="Data" meta:RefKey="Collection">
+							<Data Name="DataPair" Collapse="True" meta:RefKey="Struct">
+								<Data Name="Key" meta:RefKey="String" />
+								<Data Name="Value" meta:RefKey="Number" />
+							</Data>
+						</Data>
+					</Data>
+				</Data>
+			</Data>
+		</Data>
+	</Definition>
 </Definitions>

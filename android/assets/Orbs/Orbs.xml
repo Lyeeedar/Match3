@@ -1,32 +1,38 @@
-<Orbs>
+<Orbs xmlns:meta="Editor">
 	<Template>
-		<Sprite RefKey="Sprite">
+		<Sprite meta:RefKey="Sprite">
 			<Name>Oryx/uf_split/uf_items/crystal_cloud</Name>
 			<DrawActualSize>true</DrawActualSize>
 		</Sprite>
-		<Death RefKey="ParticleEffect">
+		<Death meta:RefKey="ParticleEffect">
 			<Name>Splatter</Name>
 			<SpeedMultiplier>2</SpeedMultiplier>
 		</Death>
 	</Template>
 	<Types>
-		<Red>
+		<Orb>
+			<Name>Red</Name>
 			<Colour>209,27,27,255</Colour>
-		</Red>
-		<Green>
+		</Orb>
+		<Orb>
+			<Name>Green</Name>
 			<Colour>45,209,27,255</Colour>
-		</Green>
-		<Blue>
+		</Orb>
+		<Orb>
+			<Name>Blue</Name>
 			<Colour>83,128,238,255</Colour>
-		</Blue>
-		<Yellow>
+		</Orb>
+		<Orb>
+			<Name>Yellow</Name>
 			<Colour>253,253,41,255</Colour>
-		</Yellow>
-		<Grey>
+		</Orb>
+		<Orb>
+			<Name>Grey</Name>
 			<Colour>205,205,205,255</Colour>
-		</Grey>
-		<Purple>
+		</Orb>
+		<Orb>
+			<Name>Purple</Name>
 			<Colour>165,35,212,255</Colour>
-		</Purple>
+		</Orb>
 	</Types>
 </Orbs>

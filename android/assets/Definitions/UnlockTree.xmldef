@@ -1,43 +1,38 @@
-<Definitions>
-	<Struct Name="UnlockTree" RefKey="Struct">
-		<Reference Name="Icon" Keys="Sprite" Nullable="False" RefKey="Reference" />
-		<Collection Name="Unlockables" MinCount="1" RefKey="Collection">
-			<Struct Name="Unlockable" ChildAsName="Key" DescriptionChild="Name" RefKey="Struct">
-				<String Name="Key" RefKey="String" />
-				<String Name="Name" RefKey="String" />
-				<String Name="Description" RefKey="String" />
-				<Reference Name="Icon" Keys="Sprite" Nullable="False" RefKey="Reference" />
-				<String Name="UnboughtDescription" RefKey="String" />
-				<Collection Name="BuyCost" RefKey="Collection">
-					<Pair Name="DataPair" RefKey="Pair">
-						<String Name="Item" RefKey="String" />
-						<Number Name="Count" Type="Int" Min="1" Default="1" RefKey="Number" />
-					</Pair>
-				</Collection>
-				<String Name="Upgrades" RefKey="String" />
-				<Reference Name="UnlockableData" Keys="EffectData" Nullable="False" RefKey="Reference" />
-			</Struct>
-		</Collection>
-		<Tree Name="Tree" RefKey="Tree" />
-		<Collection Name="Resources" SkipIfDefault="False" RefKey="Collection">
-			<Reference Name="" Keys="Sprite,TilingSprite" Nullable="False" RefKey="Reference" />
-		</Collection>
-	</Struct>
-	<StructDef Name="EffectData" RefKey="StructDef">
-		<Number Name="Cost" Type="Int" Min="1" Default="1" RefKey="Number" />
-		<Struct Name="Effect" Collapse="True" RefKey="Struct">
-			<Number Name="Target Count" Type="Int" Min="0" SkipIfDefault="False" RefKey="Number" />
-			<Enum Name="Targetter" EnumValues="Orb,Special,Block,Empty,Sealed,Monster,Attack,Tile,Shield" RefKey="Enum" />
-			<Enum Name="Permuter" EnumValues="Single,AllOfType,NofType,Column,Row,Cross,Block,Diamond,Random" RefKey="Enum" />
-			<Enum Name="Effect" EnumValues="Pop,Convert" RefKey="Enum" />
-		</Struct>
-		<Collection Name="Data" RefKey="Collection">
-			<Pair Name="DataPair" RefKey="Pair">
-				<String Name="Key" RefKey="String" />
-				<Number Name="Value" RefKey="Number" />
-			</Pair>
-		</Collection>
-		<Reference Name="FlightEffect" Keys="ParticleEffect" RefKey="Reference" />
-		<Reference Name="HitEffect" Keys="ParticleEffect" RefKey="Reference" />
-	</StructDef>
+<Definitions xmlns:meta="Editor">
+	<Definition Name="UnlockTree" meta:RefKey="Struct">
+		<Data Name="Icon" Keys="Sprite" Nullable="False" meta:RefKey="Reference" />
+		<Data Name="Unlockables" MinCount="1" meta:RefKey="Collection">
+			<Data Name="Unlockable" meta:RefKey="Struct">
+				<Data Name="Key" meta:RefKey="String" />
+				<Data Name="Name" meta:RefKey="String" />
+				<Data Name="Description" meta:RefKey="String" />
+				<Data Name="Icon" Keys="Sprite" Nullable="False" meta:RefKey="Reference" />
+				<Data Name="UnboughtDescription" meta:RefKey="String" />
+				<Data Name="BuyCost" meta:RefKey="Collection">
+					<Data Name="Cost" Collapse="True" meta:RefKey="Struct">
+						<Data Name="Item" meta:RefKey="String" />
+						<Data Name="Count" Type="Int" Min="1" meta:RefKey="Number" />
+					</Data>
+				</Data>
+				<Data Name="Upgrades" meta:RefKey="String" />
+				<Data Name="UnlockableData" Keys="EffectData" Nullable="False" meta:RefKey="Reference" />
+			</Data>
+		</Data>
+		<Data Name="Tree" meta:RefKey="Tree" />
+		<Data Name="Resources" SkipIfDefault="False" meta:RefKey="Collection">
+			<Data Name="" Keys="Sprite,TilingSprite" Nullable="False" meta:RefKey="Reference" />
+		</Data>
+	</Definition>
+	<Definition Name="EffectData" meta:RefKey="StructDef">
+		<Data Name="Cost" Type="Int" Min="1" Default="1" meta:RefKey="Number" />
+		<Data Name="Effect" Collapse="True" meta:RefKey="Struct">
+			<Data Name="Target Count" Type="Int" Min="0" SkipIfDefault="False" meta:RefKey="Number" />
+			<Data Name="Targetter" EnumValues="Orb,Special,Block,Empty,Sealed,Monster,Attack,Tile,Shield" meta:RefKey="Enum" />
+			<Data Name="Permuter" EnumValues="Single,AllOfType,NofType,Column,Row,Cross,Block,Diamond,Random" meta:RefKey="Enum" />
+			<Data Name="Effect" EnumValues="Pop,Convert" meta:RefKey="Enum" />
+		</Data>
+		<Data Name="Data" meta:RefKey="Collection" />
+		<Data Name="FlightEffect" Keys="ParticleEffect" meta:RefKey="Reference" />
+		<Data Name="HitEffect" Keys="ParticleEffect" meta:RefKey="Reference" />
+	</Definition>
 </Definitions>

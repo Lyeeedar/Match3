@@ -106,7 +106,7 @@ class Orb(val desc: OrbDesc, theme: LevelTheme): Swappable(theme)
 			for (i in 0..types.childCount-1)
 			{
 				val type = types.getChild(i)
-				val name = type.name
+				val name = type.get("Name")
 				val colour = AssetManager.loadColour(type.getChildByName("Colour"))
 
 				val orbDesc = OrbDesc()

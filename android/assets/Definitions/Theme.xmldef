@@ -23,16 +23,16 @@
 		</Struct>
 		<Struct Name="RoomWeights" RefKey="Struct">
 			<Collection Name="Good" RefKey="Collection">
-				<Pair Name="Data" RefKey="Pair">
+				<Struct Name="Data" Collapse="true" RefKey="Struct">
 					<String Name="Type" RefKey="String" />
 					<Number Name="Weight" Min="0" RefKey="Number" />
-				</Pair>
+				</Struct>
 			</Collection>
 			<Collection Name="Bad" RefKey="Collection">
-				<Pair Name="Pair" RefKey="Pair">
+				<Struct Name="Pair" Collapse="true" RefKey="Struct">
 					<String Name="Type" RefKey="String" />
 					<Number Name="Weight" Min="0" RefKey="Number" />
-				</Pair>
+				</Struct>
 			</Collection>
 		</Struct>
 	</Struct>

@@ -1,14 +1,14 @@
-<Definitions>
-	<Struct Name="Orbs" RefKey="Struct">
-		<Struct Name="Template" RefKey="Struct">
-			<Reference Name="Sprite" Keys="Sprite" RefKey="Reference" />
-			<Reference Name="Death" Keys="ParticleEffect" RefKey="Reference" />
-		</Struct>
-		<Collection Name="Types" RefKey="Collection">
-			<Struct Name="Orb" ChildAsName="Name" RefKey="Struct">
-				<String Name="Name" RefKey="String" />
-				<Colour Name="Colour" RefKey="Colour" />
-			</Struct>
-		</Collection>
-	</Struct>
+<Definitions xmlns:meta="Editor">
+	<Definition Name="Orbs" meta:RefKey="Struct">
+		<Data Name="Template" meta:RefKey="Struct">
+			<Data Name="Sprite" Keys="Sprite" meta:RefKey="Reference" />
+			<Data Name="Death" Keys="ParticleEffect" meta:RefKey="Reference" />
+		</Data>
+		<Data Name="Types" meta:RefKey="Collection">
+			<Data Name="Orb" meta:RefKey="Struct">
+				<Data Name="Name" meta:RefKey="String" />
+				<Data Name="Colour" meta:RefKey="Colour" />
+			</Data>
+		</Data>
+	</Definition>
 </Definitions>
