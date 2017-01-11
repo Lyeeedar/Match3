@@ -24,6 +24,13 @@ abstract class Special(val orb: Orb)
 
 	companion object
 	{
+		fun modifyColour(colour: Colour): Colour
+		{
+			val col = colour * 0.7f
+			val lerped = col.lerp(col, Colour.WHITE, 0.5f)
+			return lerped
+		}
+		
 		fun popTile(special: Special, tile: Tile, point: Point, grid: Grid, offset: Float = 0f)
 		{
 			val delay = tile.dist(point) * 0.1f + offset
@@ -44,7 +51,7 @@ abstract class Special(val orb: Orb)
 				val hitSet = ObjectSet<Tile>()
 
 				val effect = AssetManager.loadParticleEffect("SpecialBeam")
-				effect.colour = colour
+				effect.colour = ModifyColour(colour)
 				effect.animation = MoveAnimation.obtain().set(dist * effect.moveSpeed, arrayOf(p1, p2), Interpolation.linear)
 				effect.rotation = getRotation(p1, p2)
 				effect.collisionFun = fun(cx: Int, pcy: Int)
@@ -110,7 +117,7 @@ abstract class Special(val orb: Orb)
 				val hitSet = ObjectSet<Tile>()
 
 				val effect = AssetManager.loadParticleEffect("SpecialBeam")
-				effect.colour = colour
+				effect.colour = ModifyColour(colour)
 				effect.animation = MoveAnimation.obtain().set(dist * effect.moveSpeed, arrayOf(p1, p2), Interpolation.linear)
 				effect.rotation = getRotation(p1, p2)
 				effect.collisionFun = fun(cx: Int, pcy: Int)
@@ -227,7 +234,7 @@ class DualMatch(orb: Orb) : Special(orb)
 					val hitSet = ObjectSet<Tile>()
 
 					val effect = AssetManager.loadParticleEffect("SpecialExplosion")
-					effect.colour = orb.sprite.colour
+					effect.colour = ModifyColour(orb.sprite.colour)
 					effect.size = 4f
 					effect.collisionFun = fun(cx: Int, pcy: Int)
 					{
@@ -275,7 +282,7 @@ class DualMatch(orb: Orb) : Special(orb)
 		val hitSet = ObjectSet<Tile>()
 
 		val effect = AssetManager.loadParticleEffect("SpecialExplosion")
-		effect.colour = orb.sprite.colour
+		effect.colour = ModifyColour(orb.sprite.colour)
 		effect.size = 3f
 		effect.collisionFun = fun(cx: Int, pcy: Int)
 		{
