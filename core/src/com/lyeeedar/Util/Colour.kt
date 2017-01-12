@@ -1,6 +1,7 @@
 package com.lyeeedar.Util
 
 import com.badlogic.gdx.graphics.Color
+import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.utils.NumberUtils
 
 /**
@@ -204,5 +205,11 @@ class Colour()
 		val LIGHT_GRAY = Colour(Color.LIGHT_GRAY)
 		val DARK_GRAY = Colour(Color.DARK_GRAY)
 		val GOLD = Colour(Color.GOLD)
+
+		fun random(s: Float = 0.9f, l: Float = 0.7f): Colour
+		{
+			val hsl = HSLColour(MathUtils.random(), s, l, 1.0f)
+			return hsl.toRGB()
+		}
 	}
 }

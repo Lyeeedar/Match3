@@ -46,6 +46,8 @@ class Sprite(val fileName: String, var animationDelay: Float, var textures: Arra
 	var repeatAccumulator: Float = 0.toFloat()
 	var animationAccumulator: Float = 0.toFloat()
 
+	var faceInMoveDirection: Boolean = false
+	val lastPos: Vector2 = Vector2()
 	var rotation: Float = 0.toFloat()
 	var fixPosition: Boolean = false
 
@@ -60,6 +62,8 @@ class Sprite(val fileName: String, var animationDelay: Float, var textures: Arra
 	var animationState: AnimationState
 
 	var baseScale = floatArrayOf(1f, 1f)
+
+	var completionCallback: (() -> Unit)? = null
 
 	init
 	{
@@ -157,6 +161,9 @@ class Sprite(val fileName: String, var animationDelay: Float, var textures: Arra
 		if (looped)
 		{
 			animationStage = AnimationStage.END
+
+			completionCallback?.invoke()
+			completionCallback = null
 		}
 
 		if (!completed) completed = looped

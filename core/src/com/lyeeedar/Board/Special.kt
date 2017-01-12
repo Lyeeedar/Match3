@@ -1,11 +1,15 @@
 package com.lyeeedar.Board
 
+import com.badlogic.gdx.math.Bezier
+import com.badlogic.gdx.math.CatmullRomSpline
 import com.badlogic.gdx.math.Interpolation
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.ObjectSet
 import com.lyeeedar.Direction
 import com.lyeeedar.Global
 import com.lyeeedar.Renderables.Animation.ChromaticAnimation
+import com.lyeeedar.Renderables.Animation.ExpandAnimation
+import com.lyeeedar.Renderables.Animation.LeapAnimation
 import com.lyeeedar.Renderables.Animation.MoveAnimation
 import com.lyeeedar.Renderables.Sprite.Sprite
 import com.lyeeedar.Util.*
@@ -333,42 +337,68 @@ class Match5(orb: Orb) : Special(orb)
 			}
 			else
 			{
+				val origSprite = other.sprite
+
 				val key = other.key
+				sprite.colourAnimation = null
+				sprite.colour = other.sprite.colour
+				other.sprite = sprite
 
 				return fun (point: Point, grid: Grid, orb: Orb)
 				{
+					val effect = AssetManager.loadParticleEffect("SpecialExplosion")
+					effect.size = 2.5f
+					effect.colour = other.sprite.colour
+
+					grid.tile(point)?.effects?.add(effect)
+
 					for (tile in grid.grid)
 					{
 						if (tile.orb?.key == key)
 						{
-							if (tile.orb!!.special == null)
-							{
-								tile.orb!!.special = special.copy(tile.orb!!)
-							}
-							else
-							{
-								val func = tile.orb!!.special!!.merge(other) ?: special.merge(tile.orb!!)
-								tile.orb!!.armed = func
-							}
+							val dst = tile.dist(point)
+							val animDuration = 0.275f + dst * 0.05f
 
-							popTile(this, tile, point, grid, flightTime)
-							val delay = tile.dist(point) * 0.1f
-
-							val s = sprite.copy()
+							val s = origSprite.copy()
 							s.drawActualSize = false
-							s.animation = MoveAnimation.obtain().set(flightTime, UnsmoothedPath(tile.getPosDiff(point)))
-							s.renderDelay = delay
+							s.faceInMoveDirection = true
+							s.animation = LeapAnimation.obtain().set(animDuration, tile.getPosDiff(point), 1f + dst * 0.5f)
+							s.animation = ExpandAnimation.obtain().set(animDuration, 0.5f, 1.0f, false)
+							s.completionCallback = fun()
+							{
+								if (tile.orb == null)
+								{
+
+								}
+								else if (tile.orb!!.special == null)
+								{
+									tile.orb!!.special = special.copy(tile.orb!!)
+								}
+								else
+								{
+									val func = tile.orb!!.special!!.merge(other) ?: special.merge(tile.orb!!)
+									tile.orb!!.armed = func
+								}
+
+								grid.pop(tile, 0f, this, 1 + 2)
+							}
 							tile.effects.add(s)
 						}
 						else if (tile.monster != null)
 						{
-							popTile(this, tile, point, grid, flightTime)
-							val delay = tile.dist(point) * 0.1f
+							val dst = tile.dist(point)
+							val animDuration = 0.275f + dst * 0.05f
 
-							val s = sprite.copy()
-							s.drawActualSize = false
-							s.animation = MoveAnimation.obtain().set(flightTime, UnsmoothedPath(tile.getPosDiff(point)))
-							s.renderDelay = delay
+							val s = AssetManager.loadSprite("Oryx/Custom/items/shard")
+							s.faceInMoveDirection = true
+							s.colour = Colour.random(s = 0.5f, l = 0.9f)
+							s.drawActualSize = true
+							s.animation = LeapAnimation.obtain().set(animDuration, tile.getPosDiff(point), 1f + dst * 0.5f)
+							s.animation = ExpandAnimation.obtain().set(animDuration, 0.5f, 1.3f, false)
+							s.completionCallback = fun()
+							{
+								grid.pop(tile, 0f, this, 1 + 2)
+							}
 							tile.effects.add(s)
 						}
 					}
@@ -378,31 +408,35 @@ class Match5(orb: Orb) : Special(orb)
 		else
 		{
 			val key = other.key
+			sprite.colourAnimation = null
+			sprite.colour = other.sprite.colour
+			other.sprite = sprite
 
 			return fun (point: Point, grid: Grid, orb: Orb)
 			{
+				val effect = AssetManager.loadParticleEffect("SpecialExplosion")
+				effect.size = 2.5f
+				effect.colour = other.sprite.colour
+
+				grid.tile(point)?.effects?.add(effect)
+
 				for (tile in grid.grid)
 				{
-					if (tile.orb?.key == key)
+					if (tile.orb?.key == key || tile.monster != null)
 					{
-						popTile(this, tile, point, grid, flightTime)
-						val delay = tile.dist(point) * 0.1f
+						val dst = tile.dist(point)
+						val animDuration = 0.275f + dst * 0.05f
 
-						val s = sprite.copy()
-						s.drawActualSize = false
-						s.animation = MoveAnimation.obtain().set(flightTime, UnsmoothedPath(tile.getPosDiff(point)))
-						s.renderDelay = delay
-						tile.effects.add(s)
-					}
-					else if (tile.monster != null)
-					{
-						popTile(this, tile, point, grid, flightTime)
-						val delay = tile.dist(point) * 0.1f
-
-						val s = sprite.copy()
-						s.drawActualSize = false
-						s.animation = MoveAnimation.obtain().set(flightTime, UnsmoothedPath(tile.getPosDiff(point)))
-						s.renderDelay = delay
+						val s = AssetManager.loadSprite("Oryx/Custom/items/shard")
+						s.faceInMoveDirection = true
+						s.colour = Colour.random(s = 0.5f, l = 0.9f)
+						s.drawActualSize = true
+						s.animation = LeapAnimation.obtain().set(animDuration, tile.getPosDiff(point), 1f + dst * 0.5f)
+						s.animation = ExpandAnimation.obtain().set(animDuration, 0.5f, 1.3f, false)
+						s.completionCallback = fun()
+						{
+							grid.pop(tile, 0f, this, 1 + 2)
+						}
 						tile.effects.add(s)
 					}
 				}

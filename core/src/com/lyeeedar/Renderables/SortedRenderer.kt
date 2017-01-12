@@ -294,6 +294,13 @@ class SortedRenderer(var tileSize: Float, val width: Float, val height: Float, v
 			}
 		}
 
+		if (sprite.faceInMoveDirection)
+		{
+			val angle = getRotation(sprite.lastPos, tempVec.set(x, y))
+			sprite.rotation = angle
+			sprite.lastPos.set(x, y)
+		}
+
 		val comparisonVal = getComparisonVal(x, y, layer, index, BlendMode.MULTIPLICATIVE)
 
 		val rs = RenderSprite.obtain().set( sprite, null, null, x, y, ix, iy, colour, width, height, 0f, false, false, BlendMode.MULTIPLICATIVE, comparisonVal )

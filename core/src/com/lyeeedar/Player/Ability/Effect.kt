@@ -24,7 +24,7 @@ class Effect(val type: Type)
 		{
 			Type.POP -> fun (tile: Tile, grid: Grid, delay: Float, data: ObjectMap<String, String>) { grid.pop(tile, delay, damSource = this, bonusDam = 2, skipPowerOrb = true) }
 			Type.CONVERT -> fun (tile: Tile, grid: Grid, delay: Float, data: ObjectMap<String, String>) { val orb = tile.orb ?: return; tile.orb = if(data["CONVERTTO"] == "RANDOM") Orb(Orb.validOrbs.random(), grid.level.theme) else Orb(Orb.getOrb(data["CONVERTTO"]), grid.level.theme); tile.orb!!.setAttributes(orb) }
-			Type.TEST ->  fun (tile: Tile, grid: Grid, delay: Float, data: ObjectMap<String, String>) { val orb = tile.orb ?: return; orb.special = DualMatch(orb) }
+			Type.TEST ->  fun (tile: Tile, grid: Grid, delay: Float, data: ObjectMap<String, String>) { val orb = tile.orb ?: return; orb.special = Match5(orb) }
 			else -> throw Exception("Invalid effect type $type")
 		}
 	}
