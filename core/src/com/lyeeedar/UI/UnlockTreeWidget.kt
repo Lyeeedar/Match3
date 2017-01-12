@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent
 import com.badlogic.gdx.scenes.scene2d.Touchable
 import com.badlogic.gdx.scenes.scene2d.ui.Widget
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener
+import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.Pools
 import com.badlogic.gdx.utils.XmlReader
@@ -296,6 +297,8 @@ class UnlockTree<T: Unlockable>
 
 			val resources = ObjectMap<String, XmlReader.Element>()
 			val unlockables = ObjectMap<String, T>()
+			val treeMap = ObjectMap<String, UnlockableTreeItem<T>>()
+			val childMap = ObjectMap<String, Array<String>>()
 
 			val resourcesEl = xml.getChildByName("Resources")
 			if (resourcesEl != null)
@@ -307,13 +310,40 @@ class UnlockTree<T: Unlockable>
 				}
 			}
 
-			val unlockablesEl = xml.getChildByName("Unlockables")
+			val unlockablesEl = xml.getChildByName("Abilities")
 			for (i in 0..unlockablesEl.childCount-1)
 			{
 				val el = unlockablesEl.getChild(i)
+				val key = el.get("Key")
+
 				val unlockable = factory()
 				unlockable.load(el, resources)
-				unlockables[el.name] = unlockable
+
+				unlockables[key] = unlockable
+				treeMap[key] = UnlockableTreeItem(unlockable)
+
+				val childEl = el.getChildByName("Children")
+
+				val children = Array<String>()
+				if (childEl != null)
+				{
+					for (ii in 0..childEl.childCount - 1)
+					{
+						children.add(childEl.getChild(ii).text)
+					}
+				}
+				childMap[key] = children
+			}
+
+			for (key in unlockables.keys())
+			{
+				val tree = treeMap[key]
+				val children = childMap[key]
+
+				for (child in children)
+				{
+					tree.children.add(treeMap[child])
+				}
 			}
 
 			val treeEl = xml.getChildByName("Tree")
@@ -324,9 +354,7 @@ class UnlockTree<T: Unlockable>
 			for (i in 0..treeEl.childCount-1)
 			{
 				val el = treeEl.getChild(i)
-				val unlockable = unlockables[el.name]
-				val unlockableItem = UnlockableTreeItem<T>(unlockable)
-				unlockableItem.parse(el, unlockables, resources)
+				val unlockableItem = treeMap[el.text]
 
 				tree.unlockableItems.add(unlockableItem)
 			}
@@ -417,21 +445,26 @@ abstract class Unlockable()
 
 	fun load(xml: XmlReader.Element, resources: ObjectMap<String, XmlReader.Element>)
 	{
-		name = xml.get("Name")
-		description = xml.get("Description")
+		val dataEl = xml.getChildByName("AbilityData")
 
-		val buyCostEl = xml.getChildByName("BuyCost")
+		name = dataEl.get("Name")
+		description = dataEl.get("Description")
+
+		val buyCostEl = dataEl.getChildByName("BuyCost")
 		for (i in 0..buyCostEl.childCount - 1)
 		{
 			val el = buyCostEl.getChild(i)
-			buyCost[el.name] = el.text.toInt()
+			val text = el.text
+			val split = text.split(",")
+
+			buyCost[split[0]] = split[1].toInt()
 		}
-		unboughtDescription = xml.get("UnboughtDescription", description)
-		upgrades = xml.get("Upgrades", null)
+		unboughtDescription = dataEl.get("UnboughtDescription", description)
+		upgrades = dataEl.get("Upgrades", null)
 
-		icon = AssetManager.tryLoadSpriteWithResources(xml.getChildByName("Icon"), resources)
+		icon = AssetManager.tryLoadSpriteWithResources(dataEl.getChildByName("Icon"), resources)
 
-		parse(xml, resources)
+		parse(dataEl, resources)
 	}
 
 	protected abstract fun parse(xml: XmlReader.Element, resources: ObjectMap<String, XmlReader.Element>)

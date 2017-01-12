@@ -30,7 +30,12 @@
 					<Data Name="Permuter" EnumValues="Single,AllOfType,NofType,Column,Row,Cross,Block,Diamond,Random" meta:RefKey="Enum" />
 					<Data Name="Effect" EnumValues="Pop,Convert" meta:RefKey="Enum" />
 				</Data>
-				<Data Name="Data" meta:RefKey="Collection" />
+				<Data Name="Data" meta:RefKey="Collection">
+					<Data Name="Data" meta:RefKey="Struct">
+						<Data Name="Key" meta:RefKey="String" />
+						<Data Name="Value" meta:RefKey="String" />
+					</Data>
+				</Data>
 				<Data Name="FlightEffect" Keys="ParticleEffect" meta:RefKey="Reference" />
 				<Data Name="HitEffect" Keys="ParticleEffect" meta:RefKey="Reference" />
 			</Data>

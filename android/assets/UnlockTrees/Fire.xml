@@ -1,318 +1,93 @@
-<UnlockTree>
-	<Icon RefKey="Sprite">
+<AbilityTree meta:X="30" meta:Y="7" GUID="14b71a8a-415a-4f4a-b11f-e6bd172b1345" xmlns:meta="Editor">
+	<Icon meta:RefKey="Sprite">
 		<Name>Icons/FireTree</Name>
 	</Icon>
-	<Unlockables>
-		<Firebolt>
-			<Name>Firebolt</Name>
-			<Description>Launch a firebolt at a single orb, destroying it</Description>
-			<Icon RefKey="Sprite">
-				<Name>Icons/Firebolt</Name>
-			</Icon>
-			<UnboughtDescription>Want to learn how to throw around some fire? Come here and I'll show you</UnboughtDescription>
-			<BuyCost>
-				<Gold>50</Gold>
-			</BuyCost>
-			<UnlockableData RefKey="EffectData">
-				<Cost>1</Cost>
-				<Effect>1,Orb,Single,Test</Effect>
-				<FlightEffect RefKey="ParticleEffect">
-					<Name>Fire</Name>
-					<SpeedMultiplier>1.5</SpeedMultiplier>
-				</FlightEffect>
-				<HitEffect RefKey="ParticleEffect">
-					<Name>Fireburst</Name>
-				</HitEffect>
-			</UnlockableData>
-		</Firebolt>
-		<DualFirebolt>
-			<Name>Dual Firebolt</Name>
-			<Description>Launch a firebolt at a pair of orbs, destroying them</Description>
-			<Icon RefKey="Sprite">
-				<Name>Icons/FireboltDual</Name>
-			</Icon>
-			<UnboughtDescription>With some more funding I think I can develop a way to launch two firebolts at the same time.</UnboughtDescription>
-			<BuyCost>
-				<Gold>100</Gold>
-			</BuyCost>
-			<Upgrades>Firebolt</Upgrades>
-			<UnlockableData RefKey="EffectData">
-				<Cost>3</Cost>
-				<Effect>2,Orb,Single,Pop</Effect>
-				<FlightEffect RefKey="ParticleEffect">
-					<Name>Fire</Name>
-					<SpeedMultiplier>1.5</SpeedMultiplier>
-				</FlightEffect>
-				<HitEffect RefKey="ParticleEffect">
-					<Name>Fireburst</Name>
-				</HitEffect>
-			</UnlockableData>
-		</DualFirebolt>
-		<TriFirebolt>
-			<Name>Tri Firebolt</Name>
-			<Description>Launch a firebolt at a trio of orbs, destroying them</Description>
-			<Icon RefKey="Sprite">
-				<Name>Icons/FireboltTri</Name>
-			</Icon>
-			<UnboughtDescription>With some more funding I think I can develop a way to launch three firebolts at the same time.</UnboughtDescription>
-			<BuyCost>
-				<Gold>500</Gold>
-			</BuyCost>
-			<Upgrades>Firebolt</Upgrades>
-			<UnlockableData RefKey="EffectData">
-				<Cost>3</Cost>
-				<Effect>3,Orb,Single,Pop</Effect>
-				<Reference2 />
-				<Reference3 />
-			</UnlockableData>
-		</TriFirebolt>
-		<QuadFirebolt>
-			<Name>Quad Firebolt</Name>
-			<Description>Launch four firebolts</Description>
-			<Icon RefKey="Sprite">
-				<Name>Icons/FireboltQuad</Name>
-			</Icon>
-			<UnboughtDescription>I'm guessing you can see the pattern now, but I think I can figure out a way to launch four firebolts this time.</UnboughtDescription>
-			<BuyCost>
-				<Gold>1000</Gold>
-			</BuyCost>
-			<Upgrades>Firebolt</Upgrades>
-			<UnlockableData RefKey="EffectData">
-				<Cost>3</Cost>
-				<Effect>4,Orb,Single,Pop</Effect>
-				<Reference2 />
-				<Reference3 />
-			</UnlockableData>
-		</QuadFirebolt>
-		<FireFlurry>
-			<Name>Fire Flurry</Name>
-			<Description>Fling out fire randomly, spreading destruction everywhere it lands.</Description>
-			<Icon RefKey="Sprite">
-				<Name>Icons/FireFlurry</Name>
-			</Icon>
-			<UnboughtDescription>I really want to burn some random things. Please get some things for me.</UnboughtDescription>
-			<BuyCost>
-				<RatSkin>1</RatSkin>
-				<RatTail>1</RatTail>
-				<GoblinHelmet>1</GoblinHelmet>
-				<BatWing>1</BatWing>
-				<BrokenSpear>1</BrokenSpear>
-			</BuyCost>
-			<UnlockableData RefKey="EffectData">
-				<Effect>0,Orb,Random,Pop</Effect>
-				<Data>
-					<Count>3</Count>
-				</Data>
-				<Reference2 />
-				<Reference3 />
-			</UnlockableData>
-		</FireFlurry>
-		<FireRain>
-			<Name>Fire Rain</Name>
-			<Description>Rain down fire randomly, destroying all it touches</Description>
-			<Icon RefKey="Sprite">
-				<Name>Icons/FireRain</Name>
-			</Icon>
-			<UnboughtDescription>The last set of things you brought me were fun to burn. Please bring me more!</UnboughtDescription>
-			<BuyCost>
-				<MummyWrapping>1</MummyWrapping>
-				<DesicatedFinger>1</DesicatedFinger>
-				<RubyStaff>1</RubyStaff>
-				<ScaledHide>1</ScaledHide>
-				<GlowingEnigma>1</GlowingEnigma>
-			</BuyCost>
-			<Upgrades>Fire Flurry</Upgrades>
-			<UnlockableData RefKey="EffectData">
-				<Effect>0,Orb,Random,Pop</Effect>
-				<Data>
-					<Count>5</Count>
-				</Data>
-				<Reference2 />
-				<Reference3 />
-			</UnlockableData>
-		</FireRain>
-		<Fireball>
-			<Name>Fireball</Name>
-			<Description>Launch an exploding fireball at the target location, destroying it and all neighbours</Description>
-			<Icon RefKey="Sprite">
-				<Name>Icons/Fireball</Name>
-			</Icon>
-			<UnboughtDescription>I've heard tales of a fabled creature of flame. With it's heart I'm sure I could develop a new spell of some form.</UnboughtDescription>
-			<BuyCost>
-				<Gold>1000</Gold>
-				<Flameheart>5</Flameheart>
-			</BuyCost>
-			<UnlockableData RefKey="EffectData">
-				<Cost>5</Cost>
-				<Effect>1,Orb,Diamond,Pop</Effect>
-				<Data>
-					<aoe>1</aoe>
-				</Data>
-				<Reference3 />
-				<Reference4 />
-			</UnlockableData>
-		</Fireball>
-		<GreaterFireball>
-			<Name>Greater Fireball</Name>
-			<Description>Launch an exploding greater fireball at the target location, destroying it and all neighbours</Description>
-			<Icon RefKey="Sprite">
-				<Name>Icons/FireballGreater</Name>
-			</Icon>
-			<UnboughtDescription>This spell feels... incomplete. I need something hotter. A more powerful heart I think will do it.</UnboughtDescription>
-			<BuyCost>
-				<Gold>3000</Gold>
-				<Blazeheart>5</Blazeheart>
-			</BuyCost>
-			<Upgrades>Fireball</Upgrades>
-			<UnlockableData RefKey="EffectData">
-				<Cost>5</Cost>
-				<Effect>1,Orb,Diamond,Pop</Effect>
-				<Data>
-					<aoe>2</aoe>
-				</Data>
-				<Reference3 />
-				<Reference4 />
-			</UnlockableData>
-		</GreaterFireball>
-		<GrandFireball>
-			<Name>Grand Fireball</Name>
-			<Description>Launch an exploding grand fireball at the target location, destroying it and all neighbours</Description>
-			<Icon RefKey="Sprite">
-				<Name>Icons/FireballGrand</Name>
-			</Icon>
-			<UnboughtDescription>This spell is nearly done. I just need something even hotter.</UnboughtDescription>
-			<BuyCost>
-				<Gold>5000</Gold>
-				<Infernoheart>5</Infernoheart>
-			</BuyCost>
-			<Upgrades>Fireball</Upgrades>
-			<UnlockableData RefKey="EffectData">
-				<Cost>5</Cost>
-				<Effect>1,Orb,Diamond,Pop</Effect>
-				<Data>
-					<aoe>3</aoe>
-				</Data>
-				<Reference3 />
-				<Reference4 />
-			</UnlockableData>
-		</GrandFireball>
-		<Immolate>
-			<Name>Immolate</Name>
-			<Description>A flash of fire strikes a single monster</Description>
-			<Icon RefKey="Sprite">
-				<Name>Icons/Immolate</Name>
-			</Icon>
-			<UnboughtDescription>My flames can be adapted to target living creatures, all I need is some funding.</UnboughtDescription>
-			<BuyCost>
-				<Gold>500</Gold>
-			</BuyCost>
-			<UnlockableData RefKey="EffectData">
-				<Cost>2</Cost>
-				<Effect>1,Monster,Single,Pop</Effect>
-				<Reference2 />
-				<Reference3 />
-			</UnlockableData>
-		</Immolate>
-		<SoulfireDetonation>
-			<Name>Soulfire Detonation</Name>
-			<Description>Blast the soul of your target with purifying flames. The ensuing explosion will destroy all around them.</Description>
-			<Icon RefKey="Sprite">
-				<Name>Icons/SoulfireDetonation</Name>
-			</Icon>
-			<UnboughtDescription>Soulfire is a dangerous thing. Careless use can destroy both the caster and all those in the surrounding area. I want to play with it.</UnboughtDescription>
-			<BuyCost>
-				<SoulGem>1</SoulGem>
-				<Gold>2000</Gold>
-			</BuyCost>
-			<Upgrades>Immolate</Upgrades>
-			<UnlockableData RefKey="EffectData">
-				<Cost>4</Cost>
-				<Effect>1,Monster,Diamond,Pop</Effect>
-				<Data>
-					<aoe>1</aoe>
-				</Data>
-				<Reference3 />
-				<Reference4 />
-			</UnlockableData>
-		</SoulfireDetonation>
-		<FireBeam>
-			<Name>Fire Beam</Name>
-			<Description>Incinerate an entire column with powerful flames</Description>
-			<Icon RefKey="Sprite">
-				<Name>Icons/FireBeam</Name>
-			</Icon>
-			<UnboughtDescription>I've been experimenting with burning different kinds of wood, amd I've heard of some super flammable stuff in the enchanted forest. Please bring me some.</UnboughtDescription>
-			<BuyCost>
-				<LivingWood>5</LivingWood>
-				<Gold>1000</Gold>
-			</BuyCost>
-			<UnlockableData RefKey="EffectData">
-				<Cost>6</Cost>
-				<Effect>1,Orb,Column,Pop</Effect>
-				<Reference2 />
-				<Reference3 />
-			</UnlockableData>
-		</FireBeam>
-		<PillarsOfDestruction>
-			<Name>Pillars of Destruction</Name>
-			<Description>Summon the annihilating pillars of creation to destroy your targets</Description>
-			<Icon RefKey="Sprite">
-				<Name>Icons/PillarsOfDestruction</Name>
-			</Icon>
-			<UnboughtDescription>A ancient magical staff is said to be buried with the dead rulers of Pholbos. I want it to try burning a piece.</UnboughtDescription>
-			<BuyCost>
-				<StaffOfAngohles>1</StaffOfAngohles>
-			</BuyCost>
-			<Upgrades>Fire Beam</Upgrades>
-			<UnlockableData RefKey="EffectData">
-				<Cost>8</Cost>
-				<Effect>3,Orb,Column,Pop</Effect>
-				<Reference2 />
-				<Reference3 />
-			</UnlockableData>
-		</PillarsOfDestruction>
-		<CrossBlaze>
-			<Name>Cross Blaze</Name>
-			<Description>A burning cross destroys all around your target</Description>
-			<Icon RefKey="Sprite">
-				<Name>Icons/CrossBlaze</Name>
-			</Icon>
-			<UnboughtDescription>I've heard that the wood of the ancient shrines in the forest holds untold power. Please bring me some so I can set it on fire.</UnboughtDescription>
-			<BuyCost>
-				<ShrineFragment>5</ShrineFragment>
-				<Gold>2000</Gold>
-			</BuyCost>
-			<UnlockableData RefKey="EffectData">
-				<Cost>5</Cost>
-				<Effect>1,Orb,Cross,Pop</Effect>
-				<Reference2 />
-				<Reference3 />
-			</UnlockableData>
-		</CrossBlaze>
-	</Unlockables>
-	<Tree>
-		<Firebolt>
-			<DualFirebolt>
-				<TriFirebolt>
-					<QuadFirebolt />
-				</TriFirebolt>
-				<FireFlurry>
-					<FireRain />
-				</FireFlurry>
-			</DualFirebolt>
-		</Firebolt>
-		<Fireball>
-			<GreaterFireball>
-				<GrandFireball />
-			</GreaterFireball>
-		</Fireball>
-		<Immolate>
-			<SoulfireDetonation />
-		</Immolate>
-		<FireBeam>
-			<CrossBlaze />
-			<PillarsOfDestruction />
-		</FireBeam>
-	</Tree>
 	<Resources />
-</UnlockTree>
+	<Tree>
+		<Ability meta:RefKey="Ability">Firebolt</Ability>
+	</Tree>
+	<Abilities>
+		<Ability meta:X="440.03665161132812" meta:Y="32">
+			<Key>Firebolt</Key>
+			<AbilityData>
+				<Name>Firebolt</Name>
+				<Description>Launch a firebolt at a single orb, destroying it.</Description>
+				<Icon meta:RefKey="Sprite">
+					<Name>Icons/Firebolt</Name>
+				</Icon>
+				<UnboughtDescription>Want to learn how to throw around some fire? Come here and I'll show you.</UnboughtDescription>
+				<BuyCost>
+					<Cost>Gold,50</Cost>
+				</BuyCost>
+				<EffectData>
+					<Effect>1,Orb,Single,Pop</Effect>
+					<FlightEffect meta:RefKey="ParticleEffect">
+						<Name>Fire</Name>
+						<SpeedMultiplier>1.5</SpeedMultiplier>
+					</FlightEffect>
+					<HitEffect meta:RefKey="ParticleEffect">
+						<Name>Fireburst</Name>
+					</HitEffect>
+				</EffectData>
+			</AbilityData>
+			<Children>
+				<Ability meta:RefKey="Ability">DualFirebolt</Ability>
+			</Children>
+		</Ability>
+		<Ability meta:X="753.739990234375" meta:Y="28">
+			<Key>DualFirebolt</Key>
+			<AbilityData>
+				<Name>Dual Firebolt</Name>
+				<Description>Launch a firebolt at a pair of orbs, destroying them.</Description>
+				<Icon meta:RefKey="Sprite">
+					<Name>Icons/FireboltDual</Name>
+				</Icon>
+				<UnboughtDescription>With some more funding I think I can develop a way to launch two firebolts at the same time.</UnboughtDescription>
+				<BuyCost>
+					<Cost>Gold,100</Cost>
+				</BuyCost>
+				<Upgrades>Firebolt</Upgrades>
+				<EffectData>
+					<Cost>3</Cost>
+					<Effect>2,Orb,Single,Pop</Effect>
+					<FlightEffect meta:RefKey="ParticleEffect">
+						<Name>Fire</Name>
+						<SpeedMultiplier>1.5</SpeedMultiplier>
+					</FlightEffect>
+					<HitEffect meta:RefKey="ParticleEffect">
+						<Name>Fireburst</Name>
+					</HitEffect>
+				</EffectData>
+			</AbilityData>
+			<Children>
+				<Ability meta:RefKey="Ability">TriFirebolt</Ability>
+			</Children>
+		</Ability>
+		<Ability meta:X="1066.0333251953125" meta:Y="28">
+			<Key>TriFirebolt</Key>
+			<AbilityData>
+				<Name>Tri Firebolt</Name>
+				<Description>Launch a firebolt at a trio of orbs, destroying them.</Description>
+				<Icon meta:RefKey="Sprite">
+					<Name>Icons/FireboltTri</Name>
+				</Icon>
+				<UnboughtDescription>With some more funding I think I can develop a way to launch three firebolts at the same time.</UnboughtDescription>
+				<BuyCost>
+					<Cost>Gold,500</Cost>
+				</BuyCost>
+				<Upgrades>Firebolt</Upgrades>
+				<EffectData>
+					<Cost>3</Cost>
+					<Effect>3,Orb,Single,Pop</Effect>
+					<FlightEffect meta:RefKey="ParticleEffect">
+						<Name>Fire</Name>
+						<SpeedMultiplier>1.5</SpeedMultiplier>
+					</FlightEffect>
+					<HitEffect meta:RefKey="ParticleEffect">
+						<Name>Fireburst</Name>
+					</HitEffect>
+				</EffectData>
+			</AbilityData>
+		</Ability>
+	</Abilities>
+</AbilityTree>

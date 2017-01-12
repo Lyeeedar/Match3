@@ -118,7 +118,7 @@ class Ability() : Unlockable()
 
 	override fun parse(xml: XmlReader.Element, resources: ObjectMap<String, XmlReader.Element>)
 	{
-		val dataEl = xml.getChildByName("UnlockableData")
+		val dataEl = xml.getChildByName("EffectData")
 
 		val hitEffectData = dataEl.getChildByName("HitEffect")
 		if (hitEffectData != null) hitEffect = AssetManager.loadParticleEffect(hitEffectData)
@@ -141,7 +141,10 @@ class Ability() : Unlockable()
 			for (i in 0..dEl.childCount-1)
 			{
 				val el = dEl.getChild(i)
-				data[el.name.toUpperCase()] = el.text.toUpperCase()
+				val text = el.text.toUpperCase()
+				val split = text.split(",")
+
+				data[split[0]] = split[1]
 			}
 		}
 	}
