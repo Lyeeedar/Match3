@@ -5,9 +5,10 @@
 	<Resources />
 	<Tree>
 		<Ability meta:RefKey="Ability">Firebolt</Ability>
+		<Ability meta:RefKey="Ability">Fireball</Ability>
 	</Tree>
 	<Abilities>
-		<Ability meta:X="440.03665161132812" meta:Y="32">
+		<Ability meta:X="504.32235717773438" meta:Y="-264.42855834960938">
 			<Key>Firebolt</Key>
 			<AbilityData>
 				<Name>Firebolt</Name>
@@ -34,7 +35,7 @@
 				<Ability meta:RefKey="Ability">DualFirebolt</Ability>
 			</Children>
 		</Ability>
-		<Ability meta:X="753.739990234375" meta:Y="28">
+		<Ability meta:X="818.02569580078125" meta:Y="-268.42855834960938">
 			<Key>DualFirebolt</Key>
 			<AbilityData>
 				<Name>Dual Firebolt</Name>
@@ -61,9 +62,10 @@
 			</AbilityData>
 			<Children>
 				<Ability meta:RefKey="Ability">TriFirebolt</Ability>
+				<Ability meta:RefKey="Ability">FireFlurry</Ability>
 			</Children>
 		</Ability>
-		<Ability meta:X="1066.0333251953125" meta:Y="28">
+		<Ability meta:X="1117.819091796875" meta:Y="-398.42855834960938">
 			<Key>TriFirebolt</Key>
 			<AbilityData>
 				<Name>Tri Firebolt</Name>
@@ -82,6 +84,185 @@
 					<FlightEffect meta:RefKey="ParticleEffect">
 						<Name>Fire</Name>
 						<SpeedMultiplier>1.5</SpeedMultiplier>
+					</FlightEffect>
+					<HitEffect meta:RefKey="ParticleEffect">
+						<Name>Fireburst</Name>
+					</HitEffect>
+				</EffectData>
+			</AbilityData>
+			<Children>
+				<Ability meta:RefKey="Ability">QuadFirebolt</Ability>
+			</Children>
+		</Ability>
+		<Ability meta:X="1431.799072265625" meta:Y="-398.42855834960938">
+			<Key>QuadFirebolt</Key>
+			<AbilityData>
+				<Name>Quad Firebolt</Name>
+				<Description>Launch a firebolt at four orbs, destroying them.</Description>
+				<Icon meta:RefKey="Sprite">
+					<Name>Icons/FireboltQuad</Name>
+				</Icon>
+				<UnboughtDescription>I'm guessing you can see the pattern now, but I think I can figure out a way to launch four firebolts this time.</UnboughtDescription>
+				<BuyCost>
+					<Cost>Gold,1000</Cost>
+				</BuyCost>
+				<Upgrades>Firebolt</Upgrades>
+				<EffectData>
+					<Cost>4</Cost>
+					<Effect>4,Orb,Single,Pop</Effect>
+					<FlightEffect meta:RefKey="ParticleEffect">
+						<Name>Fire</Name>
+						<SpeedMultiplier>1.5</SpeedMultiplier>
+					</FlightEffect>
+					<HitEffect meta:RefKey="ParticleEffect">
+						<Name>Fireburst</Name>
+					</HitEffect>
+				</EffectData>
+			</AbilityData>
+		</Ability>
+		<Ability meta:X="1121.881591796875" meta:Y="-48.741073608398438">
+			<Key>FireFlurry</Key>
+			<AbilityData>
+				<Name>Fire Flurry</Name>
+				<Description>Fling out fire randomly, spreading destruction everywhere it lands.</Description>
+				<Icon meta:RefKey="Sprite">
+					<Name>Icons/FireFlurry</Name>
+				</Icon>
+				<UnboughtDescription>I really want to burn some random things. Please get some things for me.</UnboughtDescription>
+				<BuyCost>
+					<Cost>RatSkin,1</Cost>
+					<Cost>RatTail,1</Cost>
+					<Cost>SpiderChitin,1</Cost>
+					<Cost>SpiderLeg,1</Cost>
+				</BuyCost>
+				<EffectData>
+					<Cost>2</Cost>
+					<Effect>0,Orb,Random,Pop</Effect>
+					<Data>
+						<Data>Count,3</Data>
+					</Data>
+					<FlightEffect meta:RefKey="ParticleEffect">
+						<Name>Fire</Name>
+					</FlightEffect>
+					<HitEffect meta:RefKey="ParticleEffect">
+						<Name>Fireburst</Name>
+					</HitEffect>
+				</EffectData>
+			</AbilityData>
+			<Children>
+				<Ability meta:RefKey="Ability">FireRain</Ability>
+			</Children>
+		</Ability>
+		<Ability meta:X="1432.0242919921875" meta:Y="-37.563186645507812">
+			<Key>FireRain</Key>
+			<AbilityData>
+				<Name>Fire Rain</Name>
+				<Description>Rain down fire randomly, destroying all it touches.</Description>
+				<Icon meta:RefKey="Sprite">
+					<Name>Icons/FireRain</Name>
+				</Icon>
+				<UnboughtDescription>The last set of things you brought me were fun to burn. Please bring me more!</UnboughtDescription>
+				<Upgrades>FireFlurry</Upgrades>
+				<EffectData>
+					<Cost>3</Cost>
+					<Effect>0,Orb,Random,Pop</Effect>
+					<Data>
+						<Data>Count,5</Data>
+					</Data>
+					<FlightEffect meta:RefKey="ParticleEffect">
+						<Name>Fire</Name>
+					</FlightEffect>
+					<HitEffect meta:RefKey="ParticleEffect">
+						<Name>Fireburst</Name>
+					</HitEffect>
+				</EffectData>
+			</AbilityData>
+		</Ability>
+		<Ability meta:X="487.177001953125" meta:Y="565.0494384765625">
+			<Key>Fireball</Key>
+			<AbilityData>
+				<Name>Fireball</Name>
+				<Description>Launch an exploding fireball at the target location, destroying it and all neighbours.</Description>
+				<Icon meta:RefKey="Sprite">
+					<Name>Icons/Fireball</Name>
+				</Icon>
+				<UnboughtDescription>I've heard tales of a fabled creature of flame. With it's heart I'm sure I could develop a new spell of some form.</UnboughtDescription>
+				<BuyCost>
+					<Cost>Gold,1000</Cost>
+					<Cost>Flameheart,1</Cost>
+				</BuyCost>
+				<EffectData>
+					<Cost>5</Cost>
+					<Effect>1,Orb,Diamond,Pop</Effect>
+					<Data>
+						<Data>aoe,1</Data>
+					</Data>
+					<FlightEffect meta:RefKey="ParticleEffect">
+						<Name>Fire</Name>
+					</FlightEffect>
+					<HitEffect meta:RefKey="ParticleEffect">
+						<Name>Fireburst</Name>
+					</HitEffect>
+				</EffectData>
+			</AbilityData>
+			<Children>
+				<Ability meta:RefKey="Ability">GreaterFireball</Ability>
+			</Children>
+		</Ability>
+		<Ability meta:X="805.1903076171875" meta:Y="565.0494384765625">
+			<Key>GreaterFireball</Key>
+			<AbilityData>
+				<Name>Greater Fireball</Name>
+				<Description>Launch an exploding greater fireball at the target location, destroying it and all neighbours.</Description>
+				<Icon meta:RefKey="Sprite">
+					<Name>Icons/FireballGreater</Name>
+				</Icon>
+				<UnboughtDescription>This spell feels... incomplete. I need something hotter. A more powerful heart I think will do it.</UnboughtDescription>
+				<BuyCost>
+					<Cost>Gold,3000</Cost>
+					<Cost>Blazeheart,1</Cost>
+				</BuyCost>
+				<Upgrades>Fireball</Upgrades>
+				<EffectData>
+					<Cost>5</Cost>
+					<Effect>1,Orb,Diamond,Pop</Effect>
+					<Data>
+						<Data>aoe,2</Data>
+					</Data>
+					<FlightEffect meta:RefKey="ParticleEffect">
+						<Name>Fire</Name>
+					</FlightEffect>
+					<HitEffect meta:RefKey="ParticleEffect">
+						<Name>Fireburst</Name>
+					</HitEffect>
+				</EffectData>
+			</AbilityData>
+			<Children>
+				<Ability meta:RefKey="Ability">GrandFireball</Ability>
+			</Children>
+		</Ability>
+		<Ability meta:X="1115.447021484375" meta:Y="565.0494384765625">
+			<Key>GrandFireball</Key>
+			<AbilityData>
+				<Name>Grand Fireball</Name>
+				<Description>Launch an exploding grand fireball at the target location, destroying it and all neighbours.</Description>
+				<Icon meta:RefKey="Sprite">
+					<Name>Icons/FireballGrand</Name>
+				</Icon>
+				<UnboughtDescription>This spell is nearly done. I just need something even hotter.</UnboughtDescription>
+				<BuyCost>
+					<Cost>Gold,5000</Cost>
+					<Cost>Infernoheart,1</Cost>
+				</BuyCost>
+				<Upgrades>Fireball</Upgrades>
+				<EffectData>
+					<Cost>5</Cost>
+					<Effect>1,Orb,Diamond,Pop</Effect>
+					<Data>
+						<Data>aoe,3</Data>
+					</Data>
+					<FlightEffect meta:RefKey="ParticleEffect">
+						<Name>Fire</Name>
 					</FlightEffect>
 					<HitEffect meta:RefKey="ParticleEffect">
 						<Name>Fireburst</Name>

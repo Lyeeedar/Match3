@@ -17,9 +17,8 @@
       <string>&lt;?xml version="1.0" encoding="utf-16"?&gt;
 &lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
   &lt;string&gt;D:\Users\Philip\workspace\Match3\android\assets\UnlockTrees\Fire.xml&lt;/string&gt;
-  &lt;string&gt;D:\Users\Philip\workspace\Match3\android\assets\UnlockTrees\Fire2.xml&lt;/string&gt;
-  &lt;string&gt;D:\Users\Philip\workspace\Match3\android\assets\Definitions\cxvb.xml&lt;/string&gt;
   &lt;string&gt;D:\Users\Philip\workspace\Match3\android\assets\Definitions\UnlockTree2.xmldef&lt;/string&gt;
+  &lt;string&gt;D:\Users\Philip\workspace\Match3\android\assets\Definitions\cxvb.xml&lt;/string&gt;
   &lt;string&gt;D:\Users\Philip\workspace\Match3\android\assets\Definitions\UnlockTree.xmldef&lt;/string&gt;
   &lt;string&gt;D:\Users\Philip\workspace\Match3\android\assets\Houses\Pyro.xml&lt;/string&gt;
   &lt;string&gt;D:\Users\Philip\workspace\Match3\android\assets\Particles\Splatter.xml&lt;/string&gt;

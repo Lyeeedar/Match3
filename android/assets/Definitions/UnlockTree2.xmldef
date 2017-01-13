@@ -31,7 +31,7 @@
 					<Data Name="Effect" EnumValues="Pop,Convert" meta:RefKey="Enum" />
 				</Data>
 				<Data Name="Data" meta:RefKey="Collection">
-					<Data Name="Data" meta:RefKey="Struct">
+					<Data Name="Data" Collapse="True" meta:RefKey="Struct">
 						<Data Name="Key" meta:RefKey="String" />
 						<Data Name="Value" meta:RefKey="String" />
 					</Data>
