@@ -21,6 +21,7 @@ import com.lyeeedar.Renderables.Animation.LeapAnimation
 import com.lyeeedar.Renderables.Animation.MoveAnimation
 import com.lyeeedar.Renderables.Sprite.Sprite
 import com.lyeeedar.Renderables.Sprite.SpriteEffectActor
+import ktx.scene2d.*
 
 import com.lyeeedar.UI.*
 import com.lyeeedar.Util.AssetManager
@@ -131,32 +132,33 @@ class GridScreen(): AbstractScreen()
 					})
 		}
 
-		val playerTable = Table()
-		playerTable.add(playerPortrait).expand()
-		playerTable.row()
-		playerTable.add(hpBar).expandX().fillX()
-
 		mainTable.clear()
-		val table = mainTable
+		//val table = mainTable
 
-		table.defaults().pad(10f)
+		val table = table {
+			defaults().pad(10f).expandX().fillX()
+			background = TiledDrawable(TextureRegionDrawable(level.theme.floor.sprite!!.currentTexture)).tint(Color.DARK_GRAY)
 
-		val background = TextureRegionDrawable(level.theme.floor.sprite!!.currentTexture)
-		table.background = TiledDrawable(background).tint(Color.DARK_GRAY)
+			add(abilityTable)
+			row()
+			add(powerBar).height(25f)
+			row()
+			add(gridWidget).expand().fill()
+			row()
+			table {
+				add(victoryWidget).expand().fill().left()
 
-		table.add(abilityTable).expandX().fillX()
-		table.row()
-		table.add(powerBar).expandX().height(25f).fillX()
-		table.row()
-		table.add(gridWidget).expand().fill()
-		table.row()
+				table { cell -> cell.expandX().fillX().center()
+					add(playerPortrait).expand()
+					row()
+					add(hpBar).expandX().fillX()
+				}
 
-		val vdtable = Table()
-		table.add(vdtable).expandX().fillX()
+				add(defeatWidget).expand().fill().right()
+			}
+		}
 
-		vdtable.add(victoryWidget).width(Value.percentWidth(1f / 3f, vdtable)).expandY().fillY().left()
-		vdtable.add(playerTable).width(Value.percentWidth(1f / 3f, vdtable)).center()
-		vdtable.add(defeatWidget).width(Value.percentWidth(1f / 3f, vdtable)).expandY().fillY().right()
+		mainTable.add(table).expand().fill()
 
 		var message = ""
 		message += "\n\nVictory Condition: " + level.victory.getTextDescription()

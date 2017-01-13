@@ -181,12 +181,6 @@ class Grid(val width: Int, val height: Int, val level: Level)
 				newTile.isSelected = true
 				activeAbility!!.selectedTargets.add(newTile)
 			}
-
-			if (activeAbility!!.selectedTargets.size >= activeAbility!!.targets)
-			{
-				activeAbility!!.activate(this)
-				activeAbility = null
-			}
 		}
 		else
 		{

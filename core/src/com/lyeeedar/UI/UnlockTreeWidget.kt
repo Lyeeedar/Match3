@@ -451,14 +451,18 @@ abstract class Unlockable()
 		description = dataEl.get("Description")
 
 		val buyCostEl = dataEl.getChildByName("BuyCost")
-		for (i in 0..buyCostEl.childCount - 1)
+		if (buyCostEl != null)
 		{
-			val el = buyCostEl.getChild(i)
-			val text = el.text
-			val split = text.split(",")
+			for (i in 0..buyCostEl.childCount - 1)
+			{
+				val el = buyCostEl.getChild(i)
+				val text = el.text
+				val split = text.split(",")
 
-			buyCost[split[0]] = split[1].toInt()
+				buyCost[split[0]] = split[1].toInt()
+			}
 		}
+
 		unboughtDescription = dataEl.get("UnboughtDescription", description)
 		upgrades = dataEl.get("Upgrades", null)
 
