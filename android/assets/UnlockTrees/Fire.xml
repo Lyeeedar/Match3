@@ -21,6 +21,7 @@
 					<Cost>Gold,50</Cost>
 				</BuyCost>
 				<EffectData>
+					<Cost>3</Cost>
 					<Effect>1,Orb,Single,Pop</Effect>
 					<FlightEffect meta:RefKey="ParticleEffect">
 						<Name>Fire</Name>
@@ -136,7 +137,7 @@
 					<Cost>SpiderLeg,1</Cost>
 				</BuyCost>
 				<EffectData>
-					<Cost>2</Cost>
+					<Cost>3</Cost>
 					<Effect>0,Orb,Random,Pop</Effect>
 					<Data>
 						<Data>Count,3</Data>
@@ -153,7 +154,7 @@
 				<Ability meta:RefKey="Ability">FireRain</Ability>
 			</Children>
 		</Ability>
-		<Ability meta:X="1432.0242919921875" meta:Y="-37.563186645507812">
+		<Ability meta:X="1429.3927130448192" meta:Y="-34.931607698139388">
 			<Key>FireRain</Key>
 			<AbilityData>
 				<Name>Fire Rain</Name>

@@ -1,19 +1,16 @@
-<House>
-	<Sprite RefKey="Sprite">
+<House xmlns:meta="Editor">
+	<Sprite meta:RefKey="Sprite">
 		<Name>Oryx/Custom/townmap/pyro</Name>
-		<DrawActualSize>false</DrawActualSize>
-		<UpdateRate>0.5</UpdateRate>
-		<Colour>255,255,255,255</Colour>
 	</Sprite>
 	<Dialogue>
-		<DialogueLineText RefKey="DialogueLineText">
+		<Reference meta:RefKey="DialogueLineText">
 			<Text>What a hot day it is today. Time to burn some things.</Text>
-		</DialogueLineText>
-		<DialogueLineTree RefKey="DialogueLineTree">
+		</Reference>
+		<Reference meta:RefKey="DialogueLineTree">
 			<Tree>Fire</Tree>
-		</DialogueLineTree>
-		<DialogueLineText RefKey="DialogueLineText">
+		</Reference>
+		<Reference meta:RefKey="DialogueLineText">
 			<Text>Have fun.</Text>
-		</DialogueLineText>
+		</Reference>
 	</Dialogue>
 </House>

@@ -100,19 +100,23 @@ class Ability() : Unlockable()
 		for (target in finalTargets)
 		{
 			val closest = selectedTargets.minBy { it.dist(target) }!!
-			var delay = selectedDelays[closest]
 			val dst = closest.dist(target)
 
-			if (hitEffect != null)
-			{
-				val hs = hitEffect!!.copy()
-				hs.renderDelay = delay + 0.1f * dst
-				delay += hs.lifetime * 0.6f
+			Future.call(
+					{
+						var delay = 0.0f
+						if (hitEffect != null)
+						{
+							val hs = hitEffect!!.copy()
+							hs.renderDelay = delay + 0.1f * dst
+							delay += hs.lifetime * 0.6f
 
-				target.effects.add(hs)
-			}
+							target.effects.add(hs)
+						}
 
-			effect.apply(target, grid, delay, data)
+						effect.apply(target, grid, delay, data)
+					}, selectedDelays[closest] - 0.05f)
+
 		}
 
 		selectedTargets.clear()

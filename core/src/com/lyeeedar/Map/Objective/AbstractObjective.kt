@@ -11,7 +11,7 @@ import com.lyeeedar.Map.DungeonMapEntry
 
 abstract class AbstractObjective
 {
-	abstract fun update(map: DungeonMap, room: DungeonMapEntry)
+	abstract fun update(map: DungeonMap)
 	abstract fun isCompleted(): Boolean
 	abstract fun createDynamicTable(skin: Skin): Table
 	abstract fun createStaticTable(skin: Skin): Table

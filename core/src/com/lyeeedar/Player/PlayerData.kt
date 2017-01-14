@@ -33,6 +33,7 @@ class PlayerData
 
 		abilities[0] = "Firebolt"
 		getSkillTree("UnlockTrees/Fire")
+		getSkillTree("UnlockTrees/Warrior")
 	}
 
 	fun getSkillTree(path: String): UnlockTree<Ability>

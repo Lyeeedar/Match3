@@ -1,13 +1,16 @@
-<House>
-	<Sprite RefKey="Sprite">
+<House xmlns:meta="Editor">
+	<Sprite meta:RefKey="Sprite">
 		<Name>Oryx/Custom/townmap/warrior</Name>
-		<DrawActualSize>false</DrawActualSize>
-		<UpdateRate>0.5</UpdateRate>
-		<Colour>255,255,255,255</Colour>
 	</Sprite>
 	<Dialogue>
-		<DialogueLineText RefKey="DialogueLineText">
-			<Text>Piss off</Text>
-		</DialogueLineText>
+		<Reference meta:RefKey="DialogueLineText">
+			<Text>You have much to learn, but lucky for you I am here to teach.</Text>
+		</Reference>
+		<Reference meta:RefKey="DialogueLineTree">
+			<Tree>Warrior</Tree>
+		</Reference>
+		<Reference meta:RefKey="DialogueLineText">
+			<Text>Reflect on what you've learned.</Text>
+		</Reference>
 	</Dialogue>
 </House>

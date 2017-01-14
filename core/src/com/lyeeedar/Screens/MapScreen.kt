@@ -46,7 +46,7 @@ class MapScreen(): AbstractScreen()
 			created = true
 		}
 
-		map.objective.update(map, map.map[map.playerPos.hashCode()])
+		map.objective.update(map)
 
 		mainTable.clear()
 

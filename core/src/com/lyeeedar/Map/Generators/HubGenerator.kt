@@ -176,7 +176,7 @@ class HubGenerator(val seed: Long)
 		assignLevels(DungeonMapEntry.Type.BAD, badRooms)
 
 		map.finishSetup()
-		map.objective.update(map, hub)
+		map.objective.update(map)
 
 		return map
 	}

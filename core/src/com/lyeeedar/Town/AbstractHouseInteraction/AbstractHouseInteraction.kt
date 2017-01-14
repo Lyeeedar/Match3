@@ -18,7 +18,7 @@ abstract class AbstractHouseInteraction
 	{
 		fun load(xml: XmlReader.Element): AbstractHouseInteraction
 		{
-			val obj = get(xml.name)
+			val obj = get(xml.getAttribute("meta:RefKey"))
 			obj.parse(xml)
 
 			return obj

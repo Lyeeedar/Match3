@@ -1,0 +1,161 @@
+<AbilityTree meta:X="90" meta:Y="31" GUID="687122b5-b0ff-4af8-8709-442fb7ea9a82" xmlns:meta="Editor">
+	<Icon meta:RefKey="Sprite">
+		<Name>white</Name>
+	</Icon>
+	<Resources />
+	<Tree>
+		<Ability meta:RefKey="Ability">Block</Ability>
+		<Ability meta:RefKey="Ability">Strike</Ability>
+	</Tree>
+	<Abilities>
+		<Ability meta:X="365.10333333333335" meta:Y="-96">
+			<Key>Block</Key>
+			<AbilityData>
+				<Name>Block</Name>
+				<Description>Block a single attack with a quick strike.</Description>
+				<Icon meta:RefKey="Sprite">
+					<Name>white</Name>
+				</Icon>
+				<UnboughtDescription>I'm sure even one such as you can learn you fight, if given the right tutelage.</UnboughtDescription>
+				<BuyCost>
+					<Cost>Gold,50</Cost>
+				</BuyCost>
+				<EffectData>
+					<Cost>4</Cost>
+					<Effect>1,Attack,Single,Pop</Effect>
+				</EffectData>
+			</AbilityData>
+			<Children>
+				<Ability meta:RefKey="Ability">DoubleBlock</Ability>
+			</Children>
+		</Ability>
+		<Ability meta:X="681.98" meta:Y="-96">
+			<Key>DoubleBlock</Key>
+			<AbilityData>
+				<Name>Double Block</Name>
+				<Description>Block two attacks with careful precision.</Description>
+				<Icon meta:RefKey="Sprite">
+					<Name>white</Name>
+				</Icon>
+				<UnboughtDescription>Not bad, but you still have much to learn.</UnboughtDescription>
+				<BuyCost>
+					<Cost>Gold,100</Cost>
+				</BuyCost>
+				<Upgrades>Block</Upgrades>
+				<EffectData>
+					<Cost>4</Cost>
+					<Effect>2,Attack,Single,Pop</Effect>
+				</EffectData>
+			</AbilityData>
+			<Children>
+				<Ability meta:RefKey="Ability">TripleBlock</Ability>
+				<Ability meta:RefKey="Ability">MountainCrash</Ability>
+			</Children>
+		</Ability>
+		<Ability meta:X="983.60666666666668" meta:Y="-139">
+			<Key>TripleBlock</Key>
+			<AbilityData>
+				<Name>TripleBlock</Name>
+				<Description>Block three attacks with lightning swiftness.</Description>
+				<Icon meta:RefKey="Sprite">
+					<Name>white</Name>
+				</Icon>
+				<UnboughtDescription>Very good, you have learnt much. Now lets see if you can push yourself further.</UnboughtDescription>
+				<BuyCost>
+					<Cost>Gold,200</Cost>
+				</BuyCost>
+				<Upgrades>Block</Upgrades>
+				<EffectData>
+					<Cost>4</Cost>
+					<Effect>3,Attack,Single,Pop</Effect>
+				</EffectData>
+			</AbilityData>
+		</Ability>
+		<Ability meta:X="985.60666666666668" meta:Y="92">
+			<Key>MountainCrash</Key>
+			<AbilityData>
+				<Name>Mountain Crash</Name>
+				<Description>Counter and attack with a crushing blow.</Description>
+				<Icon meta:RefKey="Sprite">
+					<Name>white</Name>
+				</Icon>
+				<UnboughtDescription>You have earned the right to study some of my special techniques.</UnboughtDescription>
+				<BuyCost>
+					<Cost>Gold,1000</Cost>
+				</BuyCost>
+				<EffectData>
+					<Cost>5</Cost>
+					<Effect>1,Attack,Diamond,Pop</Effect>
+				</EffectData>
+			</AbilityData>
+		</Ability>
+		<Ability meta:X="381.10333333333335" meta:Y="373">
+			<Key>Strike</Key>
+			<AbilityData>
+				<Name>Strike</Name>
+				<Description>Attack a monster with a cutting strike.</Description>
+				<Icon meta:RefKey="Sprite">
+					<Name>white</Name>
+				</Icon>
+				<UnboughtDescription>Bring me some iron and I shall forge you a weapon, and teach you to use it.</UnboughtDescription>
+				<BuyCost>
+					<Cost>Iron,3</Cost>
+					<Cost>Gold,100</Cost>
+				</BuyCost>
+				<EffectData>
+					<Cost>3</Cost>
+					<Effect>1,Monster,Single,Pop</Effect>
+				</EffectData>
+			</AbilityData>
+			<Children>
+				<Ability meta:RefKey="Ability">TwinStrike</Ability>
+			</Children>
+		</Ability>
+		<Ability meta:X="686.11666666666667" meta:Y="373">
+			<Key>TwinStrike</Key>
+			<AbilityData>
+				<Name>Twin Strike</Name>
+				<Description>Attack two monsters with a rebounding strike.</Description>
+				<Icon meta:RefKey="Sprite">
+					<Name>white</Name>
+				</Icon>
+				<UnboughtDescription>With some steel I can improve that blade of yours, and maybe show you some more techniques with it.</UnboughtDescription>
+				<BuyCost>
+					<Cost>Steel,3</Cost>
+					<Cost>Gold,250</Cost>
+				</BuyCost>
+				<Upgrades>Strike</Upgrades>
+				<EffectData>
+					<Cost>3</Cost>
+					<Effect>2,Monster,Single,Pop</Effect>
+				</EffectData>
+			</AbilityData>
+			<Children>
+				<Ability meta:RefKey="Ability">OgreBlow</Ability>
+			</Children>
+		</Ability>
+		<Ability meta:X="1000.0566666666666" meta:Y="371">
+			<Key>OgreBlow</Key>
+			<AbilityData>
+				<Name>Ogre Blow</Name>
+				<Description>Attack a monster with the strength of an ogre.</Description>
+				<Icon meta:RefKey="Sprite">
+					<Name>white</Name>
+				</Icon>
+				<UnboughtDescription>Bring me some iron and I shall forge you a weapon, and teach you to use it.</UnboughtDescription>
+				<BuyCost>
+					<Cost>Adamantine,3</Cost>
+					<Cost>Gold,500</Cost>
+				</BuyCost>
+				<EffectData>
+					<Cost>3</Cost>
+					<Effect>1,Monster,Single,Pop</Effect>
+					<Data>
+						<Data>damage,1</Data>
+					</Data>
+				</EffectData>
+			</AbilityData>
+			<Children />
+		</Ability>
+	</Abilities>
+</AbilityTree>

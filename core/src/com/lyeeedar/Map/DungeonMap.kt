@@ -64,7 +64,7 @@ class DungeonMap(val seed: Long, val numRooms: Int)
 			}
 		}
 
-		onRoomComplete += {objective.update(this@DungeonMap, it)}
+		onRoomComplete += {objective.update(this@DungeonMap)}
 	}
 
 	val onRoomComplete = Event1Arg<DungeonMapEntry>()
