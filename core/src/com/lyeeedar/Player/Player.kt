@@ -9,13 +9,14 @@ import com.lyeeedar.Board.Grid
 import com.lyeeedar.Player.Ability.Ability
 import com.lyeeedar.Renderables.Sprite.Sprite
 import com.lyeeedar.UI.SpriteWidget
-import com.lyeeedar.Util.set
+import ktx.collections.get
+import ktx.collections.set
 
 /**
  * Created by Philip on 15-Jul-16.
  */
 
-class Player(data: PlayerData)
+class Player()
 {
 	lateinit var portrait: Sprite
 
@@ -27,7 +28,7 @@ class Player(data: PlayerData)
 			if (field > maxhp) field = maxhp
 		}
 
-	var maxhp: Int = 20
+	var maxhp: Int = 10
 	var regen: Int = 5
 
 	var gold: Int = 0
@@ -36,7 +37,7 @@ class Player(data: PlayerData)
 	// abilities and stuff
 	val abilities = Array<Ability?>(4){e -> null}
 
-	init
+	constructor(data: PlayerData) : this()
 	{
 		portrait = data.chosenSprite
 		portrait.drawActualSize = false

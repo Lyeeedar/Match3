@@ -23,6 +23,8 @@ import com.lyeeedar.Renderables.Sprite.TilingSprite
 import com.lyeeedar.Renderables.Sprite.Sprite
 import com.lyeeedar.Util.*
 import java.util.*
+import ktx.collections.get
+import ktx.collections.set
 
 /**
  * Created by Philip on 04-Jul-16.

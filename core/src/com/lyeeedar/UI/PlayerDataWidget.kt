@@ -7,6 +7,7 @@ import com.lyeeedar.Global
 import com.lyeeedar.Player.Ability.Ability
 import com.lyeeedar.Player.PlayerData
 import com.lyeeedar.Renderables.Sprite.Sprite
+import com.lyeeedar.Screens.TownScreen
 import com.lyeeedar.Util.AssetManager
 import com.lyeeedar.Util.addClickListener
 
@@ -68,7 +69,7 @@ class PlayerDataWidget(val playerData: PlayerData) : FullscreenTable()
 		val closeButtonTable = Table()
 		val closeButton = Button(Global.skin, "close")
 		closeButton.setSize(24f, 24f)
-		closeButton.addClickListener({ remove() })
+		closeButton.addClickListener({ remove(); TownScreen.instance.town.save() })
 		closeButtonTable.add(closeButton).expand().width(24f).height(24f).top().right()
 
 		val portraitStack = Stack()

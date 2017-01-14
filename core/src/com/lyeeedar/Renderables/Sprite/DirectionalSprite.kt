@@ -3,7 +3,8 @@ package com.lyeeedar.Renderables.Sprite
 import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.ObjectSet
 import com.lyeeedar.Util.random
-import com.lyeeedar.Util.set
+import ktx.collections.get
+import ktx.collections.set
 
 class DirectionalSprite
 {

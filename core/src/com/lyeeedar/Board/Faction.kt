@@ -6,7 +6,8 @@ import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Renderables.Sprite.Sprite
 import com.lyeeedar.Util.AssetManager
-import com.lyeeedar.Util.set
+import ktx.collections.get
+import ktx.collections.set
 
 /**
  * Created by Philip on 01-Aug-16.

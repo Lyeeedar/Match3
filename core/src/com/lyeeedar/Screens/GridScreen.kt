@@ -7,8 +7,11 @@ import com.badlogic.gdx.math.Bezier
 import com.badlogic.gdx.math.Interpolation
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Vector2
+import com.badlogic.gdx.scenes.scene2d.InputEvent
 import com.badlogic.gdx.scenes.scene2d.InputListener
+import com.badlogic.gdx.scenes.scene2d.Touchable
 import com.badlogic.gdx.scenes.scene2d.ui.Table
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton
 import com.badlogic.gdx.scenes.scene2d.ui.Value
 import com.badlogic.gdx.scenes.scene2d.utils.*
 import com.lyeeedar.Board.Grid
@@ -22,6 +25,7 @@ import com.lyeeedar.Renderables.Animation.MoveAnimation
 import com.lyeeedar.Renderables.Sprite.Sprite
 import com.lyeeedar.Renderables.Sprite.SpriteEffectActor
 import ktx.scene2d.*
+import ktx.actors.*
 
 import com.lyeeedar.UI.*
 import com.lyeeedar.Util.AssetManager
@@ -36,6 +40,7 @@ class GridScreen(): AbstractScreen()
 	val hp_empty: Sprite = AssetManager.loadSprite("GUI/health_empty")
 	val emptySlot = AssetManager.loadSprite("Icons/Empty")
 	var hpBar = Table()
+	var launchButton: TextButton? = null
 	lateinit var playerPortrait: SpriteWidget
 	lateinit var player: Player
 	lateinit var level: Level
@@ -136,29 +141,41 @@ class GridScreen(): AbstractScreen()
 		//val table = mainTable
 
 		val table = table {
-			defaults().pad(10f).expandX().fillX()
+			defaults().pad(10f).growX()
 			background = TiledDrawable(TextureRegionDrawable(level.theme.floor.sprite!!.currentTexture)).tint(Color.DARK_GRAY)
 
 			add(abilityTable)
 			row()
-			add(powerBar).height(25f)
+			stack { cell -> cell.height(25f)
+				add(powerBar)
+				launchButton = textButton("Launch", "default", Global.skin) {
+					isVisible = false
+					onClick { inputEvent: InputEvent, kTextButton: KTextButton ->
+						if (level.grid.activeAbility != null && level.grid.activeAbility!!.selectedTargets.size > 0)
+						{
+							level.grid.activeAbility!!.activate(level.grid)
+							level.grid.activeAbility = null
+						}
+					}
+				}
+			}
 			row()
-			add(gridWidget).expand().fill()
+			add(gridWidget).grow()
 			row()
 			table {
-				add(victoryWidget).expand().fill().left()
+				add(victoryWidget).grow().left()
 
-				table { cell -> cell.expandX().fillX().center()
+				table { cell -> cell.growX().center()
 					add(playerPortrait).expand()
 					row()
-					add(hpBar).expandX().fillX()
+					add(hpBar).growX()
 				}
 
-				add(defeatWidget).expand().fill().right()
+				add(defeatWidget).grow().right()
 			}
 		}
 
-		mainTable.add(table).expand().fill()
+		mainTable.add(table).grow()
 
 		var message = ""
 		message += "\n\nVictory Condition: " + level.victory.getTextDescription()
@@ -174,7 +191,43 @@ class GridScreen(): AbstractScreen()
 	override fun doRender(delta: Float)
 	{
 		level.update(delta)
+
+		val ability = level.grid.activeAbility
+
+		if (ability != null)
+		{
+			if (ability.selectedTargets.size != lastTargets)
+			{
+				idleTimer = 0f
+				lastTargets = ability.selectedTargets.size
+			}
+			else if (idleTimer <= 2f && popup == null)
+			{
+				idleTimer += delta
+			}
+			else if (idleTimer > 2f && popup == null && !squashed)
+			{
+				popup = TutorialPopup("Click activate to use your ability on the selected tiles.", launchButton!!.localToStageCoordinates(Vector2()), "AbilityButton")
+			}
+
+			PowerBar.instance.isVisible = false
+			launchButton!!.isVisible = true
+			launchButton!!.color = if (ability.selectedTargets.size == 0) Color.DARK_GRAY else Color.WHITE
+			launchButton!!.touchable = if (ability.selectedTargets.size == 0) Touchable.disabled else Touchable.enabled
+			launchButton!!.setText("Activate (" + ability.selectedTargets.size + "/" + ability.targets + ")")
+		}
+		else
+		{
+			PowerBar.instance.isVisible = true
+			launchButton!!.isVisible = false
+			idleTimer = 0f
+			lastTargets = 0
+		}
 	}
+	var squashed = false
+	var idleTimer = 0f
+	var lastTargets = 0
+	var popup: TutorialPopup? = null
 
 	// ----------------------------------------------------------------------
 	companion object

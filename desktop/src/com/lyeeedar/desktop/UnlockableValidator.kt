@@ -5,7 +5,8 @@ import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.ObjectSet
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Util.getChildrenRecursively
-import com.lyeeedar.Util.set
+import ktx.collections.get
+import ktx.collections.set
 import java.io.File
 
 /**

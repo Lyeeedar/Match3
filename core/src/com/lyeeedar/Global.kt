@@ -9,12 +9,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.*
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable
+import com.badlogic.gdx.utils.ObjectMap
 import com.lyeeedar.Screens.AbstractScreen
 import com.lyeeedar.UI.LayeredDrawable
 import com.lyeeedar.UI.Seperator
 import com.lyeeedar.UI.TabPanel
 import com.lyeeedar.UI.Tooltip
 import com.lyeeedar.Util.AssetManager
+import ktx.collections.set
 
 /**
  * Created by Philip on 04-Jul-16.
@@ -32,6 +34,7 @@ class Global
 		var release = false
 		lateinit var game: MainGame
 		lateinit var applicationChanger: AbstractApplicationChanger
+		var settings = Settings()
 
 		val stage: Stage
 			get() = (game.screen as AbstractScreen).stage
@@ -184,4 +187,13 @@ class Global
 			return skin
 		}
 	}
+}
+
+class Settings
+{
+	val data = ObjectMap<String, Any>()
+
+	fun hasKey(key: String) = data.containsKey(key)
+	fun <T> get(key: String, default: T) = if (data.containsKey(key)) data[key] as T else default
+	fun set(key: String, value: Any) { data[key] = value }
 }

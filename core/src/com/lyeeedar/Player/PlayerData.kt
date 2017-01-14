@@ -6,7 +6,8 @@ import com.lyeeedar.Renderables.Sprite.Sprite
 import com.lyeeedar.UI.MessageBox
 import com.lyeeedar.UI.UnlockTree
 import com.lyeeedar.Util.AssetManager
-import com.lyeeedar.Util.set
+import ktx.collections.get
+import ktx.collections.set
 
 /**
  * Created by Philip on 06-Aug-16.
@@ -31,6 +32,7 @@ class PlayerData
 		chosenSprite = unlockedSprites[0]
 
 		abilities[0] = "Firebolt"
+		getSkillTree("UnlockTrees/Fire")
 	}
 
 	fun getSkillTree(path: String): UnlockTree<Ability>
@@ -48,13 +50,8 @@ class PlayerData
 	{
 		for (tree in skillTrees)
 		{
-			for (skill in tree.value.boughtDescendants())
-			{
-				if (skill.key == name)
-				{
-					return skill
-				}
-			}
+			val skill = tree.value.boughtDescendants()[name]
+			if (skill != null) return skill
 		}
 
 		return null

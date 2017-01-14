@@ -16,7 +16,7 @@ import com.lyeeedar.Global
 import com.lyeeedar.UI.SpriteWidget
 import com.lyeeedar.Util.AssetManager
 import com.lyeeedar.Util.Colour
-import com.lyeeedar.Util.set
+import ktx.collections.set
 
 
 class CompletionConditionKill() : AbstractCompletionCondition()

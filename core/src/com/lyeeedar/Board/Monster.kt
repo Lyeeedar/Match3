@@ -14,6 +14,8 @@ import com.lyeeedar.Player.Ability.Targetter
 import com.lyeeedar.Renderables.Animation.*
 import com.lyeeedar.Renderables.Sprite.Sprite
 import com.lyeeedar.Util.*
+import ktx.collections.get
+import ktx.collections.set
 
 /**
  * Created by Philip on 22-Jul-16.

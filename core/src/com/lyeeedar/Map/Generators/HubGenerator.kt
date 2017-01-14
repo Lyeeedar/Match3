@@ -10,14 +10,16 @@ import com.lyeeedar.Map.DungeonMapEntry
 import com.lyeeedar.Map.Objective.ObjectiveExplore
 import com.lyeeedar.Util.*
 import java.util.*
+import ktx.collections.get
+import ktx.collections.set
 
 /**
  * Created by Philip on 24-Jul-16.
  */
 
-class HubGenerator
+class HubGenerator(val seed: Long)
 {
-	val ran: Random = Random()
+	val ran = Random(seed)
 	val maxCorridorLength = 4
 	val maxDepth = 10
 	var numRoomsToSpawn = 0
@@ -25,7 +27,7 @@ class HubGenerator
 	fun generate(theme: LevelTheme, numRooms: Int): DungeonMap
 	{
 		numRoomsToSpawn = numRooms
-		val map = DungeonMap()
+		val map = DungeonMap(seed, numRooms)
 
 		map.theme = theme
 		map.objective = ObjectiveExplore()

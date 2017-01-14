@@ -13,7 +13,7 @@ import com.lyeeedar.Direction
 import com.lyeeedar.Global
 import com.lyeeedar.MainGame
 import com.lyeeedar.Map.DungeonMap
-import com.lyeeedar.Player.Player
+import com.lyeeedar.Player.*
 import com.lyeeedar.Renderables.Animation.MoveAnimation
 import com.lyeeedar.Renderables.SortedRenderer
 import com.lyeeedar.Renderables.Sprite.Sprite
@@ -128,6 +128,8 @@ class DungeonMapWidget(val map: DungeonMap, val player: Player): Widget()
 				// check if dst is a valid direction
 				if (dir != null && room.connections.containsKey(dir))
 				{
+					save()
+
 					moveFrom = map.playerPos.copy()
 					moveTo = map.playerPos + dir
 				}
@@ -135,10 +137,22 @@ class DungeonMapWidget(val map: DungeonMap, val player: Player): Widget()
 		} )
 	}
 
+	fun save()
+	{
+		val save = SaveGame()
+		save.town = SaveTown().store(TownScreen.instance.town)
+		save.playerData = SavePlayerData().store(TownScreen.instance.playerData)
+		save.dungeon = SaveDungeonMap().store(map)
+		save.player = SavePlayer().store(player)
+
+		save.save()
+	}
+
 	fun completeDungeon()
 	{
 		Global.game.switchScreen(MainGame.ScreenEnum.TOWN)
 		TownScreen.instance.playerData.mergePlayerDataBack(player)
+		TownScreen.instance.town.save()
 	}
 
 	override fun act(delta: Float)

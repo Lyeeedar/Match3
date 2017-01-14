@@ -3,7 +3,11 @@ package com.lyeeedar
 import com.badlogic.gdx.Game
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.files.FileHandle
+import com.lyeeedar.Player.Player
+import com.lyeeedar.Player.PlayerData
+import com.lyeeedar.Player.SaveGame
 import com.lyeeedar.Screens.*
+import com.lyeeedar.Town.Town
 
 import javax.swing.*
 import java.io.PrintWriter
@@ -59,11 +63,42 @@ class MainGame : Game()
 
 		screens.put(ScreenEnum.GRID, GridScreen())
 		screens.put(ScreenEnum.MAP, MapScreen())
-		screens.put(ScreenEnum.TOWN, TownScreen())
+
+		val save = SaveGame.load()
+		if (save == null)
+		{
+			val player = PlayerData()
+			val town = Town(player)
+			screens.put(ScreenEnum.TOWN, TownScreen(player, town))
+
+			println("New town")
+		}
+		else
+		{
+			val playerData = save.playerData.get()
+			val town = save.town.get(playerData)
+			screens.put(ScreenEnum.TOWN, TownScreen(playerData, town))
+
+			println("Loaded town")
+
+			if (save.dungeon != null && save.player != null)
+			{
+				val dungeon = save.dungeon!!.get()
+				val player = save.player!!.get(playerData)
+
+				MapScreen.instance.setMap(dungeon, player)
+
+				println("Loaded dungeon")
+			}
+		}
 
 		if (Global.PARTICLE_EDITOR)
 		{
 			setScreen(ParticleEditorScreen())
+		}
+		else if (save?.dungeon != null)
+		{
+			switchScreen(ScreenEnum.MAP)
 		}
 		else
 		{

@@ -31,6 +31,8 @@ import com.lyeeedar.UI.GridWidget
 import com.lyeeedar.Util.*
 import javax.swing.JColorChooser
 import javax.swing.JFileChooser
+import ktx.collections.get
+import ktx.collections.set
 
 /**
  * Created by Philip on 14-Aug-16.

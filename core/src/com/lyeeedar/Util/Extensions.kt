@@ -104,6 +104,11 @@ fun <T> com.badlogic.gdx.utils.Array<T>.addAll(collection: Sequence<T>)
 {
 	for (item in collection) this.add(item)
 }
+fun <T> Iterable<T>.asGdxArray(): com.badlogic.gdx.utils.Array<T> {
+	val array = Array<T>()
+	array.addAll(this.asSequence())
+	return array
+}
 
 fun vectorToAngle(x: Float, y: Float) : Float
 {
@@ -150,12 +155,6 @@ fun Float.ciel() = MathUtils.ceil(this)
 fun Float.floor() = MathUtils.floor(this)
 
 fun String.neaten() = this.substring(0, 1).toUpperCase() + this.substring(1).toLowerCase()
-
-operator fun <V> IntMap<V>.set(key: Int, value: V) = this.put(key, value)
-
-operator fun IntIntMap.get(key: Int) = this.get(key, 0)
-operator fun IntIntMap.set(key: Int, value: Int) = this.put(key, value)
-operator fun <K, V> ObjectMap<K, V>.set(key: K, value: V) = this.put(key, value)
 
 fun <T> Sequence<T>.random() = if (this.count() > 0) this.elementAt(MathUtils.random(this.count()-1)) else null
 fun <T> Sequence<T>.random(ran: Random) = if (this.count() > 0) this.elementAt(ran.nextInt(this.count())) else null

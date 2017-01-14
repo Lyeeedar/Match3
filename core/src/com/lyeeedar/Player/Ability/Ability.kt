@@ -16,6 +16,8 @@ import com.lyeeedar.UI.GridWidget
 import com.lyeeedar.UI.PowerBar
 import com.lyeeedar.UI.Unlockable
 import com.lyeeedar.Util.*
+import ktx.collections.get
+import ktx.collections.set
 
 /**
  * Created by Philip on 20-Jul-16.
@@ -125,7 +127,7 @@ class Ability() : Unlockable()
 		val flightEffectData = dataEl.getChildByName("FlightEffect")
 		if (flightEffectData != null) flightEffect = AssetManager.loadParticleEffect(flightEffectData)
 
-		cost = dataEl.getInt("Cost", 0)
+		cost = dataEl.getInt("Cost", 1)
 
 		val effectDesc = dataEl.get("Effect")
 		val split = effectDesc.toUpperCase().split(",")

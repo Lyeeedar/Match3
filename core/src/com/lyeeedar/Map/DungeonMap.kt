@@ -8,12 +8,14 @@ import com.lyeeedar.Direction
 import com.lyeeedar.Map.Objective.AbstractObjective
 import com.lyeeedar.Renderables.Sprite.Sprite
 import com.lyeeedar.Util.*
+import ktx.collections.get
+import ktx.collections.set
 
 /**
  * Created by Philip on 24-Jul-16.
  */
 
-class DungeonMap
+class DungeonMap(val seed: Long, val numRooms: Int)
 {
 	lateinit var theme: LevelTheme
 

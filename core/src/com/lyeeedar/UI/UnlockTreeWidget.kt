@@ -19,7 +19,8 @@ import com.lyeeedar.Renderables.Sprite.Sprite
 import com.lyeeedar.Util.AssetManager
 import com.lyeeedar.Util.Colour
 import com.lyeeedar.Util.getXml
-import com.lyeeedar.Util.set
+import ktx.collections.get
+import ktx.collections.set
 
 /**
  * Created by Philip on 05-Aug-16.
@@ -266,15 +267,20 @@ class UnlockTree<T: Unlockable>
 		}
 	}
 
-	fun boughtDescendants() : com.badlogic.gdx.utils.Array<T>
+	fun descendants() : ObjectMap<String, UnlockableTreeItem<T>>
+	{
+		val map = ObjectMap<String, UnlockableTreeItem<T>>()
+		for (item in unlockableItems) item.descendants(map)
+
+		return map
+	}
+
+	fun boughtDescendants() : ObjectMap<String, T>
 	{
 		val map = ObjectMap<String, T>()
 		for (item in unlockableItems) item.boughtDescendants(map)
 
-		val array = com.badlogic.gdx.utils.Array<T>()
-		for (item in map) array.add(item.value)
-
-		return array
+		return map
 	}
 
 	fun visibleDescendants() : com.badlogic.gdx.utils.Array<UnlockableTreeItem<T>>
@@ -320,7 +326,7 @@ class UnlockTree<T: Unlockable>
 				unlockable.load(el, resources)
 
 				unlockables[key] = unlockable
-				treeMap[key] = UnlockableTreeItem(unlockable)
+				treeMap[key] = UnlockableTreeItem(unlockable, key)
 
 				val childEl = el.getChildByName("Children")
 
@@ -365,7 +371,7 @@ class UnlockTree<T: Unlockable>
 	}
 }
 
-class UnlockableTreeItem<T: Unlockable>(val data: T)
+class UnlockableTreeItem<T: Unlockable>(val data: T, val guid: String)
 {
 	var bought = false
 
@@ -382,6 +388,12 @@ class UnlockableTreeItem<T: Unlockable>(val data: T)
 		{
 			child?.visibleDescendants(array)
 		}
+	}
+
+	fun descendants(map: ObjectMap<String, UnlockableTreeItem<T>>)
+	{
+		map[guid] = this
+		for (child in children) child?.descendants(map)
 	}
 
 	fun boughtDescendants(map: ObjectMap<String, T>)
@@ -413,19 +425,6 @@ class UnlockableTreeItem<T: Unlockable>(val data: T)
 			{
 				children[i].assignLocation(angleStep, start + i*angleStep, childRadius )
 			}
-		}
-	}
-
-	fun parse(xml: XmlReader.Element, unlockables: ObjectMap<String, T>, resources: ObjectMap<String, XmlReader.Element>)
-	{
-		for (i in 0..xml.childCount-1)
-		{
-			val el = xml.getChild(i)
-			val unlockable = unlockables[el.name]
-			val child = UnlockableTreeItem<T>(unlockable)
-			child.parse(el, unlockables, resources)
-
-			children.add(child)
 		}
 	}
 }

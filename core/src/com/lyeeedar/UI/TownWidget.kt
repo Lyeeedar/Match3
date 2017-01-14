@@ -37,7 +37,8 @@ class TownWidget(val town: Town, val player: PlayerData) : Widget()
 
 	var tilesHeight: Int = 1
 
-	val playerPos: Point = Point()
+	val playerPos: Point
+		get() = town.playerPos
 
 	var playerSprite: Sprite = player.chosenSprite.copy()
 
@@ -48,8 +49,11 @@ class TownWidget(val town: Town, val player: PlayerData) : Widget()
 		val rows = 1 + Math.ceil(town.houses.size / 2.0).toInt()
 		tilesHeight = rows * 4 + rows * 2
 
-		playerPos.x = tilesWidth / 2
-		playerPos.y = tilesHeight / 2
+		if (playerPos.x == -1 && playerPos.y == -1)
+		{
+			playerPos.x = tilesWidth / 2
+			playerPos.y = tilesHeight / 2
+		}
 
 		addListener(object: ClickListener()
 		{
@@ -81,6 +85,7 @@ class TownWidget(val town: Town, val player: PlayerData) : Widget()
 					val hy = tilesHeight - (9 + 6 * (index / 2)) - 1
 
 					moveTo(hx+1, hy-1, {
+						town.save()
 						house.advance(player)
 					})
 				}
@@ -88,6 +93,8 @@ class TownWidget(val town: Town, val player: PlayerData) : Widget()
 				{
 					// world map
 					moveTo(tilesWidth/2, tilesHeight - 5, {
+						town.save()
+
 						val widget = Table()
 						val closeButton = Button(Global.skin, "close")
 						closeButton.setSize(24f, 24f)
@@ -112,7 +119,7 @@ class TownWidget(val town: Town, val player: PlayerData) : Widget()
 				}
 				else if (isOnPath(ix, iy))
 				{
-					moveTo(ix, iy)
+					moveTo(ix, iy, { town.save() })
 				}
 			}
 		})

@@ -30,6 +30,7 @@ class MapScreen(): AbstractScreen()
 	}
 
 	lateinit var portrait: SpriteWidget
+	var dungeonWidget: DungeonMapWidget? = null
 
 	fun getPortraitPos(): Vector2 = portrait.localToStageCoordinates(Vector2(portrait.width * 0.5f, portrait.height * 0.5f))
 
@@ -45,9 +46,11 @@ class MapScreen(): AbstractScreen()
 			created = true
 		}
 
+		map.objective.update(map, map.map[map.playerPos.hashCode()])
+
 		mainTable.clear()
 
-		val dungeonWidget = DungeonMapWidget(map, player)
+		dungeonWidget = DungeonMapWidget(map, player)
 		portrait = SpriteWidget(player.portrait.copy(), 48f, 48f)
 
 		val stack = Stack()
@@ -72,6 +75,12 @@ class MapScreen(): AbstractScreen()
 	override fun doRender(delta: Float)
 	{
 
+	}
+
+	override fun show()
+	{
+		super.show()
+		dungeonWidget?.save()
 	}
 
 	companion object

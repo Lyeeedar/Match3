@@ -176,7 +176,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 				newTile.isSelected = false
 				activeAbility!!.selectedTargets.removeValue(newTile, true)
 			}
-			else
+			else if (activeAbility!!.selectedTargets.size < activeAbility!!.targets)
 			{
 				newTile.isSelected = true
 				activeAbility!!.selectedTargets.add(newTile)

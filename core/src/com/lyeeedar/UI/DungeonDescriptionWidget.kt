@@ -1,6 +1,7 @@
 package com.lyeeedar.UI
 
 import com.badlogic.gdx.graphics.g2d.NinePatch
+import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.scenes.scene2d.Actor
 import com.badlogic.gdx.scenes.scene2d.ui.*
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener
@@ -64,8 +65,8 @@ class DungeonDescriptionWidget(val dungeon: WorldDungeon, val playerData: Player
 
 			while (true)
 			{
-				val generator = HubGenerator()
-				map = generator.generate(theme,  8)
+				val generator = HubGenerator(MathUtils.random(Long.MAX_VALUE))
+				map = generator.generate(theme, 8)
 				if (generator.numRoomsToSpawn <= 0) break
 			}
 

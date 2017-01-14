@@ -10,7 +10,8 @@ import com.lyeeedar.Renderables.Sprite.Sprite
 import com.lyeeedar.Renderables.Sprite.SpriteWrapper
 import com.lyeeedar.Util.AssetManager
 import com.lyeeedar.Util.FastEnumMap
-import com.lyeeedar.Util.set
+import ktx.collections.get
+import ktx.collections.set
 
 /**
  * Created by Philip on 13-Jul-16.

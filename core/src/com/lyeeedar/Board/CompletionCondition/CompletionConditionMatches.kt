@@ -17,8 +17,8 @@ import com.lyeeedar.Renderables.Sprite.Sprite
 import com.lyeeedar.UI.SpriteWidget
 import com.lyeeedar.Util.AssetManager
 import com.lyeeedar.Util.Colour
-import com.lyeeedar.Util.set
-import com.lyeeedar.Util.get
+import ktx.collections.get
+import ktx.collections.set
 
 /**
  * Created by Philip on 13-Jul-16.

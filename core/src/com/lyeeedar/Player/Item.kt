@@ -15,9 +15,20 @@ class Item
 	lateinit var description: String
 	lateinit var icon: Sprite
 	var value: Int = 0
-	var rarity: Rarity = Rarity.COMMON
 
 	var count = 1
+
+	fun copy(): Item
+	{
+		val item = Item()
+
+		item.name = name
+		item.description = description
+		item.icon = icon.copy()
+		item.value = value
+
+		return item
+	}
 
 	companion object
 	{

@@ -43,9 +43,9 @@ class UnlockablesList<T: Unlockable>(val current: String?, val trees: Array<Unlo
 		{
 			for (item in tree.boughtDescendants())
 			{
-				if (displayCondition(item))
+				if (displayCondition(item.value))
 				{
-					itemTable.add(createButton(item)).expandX().fillX()
+					itemTable.add(createButton(item.value)).expandX().fillX()
 					itemTable.row()
 				}
 			}
@@ -72,7 +72,7 @@ class UnlockablesList<T: Unlockable>(val current: String?, val trees: Array<Unlo
 			{
 				if (item.key == name)
 				{
-					return item
+					return item.value
 				}
 			}
 		}
