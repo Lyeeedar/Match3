@@ -1,4 +1,4 @@
-<Level>
+<Level xmlns:meta="Editor">
 	<Grid>
 		<Rows>
 			<Line>#.........#</Line>
@@ -124,17 +124,17 @@
 	</Grid>
 	<Faction>Rats,Spider</Faction>
 	<AllowedVictories>
-		<Kill RefKey="CompletionCondition" />
+		<Condition meta:RefKey="Kill" />
 	</AllowedVictories>
 	<AllowedDefeats>
-		<None RefKey="CompletionCondition" />
+		<Condition meta:RefKey="None" />
 	</AllowedDefeats>
 	<Type>Encounter</Type>
 	<Category>Bad</Category>
-	<UncompletedMapSprite RefKey="Sprite">
+	<UncompletedMapSprite meta:RefKey="Sprite">
 		<Name>Oryx/Custom/dungeonmap/combat</Name>
 	</UncompletedMapSprite>
-	<CompletedMapSprite RefKey="Sprite">
+	<CompletedMapSprite meta:RefKey="Sprite">
 		<Name>Oryx/Custom/dungeonmap/combat_complete</Name>
 	</CompletedMapSprite>
 </Level>

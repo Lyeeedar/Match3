@@ -1,0 +1,18 @@
+<Items xmlns:meta="Editor">
+	<Item>
+		<Name>Iron</Name>
+		<Description>A hunk of iron, ready to be forged.</Description>
+		<Icon meta:RefKey="Sprite">
+			<Name>white</Name>
+		</Icon>
+		<Value>15</Value>
+	</Item>
+	<Item>
+		<Name>Steel</Name>
+		<Description>An allow of iron and other minerals, ready to be forged.</Description>
+		<Icon meta:RefKey="Sprite">
+			<Name>white</Name>
+		</Icon>
+		<Value>25</Value>
+	</Item>
+</Items>

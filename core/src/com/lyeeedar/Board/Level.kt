@@ -38,7 +38,6 @@ class Level(val loadPath: String)
 	lateinit var rarity: Rarity
 	lateinit var category: DungeonMapEntry.Type
 	lateinit var type: String
-	var maxCountPerMap: Int = Int.MAX_VALUE
 	var minDepth: Int = 0
 	var maxDepth: Int = Int.MAX_VALUE
 
@@ -340,7 +339,6 @@ class Level(val loadPath: String)
 				level.rarity = Rarity.valueOf(xml.get("Rarity", "COMMON").toUpperCase())
 				level.category = DungeonMapEntry.Type.valueOf(xml.get("Category").toUpperCase())
 				level.type = xml.get("Type")
-				level.maxCountPerMap = xml.getInt("MaxCountPerMap", level.maxCountPerMap)
 				level.minDepth = xml.getInt("MinDepth", level.minDepth)
 				level.maxDepth = xml.getInt("MaxDepth", level.maxDepth)
 

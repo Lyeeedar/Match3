@@ -2,6 +2,7 @@ package com.lyeeedar.Map.Generators
 
 import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.ObjectMap
+import com.badlogic.gdx.utils.ObjectSet
 import com.lyeeedar.Board.Level
 import com.lyeeedar.Board.LevelTheme
 import com.lyeeedar.Direction
@@ -129,7 +130,6 @@ class HubGenerator(val seed: Long)
 				DungeonMapEntry.Type.GOOD -> goodRooms.size
 				DungeonMapEntry.Type.BAD -> badRooms.size
 				DungeonMapEntry.Type.EMPTY -> emptyRooms.size
-				DungeonMapEntry.Type.BOSS -> 0
 				else -> 0
 			}
 			typeMap[type] = getWeightedTypes(count, type)
@@ -137,21 +137,21 @@ class HubGenerator(val seed: Long)
 
 		fun assignLevels(type: DungeonMapEntry.Type, rooms: Array<DungeonMapEntry>)
 		{
-			val used = ObjectMap<Level, Int>()
+			val used = ObjectSet<Level>()
 			val typeList = typeMap[type]
-			if (typeList.size == 0) return
-			val chosenType = typeList.removeRandom(ran)
 
 			for (room in rooms)
 			{
+				if (typeList.size == 0) return
+				val chosenType = typeList.removeRandom(ran)
+
 				// build list of valid levels
 				val valid = Array<Level>()
 				for (level in levels[type])
 				{
 					if (level.minDepth > room.depth || level.maxDepth < room.depth || level.type != chosenType) continue
 
-					val usedCount = used.get(level, 0)
-					if (usedCount >= level.maxCountPerMap) continue
+					if (used.contains(level)) continue
 
 					for (i in 0..level.rarity.ordinal) valid.add(level)
 				}
@@ -161,8 +161,7 @@ class HubGenerator(val seed: Long)
 					val level = valid.random(ran)
 					room.level = level.copy()
 
-					val usedCount = used.get(level, 0)
-					used[level] = usedCount + 1
+					used.add(level)
 				}
 				else
 				{

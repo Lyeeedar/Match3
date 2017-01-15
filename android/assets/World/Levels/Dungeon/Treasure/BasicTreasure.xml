@@ -1,4 +1,4 @@
-<Level>
+<Level xmlns:meta="Editor">
 	<Grid>
 		<Rows>
 			<Line>#$$$$$$$$$#</Line>
@@ -11,84 +11,84 @@
 			<Line>#.........#</Line>
 			<Line>#.........#</Line>
 		</Rows>
-        <Rows>
-            <Line>#$$$$$$$$$#</Line>
-            <Line>#..~......#</Line>
-            <Line>#......~..#</Line>
-            <Line>#.~.......#</Line>
-            <Line>#.....~...#</Line>
-            <Line>#.........#</Line>
-            <Line>#~...~....#</Line>
-            <Line>#.......~.#</Line>
-            <Line>#.........#</Line>
-        </Rows>
-        <Rows>
-            <Line>#..$$$$$..#</Line>
-            <Line>#.........#</Line>
-            <Line>#.........#</Line>
-            <Line>#..=====..#</Line>
-            <Line>#..=~~~=..#</Line>
-            <Line>#..=~~~=..#</Line>
-            <Line>#..=====..#</Line>
-            <Line>#.........#</Line>
-            <Line>#.........#</Line>
-            <Line>#.........#</Line>
-        </Rows>
-        <Rows>
-            <Line>#$$$$$$$$$#</Line>
-            <Line>#.........#</Line>
-            <Line>#.........#</Line>
-            <Line>#.........#</Line>
-            <Line>#.........#</Line>
-            <Line>#~~~~~~~~~#</Line>
-            <Line>#.........#</Line>
-            <Line>#.........#</Line>
-            <Line>#.........#</Line>
-        </Rows>
-        <Rows>
-            <Line>######$$$$#</Line>
-            <Line>#~~~~.....#</Line>
-            <Line>#~~~~.....#</Line>
-            <Line>#~~~~.....#</Line>
-            <Line>#.........#</Line>
-            <Line>#.........#</Line>
-            <Line>#........##</Line>
-            <Line>#.......###</Line>
-            <Line>#.......###</Line>
-        </Rows>
-        <Rows>
-            <Line>#..$$..$$.#</Line>
-            <Line>#.........#</Line>
-            <Line>#.........#</Line>
-            <Line>#.........#</Line>
-            <Line>#.........#</Line>
-            <Line>###==##==##</Line>
-            <Line>#.........#</Line>
-            <Line>#.........#</Line>
-            <Line>#.........#</Line>
-        </Rows>
-        <Rows>
-            <Line>#...$$$...#</Line>
-            <Line>#.........#</Line>
-            <Line>#.........#</Line>
-            <Line>#.........#</Line>
-            <Line>#.........#</Line>
-            <Line>####===####</Line>
-            <Line>#.........#</Line>
-            <Line>#.........#</Line>
-            <Line>#.........#</Line>
-        </Rows>
-        <Rows>
-            <Line>#.$.$.$.$.#</Line>
-            <Line>#.........#</Line>
-            <Line>#.........#</Line>
-            <Line>#.........#</Line>
-            <Line>#.........#</Line>
-            <Line>##=#=#=#=##</Line>
-            <Line>#.........#</Line>
-            <Line>#.........#</Line>
-            <Line>#.........#</Line>
-        </Rows>
+		<Rows>
+			<Line>#$$$$$$$$$#</Line>
+			<Line>#..~......#</Line>
+			<Line>#......~..#</Line>
+			<Line>#.~.......#</Line>
+			<Line>#.....~...#</Line>
+			<Line>#.........#</Line>
+			<Line>#~...~....#</Line>
+			<Line>#.......~.#</Line>
+			<Line>#.........#</Line>
+		</Rows>
+		<Rows>
+			<Line>#..$$$$$..#</Line>
+			<Line>#.........#</Line>
+			<Line>#.........#</Line>
+			<Line>#..=====..#</Line>
+			<Line>#..=~~~=..#</Line>
+			<Line>#..=~~~=..#</Line>
+			<Line>#..=====..#</Line>
+			<Line>#.........#</Line>
+			<Line>#.........#</Line>
+			<Line>#.........#</Line>
+		</Rows>
+		<Rows>
+			<Line>#$$$$$$$$$#</Line>
+			<Line>#.........#</Line>
+			<Line>#.........#</Line>
+			<Line>#.........#</Line>
+			<Line>#.........#</Line>
+			<Line>#~~~~~~~~~#</Line>
+			<Line>#.........#</Line>
+			<Line>#.........#</Line>
+			<Line>#.........#</Line>
+		</Rows>
+		<Rows>
+			<Line>######$$$$#</Line>
+			<Line>#~~~~.....#</Line>
+			<Line>#~~~~.....#</Line>
+			<Line>#~~~~.....#</Line>
+			<Line>#.........#</Line>
+			<Line>#.........#</Line>
+			<Line>#........##</Line>
+			<Line>#.......###</Line>
+			<Line>#.......###</Line>
+		</Rows>
+		<Rows>
+			<Line>#..$$..$$.#</Line>
+			<Line>#.........#</Line>
+			<Line>#.........#</Line>
+			<Line>#.........#</Line>
+			<Line>#.........#</Line>
+			<Line>###==##==##</Line>
+			<Line>#.........#</Line>
+			<Line>#.........#</Line>
+			<Line>#.........#</Line>
+		</Rows>
+		<Rows>
+			<Line>#...$$$...#</Line>
+			<Line>#.........#</Line>
+			<Line>#.........#</Line>
+			<Line>#.........#</Line>
+			<Line>#.........#</Line>
+			<Line>####===####</Line>
+			<Line>#.........#</Line>
+			<Line>#.........#</Line>
+			<Line>#.........#</Line>
+		</Rows>
+		<Rows>
+			<Line>#.$.$.$.$.#</Line>
+			<Line>#.........#</Line>
+			<Line>#.........#</Line>
+			<Line>#.........#</Line>
+			<Line>#.........#</Line>
+			<Line>##=#=#=#=##</Line>
+			<Line>#.........#</Line>
+			<Line>#.........#</Line>
+			<Line>#.........#</Line>
+		</Rows>
 		<Rows>
 			<Line>#$$$$$$$$$#</Line>
 			<Line>#.........#</Line>
@@ -100,39 +100,39 @@
 			<Line>#=========#</Line>
 			<Line>#=========#</Line>
 		</Rows>
-        <Rows>
-            <Line>#$$$$$$$$$#</Line>
-            <Line>#.........#</Line>
-            <Line>#.........#</Line>
-            <Line>#.........#</Line>
-            <Line>#.........#</Line>
-            <Line>#=.=.=.=.=#</Line>
-            <Line>#.=.=.=.=.#</Line>
-            <Line>#=.=.=.=.=#</Line>
-            <Line>#.=.=.=.=.#</Line>
-        </Rows>
-        <Rows>
-            <Line>#$$$$$$$$$#</Line>
-            <Line>#.........#</Line>
-            <Line>#.........#</Line>
-            <Line>#.........#</Line>
-            <Line>#.#..#..#.#</Line>
-            <Line>#.=..=..=.#</Line>
-            <Line>#.=..=..=.#</Line>
-            <Line>#.=..=..=.#</Line>
-            <Line>#=========#</Line>
-        </Rows>
-        <Rows>
-            <Line>#$$$$$$$$$#</Line>
-            <Line>#.........#</Line>
-            <Line>#.........#</Line>
-            <Line>#.........#</Line>
-            <Line>#.=..=..=.#</Line>
-            <Line>#.=..=..=.#</Line>
-            <Line>#.=..=..=.#</Line>
-            <Line>#.=..=..=.#</Line>
-            <Line>#=========#</Line>
-        </Rows>
+		<Rows>
+			<Line>#$$$$$$$$$#</Line>
+			<Line>#.........#</Line>
+			<Line>#.........#</Line>
+			<Line>#.........#</Line>
+			<Line>#.........#</Line>
+			<Line>#=.=.=.=.=#</Line>
+			<Line>#.=.=.=.=.#</Line>
+			<Line>#=.=.=.=.=#</Line>
+			<Line>#.=.=.=.=.#</Line>
+		</Rows>
+		<Rows>
+			<Line>#$$$$$$$$$#</Line>
+			<Line>#.........#</Line>
+			<Line>#.........#</Line>
+			<Line>#.........#</Line>
+			<Line>#.#..#..#.#</Line>
+			<Line>#.=..=..=.#</Line>
+			<Line>#.=..=..=.#</Line>
+			<Line>#.=..=..=.#</Line>
+			<Line>#=========#</Line>
+		</Rows>
+		<Rows>
+			<Line>#$$$$$$$$$#</Line>
+			<Line>#.........#</Line>
+			<Line>#.........#</Line>
+			<Line>#.........#</Line>
+			<Line>#.=..=..=.#</Line>
+			<Line>#.=..=..=.#</Line>
+			<Line>#.=..=..=.#</Line>
+			<Line>#.=..=..=.#</Line>
+			<Line>#=========#</Line>
+		</Rows>
 		<Rows>
 			<Line>#...$$$...#</Line>
 			<Line>#.........#</Line>
@@ -166,57 +166,63 @@
 			<Line>#.........#</Line>
 			<Line>#.........#</Line>
 		</Rows>
-        <Rows>
-            <Line>#$###$###$#</Line>
-            <Line>#..#...#..#</Line>
-            <Line>#..#...#..#</Line>
-            <Line>#.........#</Line>
-            <Line>#.........#</Line>
-            <Line>#.........#</Line>
-            <Line>##.#.#.#.##</Line>
-            <Line>#.........#</Line>
-            <Line>#.........#</Line>
-            <Line>#.........#</Line>
-        </Rows>
-        <Rows>
-            <Line>#.###$###.#</Line>
-            <Line>#..##.##..#</Line>
-            <Line>#..#...#..#</Line>
-            <Line>#.........#</Line>
-            <Line>#.........#</Line>
-            <Line>#.........#</Line>
-            <Line>#.........#</Line>
-            <Line>#....#....#</Line>
-            <Line>#....#....#</Line>
-        </Rows>
-        <Rows>
-            <Line>#...#£#...#</Line>
-            <Line>#..=====..#</Line>
-            <Line>#..=====..#</Line>
-            <Line>#.........#</Line>
-            <Line>#.........#</Line>
-            <Line>#.........#</Line>
-            <Line>#.........#</Line>
-            <Line>#.........#</Line>
-            <Line>#.........#</Line>
-        </Rows>
+		<Rows>
+			<Line>#$###$###$#</Line>
+			<Line>#..#...#..#</Line>
+			<Line>#..#...#..#</Line>
+			<Line>#.........#</Line>
+			<Line>#.........#</Line>
+			<Line>#.........#</Line>
+			<Line>##.#.#.#.##</Line>
+			<Line>#.........#</Line>
+			<Line>#.........#</Line>
+			<Line>#.........#</Line>
+		</Rows>
+		<Rows>
+			<Line>#.###$###.#</Line>
+			<Line>#..##.##..#</Line>
+			<Line>#..#...#..#</Line>
+			<Line>#.........#</Line>
+			<Line>#.........#</Line>
+			<Line>#.........#</Line>
+			<Line>#.........#</Line>
+			<Line>#....#....#</Line>
+			<Line>#....#....#</Line>
+		</Rows>
+		<Rows>
+			<Line>#...#£#...#</Line>
+			<Line>#..=====..#</Line>
+			<Line>#..=====..#</Line>
+			<Line>#.........#</Line>
+			<Line>#.........#</Line>
+			<Line>#.........#</Line>
+			<Line>#.........#</Line>
+			<Line>#.........#</Line>
+			<Line>#.........#</Line>
+		</Rows>
 	</Grid>
 	<AllowedVictories>
-		<Sink RefKey="CompletionCondition">
-			<Sink>4</Sink>
-		</Sink>
+		<Condition meta:RefKey="Sink">
+			<Count>4</Count>
+		</Condition>
 	</AllowedVictories>
 	<AllowedDefeats>
-		<Turns RefKey="CompletionCondition">
+		<Condition meta:RefKey="Turns">
 			<Turns>30</Turns>
-		</Turns>
+		</Condition>
+		<Condition meta:RefKey="Turns">
+			<Turns>40</Turns>
+		</Condition>
+		<Condition meta:RefKey="Time">
+			<Seconds>60</Seconds>
+		</Condition>
 	</AllowedDefeats>
 	<Type>Treasure</Type>
 	<Category>Good</Category>
-	<UncompletedMapSprite RefKey="Sprite">
+	<UncompletedMapSprite meta:RefKey="Sprite">
 		<Name>Oryx/Custom/dungeonmap/treasure</Name>
 	</UncompletedMapSprite>
-	<CompletedMapSprite RefKey="Sprite">
+	<CompletedMapSprite meta:RefKey="Sprite">
 		<Name>Oryx/Custom/dungeonmap/treasure_complete</Name>
 	</CompletedMapSprite>
 </Level>

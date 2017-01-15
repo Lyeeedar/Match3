@@ -207,12 +207,7 @@ class MonsterAbility
 					{
 						val tile = grid.tile(t.x + x, t.y + y) ?: return false
 
-						if (tile.monster != null && tile.monster != monster)
-						{
-							return false
-						}
-
-						if (tile.orb != tile.contents)
+						if (tile.orb != tile.contents && tile.monster != monster)
 						{
 							return false
 						}

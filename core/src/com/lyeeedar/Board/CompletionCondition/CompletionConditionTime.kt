@@ -37,7 +37,7 @@ class CompletionConditionTime(): AbstractCompletionCondition()
 
 	override fun parse(xml: XmlReader.Element)
 	{
-		time = xml.getInt("Time").toFloat()
+		time = xml.getInt("Seconds").toFloat()
 	}
 
 	override fun attachHandlers(grid: Grid)

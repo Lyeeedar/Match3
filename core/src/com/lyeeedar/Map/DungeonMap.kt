@@ -76,8 +76,7 @@ class DungeonMapEntry(val point: Point)
 	{
 		EMPTY,
 		GOOD,
-		BAD,
-		BOSS
+		BAD
 	}
 
 	val connections: FastEnumMap<Direction, DungeonMapEntry> = FastEnumMap(Direction::class.java)

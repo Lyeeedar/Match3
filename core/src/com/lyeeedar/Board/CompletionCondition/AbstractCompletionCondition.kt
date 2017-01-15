@@ -21,7 +21,7 @@ abstract class AbstractCompletionCondition
 	{
 		fun load(xml: XmlReader.Element): AbstractCompletionCondition
 		{
-			val obj = get(xml.name)
+			val obj = get(xml.getAttribute("meta:RefKey"))
 			obj.parse(xml)
 
 			return obj
