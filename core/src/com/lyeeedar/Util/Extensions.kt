@@ -56,11 +56,25 @@ fun XmlReader.Element.getChildrenRecursively(out: Array<XmlReader.Element> = Arr
 	return out
 }
 
-fun getXml(path: String): XmlReader.Element
+fun getXml(path: String, extension: String = "xml"): XmlReader.Element
 {
-	var handle = Gdx.files.internal("$path.xml")
-	if (!handle.exists()) handle = Gdx.files.absolute(path)
-	return XmlReader().parse(handle)
+	try
+	{
+		var filepath = path
+		if (!filepath.endsWith("." + extension))
+		{
+			filepath += "." + extension
+		}
+
+		var handle = Gdx.files.internal(filepath)
+		if (!handle.exists()) handle = Gdx.files.absolute(filepath)
+		return XmlReader().parse(handle)
+	}
+	catch (ex: Exception)
+	{
+		System.err.println(ex.message)
+		throw ex
+	}
 }
 
 inline fun <reified T : Any> getPool(): Pool<T> = Pools.get(T::class.java, Int.MAX_VALUE)

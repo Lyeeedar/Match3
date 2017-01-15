@@ -453,7 +453,6 @@ class SavePlayer : SaveableObject<Player>
 
 		val player = Player()
 		player.portrait = portrait
-		portrait.drawActualSize = true
 
 		player.hp = hp
 		player.regen = regen

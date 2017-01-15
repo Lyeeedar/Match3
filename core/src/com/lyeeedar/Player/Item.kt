@@ -47,7 +47,7 @@ class Item
 		{
 			val map = ObjectMap<String, Item>()
 
-			val xml = getXml("Items/Items.xml")
+			val xml = getXml("Items/Items")
 			for (i in 0..xml.childCount-1)
 			{
 				val el = xml.getChild(i)
