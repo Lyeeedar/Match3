@@ -89,7 +89,8 @@ class LevelTheme
 				for (ii in 0..typeEl.childCount-1)
 				{
 					val el = typeEl.getChild(ii)
-					map[el.name] = el.text.toInt()
+					val split = el.text.split(",")
+					map[split[0]] = split[1].toInt()
 				}
 			}
 

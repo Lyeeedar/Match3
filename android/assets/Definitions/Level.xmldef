@@ -34,6 +34,7 @@
 			<Data Name="Rows" ElementPerLine="True" meta:RefKey="MultilineString" />
 		</Data>
 		<Data Name="Faction" meta:RefKey="String" />
+		<Data Name="OrbCount" Type="Int" Min="4" Default="6" meta:RefKey="Number" />
 		<Data Name="AllowedVictories" MinCount="1" meta:RefKey="Collection">
 			<Data Name="Condition" Keys="None,Kill,Matches,Sink,Time,Turns" Nullable="False" SkipIfDefault="False" meta:RefKey="Reference" />
 		</Data>

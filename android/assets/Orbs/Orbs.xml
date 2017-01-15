@@ -34,5 +34,17 @@
 			<Name>Purple</Name>
 			<Colour>165,35,212,255</Colour>
 		</Orb>
+		<Orb>
+			<Name>Orange</Name>
+			<Colour>255,159,0,255</Colour>
+		</Orb>
+		<Orb>
+			<Name>Pink</Name>
+			<Colour>255,0,196,255</Colour>
+		</Orb>
+		<Orb>
+			<Name>Black</Name>
+			<Colour>13,13,13,255</Colour>
+		</Orb>
 	</Types>
 </Orbs>

@@ -1,85 +1,82 @@
-<Theme>
-	<Floor RefKey="SpriteWrapper">
-		<Sprite RefKey="Sprite">
+<Theme xmlns:meta="Editor">
+	<Floor meta:RefKey="SpriteWrapper">
+		<Sprite meta:RefKey="Sprite">
 			<Name>Oryx/uf_split/uf_terrain/floor_extra_8</Name>
 		</Sprite>
-		<Reference1 />
 	</Floor>
-	<Wall RefKey="SpriteWrapper">
-		<Reference0 />
-		<TilingSprite RefKey="TilingSprite">
+	<Wall meta:RefKey="SpriteWrapper">
+		<TilingSprite meta:RefKey="TilingSprite">
 			<Name>Wall</Name>
 			<Mode>Premade</Mode>
-			<Front RefKey="Sprite">
+			<Front meta:RefKey="Sprite">
 				<Name>Oryx/uf_split/uf_terrain/wall_dungeon_14</Name>
 			</Front>
-			<Top RefKey="Sprite">
+			<Top meta:RefKey="Sprite">
 				<Name>Oryx/uf_split/uf_terrain/wall_dungeon_7</Name>
 			</Top>
-			<Overhang RefKey="Sprite">
+			<Overhang meta:RefKey="Sprite">
 				<Name>Oryx/uf_split/uf_terrain/wall_dungeon_1</Name>
 			</Overhang>
 		</TilingSprite>
 	</Wall>
-	<Pit RefKey="SpriteWrapper">
-		<Sprite RefKey="Sprite">
+	<Pit meta:RefKey="SpriteWrapper">
+		<Sprite meta:RefKey="Sprite">
 			<Name>Oryx/uf_split/uf_terrain/water_green</Name>
 		</Sprite>
-		<Reference1 />
 	</Pit>
 	<Chest>
-		<Full RefKey="Sprite">
+		<Full meta:RefKey="Sprite">
 			<Name>Oryx/uf_split/uf_items/chest_silver_open</Name>
 			<DrawActualSize>true</DrawActualSize>
 		</Full>
-		<Empty RefKey="Sprite">
+		<Empty meta:RefKey="Sprite">
 			<Name>Oryx/uf_split/uf_items/chest_silver_empty</Name>
 			<DrawActualSize>true</DrawActualSize>
 		</Empty>
 	</Chest>
-	<Coin RefKey="Sprite">
+	<Coin meta:RefKey="Sprite">
 		<Name>Oryx/uf_split/uf_items/coin_gold</Name>
 		<DrawActualSize>true</DrawActualSize>
 	</Coin>
 	<Block>
-		<Sprite RefKey="Sprite">
+		<Sprite meta:RefKey="Sprite">
 			<Name>Oryx/uf_split/uf_terrain/crate</Name>
 			<DrawActualSize>true</DrawActualSize>
 		</Sprite>
 	</Block>
 	<Seal>
-		<Sprite RefKey="Sprite">
+		<Sprite meta:RefKey="Sprite">
 			<Name>Oryx/Custom/terrain/spiderweb</Name>
 			<DrawActualSize>true</DrawActualSize>
 			<Colour>255,255,255,54</Colour>
 		</Sprite>
-		<Sprite RefKey="Sprite">
+		<Sprite meta:RefKey="Sprite">
 			<Name>Oryx/Custom/terrain/spiderweb</Name>
 			<DrawActualSize>true</DrawActualSize>
 			<Colour>255,255,255,142</Colour>
 		</Sprite>
-		<Sprite RefKey="Sprite">
+		<Sprite meta:RefKey="Sprite">
 			<Name>Oryx/Custom/terrain/spiderweb</Name>
 			<DrawActualSize>true</DrawActualSize>
 		</Sprite>
 	</Seal>
 	<Shield>
-		<Sprite RefKey="Sprite">
+		<Sprite meta:RefKey="Sprite">
 			<Name>Oryx/uf_split/uf_items/shield_iron_heater</Name>
 			<DrawActualSize>true</DrawActualSize>
 		</Sprite>
 	</Shield>
 	<Map>
-		<Room RefKey="DirectedSprite">Oryx/Custom/dungeonmap/stone_room</Room>
-		<Corridor RefKey="DirectedSprite">Oryx/Custom/dungeonmap/stone_corridor</Corridor>
+		<Room meta:RefKey="DirectedSprite">Oryx/Custom/dungeonmap/stone_room</Room>
+		<Corridor meta:RefKey="DirectedSprite">Oryx/Custom/dungeonmap/stone_corridor</Corridor>
 	</Map>
 	<RoomWeights>
 		<Good>
-			<Treasure>1</Treasure>
+			<Data>Treasure,1</Data>
 		</Good>
 		<Bad>
-			<Encounter>2</Encounter>
-			<Trap>1</Trap>
+			<Pair>Encounter,2</Pair>
+			<Pair>Trap,1</Pair>
 		</Bad>
 	</RoomWeights>
 </Theme>

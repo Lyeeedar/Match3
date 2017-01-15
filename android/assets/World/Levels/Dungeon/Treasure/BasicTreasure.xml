@@ -201,6 +201,7 @@
 			<Line>#.........#</Line>
 		</Rows>
 	</Grid>
+	<OrbCount>5</OrbCount>
 	<AllowedVictories>
 		<Condition meta:RefKey="Sink">
 			<Count>4</Count>

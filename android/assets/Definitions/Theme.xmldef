@@ -1,39 +1,39 @@
-<Definitions>
-	<Struct Name="Theme" RefKey="Struct">
-		<Reference Name="Floor" Keys="SpriteWrapper" Nullable="False" RefKey="Reference" />
-		<Reference Name="Wall" Keys="SpriteWrapper" Nullable="False" RefKey="Reference" />
-		<Reference Name="Pit" Keys="SpriteWrapper" Nullable="False" RefKey="Reference" />
-		<Struct Name="Chest" RefKey="Struct">
-			<Reference Name="Full" Keys="Sprite" Nullable="False" RefKey="Reference" />
-			<Reference Name="Empty" Keys="Sprite" Nullable="False" RefKey="Reference" />
-		</Struct>
-		<Reference Name="Coin" Keys="Sprite" Nullable="False" RefKey="Reference" />
-		<Collection Name="Block" MinCount="1" RefKey="Collection">
-			<Reference Name="Sprite" Keys="Sprite" Nullable="False" RefKey="Reference" />
-		</Collection>
-		<Collection Name="Seal" MinCount="1" RefKey="Collection">
-			<Reference Name="Sprite" Keys="Sprite" Nullable="False" RefKey="Reference" />
-		</Collection>
-		<Collection Name="Shield" MinCount="1" RefKey="Collection">
-			<Reference Name="Sprite" Keys="Sprite" Nullable="False" RefKey="Reference" />
-		</Collection>
-		<Struct Name="Map" RefKey="Struct">
-			<Reference Name="Room" Keys="DirectedSprite" Nullable="False" RefKey="Reference" />
-			<Reference Name="Corridor" Keys="DirectedSprite" Nullable="False" RefKey="Reference" />
-		</Struct>
-		<Struct Name="RoomWeights" RefKey="Struct">
-			<Collection Name="Good" RefKey="Collection">
-				<Struct Name="Data" Collapse="true" RefKey="Struct">
-					<String Name="Type" RefKey="String" />
-					<Number Name="Weight" Min="0" RefKey="Number" />
-				</Struct>
-			</Collection>
-			<Collection Name="Bad" RefKey="Collection">
-				<Struct Name="Pair" Collapse="true" RefKey="Struct">
-					<String Name="Type" RefKey="String" />
-					<Number Name="Weight" Min="0" RefKey="Number" />
-				</Struct>
-			</Collection>
-		</Struct>
-	</Struct>
+<Definitions xmlns:meta="Editor">
+	<Definition Name="Theme" meta:RefKey="Struct">
+		<Data Name="Floor" Keys="SpriteWrapper" Nullable="False" meta:RefKey="Reference" />
+		<Data Name="Wall" Keys="SpriteWrapper" Nullable="False" meta:RefKey="Reference" />
+		<Data Name="Pit" Keys="SpriteWrapper" Nullable="False" meta:RefKey="Reference" />
+		<Data Name="Chest" meta:RefKey="Struct">
+			<Data Name="Full" Keys="Sprite" Nullable="False" meta:RefKey="Reference" />
+			<Data Name="Empty" Keys="Sprite" Nullable="False" meta:RefKey="Reference" />
+		</Data>
+		<Data Name="Coin" Keys="Sprite" Nullable="False" meta:RefKey="Reference" />
+		<Data Name="Block" MinCount="1" meta:RefKey="Collection">
+			<Data Name="Sprite" Keys="Sprite" Nullable="False" meta:RefKey="Reference" />
+		</Data>
+		<Data Name="Seal" MinCount="1" meta:RefKey="Collection">
+			<Data Name="Sprite" Keys="Sprite" Nullable="False" meta:RefKey="Reference" />
+		</Data>
+		<Data Name="Shield" MinCount="1" meta:RefKey="Collection">
+			<Data Name="Sprite" Keys="Sprite" Nullable="False" meta:RefKey="Reference" />
+		</Data>
+		<Data Name="Map" meta:RefKey="Struct">
+			<Data Name="Room" Keys="DirectedSprite" Nullable="False" meta:RefKey="Reference" />
+			<Data Name="Corridor" Keys="DirectedSprite" Nullable="False" meta:RefKey="Reference" />
+		</Data>
+		<Data Name="RoomWeights" meta:RefKey="Struct">
+			<Data Name="Good" meta:RefKey="Collection">
+				<Data Name="Pair" Collapse="True" meta:RefKey="Struct">
+					<Data Name="Type" meta:RefKey="String" />
+					<Data Name="Weight" Min="0" meta:RefKey="Number" />
+				</Data>
+			</Data>
+			<Data Name="Bad" meta:RefKey="Collection">
+				<Data Name="Pair" Collapse="True" meta:RefKey="Struct">
+					<Data Name="Type" meta:RefKey="String" />
+					<Data Name="Weight" Min="0" meta:RefKey="Number" />
+				</Data>
+			</Data>
+		</Data>
+	</Definition>
 </Definitions>

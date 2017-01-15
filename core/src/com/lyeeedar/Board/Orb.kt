@@ -2,6 +2,7 @@ package com.lyeeedar.Board
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Color
+import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Direction
@@ -12,6 +13,7 @@ import com.lyeeedar.Util.AssetManager
 import com.lyeeedar.Util.FastEnumMap
 import com.lyeeedar.Util.Point
 import com.lyeeedar.Util.tryGet
+import ktx.collections.toGdxArray
 
 /**
  * Created by Philip on 04-Jul-16.
@@ -82,7 +84,20 @@ class Orb(val desc: OrbDesc, theme: LevelTheme): Swappable(theme)
 	companion object
 	{
 		// ----------------------------------------------------------------------
-		val validOrbs: Array<OrbDesc> = Array()
+		private val validOrbs: Array<OrbDesc> = Array()
+
+		fun getRandomOrb(level: Level): OrbDesc
+		{
+			val index = MathUtils.random(level.orbs-1)
+			return validOrbs[index]
+		}
+
+		fun getValidOrbs(level: Level) : Array<OrbDesc>
+		{
+			val copy = Array<OrbDesc>(level.orbs)
+			for (i in 0..level.orbs-1) copy.add(validOrbs[i])
+			return copy
+		}
 
 		fun getOrb(key: Int) = validOrbs.first { it.key == key }
 		fun getOrb(name: String) = validOrbs.first { it.name == name }

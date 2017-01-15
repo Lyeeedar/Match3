@@ -45,16 +45,16 @@ class Chest(val spawnOrbs: Boolean = true, val theme: LevelTheme)
 	{
 		if (spawnOrbs)
 		{
-			if (numToSpawn <= 0) return Orb(Orb.validOrbs.random(), theme)
+			if (numToSpawn <= 0) return Orb(Orb.getRandomOrb(grid.level), theme)
 
 			// make sure we dont flood the board
 			val coinsOnBoard = grid.grid.filter { it.sinkable != null }.count() + 1
-			if (coinsOnBoard >= 7) return Orb(Orb.validOrbs.random(), theme)
+			if (coinsOnBoard >= 7) return Orb(Orb.getRandomOrb(grid.level), theme)
 
 			if (spacingCounter < spacing)
 			{
 				spacingCounter++
-				return Orb(Orb.validOrbs.random(), theme)
+				return Orb(Orb.getRandomOrb(grid.level), theme)
 			}
 			else
 			{

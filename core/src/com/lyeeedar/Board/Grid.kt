@@ -306,7 +306,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 
 					if (found == tile)
 					{
-						orb = Orb(Orb.validOrbs.random(), level.theme)
+						orb = Orb(Orb.getRandomOrb(level), level.theme)
 						orb.movePoints.add(Point(x, -1))
 						orb.spawnCount = spawnCount[x, 0]
 
@@ -973,7 +973,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 			{
 				if (grid[x, y].canHaveOrb && grid[x, y].block == null && grid[x, y].monster == null)
 				{
-					val valid = Array(Orb.validOrbs)
+					val valid = Orb.getValidOrbs(level)
 					val l1 = tile(x-1, y)
 					val l2 = tile(x-2, y)
 					val u1 = tile(x, y-1)

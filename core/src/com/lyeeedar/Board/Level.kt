@@ -35,6 +35,7 @@ class Level(val loadPath: String)
 	val defeatActions: Array<AbstractCompletionAction> = Array()
 	val victoryActions: Array<AbstractCompletionAction> = Array()
 
+	var orbs: Int = 6
 	lateinit var rarity: Rarity
 	lateinit var category: DungeonMapEntry.Type
 	lateinit var type: String
@@ -336,6 +337,7 @@ class Level(val loadPath: String)
 					}
 				}
 
+				level.orbs = xml.getInt("OrbCount", 6)
 				level.rarity = Rarity.valueOf(xml.get("Rarity", "COMMON").toUpperCase())
 				level.category = DungeonMapEntry.Type.valueOf(xml.get("Category").toUpperCase())
 				level.type = xml.get("Type")
