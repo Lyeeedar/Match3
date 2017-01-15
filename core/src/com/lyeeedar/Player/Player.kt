@@ -63,4 +63,18 @@ class Player()
 			inventory[item.name] = item
 		}
 	}
+
+	fun removeItem(item: Item)
+	{
+		val existing = inventory[item.name]
+
+		if (existing != null)
+		{
+			existing.count -= item.count
+			if (existing.count <= 0)
+			{
+				inventory.remove(existing.name)
+			}
+		}
+	}
 }

@@ -317,6 +317,8 @@ class SavePlayerData : SaveableObject<PlayerData>
 		val data = PlayerData()
 		data.unlockedSprites.clear()
 		data.unlockedSprites.addAll(unlockedSprites)
+		for (sprite in unlockedSprites) sprite.drawActualSize = true
+
 		data.chosenSprite = unlockedSprites[chosenSprite]
 		data.gold = gold
 
@@ -451,6 +453,8 @@ class SavePlayer : SaveableObject<Player>
 
 		val player = Player()
 		player.portrait = portrait
+		portrait.drawActualSize = true
+
 		player.hp = hp
 		player.regen = regen
 		player.gold = gold

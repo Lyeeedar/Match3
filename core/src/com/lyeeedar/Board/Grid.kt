@@ -711,30 +711,32 @@ class Grid(val width: Int, val height: Int, val level: Level)
 
 						for (reward in monster.rewards)
 						{
-							for (i in 1..reward.value)
+							if (MathUtils.random(100) < reward.value.second)
 							{
-								if (reward.key == "Gold")
+								for (i in 1..reward.value.first)
 								{
-									val pos = GridWidget.instance.pointToScreenspace(tile)
-									val dst = GridScreen.instance.playerPortrait.localToStageCoordinates(Vector2())
-									val sprite = level.theme.coin.copy()
-
-									if (dst != null)
+									if (reward.key == "Gold")
 									{
-										Mote(pos, dst, sprite, { level.player.gold++ })
-									}
-								}
-								else
-								{
-									val item = Item.load(reward.key)
+										val pos = GridWidget.instance.pointToScreenspace(tile)
+										val dst = GridScreen.instance.playerPortrait.localToStageCoordinates(Vector2())
+										val sprite = level.theme.coin.copy()
 
-									val pos = GridWidget.instance.pointToScreenspace(tile)
-									val dst = GridScreen.instance.playerPortrait.localToStageCoordinates(Vector2())
-									val sprite = item.icon.copy()
-
-									if (dst != null)
+										if (dst != null)
+										{
+											Mote(pos, dst, sprite, { level.player.gold++ })
+										}
+									} else
 									{
-										Mote(pos, dst, sprite, { level.player.addItem(item) })
+										val item = Item.load(reward.key)
+
+										val pos = GridWidget.instance.pointToScreenspace(tile)
+										val dst = GridScreen.instance.playerPortrait.localToStageCoordinates(Vector2())
+										val sprite = item.icon.copy()
+
+										if (dst != null)
+										{
+											Mote(pos, dst, sprite, { level.player.addItem(item) })
+										}
 									}
 								}
 							}

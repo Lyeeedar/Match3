@@ -21,13 +21,17 @@ class CompletionActionMoney() : AbstractCompletionAction()
 	{
 		if (change > 0)
 		{
-			for (i in 1..change)
+			var value = change
+			while (value > 0)
 			{
+				val usedVal = Math.min(value, 10)
+				value -= usedVal
+
 				val sprite = AssetManager.loadSprite("Oryx/uf_split/uf_items/coin_gold", drawActualSize = true)
 				val dst = MapScreen.instance.getPortraitPos()
 				val src = DungeonMapWidget.instance.getCenterInScreenspace()
 
-				Mote(src, dst, sprite, { player.gold++ })
+				Mote(src, dst, sprite, { player.gold+=usedVal })
 			}
 		}
 		else

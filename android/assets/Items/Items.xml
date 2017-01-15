@@ -9,10 +9,74 @@
 	</Item>
 	<Item>
 		<Name>Steel</Name>
-		<Description>An allow of iron and other minerals, ready to be forged.</Description>
+		<Description>An alloy of iron and other minerals, ready to be forged.</Description>
 		<Icon meta:RefKey="Sprite">
 			<Name>white</Name>
 		</Icon>
 		<Value>25</Value>
+	</Item>
+	<Item>
+		<Name>Adamantine</Name>
+		<Description>A rare metal. Immensly hard to work but will hold a keen edge.</Description>
+		<Icon meta:RefKey="Sprite">
+			<Name>white</Name>
+		</Icon>
+		<Value>100</Value>
+	</Item>
+	<Item>
+		<Name>RatSkin</Name>
+		<Description>The skin of a giant rat. Coarse and oily to the touch.</Description>
+		<Icon meta:RefKey="Sprite">
+			<Name>white</Name>
+		</Icon>
+		<Value>10</Value>
+	</Item>
+	<Item>
+		<Name>RatTail</Name>
+		<Description>The tail of a giant rat.</Description>
+		<Icon meta:RefKey="Sprite">
+			<Name>white</Name>
+		</Icon>
+		<Value>10</Value>
+	</Item>
+	<Item>
+		<Name>SpiderChitin</Name>
+		<Description>Part of the exoskeleton of a giant spider.</Description>
+		<Icon meta:RefKey="Sprite">
+			<Name>white</Name>
+		</Icon>
+		<Value>10</Value>
+	</Item>
+	<Item>
+		<Name>SpiderLeg</Name>
+		<Description>The leg of a giant spider.</Description>
+		<Icon meta:RefKey="Sprite">
+			<Name>white</Name>
+		</Icon>
+		<Value>10</Value>
+	</Item>
+	<Item>
+		<Name>Flameheart</Name>
+		<Description>The heart of a small fire elemental. It pulses slowly with heat.</Description>
+		<Icon meta:RefKey="Sprite">
+			<Name>white</Name>
+		</Icon>
+		<Value>100</Value>
+	</Item>
+	<Item>
+		<Name>Blazeheart</Name>
+		<Description>The heart of a medium fire elemental. Angry heat surrounds it, making holding it difficult.</Description>
+		<Icon meta:RefKey="Sprite">
+			<Name>white</Name>
+		</Icon>
+		<Value>250</Value>
+	</Item>
+	<Item>
+		<Name>Infernoheart</Name>
+		<Description>The heart of a large fire elemental. Searing heat radiates from it.</Description>
+		<Icon meta:RefKey="Sprite">
+			<Name>white</Name>
+		</Icon>
+		<Value>500</Value>
 	</Item>
 </Items>

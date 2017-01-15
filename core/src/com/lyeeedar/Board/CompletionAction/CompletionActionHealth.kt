@@ -19,10 +19,5 @@ class CompletionActionHealth() : AbstractCompletionAction()
 	override fun parse(xml: XmlReader.Element)
 	{
 		change = xml.text.toInt()
-
-		if (xml.name.toUpperCase() == "HARM" || xml.name.toUpperCase() == "HURT")
-		{
-			change = -change
-		}
 	}
 }

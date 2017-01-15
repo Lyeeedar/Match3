@@ -1,11 +1,12 @@
-<Faction>
+<Faction xmlns:meta="Editor">
 	<Monsters>
-		<SmallRat>
-			<Sprite RefKey="Sprite">
+		<Monster>
+			<Name>RatSmall</Name>
+			<Sprite meta:RefKey="Sprite">
 				<Name>Oryx/uf_split/uf_heroes/rat</Name>
 				<DrawActualSize>true</DrawActualSize>
 			</Sprite>
-			<Death RefKey="Sprite">
+			<Death meta:RefKey="Sprite">
 				<Name>EffectSprites/Splatter/Splatter</Name>
 				<UpdateRate>0.1</UpdateRate>
 				<Colour>189,9,9,255</Colour>
@@ -14,22 +15,24 @@
 			<AttackSpeed>7</AttackSpeed>
 			<HP>7</HP>
 			<Rewards>
-				<Gold>10</Gold>
+				<Item>RatSkin,1,50</Item>
+				<Item>RatTail,1,50</Item>
 			</Rewards>
-            <AbilityRate>6</AbilityRate>
-            <Abilities>
-                <Ability>
-                    <TargetRestriction>BasicOrb</TargetRestriction>
-                    <Effect>Move</Effect>
-                </Ability>
-            </Abilities>
-		</SmallRat>
-		<GiantRat>
-			<Sprite RefKey="Sprite">
+			<AbilityRate>6</AbilityRate>
+			<Abilities>
+				<Ability>
+					<TargetRestriction>BasicOrb</TargetRestriction>
+					<Effect>Move</Effect>
+				</Ability>
+			</Abilities>
+		</Monster>
+		<Monster>
+			<Name>RatGiant</Name>
+			<Sprite meta:RefKey="Sprite">
 				<Name>Oryx/uf_split/uf_heroes/rat_giant</Name>
 				<DrawActualSize>true</DrawActualSize>
 			</Sprite>
-			<Death RefKey="Sprite">
+			<Death meta:RefKey="Sprite">
 				<Name>EffectSprites/Splatter/Splatter</Name>
 				<UpdateRate>0.1</UpdateRate>
 				<Colour>189,9,9,255</Colour>
@@ -39,15 +42,16 @@
 			<Size>2</Size>
 			<HP>20</HP>
 			<Rewards>
-				<Gold>25</Gold>
+				<Item>RatSkin,2,50</Item>
+				<Item>RatTail,2,50</Item>
 			</Rewards>
-            <AbilityRate>6</AbilityRate>
-            <Abilities>
-                <Ability>
-                    <TargetRestriction>BasicOrb</TargetRestriction>
-                    <Effect>Move</Effect>
-                </Ability>
-            </Abilities>
-		</GiantRat>
+			<AbilityRate>6</AbilityRate>
+			<Abilities>
+				<Ability>
+					<TargetRestriction>BasicOrb</TargetRestriction>
+					<Effect>Move</Effect>
+				</Ability>
+			</Abilities>
+		</Monster>
 	</Monsters>
 </Faction>

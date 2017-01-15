@@ -49,6 +49,7 @@ class LwjglApplicationChanger : AbstractApplicationChanger(LwjglPreferences("gam
 			AtlasCreator()
 			LevelProcessor()
 			UnlockableValidator()
+			ItemValidator();
 		}
 	}
 

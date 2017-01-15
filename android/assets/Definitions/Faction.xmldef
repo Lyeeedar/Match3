@@ -13,6 +13,7 @@
 					<Data Name="Item" Collapse="True" meta:RefKey="Struct">
 						<Data Name="Key" meta:RefKey="String" />
 						<Data Name="Value" Type="Int" Min="1" Default="1" meta:RefKey="Number" />
+						<Data Name="Probability" Min="0" Max="100" SkipIfDefault="False" meta:RefKey="Number" />
 					</Data>
 				</Data>
 				<Data Name="AbilityRate" Type="Int" Min="0" Default="10" meta:RefKey="Number" />

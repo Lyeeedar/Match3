@@ -1,11 +1,12 @@
-<Faction>
+<Faction xmlns:meta="Editor">
 	<Monsters>
-		<SmallSpider>
-			<Sprite RefKey="Sprite">
+		<Monster>
+			<Name>SpiderSmall</Name>
+			<Sprite meta:RefKey="Sprite">
 				<Name>Oryx/uf_split/uf_heroes/spider_brown</Name>
 				<DrawActualSize>true</DrawActualSize>
 			</Sprite>
-			<Death RefKey="Sprite">
+			<Death meta:RefKey="Sprite">
 				<Name>EffectSprites/Splatter/Splatter</Name>
 				<UpdateRate>0.1</UpdateRate>
 				<Colour>189,9,9,255</Colour>
@@ -14,7 +15,8 @@
 			<AttackSpeed>8</AttackSpeed>
 			<HP>6</HP>
 			<Rewards>
-				<Gold>10</Gold>
+				<Item>SpiderChitin,1,50</Item>
+				<Item>SpiderLeg,1,50</Item>
 			</Rewards>
 			<AbilityRate>6</AbilityRate>
 			<Abilities>
@@ -22,13 +24,14 @@
 					<Effect>Seal</Effect>
 				</Ability>
 			</Abilities>
-		</SmallSpider>
-		<GiantSpider>
-			<Sprite RefKey="Sprite">
+		</Monster>
+		<Monster>
+			<Name>SpiderGiant</Name>
+			<Sprite meta:RefKey="Sprite">
 				<Name>Oryx/uf_split/uf_heroes/spider_brown_giant</Name>
 				<DrawActualSize>true</DrawActualSize>
 			</Sprite>
-			<Death RefKey="Sprite">
+			<Death meta:RefKey="Sprite">
 				<Name>EffectSprites/Splatter/Splatter</Name>
 				<UpdateRate>0.1</UpdateRate>
 				<Colour>189,9,9,255</Colour>
@@ -38,7 +41,8 @@
 			<Size>2</Size>
 			<HP>15</HP>
 			<Rewards>
-				<Gold>10</Gold>
+				<Item>SpiderChitin,2,50</Item>
+				<Item>SpiderLeg,2,50</Item>
 			</Rewards>
 			<AbilityRate>6</AbilityRate>
 			<Abilities>
@@ -47,6 +51,6 @@
 					<Effect>Seal</Effect>
 				</Ability>
 			</Abilities>
-		</GiantSpider>
+		</Monster>
 	</Monsters>
 </Faction>

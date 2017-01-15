@@ -46,6 +46,8 @@ class TownWidget(val town: Town, val player: PlayerData) : Widget()
 
 	init
 	{
+		playerSprite.drawActualSize = true
+
 		val rows = 1 + Math.ceil(town.houses.size / 2.0).toInt()
 		tilesHeight = rows * 4 + rows * 2
 

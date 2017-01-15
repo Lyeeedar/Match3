@@ -1,4 +1,20 @@
 <Definitions xmlns:meta="Editor">
+	<Definition Name="Money" Nullable="False" Collapse="True" SkipIfDefault="False" meta:RefKey="StructDef">
+		<Data Name="Amount" Type="Int" SkipIfDefault="False" meta:RefKey="Number" />
+	</Definition>
+	<Definition Name="Health" Nullable="False" Collapse="True" SkipIfDefault="False" meta:RefKey="StructDef">
+		<Data Name="Amount" Type="Int" SkipIfDefault="False" meta:RefKey="Number" />
+	</Definition>
+	<Definition Name="Items" Collapse="True" SkipIfDefault="False" HasAttributes="True" meta:RefKey="CollectionDef">
+		<Attributes meta:RefKey="Attributes">
+			<Attribute Name="NumToDrop" Default="All" meta:RefKey="String" />
+		</Attributes>
+		<Data Name="Item" Nullable="False" Collapse="True" SkipIfDefault="False" meta:RefKey="Struct">
+			<Data Name="Name" SkipIfDefault="False" meta:RefKey="String" />
+			<Data Name="Count" Type="Int" SkipIfDefault="False" meta:RefKey="Number" />
+			<Data Name="Weight" Type="Int" Min="1" Default="1" SkipIfDefault="False" meta:RefKey="Number" />
+		</Data>
+	</Definition>
 	<Definition Name="None" Nullable="False" SkipIfDefault="False" meta:RefKey="StructDef" />
 	<Definition Name="Kill" Nullable="False" SkipIfDefault="False" meta:RefKey="StructDef" />
 	<Definition Name="Matches" MinCount="1" SkipIfDefault="False" meta:RefKey="CollectionDef">
@@ -23,6 +39,12 @@
 		</Data>
 		<Data Name="AllowedDefeats" MinCount="1" meta:RefKey="Collection">
 			<Data Name="Condition" Keys="None,Kill,Matches,Sink,Time,Turns" Nullable="False" SkipIfDefault="False" meta:RefKey="Reference" />
+		</Data>
+		<Data Name="VictoryActions" meta:RefKey="Collection">
+			<Data Name="Action" Keys="Money,Health,Items" meta:RefKey="Reference" />
+		</Data>
+		<Data Name="DefeatActions" meta:RefKey="Collection">
+			<Data Name="Action" Keys="Money,Health,Items" meta:RefKey="Reference" />
 		</Data>
 		<Data Name="Type" meta:RefKey="String" />
 		<Data Name="Category" EnumValues="Empty,Good,Bad" SkipIfDefault="False" meta:RefKey="Enum" />

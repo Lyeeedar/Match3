@@ -57,7 +57,7 @@ class MonsterDesc
 	var attackSpeed: Int = 6
 	var size: Int = 1
 	var hp: Int = 25
-	val rewards = ObjectMap<String, Int>()
+	val rewards = ObjectMap<String, Pair<Int, Int>>()
 	val abilities = Array<MonsterAbility>()
 	var abilityRate = 10
 
@@ -82,7 +82,10 @@ class MonsterDesc
 			for (i in 0..rewardsEl.childCount-1)
 			{
 				val el = rewardsEl.getChild(i)
-				desc.rewards[el.name] = el.text.toInt()
+				val text = el.text
+				val split = text.split(",")
+
+				desc.rewards[split[0]] = Pair<Int, Int>(split[1].toInt(), split[2].toInt())
 			}
 
 			val abilitiesEl = xml.getChildByName("Abilities")

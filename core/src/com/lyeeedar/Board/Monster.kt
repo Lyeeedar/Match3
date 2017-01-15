@@ -60,7 +60,7 @@ class Monster(val desc: MonsterDesc)
 
 	val damSources = ObjectSet<Any>()
 
-	val rewards = ObjectMap<String, Int>()
+	val rewards = ObjectMap<String, Pair<Int, Int>>()
 
 	val abilities = Array<MonsterAbility>()
 	var abilityCooldown = 10
@@ -318,7 +318,10 @@ class MonsterAbility
 				for (i in 0..dEl.childCount-1)
 				{
 					val el = dEl.getChild(i)
-					ability.data[el.name.toUpperCase()] = el.text.toUpperCase()
+					val text = el.text.toUpperCase()
+					val split = text.split(",")
+
+					ability.data[split[0]] = split[1]
 				}
 			}
 

@@ -20,7 +20,7 @@ abstract class AbstractCompletionAction
 	{
 		fun load(xml: XmlReader.Element): AbstractCompletionAction
 		{
-			val obj = get(xml.name)
+			val obj = get(xml.getAttribute("meta:RefKey"))
 			obj.parse(xml)
 
 			return obj
@@ -38,8 +38,9 @@ abstract class AbstractCompletionAction
 		private fun getClass(name: String): Class<out AbstractCompletionAction>
 		{
 			val type = when(name) {
-				"HEALTH", "HEAL", "HARM", "HURT" -> CompletionActionHealth::class.java
+				"HEALTH" -> CompletionActionHealth::class.java
 				"MONEY" -> CompletionActionMoney::class.java
+				"ITEMS" -> CompletionActionItem::class.java
 
 			// ARGH everything broke
 				else -> throw RuntimeException("Invalid completion action type: $name")

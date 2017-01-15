@@ -1,9 +1,11 @@
 package com.lyeeedar.Player
 
+import com.badlogic.gdx.utils.ObjectMap
 import com.lyeeedar.Rarity
 import com.lyeeedar.Renderables.Sprite.Sprite
 import com.lyeeedar.Util.AssetManager
 import com.lyeeedar.Util.getXml
+import ktx.collections.set
 
 /**
  * Created by Philip on 06-Aug-16.
@@ -32,18 +34,35 @@ class Item
 
 	companion object
 	{
-		fun load(path: String): Item
+		val allItems: ObjectMap<String, Item> by lazy {
+			loadAll()
+		}
+
+		fun load(name: String): Item
 		{
-			val xml = getXml("Items/$path")
+			return allItems[name].copy()
+		}
 
-			val item = Item()
+		private fun loadAll() : ObjectMap<String, Item>
+		{
+			val map = ObjectMap<String, Item>()
 
-			item.name = xml.get("Name")
-			item.description = xml.get("Description")
-			item.icon = AssetManager.loadSprite(xml.getChildByName("Icon"))
-			item.value = xml.getInt("Value", 0)
+			val xml = getXml("Items/Items.xml")
+			for (i in 0..xml.childCount-1)
+			{
+				val el = xml.getChild(i)
 
-			return item
+				val item = Item()
+
+				item.name = el.get("Name")
+				item.description = el.get("Description")
+				item.icon = AssetManager.loadSprite(el.getChildByName("Icon"))
+				item.value = el.getInt("Value", 0)
+
+				map[item.name] = item
+			}
+
+			return map
 		}
 	}
 }

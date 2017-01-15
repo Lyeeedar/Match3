@@ -217,6 +217,14 @@
 			<Seconds>60</Seconds>
 		</Condition>
 	</AllowedDefeats>
+	<VictoryActions>
+		<Action meta:RefKey="Money">25</Action>
+		<Action NumToDrop="ran(2)" meta:RefKey="Items">
+			<Item>Iron,1,5</Item>
+			<Item>Steel,1,3</Item>
+			<Item>Adamantine,1,1</Item>
+		</Action>
+	</VictoryActions>
 	<Type>Treasure</Type>
 	<Category>Good</Category>
 	<UncompletedMapSprite meta:RefKey="Sprite">
