@@ -305,7 +305,7 @@ class SavePlayerData : SaveableObject<PlayerData>
 
 		for (tree in data.skillTrees)
 		{
-			val bought = tree.value.boughtDescendants().map{ it.key }
+			val bought = tree.value.descendants().filter { it.value.bought }.map{ it.key }
 			unlockedAbilities[tree.key] = bought.asGdxArray()
 		}
 
@@ -339,6 +339,7 @@ class SavePlayerData : SaveableObject<PlayerData>
 
 			for (item in unlocked.value)
 			{
+				if (!abilities.containsKey(item)) kotlin.error("Previously bought ability '$item' does not exist!")
 				abilities[item].bought = true
 			}
 		}

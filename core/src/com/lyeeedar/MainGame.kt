@@ -33,13 +33,13 @@ class MainGame : Game()
 
 		if (Global.android)
 		{
-			val sw = StringWriter()
-			val handler = Thread.UncaughtExceptionHandler { myThread, e ->
-				val exceptionAsString = sw.toString()
-				JOptionPane.showMessageDialog(null, "A fatal error occurred:\n" + exceptionAsString, "An error occurred", JOptionPane.ERROR_MESSAGE)
-			}
-
-			Thread.currentThread().uncaughtExceptionHandler = handler
+//			val sw = StringWriter()
+//			val handler = Thread.UncaughtExceptionHandler { myThread, e ->
+//				val exceptionAsString = sw.toString()
+//				JOptionPane.showMessageDialog(null, "A fatal error occurred:\n" + exceptionAsString, "An error occurred", JOptionPane.ERROR_MESSAGE)
+//			}
+//
+//			Thread.currentThread().uncaughtExceptionHandler = handler
 		}
 		else
 		{
@@ -64,7 +64,7 @@ class MainGame : Game()
 		screens.put(ScreenEnum.GRID, GridScreen())
 		screens.put(ScreenEnum.MAP, MapScreen())
 
-		val save = SaveGame.load()
+		var save = SaveGame.load()
 		if (save == null)
 		{
 			val player = PlayerData()
@@ -75,20 +75,35 @@ class MainGame : Game()
 		}
 		else
 		{
-			val playerData = save.playerData.get()
-			val town = save.town.get(playerData)
-			screens.put(ScreenEnum.TOWN, TownScreen(playerData, town))
-
-			println("Loaded town")
-
-			if (save.dungeon != null && save.player != null)
+			try
 			{
-				val dungeon = save.dungeon!!.get()
-				val player = save.player!!.get(playerData)
+				val playerData = save.playerData.get()
+				val town = save.town.get(playerData)
+				screens.put(ScreenEnum.TOWN, TownScreen(playerData, town))
 
-				MapScreen.instance.setMap(dungeon, player)
+				println("Loaded town")
 
-				println("Loaded dungeon")
+				if (save.dungeon != null && save.player != null)
+				{
+					val dungeon = save.dungeon!!.get()
+					val player = save.player!!.get(playerData)
+
+					MapScreen.instance.setMap(dungeon, player)
+
+					println("Loaded dungeon")
+				}
+			}
+			catch (ex: Exception)
+			{
+				System.err.println("Load failed")
+
+				val player = PlayerData()
+				val town = Town(player)
+				screens.put(ScreenEnum.TOWN, TownScreen(player, town))
+
+				save = null
+
+				println("New town")
 			}
 		}
 
