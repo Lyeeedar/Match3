@@ -38,7 +38,8 @@ class CompletionActionItem() : AbstractCompletionAction()
 						val dst = MapScreen.instance.getPortraitPos()
 						val src = DungeonMapWidget.instance.getCenterInScreenspace()
 
-						Mote(src, dst, sprite, { player.addItem(drop.item.copy()) })
+						Mote(src, dst, sprite, {  })
+						player.addItem(drop.item.copy())
 					}
 				}
 				else
@@ -71,7 +72,8 @@ class CompletionActionItem() : AbstractCompletionAction()
 						val dst = MapScreen.instance.getPortraitPos()
 						val src = DungeonMapWidget.instance.getCenterInScreenspace()
 
-						Mote(src, dst, sprite, { player.addItem(drop.item.copy()) })
+						Mote(src, dst, sprite, {  })
+						player.addItem(drop.item.copy())
 					}
 				}
 				else

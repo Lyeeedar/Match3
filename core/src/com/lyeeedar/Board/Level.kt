@@ -12,6 +12,7 @@ import com.lyeeedar.Map.DungeonMapEntry
 import com.lyeeedar.Player.Player
 import com.lyeeedar.Rarity
 import com.lyeeedar.Renderables.Sprite.Sprite
+import com.lyeeedar.Screens.MapScreen
 import com.lyeeedar.UI.DungeonMapWidget
 import com.lyeeedar.UI.FullscreenMessage
 import com.lyeeedar.Util.*
@@ -260,15 +261,33 @@ class Level(val loadPath: String)
 		completeFun = null
 		if (player.hp <= 0)
 		{
-			FullscreenMessage("You died", "", { Global.game.switchScreen(MainGame.ScreenEnum.MAP); defeatActions.forEach { it.apply(player) }; player.hp += player.regen }).show()
+			FullscreenMessage("You died", "",
+					{
+						Global.game.switchScreen(MainGame.ScreenEnum.MAP)
+						defeatActions.forEach { it.apply(player) }
+						player.hp += player.regen
+						MapScreen.instance.save()
+					}).show()
 		}
 		else if (victory.isCompleted())
 		{
-			FullscreenMessage(victoryText, "", { Global.game.switchScreen(MainGame.ScreenEnum.MAP); victoryActions.forEach { it.apply(player) }; player.hp += player.regen }).show()
+			FullscreenMessage(victoryText, "",
+					{
+						Global.game.switchScreen(MainGame.ScreenEnum.MAP)
+						victoryActions.forEach { it.apply(player) }
+						player.hp += player.regen
+						MapScreen.instance.save()
+					}).show()
 		}
 		else if (defeat.isCompleted())
 		{
-			FullscreenMessage(defeatText, "", { Global.game.switchScreen(MainGame.ScreenEnum.MAP); defeatActions.forEach { it.apply(player) }; player.hp += player.regen }).show()
+			FullscreenMessage(defeatText, "",
+					{
+						Global.game.switchScreen(MainGame.ScreenEnum.MAP)
+						defeatActions.forEach { it.apply(player) }
+						player.hp += player.regen
+						MapScreen.instance.save()
+					}).show()
 		}
 	}
 

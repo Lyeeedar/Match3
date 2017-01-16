@@ -31,8 +31,10 @@ class CompletionActionMoney() : AbstractCompletionAction()
 				val dst = MapScreen.instance.getPortraitPos()
 				val src = DungeonMapWidget.instance.getCenterInScreenspace()
 
-				Mote(src, dst, sprite, { player.gold+=usedVal })
+				Mote(src, dst, sprite, {  })
 			}
+
+			player.gold += change
 		}
 		else
 		{

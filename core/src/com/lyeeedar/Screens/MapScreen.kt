@@ -80,6 +80,11 @@ class MapScreen(): AbstractScreen()
 	override fun show()
 	{
 		super.show()
+		save()
+	}
+
+	fun save()
+	{
 		dungeonWidget?.save()
 	}
 
