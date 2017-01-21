@@ -5,6 +5,7 @@ import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Board.CompletionAction.AbstractCompletionAction
 import com.lyeeedar.Board.CompletionCondition.AbstractCompletionCondition
+import com.lyeeedar.Board.CompletionCondition.CompletionConditionSink
 import com.lyeeedar.Direction
 import com.lyeeedar.Global
 import com.lyeeedar.MainGame
@@ -224,6 +225,17 @@ class Level(val loadPath: String)
 				{
 					orb!!.sealCount = sealStrength
 				}
+			}
+		}
+
+		if (victory is CompletionConditionSink)
+		{
+			val numToSink = (victory as? CompletionConditionSink)!!.count
+			val chests = grid.grid.filter { it.chest != null }.map { it.chest!! }
+
+			for (i in 0..numToSink-1)
+			{
+				chests.random()!!.numToSpawn++
 			}
 		}
 

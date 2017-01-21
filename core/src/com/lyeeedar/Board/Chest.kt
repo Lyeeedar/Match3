@@ -10,7 +10,7 @@ import com.lyeeedar.Util.AssetManager
 
 class Chest(val spawnOrbs: Boolean = true, val theme: LevelTheme)
 {
-	var numToSpawn = 4
+	var numToSpawn = 0
 	var spacing = 3
 	var spacingCounter = 0
 
@@ -22,23 +22,7 @@ class Chest(val spawnOrbs: Boolean = true, val theme: LevelTheme)
 
 	fun attachHandlers(grid: Grid)
 	{
-		val victory = grid.level.victory
-		if (victory is CompletionConditionSink)
-		{
-			// ensure we dont spawn too many orbs
-			grid.onSpawn += {
-				if (it is Sinkable)
-				{
-					val coinsOnBoard = grid.grid.filter { it.sinkable != null }.count() + 1
-					val allowedToSpawn = victory.count - coinsOnBoard
 
-					if (allowedToSpawn < numToSpawn)
-					{
-						numToSpawn = allowedToSpawn
-					}
-				}
-			}
-		}
 	}
 
 	fun spawn(grid: Grid): Swappable?
@@ -59,12 +43,14 @@ class Chest(val spawnOrbs: Boolean = true, val theme: LevelTheme)
 			else
 			{
 				spacingCounter = 0
+				numToSpawn--
 				return Sinkable(theme.coin.copy(), theme)
 			}
 		}
 		else
 		{
 			if (numToSpawn <= 0) return null
+			numToSpawn--
 			return Sinkable(theme.coin.copy(), theme)
 		}
 	}
