@@ -12,6 +12,7 @@ import com.lyeeedar.Global
 import com.lyeeedar.MainGame
 import com.lyeeedar.Map.DungeonMap
 import com.lyeeedar.Map.Generators.HubGenerator
+import com.lyeeedar.Map.Objective.AbstractObjective
 import com.lyeeedar.Map.WorldDungeon
 import com.lyeeedar.Player.Ability.Ability
 import com.lyeeedar.Player.Player
@@ -66,11 +67,11 @@ class DungeonDescriptionWidget(val dungeon: WorldDungeon, val playerData: Player
 			while (true)
 			{
 				val generator = HubGenerator(MathUtils.random(Long.MAX_VALUE))
-				map = generator.generate(theme, 8)
+				map = generator.generate(theme, 8, dungeon.progression, dungeon.getObjective(), dungeon.name)
 				if (generator.numRoomsToSpawn <= 0) break
 			}
 
-			MapScreen.instance.setMap(map, Player(playerData))
+			MapScreen.instance.setMap(map, Player(playerData), dungeon)
 			Global.game.switchScreen(MainGame.ScreenEnum.MAP)
 
 			remove()

@@ -10,6 +10,7 @@ import com.lyeeedar.Board.LevelTheme
 import com.lyeeedar.Global
 import com.lyeeedar.Map.DungeonMap
 import com.lyeeedar.Map.Generators.HubGenerator
+import com.lyeeedar.Map.WorldDungeon
 import com.lyeeedar.Player.Ability.Ability
 import com.lyeeedar.Player.Player
 import com.lyeeedar.UI.DungeonMapWidget
@@ -39,7 +40,7 @@ class MapScreen(): AbstractScreen()
 
 	}
 
-	fun setMap(map: DungeonMap, player: Player)
+	fun setMap(map: DungeonMap, player: Player, dungeon: WorldDungeon)
 	{
 		if (!created){
 			baseCreate()
@@ -50,7 +51,7 @@ class MapScreen(): AbstractScreen()
 
 		mainTable.clear()
 
-		dungeonWidget = DungeonMapWidget(map, player)
+		dungeonWidget = DungeonMapWidget(map, player, dungeon)
 		portrait = SpriteWidget(player.portrait.copy(), 48f, 48f)
 
 		val stack = Stack()

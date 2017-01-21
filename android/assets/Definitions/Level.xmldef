@@ -29,9 +29,12 @@
 	<Definition Name="Turns" Nullable="False" SkipIfDefault="False" meta:RefKey="StructDef">
 		<Data Name="Turns" Type="Int" Min="1" Default="30" SkipIfDefault="False" meta:RefKey="Number" />
 	</Definition>
-	<Definition Name="Level" meta:RefKey="Struct">
+	<Definition Name="Level" HasAttributes="True" meta:RefKey="Struct">
+		<Attributes meta:RefKey="Attributes">
+			<Attribute Name="IsInMapPool" Default="True" meta:RefKey="Boolean" />
+		</Attributes>
 		<Data Name="Grid" MinCount="1" meta:RefKey="Collection">
-			<Data Name="Rows" ElementPerLine="True" meta:RefKey="MultilineString" />
+			<Data Name="Rows" ElementPerLine="True" IsAsciiGrid="True" meta:RefKey="MultilineString" />
 		</Data>
 		<Data Name="Faction" meta:RefKey="String" />
 		<Data Name="OrbCount" Type="Int" Min="4" Default="6" meta:RefKey="Number" />
@@ -48,6 +51,8 @@
 			<Data Name="Action" Keys="Money,Health,Items" meta:RefKey="Reference" />
 		</Data>
 		<Data Name="Type" meta:RefKey="String" />
+		<Data Name="MinDepth" Type="Int" Min="0" meta:RefKey="Number" />
+		<Data Name="MaxDepth" Type="Int" Min="0" Default="9999999" meta:RefKey="Number" />
 		<Data Name="Category" EnumValues="Empty,Good,Bad" SkipIfDefault="False" meta:RefKey="Enum" />
 		<Data Name="UncompletedMapSprite" Keys="Sprite" meta:RefKey="Reference" />
 		<Data Name="CompletedMapSprite" Keys="Sprite" meta:RefKey="Reference" />

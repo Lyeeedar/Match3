@@ -46,7 +46,7 @@
 			<Line>#.........#</Line>
 		</Rows>
 		<Rows>
-			<Line>######$$$$#</Line>
+			<Line>######$$$.#</Line>
 			<Line>#~~~~.....#</Line>
 			<Line>#~~~~.....#</Line>
 			<Line>#~~~~.....#</Line>
@@ -112,7 +112,7 @@
 			<Line>#.=.=.=.=.#</Line>
 		</Rows>
 		<Rows>
-			<Line>#$$$$$$$$$#</Line>
+			<Line>#$.$$.$$.$#</Line>
 			<Line>#.........#</Line>
 			<Line>#.........#</Line>
 			<Line>#.........#</Line>
@@ -200,6 +200,19 @@
 			<Line>#.........#</Line>
 			<Line>#.........#</Line>
 		</Rows>
+		<Rows>
+			<Line>####.####.#</Line>
+			<Line>#$....~~$.#</Line>
+			<Line>#....~~...#</Line>
+			<Line>#..$..~...#</Line>
+			<Line>#.........#</Line>
+			<Line>#.~...$...#</Line>
+			<Line>#.~.......#</Line>
+			<Line>#.~~......#</Line>
+			<Line>#.......~.#</Line>
+			<Line>#......~~.#</Line>
+			<Line>#.........#</Line>
+		</Rows>
 	</Grid>
 	<OrbCount>5</OrbCount>
 	<AllowedVictories>
@@ -220,7 +233,7 @@
 	</AllowedDefeats>
 	<VictoryActions>
 		<Action meta:RefKey="Money">25</Action>
-		<Action NumToDrop="rnd(2)" meta:RefKey="Items">
+		<Action NumToDrop="rnd(1)" meta:RefKey="Items">
 			<Item>Iron,1,5</Item>
 			<Item>Steel,1,3</Item>
 			<Item>Adamantine,1,1</Item>

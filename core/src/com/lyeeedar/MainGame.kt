@@ -3,6 +3,7 @@ package com.lyeeedar
 import com.badlogic.gdx.Game
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.files.FileHandle
+import com.lyeeedar.Map.World
 import com.lyeeedar.Player.Player
 import com.lyeeedar.Player.PlayerData
 import com.lyeeedar.Player.SaveGame
@@ -68,7 +69,8 @@ class MainGame : Game()
 		if (save == null)
 		{
 			val player = PlayerData()
-			val town = Town(player)
+			val world = World()
+			val town = Town(player, world)
 			screens.put(ScreenEnum.TOWN, TownScreen(player, town))
 
 			println("New town")
@@ -78,7 +80,8 @@ class MainGame : Game()
 			try
 			{
 				val playerData = save.playerData.get()
-				val town = save.town.get(playerData)
+				val world = save.world.get()
+				val town = save.town.get(playerData, world)
 				screens.put(ScreenEnum.TOWN, TownScreen(playerData, town))
 
 				println("Loaded town")
@@ -88,7 +91,7 @@ class MainGame : Game()
 					val dungeon = save.dungeon!!.get()
 					val player = save.player!!.get(playerData)
 
-					MapScreen.instance.setMap(dungeon, player)
+					MapScreen.instance.setMap(dungeon, player, world.dungeons.first { it.name == dungeon.dungeonName })
 
 					println("Loaded dungeon")
 				}
@@ -98,7 +101,8 @@ class MainGame : Game()
 				System.err.println("Load failed")
 
 				val player = PlayerData()
-				val town = Town(player)
+				val world = World()
+				val town = Town(player, world)
 				screens.put(ScreenEnum.TOWN, TownScreen(player, town))
 
 				save = null

@@ -18,6 +18,8 @@ import com.badlogic.gdx.files.FileHandle
 import com.lyeeedar.Board.LevelTheme
 import com.lyeeedar.Map.DungeonMap
 import com.lyeeedar.Map.Generators.HubGenerator
+import com.lyeeedar.Map.Objective.AbstractObjective
+import com.lyeeedar.Map.World
 import com.lyeeedar.Player.Ability.Ability
 import com.lyeeedar.Town.Town
 import com.lyeeedar.Util.*
@@ -30,6 +32,7 @@ import java.util.zip.GZIPInputStream
 
 class SaveGame
 {
+	lateinit var world: SaveWorld
 	lateinit var playerData: SavePlayerData
 	lateinit var town: SaveTown
 	var dungeon: SaveDungeonMap? = null
@@ -68,18 +71,22 @@ class SaveGame
 		fun load(): SaveGame?
 		{
 			var input: Input? = null
+			var save: SaveGame? = null
+
 			try
 			{
 				input = Input(GZIPInputStream(Gdx.files.local("save.dat").read()))
+				save = kryo.readObject(input, SaveGame::class.java)
 			}
 			catch (e: Exception)
 			{
 				e.printStackTrace()
 				return null
 			}
-
-			val save = kryo.readObject(input, SaveGame::class.java)
-			input.close()
+			finally
+			{
+				input?.close()
+			}
 
 			return save
 		}
@@ -263,6 +270,7 @@ class SaveGame
 			kryo.register(SavePlayer::class.java)
 			kryo.register(SaveTown::class.java)
 			kryo.register(SaveDungeonMap::class.java)
+			kryo.register(SaveWorld::class.java)
 
 			kryo.register(Item::class.java)
 
@@ -276,6 +284,33 @@ interface SaveableObject<T>
 {
 	fun store(data: T): SaveableObject<T>
 	fun get(vararg obj: Any): T
+}
+
+class SaveWorld : SaveableObject<World>
+{
+	var progressionData = ObjectMap<String, Int>()
+
+	override fun store(data: World): SaveWorld
+	{
+		for (dungeon in data.dungeons)
+		{
+			progressionData[dungeon.name] = dungeon.progression
+		}
+
+		return this
+	}
+
+	override fun get(vararg obj: Any): World
+	{
+		val world = World()
+		for (dungeon in world.dungeons)
+		{
+			dungeon.progression = progressionData[dungeon.name]
+		}
+
+		return world
+	}
+
 }
 
 class SavePlayerData : SaveableObject<PlayerData>
@@ -361,7 +396,7 @@ class SaveTown : SaveableObject<Town>
 
 	override fun get(vararg obj: Any): Town
 	{
-		val town = Town(obj[0] as PlayerData)
+		val town = Town(obj[0] as PlayerData, obj[1] as World)
 
 		town.playerPos.set(playerPos)
 
@@ -371,9 +406,12 @@ class SaveTown : SaveableObject<Town>
 
 class SaveDungeonMap : SaveableObject<DungeonMap>
 {
+	lateinit var dungeonName: String
 	lateinit var theme: String
 	var seed: Long = 0
 	var numRooms: Int = 0
+	var depth: Int = 0
+	lateinit var objectiveXml: XmlReader.Element
 	lateinit var playerPos: Point
 	lateinit var completedRooms: Array<Int>
 	lateinit var seenRooms: Array<Int>
@@ -382,7 +420,7 @@ class SaveDungeonMap : SaveableObject<DungeonMap>
 	{
 		val themeObj = LevelTheme.load(theme)
 		val generator = HubGenerator(seed)
-		val dungeon = generator.generate(themeObj, numRooms)
+		val dungeon = generator.generate(themeObj, numRooms, depth, AbstractObjective.load(objectiveXml), dungeonName)
 
 		for (seen in seenRooms)
 		{
@@ -405,6 +443,9 @@ class SaveDungeonMap : SaveableObject<DungeonMap>
 		seed = data.seed
 		numRooms = data.numRooms
 		playerPos = data.playerPos.copy()
+		depth = data.depth
+		objectiveXml = data.objective.srcData
+		dungeonName = data.dungeonName
 
 		seenRooms = Array()
 		completedRooms = Array()

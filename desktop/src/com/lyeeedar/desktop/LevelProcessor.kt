@@ -76,7 +76,7 @@ class LevelProcessor
 	{
 		val xml = XmlReader().parse(Gdx.files.internal(path))
 
-		if (!xml.name.equals("Level")) return
+		if (!xml.name.equals("Level") || !xml.getBooleanAttribute("IsInMapPool", true)) return
 
 		var p = path
 		p = p.replace("\\", "/")

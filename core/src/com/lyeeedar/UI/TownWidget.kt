@@ -101,7 +101,7 @@ class TownWidget(val town: Town, val player: PlayerData) : Widget()
 						val closeButton = Button(Global.skin, "close")
 						closeButton.setSize(24f, 24f)
 
-						val map = WorldMapWidget(World(), player, widget, closeButton)
+						val map = WorldMapWidget(town.world, player, widget, closeButton)
 						val scroll = ScrollPane(map)
 						scroll.setFlingTime(0f)
 						scroll.setOverscroll(false, false)

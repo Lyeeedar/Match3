@@ -8,36 +8,35 @@ import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Board.Level
 import com.lyeeedar.Global
 import com.lyeeedar.Map.DungeonMap
-import com.lyeeedar.Map.DungeonMapEntry
 
-/**
- * Created by Philip on 29-Jul-16.
- */
-
-class ObjectiveExplore(): AbstractObjective()
+class ObjectiveEncounter : AbstractObjective()
 {
-	var label: Label = Label("Explore n more rooms", Global.skin)
+	lateinit var levels: Array<Level>
+	var label: Label = Label("Complete the encounter", Global.skin)
 	var complete = false
+
+	override fun getRequiredLevels(): Array<Level>
+	{
+		return levels
+	}
 
 	override fun update(map: DungeonMap)
 	{
-		val roomCount = map.map.filter { it.value.isRoom }.count()
-		val exploredCount = map.map.filter { it.value.isRoom && it.value.isCompleted }.count()
+		val rooms = map.map.filter { it.value.level?.loadPath == levels[0].loadPath }
+		val uncompletedCount = rooms.filter { !it.value.isCompleted }.count()
 
-		val diff = roomCount - exploredCount
-
-		if (diff <= 0)
+		if (uncompletedCount == 0)
 		{
 			label.setText("Complete")
 			complete = true
 		}
-		else if (diff == 1)
+		else if (uncompletedCount > 1)
 		{
-			label.setText("Explore $diff more room")
+			label.setText("Complete the encounters")
 		}
 		else
 		{
-			label.setText("Explore $diff more rooms")
+			label.setText("Complete the encounter")
 		}
 	}
 
@@ -47,7 +46,7 @@ class ObjectiveExplore(): AbstractObjective()
 	{
 		val table = Table()
 
-		table.add(Label("Explore", skin)).left()
+		table.add(Label("Encounter", skin)).left()
 		table.row()
 
 		table.add(label).left()
@@ -59,7 +58,7 @@ class ObjectiveExplore(): AbstractObjective()
 	{
 		val table = Table()
 
-		table.add(Label("Explore", skin)).left()
+		table.add(Label("Encounter", skin)).left()
 		table.row()
 
 		table.add(Label(label.text, skin)).left()
@@ -67,10 +66,8 @@ class ObjectiveExplore(): AbstractObjective()
 		return table
 	}
 
-	override fun getRequiredLevels(): Array<Level> = Array()
-
 	override fun parse(xml: XmlReader.Element)
 	{
-
+		levels = Level.load(xml.text)
 	}
 }

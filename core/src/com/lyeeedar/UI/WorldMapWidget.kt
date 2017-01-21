@@ -39,7 +39,7 @@ class WorldMapWidget(val world: World, val playerData: PlayerData, val parent: A
 
 				for (dungeon in world.dungeons)
 				{
-					if (dungeon.location.dist(x.toInt(), y.toInt()) < 25)
+					if (dungeon.isUnlocked(world) && dungeon.location.dist(x.toInt(), y.toInt()) < 25)
 					{
 						// select this dungeon
 						DungeonDescriptionWidget(dungeon, playerData, parent, closeButton)
@@ -61,7 +61,10 @@ class WorldMapWidget(val world: World, val playerData: PlayerData, val parent: A
 
 		for (dungeon in world.dungeons)
 		{
-			batch.draw(notSelected, x+dungeon.location.x-notSelected.regionWidth/2, y+dungeon.location.y-notSelected.regionHeight/2)
+			if (dungeon.isUnlocked(world))
+			{
+				batch.draw(notSelected, x + dungeon.location.x - notSelected.regionWidth / 2, y + dungeon.location.y - notSelected.regionHeight / 2)
+			}
 		}
 	}
 }

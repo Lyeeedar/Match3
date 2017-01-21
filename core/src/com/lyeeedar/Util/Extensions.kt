@@ -167,6 +167,7 @@ fun error(message: String) { System.err.println(message) }
 fun Float.abs() = Math.abs(this)
 fun Float.ciel() = MathUtils.ceil(this)
 fun Float.floor() = MathUtils.floor(this)
+fun Float.round() = MathUtils.round(this)
 
 fun String.neaten() = this.substring(0, 1).toUpperCase() + this.substring(1).toLowerCase()
 

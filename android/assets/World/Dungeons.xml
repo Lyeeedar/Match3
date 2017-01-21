@@ -3,14 +3,25 @@
 
     <Dungeons>
         <Dungeon>
-            <UnlockedAtStart>true</UnlockedAtStart>
             <Name>Dungeon Ruins</Name>
             <Description>The collapsed remains of an ancient fortress. Over the long aeons since its heyday all manner of strange creatures have come to inhabit its dark corridors and damp rooms.</Description>
             <Location>362,404</Location>
             <Theme>Dungeon</Theme>
             <QuestOrder>
                 <Explore></Explore>
+                <Explore></Explore>
+                <Explore></Explore>
+                <Explore></Explore>
+                <Encounter>SmallFireElemental</Encounter>
+                <Explore></Explore>
+                <Encounter>TreasureVault</Encounter>
+                <Explore></Explore>
+                <Encounter>SmallFireElemental</Encounter>
             </QuestOrder>
+            <LoopQuests>
+                <Encounter>SmallFireElemental</Encounter>
+                <Encounter>TreasureVault</Encounter>
+            </LoopQuests>
         </Dungeon>
     </Dungeons>
 </Dungeons>

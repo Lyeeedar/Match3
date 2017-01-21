@@ -1,10 +1,8 @@
 package com.lyeeedar.Town
 
 import com.badlogic.gdx.utils.Array
-import com.lyeeedar.Player.PlayerData
-import com.lyeeedar.Player.SaveGame
-import com.lyeeedar.Player.SavePlayerData
-import com.lyeeedar.Player.SaveTown
+import com.lyeeedar.Map.World
+import com.lyeeedar.Player.*
 import com.lyeeedar.Util.AssetManager
 import com.lyeeedar.Util.Point
 import com.lyeeedar.Util.getXml
@@ -13,7 +11,7 @@ import com.lyeeedar.Util.getXml
  * Created by Philip on 02-Aug-16.
  */
 
-class Town(val playerData: PlayerData)
+class Town(val playerData: PlayerData, val world: World)
 {
 	val playerPos = Point(-1, -1)
 	val houses: Array<House> = Array()
@@ -33,6 +31,7 @@ class Town(val playerData: PlayerData)
 		val save = SaveGame()
 		save.town = SaveTown().store(this)
 		save.playerData = SavePlayerData().store(playerData)
+		save.world = SaveWorld().store(world)
 
 		save.save()
 	}

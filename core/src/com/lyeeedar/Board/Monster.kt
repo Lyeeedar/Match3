@@ -146,7 +146,8 @@ class MonsterAbility
 		ATTACK,
 		SHIELD,
 		SEAL,
-		MOVE
+		MOVE,
+		HEAL
 	}
 
 	lateinit var target: Target
@@ -158,6 +159,20 @@ class MonsterAbility
 
 	fun activate(grid: Grid, monster: Monster)
 	{
+		if (effect == Effect.HEAL)
+		{
+			monster.hp += data["amount"].toInt()
+			if (monster.hp > monster.maxhp) monster.hp = monster.maxhp
+
+			val sprite = AssetManager.loadSprite("EffectSprites/Heal/Heal", 0.1f, Colour(0f,1f,0f,1f))
+			sprite.size[0] = monster.size
+			sprite.size[1] = monster.size
+
+			monster.tiles[0, 0].effects.add(sprite)
+
+			return
+		}
+
 		val availableTargets = Array<Tile>()
 
 		if (target == Target.NEIGHBOUR)

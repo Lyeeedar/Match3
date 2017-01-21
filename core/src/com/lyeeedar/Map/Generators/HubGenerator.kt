@@ -8,6 +8,7 @@ import com.lyeeedar.Board.LevelTheme
 import com.lyeeedar.Direction
 import com.lyeeedar.Map.DungeonMap
 import com.lyeeedar.Map.DungeonMapEntry
+import com.lyeeedar.Map.Objective.AbstractObjective
 import com.lyeeedar.Map.Objective.ObjectiveExplore
 import com.lyeeedar.Util.*
 import java.util.*
@@ -22,16 +23,13 @@ class HubGenerator(val seed: Long)
 {
 	val ran = Random(seed)
 	val maxCorridorLength = 4
-	val maxDepth = 10
+	val maxLength = 10
 	var numRoomsToSpawn = 0
 
-	fun generate(theme: LevelTheme, numRooms: Int): DungeonMap
+	fun generate(theme: LevelTheme, numRooms: Int, depth: Int, objective: AbstractObjective, dungeonName: String): DungeonMap
 	{
 		numRoomsToSpawn = numRooms
-		val map = DungeonMap(seed, numRooms)
-
-		map.theme = theme
-		map.objective = ObjectiveExplore()
+		val map = DungeonMap(seed, numRooms, depth, theme, objective, dungeonName)
 
 		val hub = DungeonMapEntry(Point.ZERO.copy())
 		hub.isRoom = true
@@ -62,6 +60,15 @@ class HubGenerator(val seed: Long)
 					unfilledRooms.add(room.value)
 				}
 			}
+		}
+
+		val requiredLevels = objective.getRequiredLevels()
+		for (level in requiredLevels)
+		{
+			val arrToUse = if (endOfChainRooms.size > 0) endOfChainRooms else unfilledRooms
+			val room = arrToUse.removeRandom(ran)
+			room.level = level.copy()
+			room.isRoom = true
 		}
 
 		// 0.1 emtpy
@@ -149,7 +156,7 @@ class HubGenerator(val seed: Long)
 				val valid = Array<Level>()
 				for (level in levels[type])
 				{
-					if (level.minDepth > room.depth || level.maxDepth < room.depth || level.type != chosenType) continue
+					if (depth < level.minDepth || depth > level.maxDepth || level.type != chosenType) continue
 
 					if (used.contains(level)) continue
 
@@ -208,7 +215,6 @@ class HubGenerator(val seed: Long)
 		}
 
 		val tempRoom = DungeonMapEntry(point)
-		tempRoom.depth = depth
 		tempRoom.connections[dir.opposite] = map.map[(point + dir.opposite).hashCode()]
 		map.map[point.hashCode()] = tempRoom
 
@@ -241,7 +247,7 @@ class HubGenerator(val seed: Long)
 				// assign random type
 				tempRoom.type = DungeonMapEntry.Type.values().asSequence().random(ran)!!
 
-				if (depth < maxDepth)
+				if (depth < maxLength)
 				{
 					val numRooms = sequenceOf(0, 1, 1, 1, 1, 1, 2, 2, 3).random(ran)!!
 

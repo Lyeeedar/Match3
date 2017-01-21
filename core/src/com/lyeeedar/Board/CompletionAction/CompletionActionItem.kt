@@ -12,6 +12,7 @@ import com.lyeeedar.UI.DungeonMapWidget
 import com.lyeeedar.UI.PlayerWidget
 import com.lyeeedar.Util.AssetManager
 import com.lyeeedar.Util.ciel
+import com.lyeeedar.Util.round
 
 /**
  * Created by Philip on 29-Jul-16.
@@ -50,7 +51,7 @@ class CompletionActionItem() : AbstractCompletionAction()
 		}
 		else
 		{
-			val count = EquationHelper.evaluate(dropCount).ciel()
+			val count = EquationHelper.evaluate(dropCount).round()
 			val weightedList = Array<Drop>()
 			for (drop in drops)
 			{

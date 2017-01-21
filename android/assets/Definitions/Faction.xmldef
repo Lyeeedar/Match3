@@ -23,7 +23,7 @@
 						<Data Name="Count" Type="Int" Min="1" Default="1" meta:RefKey="Number" />
 						<Data Name="TargetRestriction" EnumValues="Orb,Special,Block,Empty,Sealed,Monster,Attack,Tile,Shield" meta:RefKey="Enum" />
 						<Data Name="Permuter" EnumValues="Single,AllOfType,NofType,Column,Row,Cross,Block,Diamond,Random" meta:RefKey="Enum" />
-						<Data Name="Effect" EnumValues="Attack,Seal,Shield,Move" meta:RefKey="Enum" />
+						<Data Name="Effect" EnumValues="Attack,Seal,Shield,Move,Heal" meta:RefKey="Enum" />
 						<Data Name="Data" meta:RefKey="Collection">
 							<Data Name="DataPair" Collapse="True" meta:RefKey="Struct">
 								<Data Name="Key" meta:RefKey="String" />

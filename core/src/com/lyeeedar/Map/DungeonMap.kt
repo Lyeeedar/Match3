@@ -15,13 +15,9 @@ import ktx.collections.set
  * Created by Philip on 24-Jul-16.
  */
 
-class DungeonMap(val seed: Long, val numRooms: Int)
+class DungeonMap(val seed: Long, val numRooms: Int, val depth: Int, val theme: LevelTheme, val objective: AbstractObjective, val dungeonName: String)
 {
-	lateinit var theme: LevelTheme
-
 	val playerPos: Point = Point()
-
-	lateinit var objective: AbstractObjective
 
 	val map: IntMap<DungeonMapEntry> = IntMap()
 
@@ -82,7 +78,6 @@ class DungeonMapEntry(val point: Point)
 	val connections: FastEnumMap<Direction, DungeonMapEntry> = FastEnumMap(Direction::class.java)
 
 	var isRoom: Boolean = false
-	var depth = 0
 	var type: Type = Type.EMPTY
 	var seen = false
 	var level: Level? = null

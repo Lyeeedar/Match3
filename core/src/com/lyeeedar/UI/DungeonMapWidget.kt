@@ -21,13 +21,13 @@ import com.lyeeedar.Renderables.Sprite.TilingSprite
 import com.lyeeedar.Screens.GridScreen
 import com.lyeeedar.Screens.TownScreen
 import com.lyeeedar.Util.*
-import sun.applet.Main
+import com.lyeeedar.Map.WorldDungeon
 
 /**
  * Created by Philip on 24-Jul-16.
  */
 
-class DungeonMapWidget(val map: DungeonMap, val player: Player): Widget()
+class DungeonMapWidget(val map: DungeonMap, val player: Player, val dungeon: WorldDungeon): Widget()
 {
 	val tileSize = 64f
 
@@ -144,6 +144,7 @@ class DungeonMapWidget(val map: DungeonMap, val player: Player): Widget()
 		save.playerData = SavePlayerData().store(TownScreen.instance.playerData)
 		save.dungeon = SaveDungeonMap().store(map)
 		save.player = SavePlayer().store(player)
+		save.world = SaveWorld().store(TownScreen.instance.town.world)
 
 		save.save()
 	}
@@ -172,7 +173,7 @@ class DungeonMapWidget(val map: DungeonMap, val player: Player): Widget()
 		{
 			dungeonComplete = true
 			MessageBox("Quest Complete", "You have completed your all your tasks in your quest. Return to town?",
-					Pair("Yes", {completeDungeon()}),
+					Pair("Yes", {dungeon.progression++; completeDungeon()}),
 					Pair("Continue Exploring", {val m = MessageBox("Continue Exploration", "You can tap the icon in the top left when you are ready to return to town.", Pair("Okay", {}))})
 			)
 		}
