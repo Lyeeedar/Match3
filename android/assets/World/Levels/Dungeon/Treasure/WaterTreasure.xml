@@ -2,58 +2,60 @@
 	<Grid>
 		<Rows>
 			<Line>#$$$$$$$$$#</Line>
+			<Line>#..~......#</Line>
+			<Line>#......~..#</Line>
+			<Line>#.~.......#</Line>
+			<Line>#.....~...#</Line>
+			<Line>#.........#</Line>
+			<Line>#~...~....#</Line>
+			<Line>#.......~.#</Line>
+			<Line>#.........#</Line>
+		</Rows>
+		<Rows>
+			<Line>#..$$$$$..#</Line>
 			<Line>#.........#</Line>
 			<Line>#.........#</Line>
-			<Line>#.........#</Line>
-			<Line>#.........#</Line>
-			<Line>#.........#</Line>
+			<Line>#..=====..#</Line>
+			<Line>#..=~~~=..#</Line>
+			<Line>#..=~~~=..#</Line>
+			<Line>#..=====..#</Line>
 			<Line>#.........#</Line>
 			<Line>#.........#</Line>
 			<Line>#.........#</Line>
 		</Rows>
 		<Rows>
-			<Line>#...$$$...#</Line>
+			<Line>#$$$$$$$$$#</Line>
 			<Line>#.........#</Line>
 			<Line>#.........#</Line>
 			<Line>#.........#</Line>
 			<Line>#.........#</Line>
-			<Line>#.........#</Line>
-			<Line>#.........#</Line>
-			<Line>#.........#</Line>
-			<Line>#.........#</Line>
-		</Rows>
-		<Rows>
-			<Line>#####$#####</Line>
-			<Line>####...####</Line>
-			<Line>###.....###</Line>
-			<Line>##.......##</Line>
-			<Line>#.........#</Line>
-			<Line>#.........#</Line>
+			<Line>#~~~~~~~~~#</Line>
 			<Line>#.........#</Line>
 			<Line>#.........#</Line>
 			<Line>#.........#</Line>
 		</Rows>
 		<Rows>
-			<Line>#$#######$#</Line>
-			<Line>#..#####..#</Line>
-			<Line>#...###...#</Line>
-			<Line>#....#....#</Line>
+			<Line>######$$$.#</Line>
+			<Line>#~~~~.....#</Line>
+			<Line>#~~~~.....#</Line>
+			<Line>#~~~~.....#</Line>
 			<Line>#.........#</Line>
 			<Line>#.........#</Line>
-			<Line>#.........#</Line>
-			<Line>#.........#</Line>
-			<Line>#.........#</Line>
+			<Line>#........##</Line>
+			<Line>#.......###</Line>
+			<Line>#.......###</Line>
 		</Rows>
 		<Rows>
-			<Line>#$###$###$#</Line>
-			<Line>#..#...#..#</Line>
-			<Line>#..#...#..#</Line>
+			<Line>####.####.#</Line>
+			<Line>#$....~~$.#</Line>
+			<Line>#....~~...#</Line>
+			<Line>#..$..~...#</Line>
 			<Line>#.........#</Line>
-			<Line>#.........#</Line>
-			<Line>#.........#</Line>
-			<Line>##.#.#.#.##</Line>
-			<Line>#.........#</Line>
-			<Line>#.........#</Line>
+			<Line>#.~...$...#</Line>
+			<Line>#.~.......#</Line>
+			<Line>#.~~......#</Line>
+			<Line>#.......~.#</Line>
+			<Line>#......~~.#</Line>
 			<Line>#.........#</Line>
 		</Rows>
 	</Grid>
@@ -83,6 +85,7 @@
 		</Action>
 	</VictoryActions>
 	<Type>Treasure</Type>
+	<MinDepth>6</MinDepth>
 	<Category>Good</Category>
 	<UncompletedMapSprite meta:RefKey="Sprite">
 		<Name>Oryx/Custom/dungeonmap/treasure</Name>

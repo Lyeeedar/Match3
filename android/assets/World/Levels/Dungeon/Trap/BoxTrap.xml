@@ -1,10 +1,10 @@
 <Level xmlns:meta="Editor">
 	<Grid>
 		<Rows>
-			<Line>#.........#</Line>
-			<Line>#.........#</Line>
-			<Line>#.........#</Line>
-			<Line>#.........#</Line>
+			<Line>#========.#</Line>
+			<Line>#=====....#</Line>
+			<Line>#===......#</Line>
+			<Line>#=........#</Line>
 			<Line>#.........#</Line>
 			<Line>#.........#</Line>
 			<Line>#.........#</Line>
@@ -12,99 +12,82 @@
 			<Line>#.........#</Line>
 		</Rows>
 		<Rows>
+			<Line>#========.#</Line>
+			<Line>#=====....#</Line>
+			<Line>#===......#</Line>
+			<Line>#=........#</Line>
+			<Line>#.........#</Line>
+			<Line>#........=#</Line>
+			<Line>#.......==#</Line>
+			<Line>#.....====#</Line>
+			<Line>#..=======#</Line>
+		</Rows>
+		<Rows>
 			<Line>#.........#</Line>
 			<Line>#.........#</Line>
-			<Line>#.........#</Line>
+			<Line>#=.......=#</Line>
 			<Line>###.....###</Line>
-			<Line>#.........#</Line>
-			<Line>#.........#</Line>
+			<Line>#==.....==#</Line>
+			<Line>#==.....==#</Line>
 			<Line>####...####</Line>
-			<Line>#.........#</Line>
-			<Line>#.........#</Line>
+			<Line>#===...===#</Line>
+			<Line>#=========#</Line>
 		</Rows>
 		<Rows>
-			<Line>#..#####..#</Line>
-			<Line>#...###...#</Line>
+			<Line>#.........#</Line>
+			<Line>#......==.#</Line>
+			<Line>#......==.#</Line>
+			<Line>#..==.....#</Line>
+			<Line>#..==.....#</Line>
+			<Line>#.........#</Line>
+			<Line>##==###==##</Line>
 			<Line>#....#....#</Line>
-			<Line>#.........#</Line>
-			<Line>#.........#</Line>
-			<Line>#.........#</Line>
-			<Line>#.........#</Line>
-			<Line>##.......##</Line>
-			<Line>###.....###</Line>
+			<Line>#....#....#</Line>
 		</Rows>
 		<Rows>
-			<Line>#####.#####</Line>
-			<Line>####...####</Line>
-			<Line>###.....###</Line>
-			<Line>##.......##</Line>
 			<Line>#.........#</Line>
-			<Line>##.......##</Line>
-			<Line>###.....###</Line>
-			<Line>####...####</Line>
-			<Line>#####.#####</Line>
+			<Line>#.........#</Line>
+			<Line>#.........#</Line>
+			<Line>#.==......#</Line>
+			<Line>#.==......#</Line>
+			<Line>#.........#</Line>
+			<Line>#.....==..#</Line>
+			<Line>#.....==..#</Line>
+			<Line>#.........#</Line>
 		</Rows>
 		<Rows>
 			<Line>####...####</Line>
-			<Line>####...####</Line>
-			<Line>###.....###</Line>
 			<Line>#.........#</Line>
-			<Line>#.........#</Line>
-			<Line>#.........#</Line>
-			<Line>#.........#</Line>
-			<Line>#..#...#..#</Line>
-			<Line>#.##...##.#</Line>
-			<Line>####...####</Line>
+			<Line>#....=....#</Line>
+			<Line>#...===...#</Line>
+			<Line>#..=====..#</Line>
+			<Line>#...===...#</Line>
+			<Line>#.##===##.#</Line>
+			<Line>####===####</Line>
 			<Line>###########</Line>
 		</Rows>
 		<Rows>
-			<Line>####...####</Line>
-			<Line>#.........#</Line>
-			<Line>#.........#</Line>
-			<Line>#....#....#</Line>
-			<Line>#....#....#</Line>
-			<Line>#.........#</Line>
-			<Line>#.##...##.#</Line>
-			<Line>####...####</Line>
-			<Line>###########</Line>
-		</Rows>
-		<Rows>
 			<Line>#####.#####</Line>
-			<Line>####...####</Line>
+			<Line>####..=####</Line>
 			<Line>###.....###</Line>
-			<Line>##.......##</Line>
+			<Line>##.....=.##</Line>
+			<Line>#..=......#</Line>
 			<Line>#.........#</Line>
 			<Line>#.........#</Line>
-			<Line>#.........#</Line>
-			<Line>#.........#</Line>
-			<Line>#.........#</Line>
+			<Line>#...=...=.#</Line>
+			<Line>#=........#</Line>
 		</Rows>
 		<Rows>
-			<Line>#...#########</Line>
-			<Line>#....########</Line>
-			<Line>#......######</Line>
-			<Line>##......#####</Line>
+			<Line>#...========#</Line>
+			<Line>#....=======#</Line>
+			<Line>#......====##</Line>
+			<Line>##......==###</Line>
 			<Line>####......###</Line>
 			<Line>###.......###</Line>
 			<Line>#..........##</Line>
 			<Line>#..........##</Line>
 			<Line>##.......####</Line>
 			<Line>#############</Line>
-		</Rows>
-		<Rows>
-			<Line>#####.#####</Line>
-			<Line>#####.#####</Line>
-			<Line>#####.#####</Line>
-			<Line>#####.#####</Line>
-			<Line>#####.#####</Line>
-			<Line>#.........#</Line>
-			<Line>#.........#</Line>
-			<Line>#.........#</Line>
-			<Line>#.........#</Line>
-			<Line>#.........#</Line>
-			<Line>#.........#</Line>
-			<Line>#.........#</Line>
-			<Line>#.........#</Line>
 		</Rows>
 	</Grid>
 	<AllowedVictories>
@@ -133,6 +116,7 @@
 		<Action meta:RefKey="Health">-5</Action>
 	</DefeatActions>
 	<Type>Trap</Type>
+	<MinDepth>2</MinDepth>
 	<Category>Bad</Category>
 	<UncompletedMapSprite meta:RefKey="Sprite">
 		<Name>Oryx/Custom/dungeonmap/spiketrap</Name>

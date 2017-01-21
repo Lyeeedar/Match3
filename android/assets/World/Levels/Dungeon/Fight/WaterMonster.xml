@@ -1,0 +1,31 @@
+<Level xmlns:meta="Editor">
+	<Grid>
+		<Rows>
+			<Line>########..#</Line>
+			<Line>#~~~......#</Line>
+			<Line>#~~~......#</Line>
+			<Line>#~~~......#</Line>
+			<Line>#~~~......#</Line>
+			<Line>#.......###</Line>
+			<Line>#..!....~~#</Line>
+			<Line>#......!~~#</Line>
+			<Line>#.......~~#</Line>
+		</Rows>
+	</Grid>
+	<Faction>Rats,Spider</Faction>
+	<AllowedVictories>
+		<Condition meta:RefKey="Kill" />
+	</AllowedVictories>
+	<AllowedDefeats>
+		<Condition meta:RefKey="None" />
+	</AllowedDefeats>
+	<Type>Encounter</Type>
+	<MinDepth>6</MinDepth>
+	<Category>Bad</Category>
+	<UncompletedMapSprite meta:RefKey="Sprite">
+		<Name>Oryx/Custom/dungeonmap/combat</Name>
+	</UncompletedMapSprite>
+	<CompletedMapSprite meta:RefKey="Sprite">
+		<Name>Oryx/Custom/dungeonmap/combat_complete</Name>
+	</CompletedMapSprite>
+</Level>

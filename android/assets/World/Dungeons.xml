@@ -11,16 +11,15 @@
                 <Explore></Explore>
                 <Explore></Explore>
                 <Explore></Explore>
+                <Encounter>Dungeon/Encounter/SmallFireElemental</Encounter>
                 <Explore></Explore>
-                <Encounter>SmallFireElemental</Encounter>
+                <Encounter>Dungeon/Encounter/TreasureVault</Encounter>
                 <Explore></Explore>
-                <Encounter>TreasureVault</Encounter>
-                <Explore></Explore>
-                <Encounter>SmallFireElemental</Encounter>
+                <Encounter>Dungeon/Encounter/SmallFireElemental</Encounter>
             </QuestOrder>
             <LoopQuests>
-                <Encounter>SmallFireElemental</Encounter>
-                <Encounter>TreasureVault</Encounter>
+                <Encounter>Dungeon/Encounter/SmallFireElemental</Encounter>
+                <Encounter>Dungeon/Encounter/TreasureVault</Encounter>
             </LoopQuests>
         </Dungeon>
     </Dungeons>

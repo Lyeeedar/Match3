@@ -69,7 +69,7 @@
 			</Death>
 			<AttackDelay>5</AttackDelay>
 			<AttackSpeed>4</AttackSpeed>
-			<Size>2</Size>
+			<Size>3</Size>
 			<HP>50</HP>
 			<Rewards>
 				<Item>Infernoheart,1,100</Item>
@@ -81,7 +81,6 @@
 					<Count>4</Count>
 				</Ability>
 				<Ability>
-					<Target>Random</Target>
 					<Effect>Move</Effect>
 				</Ability>
 			</Abilities>
