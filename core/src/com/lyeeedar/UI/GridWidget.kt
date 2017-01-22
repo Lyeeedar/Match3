@@ -53,7 +53,7 @@ class GridWidget(val grid: Grid) : Widget()
 	val ground = SortedRenderer(tileSize, grid.width.toFloat(), grid.height.toFloat(), 3)
 	val floating = SortedRenderer(tileSize, grid.width.toFloat(), grid.height.toFloat(), 3)
 
-	val tempCol = Color()
+	val tempCol = Colour()
 
 	init
 	{
@@ -266,6 +266,23 @@ class GridWidget(val grid: Grid) : Widget()
 					if (orb.sealed)
 					{
 						ground.queueSprite(orb.sealSprite, xi, yi, ORB, 2, orbColour)
+					}
+
+					if (orb is Orb && orb.isChanger)
+					{
+						val offset = orb.sprite.animation?.renderOffset()
+
+						var xii = xi
+						var yii = yi
+
+						if (offset != null)
+						{
+							xii += offset[0]
+							yii += offset[1]
+						}
+
+						tempCol.set(orb.nextDesc!!.sprite.colour).a(0.5f)
+						ground.queueSprite(glow, xii, yii, ORB, 0, colour = tempCol)
 					}
 
 					if (orb is Orb && orb.sprite.renderDelay <= 0)

@@ -35,6 +35,30 @@ class Colour()
 		set(r, g, b, a)
 	}
 
+	fun r(r: Float): Colour
+	{
+		this.r = r
+		return this
+	}
+
+	fun g(g: Float): Colour
+	{
+		this.g = g
+		return this
+	}
+
+	fun b(b: Float): Colour
+	{
+		this.b = b
+		return this
+	}
+
+	fun a(a: Float): Colour
+	{
+		this.a = a
+		return this
+	}
+
 	fun set(other: Colour): Colour
 	{
 		r = other.r

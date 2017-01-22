@@ -60,6 +60,32 @@ class Level(val loadPath: String)
 	var completeFun: (() -> Unit)? = null
 	val onComplete = Event0Arg()
 
+	fun spawnOrb(): Swappable
+	{
+		val toSpawn = theme.spawnList.random()
+
+		if (toSpawn == "Shield")
+		{
+			return Shield(theme)
+		}
+		else if (toSpawn == "Changer")
+		{
+			val orb = Orb(Orb.getRandomOrb(this), theme)
+			orb.isChanger = true
+			orb.nextDesc = Orb.getRandomOrb(this)
+			return orb
+		}
+		else if (toSpawn == "Attack")
+		{
+			val orb = Orb(Orb.getRandomOrb(this), theme)
+			orb.hasAttack = true
+			orb.attackTimer = 10
+			return orb
+		}
+
+		return Orb(Orb.getRandomOrb(this), theme)
+	}
+
 	fun create(theme: LevelTheme, player: Player)
 	{
 		this.theme = theme
@@ -203,27 +229,33 @@ class Level(val loadPath: String)
 			}
 		}
 
-		grid.fill()
+		grid.fill(false)
 
 		for (x in 0..charGrid.xSize-1)
 		{
 			for (y in 0..charGrid.ySize-1)
 			{
 				val tile = grid.grid[x, y]
-				val orb = tile.orb
+				val swappable = tile.swappable
 				val char = charGrid[x, y]
 
 				if (char == '|')
 				{
-					orb!!.special = Vertical4(orb)
+					var orb = swappable as? Orb
+					if (orb == null) orb = Orb(Orb.getRandomOrb(this), theme)
+					orb.special = Vertical4(orb)
+					tile.orb = orb
 				}
 				else if (char == '-')
 				{
-					orb!!.special = Horizontal4(orb)
+					var orb = swappable as? Orb
+					if (orb == null) orb = Orb(Orb.getRandomOrb(this), theme)
+					orb.special = Horizontal4(orb)
+					tile.orb = orb
 				}
 				else if (char == '@')
 				{
-					orb!!.sealCount = sealStrength
+					swappable!!.sealCount = sealStrength
 				}
 			}
 		}

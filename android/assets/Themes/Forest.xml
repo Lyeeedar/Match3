@@ -71,4 +71,8 @@
 			<Pair>Trap,1</Pair>
 		</Bad>
 	</RoomWeights>
+	<SpawnWeights>
+		<Spawn>Orb,3</Spawn>
+		<Spawn>Changer,1</Spawn>
+	</SpawnWeights>
 </Theme>

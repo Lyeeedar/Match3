@@ -110,6 +110,14 @@ class Grid(val width: Int, val height: Int, val level: Level)
 					{
 						orb.attackTimer--
 					}
+					else if (orb.isChanger)
+					{
+						orb.desc = orb.nextDesc!!
+						orb.nextDesc = Orb.getRandomOrb(level)
+
+						val effect = AssetManager.loadSprite("EffectSprites/Heal/Heal", 0.05f, orb.desc.sprite.colour)
+						tile.effects.add(effect)
+					}
 				}
 
 				// process monsters
@@ -306,7 +314,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 
 					if (found == tile)
 					{
-						orb = Orb(Orb.getRandomOrb(level), level.theme)
+						orb = level.spawnOrb()
 						orb.movePoints.add(Point(x, -1))
 						orb.spawnCount = spawnCount[x, 0]
 
@@ -929,7 +937,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 			}
 		}
 
-		fill()
+		fill(true)
 
 		for (x in 0..width-1)
 		{
@@ -948,6 +956,11 @@ class Grid(val width: Int, val height: Int, val level: Level)
 						orb.hasAttack = true
 						orb.attackTimer = oldorb.attackTimer
 					}
+					if (oldorb.isChanger)
+					{
+						orb.isChanger = true
+						orb.nextDesc = oldorb.nextDesc
+					}
 
 					val delay = grid[x, y].taxiDist(Point.ZERO).toFloat() * 0.1f
 					orb.sprite.renderDelay = delay + 0.2f
@@ -965,7 +978,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 	}
 
 	// ----------------------------------------------------------------------
-	fun fill()
+	fun fill(orbOnly: Boolean)
 	{
 		for (x in 0..width-1)
 		{
@@ -973,24 +986,29 @@ class Grid(val width: Int, val height: Int, val level: Level)
 			{
 				if (grid[x, y].canHaveOrb && grid[x, y].block == null && grid[x, y].monster == null)
 				{
-					val valid = Orb.getValidOrbs(level)
-					val l1 = tile(x-1, y)
-					val l2 = tile(x-2, y)
-					val u1 = tile(x, y-1)
-					val u2 = tile(x, y-2)
+					val toSpawn = if (orbOnly) Orb(Orb.getRandomOrb(level), level.theme) else level.spawnOrb()
 
-					if (l1?.orb != null && l2?.orb != null && l1?.orb?.key == l2?.orb?.key)
+					if (toSpawn is Orb)
 					{
-						valid.removeValue(l1!!.orb!!.desc, true)
-					}
-					if (u1?.orb != null && u2?.orb != null && u1?.orb?.key == u2?.orb?.key)
-					{
-						valid.removeValue(u1!!.orb!!.desc, true)
+						val valid = Orb.getValidOrbs(level)
+						val l1 = tile(x - 1, y)
+						val l2 = tile(x - 2, y)
+						val u1 = tile(x, y - 1)
+						val u2 = tile(x, y - 2)
+
+						if (l1?.orb != null && l2?.orb != null && l1?.orb?.key == l2?.orb?.key)
+						{
+							valid.removeValue(l1!!.orb!!.desc, true)
+						}
+						if (u1?.orb != null && u2?.orb != null && u1?.orb?.key == u2?.orb?.key)
+						{
+							valid.removeValue(u1!!.orb!!.desc, true)
+						}
+
+						toSpawn.desc = valid.random()
 					}
 
-					val desc = valid.random()
-					val orb = Orb(desc, level.theme)
-					grid[x, y].orb = orb
+					grid[x, y].contents = toSpawn
 				}
 			}
 		}

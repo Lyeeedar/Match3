@@ -19,11 +19,19 @@ import ktx.collections.toGdxArray
  * Created by Philip on 04-Jul-16.
  */
 
-class Orb(val desc: OrbDesc, theme: LevelTheme): Swappable(theme)
+class Orb(desc: OrbDesc, theme: LevelTheme): Swappable(theme)
 {
+	var desc: OrbDesc = OrbDesc()
+		get() = field
+		set(value)
+		{
+			field = value
+			sprite = desc.sprite.copy()
+		}
+
 	init
 	{
-		sprite = desc.sprite.copy()
+		this.desc = desc
 	}
 
 	var armed: ((point: Point, grid: Grid, orb: Orb) -> Unit)? = null
@@ -61,6 +69,9 @@ class Orb(val desc: OrbDesc, theme: LevelTheme): Swappable(theme)
 		}
 
 	var attackTimer = 0
+
+	var isChanger: Boolean = false
+	var nextDesc: OrbDesc? = null
 
 	val key: Int
 		get() = if (special is Match5) -1 else desc.key

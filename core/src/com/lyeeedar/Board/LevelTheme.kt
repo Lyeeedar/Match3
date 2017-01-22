@@ -12,6 +12,7 @@ import com.lyeeedar.Util.AssetManager
 import com.lyeeedar.Util.FastEnumMap
 import ktx.collections.get
 import ktx.collections.set
+import com.lyeeedar.Util.iterator
 
 /**
  * Created by Philip on 13-Jul-16.
@@ -36,6 +37,7 @@ class LevelTheme
 	lateinit var mapCorridor: DirectedSprite
 
 	val roomWeights = FastEnumMap<DungeonMapEntry.Type, ObjectMap<String, Int>>(DungeonMapEntry.Type::class.java)
+	val spawnList = Array<String>()
 
 	companion object
 	{
@@ -92,6 +94,24 @@ class LevelTheme
 					val split = el.text.split(",")
 					map[split[0]] = split[1].toInt()
 				}
+			}
+
+			val spawnsEl = xml.getChildByName("SpawnWeights")
+			if (spawnsEl != null)
+			{
+				for (el in spawnsEl)
+				{
+					val split = el.text.split(",")
+
+					for (i in 0..split[1].toInt()-1)
+					{
+						theme.spawnList.add(split[0])
+					}
+				}
+			}
+			else
+			{
+				theme.spawnList.add("Orb")
 			}
 
 			return theme

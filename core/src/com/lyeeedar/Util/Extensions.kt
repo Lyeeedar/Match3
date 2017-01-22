@@ -44,18 +44,6 @@ class Leap() : Interpolation()
 }
 val leap = Leap()
 
-fun XmlReader.Element.getChildrenRecursively(out: Array<XmlReader.Element> = Array()) : Array<XmlReader.Element>
-{
-	for (i in 0..this.childCount-1)
-	{
-		val el = getChild(i)
-		out.add(el)
-		el.getChildrenRecursively(out)
-	}
-
-	return out
-}
-
 fun getXml(path: String, extension: String = "xml"): XmlReader.Element
 {
 	try
@@ -239,6 +227,8 @@ fun XmlReader.Element.children(): Array<XmlReader.Element>
 	return els
 }
 
+operator fun XmlReader.Element.iterator(): Iterator<XmlReader.Element> = this.children().iterator()
+
 fun XmlReader.Element.getChildrenByAttributeRecursively(attribute: String, value: String, result: Array<XmlReader.Element> = Array()): Array<XmlReader.Element>
 {
 	if (this.children().count() == 0) return result
@@ -250,4 +240,16 @@ fun XmlReader.Element.getChildrenByAttributeRecursively(attribute: String, value
 	}
 
 	return result
+}
+
+fun XmlReader.Element.getChildrenRecursively(out: Array<XmlReader.Element> = Array()) : Array<XmlReader.Element>
+{
+	for (i in 0..this.childCount-1)
+	{
+		val el = getChild(i)
+		out.add(el)
+		el.getChildrenRecursively(out)
+	}
+
+	return out
 }
