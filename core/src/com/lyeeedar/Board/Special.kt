@@ -343,6 +343,8 @@ class Match5(orb: Orb) : Special(orb)
 				sprite.colourAnimation = null
 				sprite.colour = other.sprite.colour
 				other.sprite = sprite
+				other.isChanger = false
+				other.hasAttack = false
 
 				return fun (point: Point, grid: Grid, orb: Orb)
 				{
@@ -411,6 +413,8 @@ class Match5(orb: Orb) : Special(orb)
 			sprite.colourAnimation = null
 			sprite.colour = other.sprite.colour
 			other.sprite = sprite
+			other.isChanger = false
+			other.hasAttack = false
 
 			return fun (point: Point, grid: Grid, orb: Orb)
 			{

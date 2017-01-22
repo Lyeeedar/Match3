@@ -16,14 +16,14 @@
 						<Data Name="Probability" Min="0" Max="100" SkipIfDefault="False" meta:RefKey="Number" />
 					</Data>
 				</Data>
-				<Data Name="AbilityRate" Type="Int" Min="0" Default="10" meta:RefKey="Number" />
 				<Data Name="Abilities" meta:RefKey="Collection">
 					<Data Name="Ability" meta:RefKey="Struct">
+						<Data Name="Cooldown" Name1="Min" Name2="Max" Min="1" Type="Int" SkipIfDefault="False" meta:RefKey="Vector" />
 						<Data Name="Target" EnumValues="Neighbour,Random" meta:RefKey="Enum" />
 						<Data Name="Count" Type="Int" Min="1" Default="1" meta:RefKey="Number" />
 						<Data Name="TargetRestriction" EnumValues="Orb,Special,Block,Empty,Sealed,Monster,Attack,Tile,Shield" meta:RefKey="Enum" />
 						<Data Name="Permuter" EnumValues="Single,AllOfType,NofType,Column,Row,Cross,Block,Diamond,Random" meta:RefKey="Enum" />
-						<Data Name="Effect" EnumValues="Attack,Seal,Shield,Move,Heal" meta:RefKey="Enum" />
+						<Data Name="Effect" EnumValues="Attack,Seal,Shield,Move,Heal,SealedAttack" meta:RefKey="Enum" />
 						<Data Name="Data" meta:RefKey="Collection">
 							<Data Name="DataPair" Collapse="True" meta:RefKey="Struct">
 								<Data Name="Key" meta:RefKey="String" />

@@ -16,6 +16,7 @@ import com.lyeeedar.Renderables.Sprite.Sprite
 import com.lyeeedar.Util.*
 import ktx.collections.get
 import ktx.collections.set
+import ktx.collections.toGdxArray
 
 /**
  * Created by Philip on 22-Jul-16.
@@ -63,23 +64,18 @@ class Monster(val desc: MonsterDesc)
 	val rewards = ObjectMap<String, Pair<Int, Int>>()
 
 	val abilities = Array<MonsterAbility>()
-	var abilityCooldown = 10
-	var abilityRate = 10
 
 	init
 	{
 		attackSpeed = desc.attackSpeed
 		attackDelay = desc.attackDelay
-		abilityRate = desc.abilityRate
 		size = desc.size
 		sprite = desc.sprite.copy()
 		death = desc.death.copy()
 		maxhp = desc.hp
-		abilities.addAll(desc.abilities)
+		abilities.addAll(desc.abilities.map{ it.copy() }.toGdxArray())
 
 		attackAccumulator = (MathUtils.random() * attackDelay).toInt()
-
-		abilityCooldown = (MathUtils.random() * abilityRate).toInt() + abilityRate / 2
 
 		for (reward in desc.rewards)
 		{
@@ -116,17 +112,17 @@ class Monster(val desc: MonsterDesc)
 			}
 		}
 
-		abilityCooldown--
-		if (abilityCooldown <= 0)
+		for (ability in abilities)
 		{
-			if (MathUtils.randomBoolean())
+			ability.cooldownTimer--
+			if (ability.cooldownTimer <= 0)
 			{
-				abilityCooldown = (MathUtils.random() * (abilityRate / 2f)).toInt() + abilityRate / 2
-
-				if (abilities.size > 0)
+				if (MathUtils.randomBoolean())
 				{
-					val ability = abilities.random()
+					ability.cooldownTimer = ability.cooldownMin + MathUtils.random(ability.cooldownMax - ability.cooldownMin)
 					ability.activate(grid, this)
+
+					break // only do 1 a turn
 				}
 			}
 		}
@@ -144,18 +140,38 @@ class MonsterAbility
 	enum class Effect
 	{
 		ATTACK,
+		SEALEDATTACK,
 		SHIELD,
 		SEAL,
 		MOVE,
 		HEAL
 	}
 
+	var cooldownTimer: Int = 0
+	var cooldownMin: Int = 1
+	var cooldownMax: Int = 1
 	lateinit var target: Target
 	lateinit var targetRestriction: Targetter
 	var targetCount: Int = 1
 	lateinit var permuter: Permuter
 	lateinit var effect: Effect
 	val data = ObjectMap<String, String>()
+
+	fun copy(): MonsterAbility
+	{
+		val ability = MonsterAbility()
+		ability.cooldownTimer = cooldownTimer
+		ability.cooldownMin = cooldownMin
+		ability.cooldownMax = cooldownMax
+		ability.target = target
+		ability.targetRestriction = targetRestriction
+		ability.targetCount = targetCount
+		ability.permuter = permuter
+		ability.effect = effect
+		ability.data.putAll(data)
+
+		return ability
+	}
 
 	fun activate(grid: Grid, monster: Monster)
 	{
@@ -280,7 +296,7 @@ class MonsterAbility
 		{
 			val strength = data.get("Strength", "1").toInt()
 
-			if (effect == Effect.ATTACK)
+			if (effect == Effect.ATTACK || effect == Effect.SEALEDATTACK)
 			{
 				target.orb!!.attackTimer = monster.attackSpeed
 				val diff = target.getPosDiff(monster.tiles[0, 0])
@@ -297,20 +313,19 @@ class MonsterAbility
 
 				target.orb!!.delayDisplayAttack = animDuration
 			}
-			else if (effect == Effect.SHIELD)
+			if (effect == Effect.SHIELD)
 			{
 				target.shield = Shield(grid.level.theme)
 				target.shield!!.count = strength
 			}
-			else if (effect == Effect.SEAL)
+			if (effect == Effect.SEAL || effect == Effect.SEALEDATTACK)
 			{
 				target.swappable?.sealCount = strength
 			}
-			else if (effect == Effect.MOVE)
+			if (effect == Effect.MOVE)
 			{
 
 			}
-			else throw NotImplementedError()
 		}
 	}
 
@@ -319,6 +334,11 @@ class MonsterAbility
 		fun load(xml: XmlReader.Element) : MonsterAbility
 		{
 			val ability = MonsterAbility()
+
+			val cooldown = xml.get("Cooldown").split(",")
+			ability.cooldownMin = cooldown[0].toInt()
+			ability.cooldownMax = cooldown[1].toInt()
+			ability.cooldownTimer = ability.cooldownMin + MathUtils.random(ability.cooldownMax - ability.cooldownMin)
 
 			ability.target = Target.valueOf(xml.get("Target", "NEIGHBOUR").toUpperCase())
 			ability.targetCount = xml.getInt("Count", 1)

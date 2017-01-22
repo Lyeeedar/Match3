@@ -26,11 +26,12 @@ class Orb(desc: OrbDesc, theme: LevelTheme): Swappable(theme)
 		set(value)
 		{
 			field = value
-			sprite = desc.sprite.copy()
+			sprite.colour = desc.sprite.colour
 		}
 
 	init
 	{
+		sprite = desc.sprite.copy()
 		this.desc = desc
 	}
 

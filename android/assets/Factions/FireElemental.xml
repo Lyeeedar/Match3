@@ -16,13 +16,14 @@
 			<Rewards>
 				<Item>Flameheart,1,100</Item>
 			</Rewards>
-			<AbilityRate>5</AbilityRate>
 			<Abilities>
 				<Ability>
+					<Cooldown>5,7</Cooldown>
 					<Target>Random</Target>
 					<Count>3</Count>
 				</Ability>
 				<Ability>
+					<Cooldown>4,8</Cooldown>
 					<Target>Random</Target>
 					<Effect>Move</Effect>
 				</Ability>
@@ -45,13 +46,14 @@
 			<Rewards>
 				<Item>Blazeheart,1,100</Item>
 			</Rewards>
-			<AbilityRate>5</AbilityRate>
 			<Abilities>
 				<Ability>
+					<Cooldown>5,7</Cooldown>
 					<Target>Random</Target>
 					<Count>4</Count>
 				</Ability>
 				<Ability>
+					<Cooldown>4,8</Cooldown>
 					<Target>Random</Target>
 					<Effect>Move</Effect>
 				</Ability>
@@ -74,13 +76,14 @@
 			<Rewards>
 				<Item>Infernoheart,1,100</Item>
 			</Rewards>
-			<AbilityRate>5</AbilityRate>
 			<Abilities>
 				<Ability>
+					<Cooldown>5,7</Cooldown>
 					<Target>Random</Target>
 					<Count>4</Count>
 				</Ability>
 				<Ability>
+					<Cooldown>4,8</Cooldown>
 					<Effect>Move</Effect>
 				</Ability>
 			</Abilities>

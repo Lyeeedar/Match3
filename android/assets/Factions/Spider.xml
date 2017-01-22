@@ -18,9 +18,9 @@
 				<Item>SpiderChitin,1,50</Item>
 				<Item>SpiderLeg,1,50</Item>
 			</Rewards>
-			<AbilityRate>6</AbilityRate>
 			<Abilities>
 				<Ability>
+					<Cooldown>5,8</Cooldown>
 					<Effect>Seal</Effect>
 				</Ability>
 			</Abilities>
@@ -44,9 +44,9 @@
 				<Item>SpiderChitin,2,50</Item>
 				<Item>SpiderLeg,2,50</Item>
 			</Rewards>
-			<AbilityRate>6</AbilityRate>
 			<Abilities>
 				<Ability>
+					<Cooldown>5,8</Cooldown>
 					<Count>2</Count>
 					<Effect>Seal</Effect>
 				</Ability>

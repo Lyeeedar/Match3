@@ -59,7 +59,6 @@ class MonsterDesc
 	var hp: Int = 25
 	val rewards = ObjectMap<String, Pair<Int, Int>>()
 	val abilities = Array<MonsterAbility>()
-	var abilityRate = 10
 
 	companion object
 	{
@@ -72,7 +71,6 @@ class MonsterDesc
 
 			desc.attackDelay = xml.getInt("AttackDelay")
 			desc.attackSpeed = xml.getInt("AttackSpeed")
-			desc.abilityRate = xml.getInt("AbilityRate", 10)
 
 			desc.size = xml.getInt("Size", 1)
 

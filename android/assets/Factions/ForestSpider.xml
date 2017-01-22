@@ -1,9 +1,9 @@
 <Faction xmlns:meta="Editor">
 	<Monsters>
 		<Monster>
-			<Name>RatSmall</Name>
+			<Name>SpiderSmall</Name>
 			<Sprite meta:RefKey="Sprite">
-				<Name>Oryx/uf_split/uf_heroes/rat</Name>
+				<Name>Oryx/uf_split/uf_heroes/spider_black</Name>
 				<DrawActualSize>true</DrawActualSize>
 			</Sprite>
 			<Death meta:RefKey="Sprite">
@@ -12,24 +12,22 @@
 				<Colour>189,9,9,255</Colour>
 			</Death>
 			<AttackDelay>5</AttackDelay>
-			<AttackSpeed>7</AttackSpeed>
-			<HP>7</HP>
+			<AttackSpeed>6</AttackSpeed>
 			<Rewards>
-				<Item>RatSkin,1,50</Item>
-				<Item>RatTail,1,50</Item>
+				<Item>SpiderChitin,1,50</Item>
+				<Item>SpiderLeg,1,50</Item>
 			</Rewards>
 			<Abilities>
 				<Ability>
-					<Cooldown>3,7</Cooldown>
-					<TargetRestriction>BasicOrb</TargetRestriction>
-					<Effect>Move</Effect>
+					<Cooldown>5,8</Cooldown>
+					<Effect>SealedAttack</Effect>
 				</Ability>
 			</Abilities>
 		</Monster>
 		<Monster>
-			<Name>RatGiant</Name>
+			<Name>SpiderGiant</Name>
 			<Sprite meta:RefKey="Sprite">
-				<Name>Oryx/uf_split/uf_heroes/rat_giant</Name>
+				<Name>Oryx/uf_split/uf_heroes/spider_black_giant</Name>
 				<DrawActualSize>true</DrawActualSize>
 			</Sprite>
 			<Death meta:RefKey="Sprite">
@@ -42,14 +40,14 @@
 			<Size>2</Size>
 			<HP>20</HP>
 			<Rewards>
-				<Item>RatSkin,2,50</Item>
-				<Item>RatTail,2,50</Item>
+				<Item>SpiderChitin,2,50</Item>
+				<Item>SpiderLeg,2,50</Item>
 			</Rewards>
 			<Abilities>
 				<Ability>
-					<Cooldown>4,8</Cooldown>
-					<TargetRestriction>BasicOrb</TargetRestriction>
-					<Effect>Move</Effect>
+					<Cooldown>5,8</Cooldown>
+					<Count>2</Count>
+					<Effect>SealedAttack</Effect>
 				</Ability>
 			</Abilities>
 		</Monster>
