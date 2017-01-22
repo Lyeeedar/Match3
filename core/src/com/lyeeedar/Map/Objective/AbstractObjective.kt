@@ -17,6 +17,7 @@ abstract class AbstractObjective()
 {
 	lateinit var srcData: XmlReader.Element
 
+	abstract fun getDescription(): String
 	abstract fun getRequiredLevels(): Array<Level>
 	abstract fun update(map: DungeonMap)
 	abstract fun isCompleted(): Boolean

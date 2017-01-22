@@ -11,6 +11,8 @@ import com.lyeeedar.Map.DungeonMap
 
 class ObjectiveEncounter : AbstractObjective()
 {
+	override fun getDescription(): String = "Complete all the encounters to complete the quest"
+
 	lateinit var levels: Array<Level>
 	var label: Label = Label("Complete the encounter", Global.skin)
 	var complete = false

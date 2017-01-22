@@ -1,27 +1,19 @@
 <Theme xmlns:meta="Editor">
 	<Floor meta:RefKey="SpriteWrapper">
 		<Sprite meta:RefKey="Sprite">
-			<Name>Oryx/uf_split/uf_terrain/floor_extra_8</Name>
+			<Name>Oryx/uf_split/uf_terrain/ground_grass_1</Name>
+			<Colour>191,191,191,255</Colour>
 		</Sprite>
 	</Floor>
 	<Wall meta:RefKey="SpriteWrapper">
-		<TilingSprite meta:RefKey="TilingSprite">
-			<Name>Wall</Name>
-			<Mode>Premade</Mode>
-			<Front meta:RefKey="Sprite">
-				<Name>Oryx/uf_split/uf_terrain/wall_dungeon_14</Name>
-			</Front>
-			<Top meta:RefKey="Sprite">
-				<Name>Oryx/uf_split/uf_terrain/wall_dungeon_7</Name>
-			</Top>
-			<Overhang meta:RefKey="Sprite">
-				<Name>Oryx/uf_split/uf_terrain/wall_dungeon_1</Name>
-			</Overhang>
-		</TilingSprite>
+		<Sprite meta:RefKey="Sprite">
+			<Name>Oryx/Custom/terrain/tree1</Name>
+			<DrawActualSize>true</DrawActualSize>
+		</Sprite>
 	</Wall>
 	<Pit meta:RefKey="SpriteWrapper">
 		<Sprite meta:RefKey="Sprite">
-			<Name>Oryx/uf_split/uf_terrain/water_green</Name>
+			<Name>Oryx/uf_split/uf_terrain/water_teal</Name>
 		</Sprite>
 	</Pit>
 	<Chest>
@@ -40,7 +32,7 @@
 	</Coin>
 	<Block>
 		<Sprite meta:RefKey="Sprite">
-			<Name>Oryx/uf_split/uf_terrain/crate</Name>
+			<Name>Oryx/Custom/terrain/VitaBloom2</Name>
 			<DrawActualSize>true</DrawActualSize>
 		</Sprite>
 	</Block>
@@ -67,15 +59,15 @@
 		</Sprite>
 	</Shield>
 	<Map>
-		<Room meta:RefKey="DirectedSprite">Oryx/Custom/dungeonmap/stone_room</Room>
-		<Corridor meta:RefKey="DirectedSprite">Oryx/Custom/dungeonmap/stone_corridor</Corridor>
+		<Room meta:RefKey="DirectedSprite">Oryx/Custom/dungeonmap/grass_room</Room>
+		<Corridor meta:RefKey="DirectedSprite">Oryx/Custom/dungeonmap/grass_corridor</Corridor>
 	</Map>
 	<RoomWeights>
 		<Good>
 			<Pair>Treasure,1</Pair>
 		</Good>
 		<Bad>
-			<Pair>Encounter,2</Pair>
+			<Pair>Encounter,1</Pair>
 			<Pair>Trap,1</Pair>
 		</Bad>
 	</RoomWeights>

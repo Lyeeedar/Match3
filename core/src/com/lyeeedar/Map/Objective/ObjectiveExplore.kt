@@ -19,6 +19,8 @@ class ObjectiveExplore(): AbstractObjective()
 	var label: Label = Label("Explore n more rooms", Global.skin)
 	var complete = false
 
+	override fun getDescription(): String = "Explore all the rooms in the dungeon to complete the quest"
+
 	override fun update(map: DungeonMap)
 	{
 		val roomCount = map.map.filter { it.value.isRoom }.count()

@@ -53,7 +53,9 @@ class DungeonDescriptionWidget(val dungeon: WorldDungeon, val playerData: Player
 		table.add(Label("Explore", Global.skin, "title")).pad(30f)
 		table.row()
 
-		val missionLabel = Label("Explore 80% of the rooms in the dungeon to complete the quest", Global.skin)
+		val objective = dungeon.getObjective()
+
+		val missionLabel = Label(objective.getDescription(), Global.skin)
 		missionLabel.setWrap(true)
 		table.add(missionLabel).expandX().fillX().center()
 		table.row()
@@ -67,7 +69,7 @@ class DungeonDescriptionWidget(val dungeon: WorldDungeon, val playerData: Player
 			while (true)
 			{
 				val generator = HubGenerator(MathUtils.random(Long.MAX_VALUE))
-				map = generator.generate(theme, 8, dungeon.progression, dungeon.getObjective(), dungeon.name)
+				map = generator.generate(theme, 8, dungeon.progression, objective, dungeon.name)
 				if (generator.numRoomsToSpawn <= 0) break
 			}
 
