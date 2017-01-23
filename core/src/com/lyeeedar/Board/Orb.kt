@@ -73,6 +73,15 @@ class Orb(desc: OrbDesc, theme: LevelTheme): Swappable(theme)
 
 	var isChanger: Boolean = false
 	var nextDesc: OrbDesc? = null
+		set(value)
+		{
+			field = value
+			nextSprite = sprite.copy()
+			nextSprite!!.colour = nextDesc!!.sprite.colour.copy().a(0.75f)
+			nextSprite!!.baseScale[0] = 1.25f
+			nextSprite!!.baseScale[1] = 1.25f
+		}
+	var nextSprite: Sprite? = null
 
 	val key: Int
 		get() = if (special is Match5) -1 else desc.key
@@ -98,10 +107,22 @@ class Orb(desc: OrbDesc, theme: LevelTheme): Swappable(theme)
 		// ----------------------------------------------------------------------
 		private val validOrbs: Array<OrbDesc> = Array()
 
-		fun getRandomOrb(level: Level): OrbDesc
+		fun getRandomOrb(level: Level, toIgnore: OrbDesc? = null): OrbDesc
 		{
-			val index = MathUtils.random(level.orbs-1)
-			return validOrbs[index]
+			if (toIgnore != null)
+			{
+				while (true)
+				{
+					val index = MathUtils.random(level.orbs - 1)
+					if (validOrbs[index] == toIgnore) continue
+					return validOrbs[index]
+				}
+			}
+			else
+			{
+				val index = MathUtils.random(level.orbs - 1)
+				return validOrbs[index]
+			}
 		}
 
 		fun getValidOrbs(level: Level) : Array<OrbDesc>

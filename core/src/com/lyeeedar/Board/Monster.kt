@@ -112,17 +112,18 @@ class Monster(val desc: MonsterDesc)
 			}
 		}
 
+		var doneAbility = false
 		for (ability in abilities)
 		{
 			ability.cooldownTimer--
-			if (ability.cooldownTimer <= 0)
+			if (ability.cooldownTimer <= 0 && !doneAbility)
 			{
 				if (MathUtils.randomBoolean())
 				{
 					ability.cooldownTimer = ability.cooldownMin + MathUtils.random(ability.cooldownMax - ability.cooldownMin)
 					ability.activate(grid, this)
 
-					break // only do 1 a turn
+					doneAbility = true // only use 1 a turn
 				}
 			}
 		}

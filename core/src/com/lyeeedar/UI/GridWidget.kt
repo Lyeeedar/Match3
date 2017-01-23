@@ -215,19 +215,25 @@ class GridWidget(val grid: Grid) : Widget()
 				val xi = x.toFloat()
 				val yi = (grid.height-1) - y.toFloat()
 
-				if (tile.sprite.sprite != null)
+				var tileHeight = 0
+				for (sprite in tile.sprites)
 				{
-					ground.queueSprite(tile.sprite.sprite!!, xi, yi, TILE, 0, tileColour)
-				}
-				if (tile.sprite.tilingSprite != null)
-				{
-					val tiling = tile.sprite.tilingSprite!!
-					ground.queueSprite(tiling, xi, yi, TILE, 0, tileColour)
+					if (sprite.sprite != null)
+					{
+						ground.queueSprite(sprite.sprite!!, xi, yi, TILE, tileHeight, tileColour)
+					}
+					if (sprite.tilingSprite != null)
+					{
+						val tiling = sprite.tilingSprite!!
+						ground.queueSprite(tiling, xi, yi, TILE, tileHeight, tileColour)
+					}
+
+					tileHeight++
 				}
 
 				if (chest != null)
 				{
-					ground.queueSprite(chest.sprite, xi, yi, TILE, 1, tileColour)
+					ground.queueSprite(chest.sprite, xi, yi, TILE, tileHeight, tileColour)
 				}
 
 				for (effect in tile.effects)
@@ -281,8 +287,7 @@ class GridWidget(val grid: Grid) : Widget()
 							yii += offset[1]
 						}
 
-						tempCol.set(orb.nextDesc!!.sprite.colour).a(0.5f)
-						ground.queueSprite(glow, xii, yii, ORB, 0, colour = tempCol)
+						ground.queueSprite(orb.nextSprite!!, xii, yii, ORB, 0, orbColour)
 					}
 
 					if (orb is Orb && orb.sprite.renderDelay <= 0)

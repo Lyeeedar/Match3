@@ -113,7 +113,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 					else if (orb.isChanger)
 					{
 						orb.desc = orb.nextDesc!!
-						orb.nextDesc = Orb.getRandomOrb(level)
+						orb.nextDesc = Orb.getRandomOrb(level, orb.desc)
 
 						val effect = AssetManager.loadSprite("EffectSprites/Heal/Heal", 0.05f, orb.desc.sprite.colour)
 						tile.effects.add(effect)

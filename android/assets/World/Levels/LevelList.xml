@@ -11,4 +11,9 @@
 		<Level>Dungeon/Treasure/SideShuffleTreasure</Level>
 		<Level>Dungeon/Treasure/WaterTreasure</Level>
 	</Dungeon>
+	<Forest>
+		<Level>Forest/Fight/BasicFight</Level>
+		<Level>Forest/Trap/BasicTrap</Level>
+		<Level>Forest/Treasure/BasicTreasure</Level>
+	</Forest>
 </Dungeons>

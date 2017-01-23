@@ -15,7 +15,13 @@ import com.lyeeedar.Renderables.Sprite.SpriteWrapper
 
 class Tile(x: Int, y: Int) : Point(x, y)
 {
-	lateinit var sprite: SpriteWrapper
+	val sprites = Array<SpriteWrapper>()
+
+	var spriteSetter: SpriteWrapper? = null
+		set(value)
+		{
+			sprites.add(value)
+		}
 
 	var orb: Orb?
 		get() = contents as? Orb

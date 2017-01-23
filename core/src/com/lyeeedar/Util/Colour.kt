@@ -35,6 +35,8 @@ class Colour()
 		set(r, g, b, a)
 	}
 
+	fun copy(): Colour = Colour(this)
+
 	fun r(r: Float): Colour
 	{
 		this.r = r
