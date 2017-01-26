@@ -45,6 +45,7 @@ class GridWidget(val grid: Grid) : Widget()
 	val hp_empty: Sprite = AssetManager.loadSprite("GUI/health_empty")
 	val atk_full: Sprite = AssetManager.loadSprite("GUI/attack_full")
 	val atk_empty: Sprite = AssetManager.loadSprite("GUI/attack_empty")
+	val changer: Sprite = AssetManager.loadSprite("Oryx/Custom/items/changer", drawActualSize = true)
 
 	val TILE = 0
 	val ORB = 1
@@ -95,6 +96,16 @@ class GridWidget(val grid: Grid) : Widget()
 				{
 					grid.dragEnd(point)
 				}
+			}
+
+			override fun keyTyped(event: InputEvent?, character: Char): Boolean
+			{
+				if (character == 'd')
+				{
+					ground.debugDraw = !ground.debugDraw
+				}
+
+				return false
 			}
 		})
 
@@ -287,7 +298,9 @@ class GridWidget(val grid: Grid) : Widget()
 							yii += offset[1]
 						}
 
-						ground.queueSprite(orb.nextSprite!!, xii, yii, ORB, 0, orbColour)
+						tempCol.set(orbColour).mul(orb.nextDesc!!.sprite.colour)
+
+						ground.queueSprite(changer, xii, yii, ORB, 2, tempCol)
 					}
 
 					if (orb is Orb && orb.sprite.renderDelay <= 0)

@@ -57,6 +57,12 @@ class SortedRenderer(var tileSize: Float, val width: Float, val height: Float, v
 
 	var delta: Float = 0f
 
+	var debugDrawSpeed = 1.0f
+	var debugDrawAccumulator = 0.0f
+	var debugDraw = false
+	var inDebugFrame = false
+	var debugDrawList = Array<RenderSprite>()
+
 	// ----------------------------------------------------------------------
 	fun setScreenShake(amount: Float)
 	{
@@ -85,10 +91,8 @@ class SortedRenderer(var tileSize: Float, val width: Float, val height: Float, v
 			offsety += Math.cos( screenShakeAngle.toDouble() ).toFloat() * screenShakeRadius
 		}
 
-		while (heap.size > 0)
+		fun draw(rs: RenderSprite)
 		{
-			val rs = heap.pop()
-
 			batch.setBlendFunction(rs.blend.src, rs.blend.dst)
 
 			if (batch is HDRColourSpriteBatch) batch.setColor(rs.colour)
@@ -125,18 +129,63 @@ class SortedRenderer(var tileSize: Float, val width: Float, val height: Float, v
 					batch.draw(rs.texture, rs.x + offsetx, rs.y + offsety, 0.5f, 0.5f, 1f, 1f, tileSize * rs.width, tileSize * rs.height, rs.rotation)
 				}
 			}
-
-			rs.free()
 		}
 
-		batchID = random.nextInt()
-
-		for (entry in tilingMap)
+		if (debugDraw)
 		{
-			entry.key.free()
-			setPool.free(entry.value)
+			for (rs in debugDrawList)
+			{
+				draw(rs)
+			}
+
+			debugDrawAccumulator += debugDrawSpeed
+
+			while (heap.size > 0 && debugDrawAccumulator > 1.0f)
+			{
+				if (debugDraw) inDebugFrame = true
+
+				val rs = heap.pop()
+
+				draw(rs)
+
+				debugDrawList.add(rs)
+
+				debugDrawAccumulator -= 1.0f
+			}
+
+			if (heap.size == 0)
+			{
+				debugDrawAccumulator = 0.0f
+			}
 		}
-		tilingMap.clear()
+		else
+		{
+			while (heap.size > 0)
+			{
+				val rs = heap.pop()
+
+				draw(rs)
+
+				rs.free()
+			}
+		}
+
+		if (!debugDraw || heap.size == 0)
+		{
+			inDebugFrame = false
+
+			for (rs in debugDrawList) rs.free()
+			debugDrawList.clear()
+
+			batchID = random.nextInt()
+
+			for (entry in tilingMap)
+			{
+				entry.key.free()
+				setPool.free(entry.value)
+			}
+			tilingMap.clear()
+		}
 
 		batch.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA)
 	}
@@ -156,6 +205,8 @@ class SortedRenderer(var tileSize: Float, val width: Float, val height: Float, v
 	// ----------------------------------------------------------------------
 	fun queueParticle(effect: ParticleEffect, ix: Float, iy: Float, layer: Int, index: Int, colour: Colour = Colour.WHITE, width: Float = 1f, height: Float = 1f)
 	{
+		if (debugDraw && inDebugFrame) return
+
 		if (effect.batchID != batchID) effect.update(delta)
 		effect.batchID = batchID
 
@@ -227,6 +278,8 @@ class SortedRenderer(var tileSize: Float, val width: Float, val height: Float, v
 	// ----------------------------------------------------------------------
 	fun queueSprite(tilingSprite: TilingSprite, ix: Float, iy: Float, layer: Int, index: Int, colour: Colour = Colour.WHITE, width: Float = 1f, height: Float = 1f)
 	{
+		if (debugDraw && inDebugFrame) return
+
 		if (tilingSprite.batchID != batchID) tilingSprite.update(delta)
 		tilingSprite.batchID = batchID
 
@@ -270,6 +323,8 @@ class SortedRenderer(var tileSize: Float, val width: Float, val height: Float, v
 	// ----------------------------------------------------------------------
 	fun queueSprite(sprite: Sprite, ix: Float, iy: Float, layer: Int, index: Int, colour: Colour = Colour.WHITE, update: Boolean = true, width: Float = 1f, height: Float = 1f)
 	{
+		if (debugDraw && inDebugFrame) return
+
 		if (update)
 		{
 			if (sprite.batchID != batchID) sprite.update(delta)

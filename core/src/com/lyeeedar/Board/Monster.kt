@@ -299,7 +299,9 @@ class MonsterAbility
 
 			if (effect == Effect.ATTACK || effect == Effect.SEALEDATTACK)
 			{
-				target.orb!!.attackTimer = monster.attackSpeed
+				val speed = data.get("Speed", monster.attackSpeed.toString()).toInt()
+
+				target.orb!!.attackTimer = speed
 				val diff = target.getPosDiff(monster.tiles[0, 0])
 				diff[0].y *= -1
 				monster.sprite.animation = BumpAnimation.obtain().set(0.2f, diff)

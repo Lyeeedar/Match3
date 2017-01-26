@@ -10,7 +10,6 @@
             <QuestOrder>
                 <Explore></Explore>
                 <Explore></Explore>
-                <Explore></Explore>
                 <Encounter>Dungeon/Encounter/SmallFireElemental</Encounter>
                 <Explore></Explore>
                 <Encounter>Dungeon/Encounter/TreasureVault</Encounter>
@@ -28,7 +27,6 @@
             <Location>230,276</Location>
             <Theme>Forest</Theme>
             <QuestOrder>
-                <Explore></Explore>
                 <Explore></Explore>
                 <Explore></Explore>
                 <Encounter>Dungeon/Encounter/SmallFireElemental</Encounter>

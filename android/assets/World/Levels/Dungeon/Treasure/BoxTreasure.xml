@@ -111,7 +111,6 @@
 		<Action NumToDrop="rnd(1)" meta:RefKey="Items">
 			<Item>Iron,1,5</Item>
 			<Item>Steel,1,3</Item>
-			<Item>Adamantine,1,1</Item>
 		</Action>
 	</VictoryActions>
 	<Type>Treasure</Type>

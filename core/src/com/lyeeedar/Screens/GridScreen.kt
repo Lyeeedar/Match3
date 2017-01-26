@@ -1,5 +1,6 @@
 package com.lyeeedar.Screens
 
+import com.badlogic.gdx.Input
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.NinePatch
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
@@ -41,6 +42,7 @@ class GridScreen(): AbstractScreen()
 	val emptySlot = AssetManager.loadSprite("Icons/Empty")
 	var hpBar = Table()
 	var launchButton: TextButton? = null
+	var grid: GridWidget? = null
 	lateinit var playerPortrait: SpriteWidget
 	lateinit var player: Player
 	lateinit var level: Level
@@ -85,6 +87,7 @@ class GridScreen(): AbstractScreen()
 		this.level = level
 
 		val gridWidget = GridWidget(level.grid)
+		grid = gridWidget
 
 		val powerBar = PowerBar()
 
@@ -185,6 +188,30 @@ class GridScreen(): AbstractScreen()
 		fswidget.setFillParent(true)
 
 		Global.stage.addActor(fswidget)
+	}
+
+	override fun keyDown(keycode: Int): Boolean
+	{
+		if (keycode == Input.Keys.D)
+		{
+			grid!!.ground.debugDraw = !grid!!.ground.debugDraw
+		}
+		else if (keycode == Input.Keys.UP)
+		{
+			if (grid!!.ground.debugDraw)
+			{
+				grid!!.ground.debugDrawSpeed *= 2.0f
+			}
+		}
+		else if (keycode == Input.Keys.DOWN)
+		{
+			if (grid!!.ground.debugDraw)
+			{
+				grid!!.ground.debugDrawSpeed /= 2.0f
+			}
+		}
+
+		return false
 	}
 
 	// ----------------------------------------------------------------------

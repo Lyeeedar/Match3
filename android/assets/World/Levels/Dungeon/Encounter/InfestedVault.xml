@@ -4,17 +4,18 @@
 			<Line>##.###.##.##</Line>
 			<Line>#...£.....£#</Line>
 			<Line>#.£........#</Line>
-			<Line>#..........#</Line>
-			<Line>#..........#</Line>
+			<Line>#.....!....#</Line>
+			<Line>#.!........#</Line>
 			<Line>#.......£..#</Line>
 			<Line>#..........#</Line>
-			<Line>#£...£.....#</Line>
-			<Line>#........£.#</Line>
-			<Line>#..........#</Line>
+			<Line>#£...£.!...#</Line>
+			<Line>#........£!#</Line>
+			<Line>#..!.......#</Line>
 			<Line>#..........#</Line>
 			<Line>#..........#</Line>
 		</Rows>
 	</Grid>
+	<Faction>Rat,Spider</Faction>
 	<OrbCount>5</OrbCount>
 	<AllowedVictories>
 		<Condition meta:RefKey="Sink">

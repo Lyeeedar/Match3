@@ -29,15 +29,15 @@
 		<Rows>
 			<Line>#.........#</Line>
 			<Line>#........=#</Line>
-			<Line>#.......==#</Line>
-			<Line>#......==~#</Line>
+			<Line>#.......==~</Line>
+			<Line>#......==~~</Line>
 			<Line>#....===~~#</Line>
 			<Line>#..===~~~.#</Line>
 			<Line>#..=~~~...#</Line>
 			<Line>#===~.....#</Line>
 			<Line>#=~~~.....#</Line>
 			<Line>#~~.......#</Line>
-			<Line>#~........#</Line>
+			<Line>~~........#</Line>
 		</Rows>
 		<Rows>
 			<Line>#.........#</Line>
