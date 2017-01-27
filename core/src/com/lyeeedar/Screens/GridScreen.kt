@@ -200,14 +200,14 @@ class GridScreen(): AbstractScreen()
 		{
 			if (grid!!.ground.debugDraw)
 			{
-				grid!!.ground.debugDrawSpeed *= 2.0f
+				grid!!.ground.debugDrawSpeed++
 			}
 		}
 		else if (keycode == Input.Keys.DOWN)
 		{
 			if (grid!!.ground.debugDraw)
 			{
-				grid!!.ground.debugDrawSpeed /= 2.0f
+				grid!!.ground.debugDrawSpeed--
 			}
 		}
 

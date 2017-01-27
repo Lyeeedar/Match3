@@ -138,7 +138,9 @@ class SortedRenderer(var tileSize: Float, val width: Float, val height: Float, v
 				draw(rs)
 			}
 
-			debugDrawAccumulator += debugDrawSpeed
+			val drawSpeed = if (debugDrawSpeed < 0) -1.0f / debugDrawSpeed else debugDrawSpeed
+
+			debugDrawAccumulator += drawSpeed
 
 			while (heap.size > 0 && debugDrawAccumulator > 1.0f)
 			{
@@ -191,15 +193,17 @@ class SortedRenderer(var tileSize: Float, val width: Float, val height: Float, v
 	}
 
 	// ----------------------------------------------------------------------
-	fun getComparisonVal(x: Float, y: Float, layer: Int, index: Int, blend: BlendMode) : Float
+	fun getComparisonVal(x: Int, y: Int, layer: Int, index: Int, blend: BlendMode) : Float
 	{
 		if (index > MAX_INDEX-1) throw RuntimeException("Index too high! $index >= $MAX_INDEX!")
 		if (layer > layers-1) throw RuntimeException("Layer too high! $index >= $layers!")
 
-		val sx = (x / tileSize).toInt()
-		val sy = (y / tileSize).toInt()
+		val yBlock = MAX_Y_BLOCK_SIZE - y * Y_BLOCK_SIZE
+		val xBlock = (MAX_X_BLOCK_SIZE - x * X_BLOCK_SIZE)
+		val lBlock = layer * MAX_INDEX
+		val iBlock = index * BLENDMODES
 
-		return MAX_Y_BLOCK_SIZE - sy * Y_BLOCK_SIZE + (MAX_X_BLOCK_SIZE - sx * X_BLOCK_SIZE) + layer * MAX_INDEX + index * BLENDMODES + blend.ordinal
+		return yBlock + xBlock + lBlock + iBlock + blend.ordinal
 	}
 
 	// ----------------------------------------------------------------------
@@ -216,8 +220,8 @@ class SortedRenderer(var tileSize: Float, val width: Float, val height: Float, v
 			return
 		}
 
-		val x = ix * tileSize
-		val y = iy * tileSize
+		val x = ix
+		val y = iy
 
 		//val scale = effect.animation?.renderScale()?.get(0) ?: 1f
 		val animCol = effect.animation?.renderColour() ?: Colour.WHITE
@@ -235,8 +239,8 @@ class SortedRenderer(var tileSize: Float, val width: Float, val height: Float, v
 					tempVec.scl(emitter.size)
 					tempVec.rotate(emitter.rotation)
 
-					offsetx += (emitter.position.x + tempVec.x) * tileSize
-					offsety += (emitter.position.y + tempVec.y) * tileSize
+					offsetx += (emitter.position.x + tempVec.x)
+					offsety += (emitter.position.y + tempVec.y)
 				}
 
 				for (pdata in particle.particles)
@@ -262,12 +266,12 @@ class SortedRenderer(var tileSize: Float, val width: Float, val height: Float, v
 
 					if (emitter.simulationSpace == Emitter.SimulationSpace.LOCAL) tempVec.scl(emitter.size).rotate(emitter.rotation + emitter.emitterRotation)
 
-					val drawx = tempVec.x * tileSize + offsetx
-					val drawy = tempVec.y * tileSize + offsety
+					val drawx = tempVec.x  + offsetx
+					val drawy = tempVec.y + offsety
 
-					val comparisonVal = getComparisonVal(drawx-sizex*0.5f*tileSize, drawy-sizey*0.5f*tileSize, layer, index, particle.blend)
+					val comparisonVal = getComparisonVal((drawx-sizex*0.5f).toInt(), (drawy-sizey*0.5f).toInt(), layer, index, particle.blend)
 
-					val rs = RenderSprite.obtain().set( null, null, tex, drawx, drawy, tempVec.x, tempVec.y, col, sizex, sizey, rotation, effect.flipX, effect.flipY, particle.blend, comparisonVal )
+					val rs = RenderSprite.obtain().set( null, null, tex, drawx * tileSize, drawy * tileSize, tempVec.x, tempVec.y, col, sizex, sizey, rotation, effect.flipX, effect.flipY, particle.blend, comparisonVal )
 
 					heap.add( rs, rs.comparisonVal )
 				}
@@ -289,6 +293,9 @@ class SortedRenderer(var tileSize: Float, val width: Float, val height: Float, v
 			return
 		}
 
+		var lx = ix
+		var ly = iy
+
 		var x = ix * tileSize
 		var y = iy * tileSize
 
@@ -300,10 +307,13 @@ class SortedRenderer(var tileSize: Float, val width: Float, val height: Float, v
 			{
 				x += offset[0] * tileSize
 				y += offset[1] * tileSize
+
+				lx += offset[0]
+				ly += offset[1]
 			}
 		}
 
-		val comparisonVal = getComparisonVal(x, y, layer, index, BlendMode.MULTIPLICATIVE)
+		val comparisonVal = getComparisonVal(lx.toInt(), ly.toInt(), layer, index, BlendMode.MULTIPLICATIVE)
 
 		val rs = RenderSprite.obtain().set( null, tilingSprite, null, x, y, ix, iy, colour, width, height, 0f, false, false, BlendMode.MULTIPLICATIVE, comparisonVal )
 
@@ -337,6 +347,9 @@ class SortedRenderer(var tileSize: Float, val width: Float, val height: Float, v
 			return
 		}
 
+		var lx = ix
+		var ly = iy
+
 		var x = ix * tileSize
 		var y = iy * tileSize
 
@@ -348,6 +361,9 @@ class SortedRenderer(var tileSize: Float, val width: Float, val height: Float, v
 			{
 				x += offset[0] * tileSize
 				y += offset[1] * tileSize
+
+				lx += offset[0]
+				ly += offset[1]
 			}
 		}
 
@@ -358,7 +374,7 @@ class SortedRenderer(var tileSize: Float, val width: Float, val height: Float, v
 			sprite.lastPos.set(x, y)
 		}
 
-		val comparisonVal = getComparisonVal(x, y, layer, index, BlendMode.MULTIPLICATIVE)
+		val comparisonVal = getComparisonVal(lx.toInt(), ly.toInt(), layer, index, BlendMode.MULTIPLICATIVE)
 
 		val rs = RenderSprite.obtain().set( sprite, null, null, x, y, ix, iy, colour, width, height, 0f, false, false, BlendMode.MULTIPLICATIVE, comparisonVal )
 

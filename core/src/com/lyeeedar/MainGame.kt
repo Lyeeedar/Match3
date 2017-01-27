@@ -3,6 +3,8 @@ package com.lyeeedar
 import com.badlogic.gdx.Game
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.files.FileHandle
+import com.lyeeedar.Board.Level
+import com.lyeeedar.Board.LevelTheme
 import com.lyeeedar.Map.World
 import com.lyeeedar.Player.Player
 import com.lyeeedar.Player.PlayerData
@@ -17,6 +19,7 @@ import java.util.HashMap
 
 class MainGame : Game()
 {
+	val debugOverride = false
 
 	enum class ScreenEnum
 	{
@@ -66,7 +69,19 @@ class MainGame : Game()
 		screens.put(ScreenEnum.MAP, MapScreen())
 
 		var save = SaveGame.load()
-		if (save == null)
+		if (debugOverride)
+		{
+			val playerData = PlayerData()
+			val player = Player(playerData)
+
+			val level = Level.load("Dungeon/Encounter/SmallFireElemental").first()
+			val theme = LevelTheme.load("Dungeon")
+
+			level.create(theme, player)
+			Global.game.switchScreen(MainGame.ScreenEnum.GRID)
+			GridScreen.instance.updateLevel(level, player)
+		}
+		else if (save == null)
 		{
 			val player = PlayerData()
 			val world = World()
@@ -114,6 +129,10 @@ class MainGame : Game()
 		if (Global.PARTICLE_EDITOR)
 		{
 			setScreen(ParticleEditorScreen())
+		}
+		else if (debugOverride)
+		{
+
 		}
 		else if (save?.dungeon != null)
 		{

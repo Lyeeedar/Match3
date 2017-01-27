@@ -68,3 +68,8 @@ build/
 ## OS Specific
 .DS_Store
 Thumbs.db
+/android/assets/save.dat
+/android/assets/Settings.xml
+/android/assets/error.log
+/android/assets/Layout.xml
+/android/assets/UnlockTrees/FireOld.oldxml
