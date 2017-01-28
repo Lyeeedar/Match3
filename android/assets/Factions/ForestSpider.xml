@@ -21,6 +21,9 @@
 				<Ability>
 					<Cooldown>5,8</Cooldown>
 					<Effect>SealedAttack</Effect>
+					<Data>
+						<Speed>10</Speed>
+					</Data>
 				</Ability>
 			</Abilities>
 		</Monster>
@@ -48,6 +51,9 @@
 					<Cooldown>5,8</Cooldown>
 					<Count>2</Count>
 					<Effect>SealedAttack</Effect>
+					<Data>
+						<Speed>10</Speed>
+					</Data>
 				</Ability>
 			</Abilities>
 		</Monster>

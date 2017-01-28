@@ -144,13 +144,9 @@ class Ability() : Unlockable()
 		val dEl = dataEl.getChildByName("Data")
 		if (dEl != null)
 		{
-			for (i in 0..dEl.childCount-1)
+			for (el in dEl)
 			{
-				val el = dEl.getChild(i)
-				val text = el.text.toUpperCase()
-				val split = text.split(",")
-
-				data[split[0]] = split[1]
+				data[el.name.toUpperCase()] = el.text.toUpperCase()
 			}
 		}
 	}

@@ -26,6 +26,11 @@ class Town(val playerData: PlayerData, val world: World)
 		}
 	}
 
+	fun unlock(house: String)
+	{
+		houses.first{ it.name == house }.unlocked = true
+	}
+
 	fun save()
 	{
 		val save = SaveGame()

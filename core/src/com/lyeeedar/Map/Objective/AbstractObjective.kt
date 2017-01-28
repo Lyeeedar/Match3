@@ -16,6 +16,7 @@ import com.lyeeedar.Board.Level
 abstract class AbstractObjective()
 {
 	lateinit var srcData: XmlReader.Element
+	var unlocks: String? = null
 
 	abstract fun getDescription(): String
 	abstract fun getRequiredLevels(): Array<Level>
@@ -33,6 +34,7 @@ abstract class AbstractObjective()
 			val obj = get(xml.name)
 			obj.srcData = xml
 			obj.parse(xml)
+			obj.unlocks = xml.getAttribute("Unlocks", null)
 
 			return obj
 		}

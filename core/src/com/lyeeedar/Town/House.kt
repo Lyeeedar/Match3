@@ -18,6 +18,9 @@ class House
 {
 	lateinit var sprite: Sprite
 
+	lateinit var name: String
+	var unlocked = false
+
 	var interactionIndex = -1
 	val interactions = Array<AbstractHouseInteraction>()
 
@@ -44,10 +47,10 @@ class House
 		{
 			val xml = getXml("Houses/$path")
 
-
 			val sprite = AssetManager.loadSprite(xml.getChildByName("Sprite"))
 
 			val house = House(sprite)
+			house.name = path
 
 			val dialogueEl = xml.getChildByName("Dialogue")
 			for (i in 0.. dialogueEl.childCount-1)

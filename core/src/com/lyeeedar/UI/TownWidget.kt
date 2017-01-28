@@ -32,6 +32,7 @@ class TownWidget(val town: Town, val player: PlayerData) : Widget()
 	var gate = AssetManager.loadSprite("Oryx/Custom/townmap/gate")
 	var grass = AssetManager.loadSprite("Oryx/uf_split/uf_terrain/ground_grass_1")
 	var path = TilingSprite("path", "Oryx/uf_split/uf_terrain/floor_extra_5", "Masks/path")
+	var emptyHouse = AssetManager.loadSprite("Oryx/Custom/townmap/housebase")
 
 	val tilesWidth = 4 + 8 + 2
 
@@ -88,7 +89,7 @@ class TownWidget(val town: Town, val player: PlayerData) : Widget()
 
 					moveTo(hx+1, hy-1, {
 						town.save()
-						house.advance(player)
+						if (house.unlocked) house.advance(player)
 					})
 				}
 				else if (ix >= 5 && ix < 9 && iy >= tilesHeight-4)
@@ -259,10 +260,12 @@ class TownWidget(val town: Town, val player: PlayerData) : Widget()
 			val x = 1f + 8f * (i % 2)
 			val y = tilesHeight - (9f + 6f * (i / 2)) - 1
 
-			house.sprite.size[0] = 4
-			house.sprite.size[1] = 4
+			val sprite = if (house.unlocked) house.sprite else emptyHouse
 
-			renderer.queueSprite(house.sprite, x, y, 1, 0)
+			sprite.size[0] = 4
+			sprite.size[1] = 4
+
+			renderer.queueSprite(sprite, x, y, 1, 0)
 
 			val left = (i % 2) == 0
 

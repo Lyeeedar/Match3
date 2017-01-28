@@ -140,7 +140,7 @@
 					<Cost>3</Cost>
 					<Effect>0,Orb,Random,Pop</Effect>
 					<Data>
-						<Data>Count,3</Data>
+						<Count>3</Count>
 					</Data>
 					<FlightEffect meta:RefKey="ParticleEffect">
 						<Name>Fire</Name>
@@ -154,7 +154,7 @@
 				<Ability meta:RefKey="Ability">FireRain</Ability>
 			</Children>
 		</Ability>
-		<Ability meta:X="1429.3927130448192" meta:Y="-34.931607698139388">
+		<Ability meta:X="1429.3927001953125" meta:Y="-34.931606292724609">
 			<Key>FireRain</Key>
 			<AbilityData>
 				<Name>Fire Rain</Name>
@@ -168,7 +168,7 @@
 					<Cost>3</Cost>
 					<Effect>0,Orb,Random,Pop</Effect>
 					<Data>
-						<Data>Count,5</Data>
+						<Count>5</Count>
 					</Data>
 					<FlightEffect meta:RefKey="ParticleEffect">
 						<Name>Fire</Name>
@@ -195,9 +195,7 @@
 				<EffectData>
 					<Cost>5</Cost>
 					<Effect>1,Orb,Diamond,Pop</Effect>
-					<Data>
-						<Data>aoe,1</Data>
-					</Data>
+					<Data />
 					<FlightEffect meta:RefKey="ParticleEffect">
 						<Name>Fire</Name>
 					</FlightEffect>
@@ -228,7 +226,7 @@
 					<Cost>5</Cost>
 					<Effect>1,Orb,Diamond,Pop</Effect>
 					<Data>
-						<Data>aoe,2</Data>
+						<AOE>2</AOE>
 					</Data>
 					<FlightEffect meta:RefKey="ParticleEffect">
 						<Name>Fire</Name>
@@ -260,7 +258,7 @@
 					<Cost>5</Cost>
 					<Effect>1,Orb,Diamond,Pop</Effect>
 					<Data>
-						<Data>aoe,3</Data>
+						<AOE>3</AOE>
 					</Data>
 					<FlightEffect meta:RefKey="ParticleEffect">
 						<Name>Fire</Name>

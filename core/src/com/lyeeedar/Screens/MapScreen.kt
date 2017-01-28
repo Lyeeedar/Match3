@@ -65,7 +65,7 @@ class MapScreen(): AbstractScreen()
 		portraitTable.add(portrait)
 		portraitTable.add(map.objective.createDynamicTable(Global.skin))
 		portraitTable.touchable = Touchable.enabled
-		portraitTable.addClickListener { PlayerWidget(player, map.objective) }
+		portraitTable.addClickListener { PlayerWidget(player, dungeonWidget!!) }
 
 		overlay.add(portraitTable).expand().top().left()
 		stack.add(overlay)

@@ -8,9 +8,9 @@
             <Location>362,404</Location>
             <Theme>Dungeon</Theme>
             <QuestOrder>
+                <Explore Unlocks="Pyro"></Explore>
                 <Explore></Explore>
-                <Explore></Explore>
-                <Encounter>Dungeon/Encounter/SmallFireElemental</Encounter>
+                <Encounter Unlocks="Warrior">Dungeon/Encounter/SmallFireElemental</Encounter>
                 <Explore></Explore>
                 <Encounter>Dungeon/Encounter/TreasureVault</Encounter>
                 <Explore></Explore>

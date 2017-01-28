@@ -386,10 +386,12 @@ class SavePlayerData : SaveableObject<PlayerData>
 class SaveTown : SaveableObject<Town>
 {
 	lateinit var playerPos: Point
+	lateinit var unlockedHouses: Array<String>
 
 	override fun store(data: Town) : SaveTown
 	{
 		playerPos = data.playerPos.copy()
+		unlockedHouses = data.houses.filter { it.unlocked }.map { it.name }.toGdxArray()
 
 		return this
 	}
@@ -397,6 +399,11 @@ class SaveTown : SaveableObject<Town>
 	override fun get(vararg obj: Any): Town
 	{
 		val town = Town(obj[0] as PlayerData, obj[1] as World)
+
+		for (unlocked in unlockedHouses)
+		{
+			town.houses.first{ it.name == unlocked }.unlocked = true
+		}
 
 		town.playerPos.set(playerPos)
 
@@ -464,7 +471,6 @@ class SavePlayer : SaveableObject<Player>
 {
 	lateinit var portrait: Sprite
 	var hp: Int = 0
-	var regen: Int = 0
 	var gold: Int = 0
 	var inventory = ObjectMap<String, Item>()
 	var equippedAbilities = Array<String?>(4){e -> null}
@@ -473,7 +479,6 @@ class SavePlayer : SaveableObject<Player>
 	{
 		portrait = data.portrait.copy()
 		hp = data.hp
-		regen = data.regen
 		gold = data.gold
 
 		for (i in 0..3)
@@ -497,7 +502,6 @@ class SavePlayer : SaveableObject<Player>
 		player.portrait = portrait
 
 		player.hp = hp
-		player.regen = regen
 		player.gold = gold
 
 		for (item in inventory)

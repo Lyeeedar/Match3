@@ -151,6 +151,7 @@ class DungeonMapWidget(val map: DungeonMap, val player: Player, val dungeon: Wor
 
 	fun completeDungeon()
 	{
+		if (map.objective.unlocks != null) TownScreen.instance.town.unlock(map.objective.unlocks!!)
 		Global.game.switchScreen(MainGame.ScreenEnum.TOWN)
 		TownScreen.instance.playerData.mergePlayerDataBack(player)
 		TownScreen.instance.town.save()

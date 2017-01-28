@@ -29,7 +29,6 @@ class Player()
 		}
 
 	var maxhp: Int = 10
-	var regen: Int = 5
 
 	var gold: Int = 0
 	val inventory = ObjectMap<String, Item>()

@@ -8,7 +8,7 @@
 		<Ability meta:RefKey="Ability">Strike</Ability>
 	</Tree>
 	<Abilities>
-		<Ability meta:X="365.10333333333335" meta:Y="-96">
+		<Ability meta:X="365.10333251953125" meta:Y="-96">
 			<Key>Block</Key>
 			<AbilityData>
 				<Name>Block</Name>
@@ -29,7 +29,7 @@
 				<Ability meta:RefKey="Ability">DoubleBlock</Ability>
 			</Children>
 		</Ability>
-		<Ability meta:X="681.98" meta:Y="-96">
+		<Ability meta:X="681.97998046875" meta:Y="-96">
 			<Key>DoubleBlock</Key>
 			<AbilityData>
 				<Name>Double Block</Name>
@@ -52,7 +52,7 @@
 				<Ability meta:RefKey="Ability">MountainCrash</Ability>
 			</Children>
 		</Ability>
-		<Ability meta:X="983.60666666666668" meta:Y="-139">
+		<Ability meta:X="983.606689453125" meta:Y="-139">
 			<Key>TripleBlock</Key>
 			<AbilityData>
 				<Name>TripleBlock</Name>
@@ -71,7 +71,7 @@
 				</EffectData>
 			</AbilityData>
 		</Ability>
-		<Ability meta:X="985.60666666666668" meta:Y="92">
+		<Ability meta:X="985.606689453125" meta:Y="92">
 			<Key>MountainCrash</Key>
 			<AbilityData>
 				<Name>Mountain Crash</Name>
@@ -89,7 +89,7 @@
 				</EffectData>
 			</AbilityData>
 		</Ability>
-		<Ability meta:X="381.10333333333335" meta:Y="373">
+		<Ability meta:X="381.10333251953125" meta:Y="373">
 			<Key>Strike</Key>
 			<AbilityData>
 				<Name>Strike</Name>
@@ -111,7 +111,7 @@
 				<Ability meta:RefKey="Ability">TwinStrike</Ability>
 			</Children>
 		</Ability>
-		<Ability meta:X="686.11666666666667" meta:Y="373">
+		<Ability meta:X="686.11663818359375" meta:Y="373">
 			<Key>TwinStrike</Key>
 			<AbilityData>
 				<Name>Twin Strike</Name>
@@ -134,7 +134,7 @@
 				<Ability meta:RefKey="Ability">OgreBlow</Ability>
 			</Children>
 		</Ability>
-		<Ability meta:X="1000.0566666666666" meta:Y="371">
+		<Ability meta:X="999.056640625" meta:Y="372">
 			<Key>OgreBlow</Key>
 			<AbilityData>
 				<Name>Ogre Blow</Name>
@@ -151,7 +151,7 @@
 					<Cost>3</Cost>
 					<Effect>1,Monster,Single,Pop</Effect>
 					<Data>
-						<Data>damage,1</Data>
+						<Damage>2</Damage>
 					</Data>
 				</EffectData>
 			</AbilityData>

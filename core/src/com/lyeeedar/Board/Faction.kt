@@ -2,6 +2,7 @@ package com.lyeeedar.Board
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.utils.Array
+import com.badlogic.gdx.utils.IntMap
 import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Renderables.Sprite.Sprite
@@ -15,10 +16,19 @@ import ktx.collections.set
 
 class Faction
 {
-	val size1 = Array<MonsterDesc>()
-	var size2 = Array<MonsterDesc>()
+	val sizeMap = IntMap<Array<MonsterDesc>>()
 
-	var bosses = Array<MonsterDesc>()
+	fun get(size: Int) : MonsterDesc
+	{
+		var s = size
+		while (s > 0)
+		{
+			if (sizeMap.containsKey(s)) return sizeMap[s].random()
+			s--
+		}
+
+		return sizeMap.values().first().random()
+	}
 
 	companion object
 	{
@@ -34,14 +44,12 @@ class Faction
 				val el = monsterEl.getChild(i)
 				val desc = MonsterDesc.load(el)
 
-				if (desc.size == 1)
+				if (!faction.sizeMap.containsKey(desc.size))
 				{
-					faction.size1.add(desc)
+					faction.sizeMap[desc.size] = Array()
 				}
-				else
-				{
-					faction.size2.add(desc)
-				}
+
+				faction.sizeMap[desc.size].add(desc)
 			}
 
 			return faction

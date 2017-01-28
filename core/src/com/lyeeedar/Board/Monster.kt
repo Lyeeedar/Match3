@@ -91,7 +91,7 @@ class Monster(val desc: MonsterDesc)
 			attackAccumulator -= attackDelay
 
 			// do attack
-			val tile = grid.grid.filter { it.orb != null && it.orb!!.special == null && !it.orb!!.hasAttack }.random()
+			val tile = grid.grid.filter { validAttack(grid, it) }.random()
 
 			if (tile != null)
 			{
@@ -128,6 +128,21 @@ class Monster(val desc: MonsterDesc)
 			}
 		}
 	}
+}
+
+fun validAttack(grid: Grid, tile: Tile): Boolean
+{
+	if (tile.orb == null) return false
+	if (tile.orb!!.special != null) return false
+	if (tile.orb!!.hasAttack) return false
+
+	for (dir in Direction.CardinalValues)
+	{
+		val ntile = grid.tile(tile + dir) ?: return false
+		if (!ntile.canHaveOrb) return false
+	}
+
+	return true
 }
 
 class MonsterAbility
@@ -178,7 +193,7 @@ class MonsterAbility
 	{
 		if (effect == Effect.HEAL)
 		{
-			monster.hp += data["amount"].toInt()
+			monster.hp += data["AMOUNT"].toInt()
 			if (monster.hp > monster.maxhp) monster.hp = monster.maxhp
 
 			val sprite = AssetManager.loadSprite("EffectSprites/Heal/Heal", 0.1f, Colour(0f,1f,0f,1f))
@@ -212,7 +227,12 @@ class MonsterAbility
 			throw NotImplementedError()
 		}
 
-		val validTargets = availableTargets.filter { targetRestriction.isValid(it, data) }
+		var validTargets = availableTargets.filter { targetRestriction.isValid(it, data) }
+
+		if (effect == Effect.ATTACK || effect == Effect.SEALEDATTACK)
+		{
+			validTargets = validTargets.filter { validAttack(grid, it) }
+		}
 
 		val chosen = validTargets.asSequence().random(targetCount)
 
@@ -295,11 +315,11 @@ class MonsterAbility
 
 		for (target in finalTargets)
 		{
-			val strength = data.get("Strength", "1").toInt()
+			val strength = data.get("STRENGTH", "1").toInt()
 
 			if (effect == Effect.ATTACK || effect == Effect.SEALEDATTACK)
 			{
-				val speed = data.get("Speed", monster.attackSpeed.toString()).toInt()
+				val speed = data.get("SPEED", monster.attackSpeed.toString()).toInt()
 
 				target.orb!!.attackTimer = speed
 				val diff = target.getPosDiff(monster.tiles[0, 0])
@@ -356,10 +376,7 @@ class MonsterAbility
 				for (i in 0..dEl.childCount-1)
 				{
 					val el = dEl.getChild(i)
-					val text = el.text.toUpperCase()
-					val split = text.split(",")
-
-					ability.data[split[0]] = split[1]
+					ability.data[el.name.toUpperCase()] = el.text.toUpperCase()
 				}
 			}
 

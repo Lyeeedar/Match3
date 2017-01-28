@@ -210,8 +210,8 @@ class Level(val loadPath: String)
 				if (w != h) throw Exception("Non-square monster!")
 
 				val size = w
-				val monsterDesc = if (size == 1) chosenFaction.size1.random() else chosenFaction.size2.random()
-				val monster =  Monster(monsterDesc)
+				val monsterDesc = chosenFaction.get(size)
+				val monster = Monster(monsterDesc)
 				monster.size = size
 
 				for (x in 0..size-1)
@@ -310,7 +310,6 @@ class Level(val loadPath: String)
 					{
 						Global.game.switchScreen(MainGame.ScreenEnum.MAP)
 						defeatActions.forEach { it.apply(player) }
-						player.hp += player.regen
 						MapScreen.instance.save()
 					}).show()
 		}
@@ -320,7 +319,6 @@ class Level(val loadPath: String)
 					{
 						Global.game.switchScreen(MainGame.ScreenEnum.MAP)
 						victoryActions.forEach { it.apply(player) }
-						player.hp += player.regen
 						MapScreen.instance.save()
 					}).show()
 		}
@@ -330,7 +328,6 @@ class Level(val loadPath: String)
 					{
 						Global.game.switchScreen(MainGame.ScreenEnum.MAP)
 						defeatActions.forEach { it.apply(player) }
-						player.hp += player.regen
 						MapScreen.instance.save()
 					}).show()
 		}

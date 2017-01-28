@@ -16,7 +16,7 @@ import com.lyeeedar.Util.addClickListener
  * Created by Philip on 29-Jul-16.
  */
 
-class PlayerWidget(val player: Player, val objective: AbstractObjective): FullscreenTable()
+class PlayerWidget(val player: Player, val parentWidget: DungeonMapWidget): FullscreenTable()
 {
 	val emptySlot = AssetManager.loadSprite("Icons/Empty")
 	val hp_full: Sprite = AssetManager.loadSprite("GUI/health_full")
@@ -77,14 +77,14 @@ class PlayerWidget(val player: Player, val objective: AbstractObjective): Fullsc
 
 		val objectiveTable = Table()
 		objectiveTable.defaults().pad(10f)
-		objectiveTable.add(objective.createStaticTable(Global.skin)).expand().left()
+		objectiveTable.add(parentWidget.map.objective.createStaticTable(Global.skin)).expand().left()
 
-		if (objective.isCompleted())
+		if (parentWidget.map.objective.isCompleted())
 		{
 			val button = TextButton("Complete\nQuest", Global.skin)
 			button.addClickListener {
 				MessageBox("Complete Quest", "Do you wish to complete the quest and return to town?",
-						Pair("Yes", {this@PlayerWidget.remove(); Global.game.switchScreen(MainGame.ScreenEnum.TOWN); TownScreen.instance.playerData.mergePlayerDataBack(player)}),
+						Pair("Yes", {this@PlayerWidget.remove(); parentWidget.completeDungeon()}),
 						Pair("No", {}))
 			}
 			objectiveTable.add(button).expand().right()
@@ -94,7 +94,7 @@ class PlayerWidget(val player: Player, val objective: AbstractObjective): Fullsc
 			val button = TextButton("Abandon\nQuest", Global.skin)
 			button.addClickListener {
 				MessageBox("Abandon Quest", "Do you wish you abandon the quest and return to town? You will lose half your collected gold if you leave.",
-						Pair("Yes", {this@PlayerWidget.remove(); player.gold /= 2; Global.game.switchScreen(MainGame.ScreenEnum.TOWN); TownScreen.instance.playerData.mergePlayerDataBack(player)}),
+						Pair("Yes", {this@PlayerWidget.remove(); player.gold /= 2; parentWidget.completeDungeon()}),
 						Pair("No", {}))
 			}
 			objectiveTable.add(button).expand().right()
