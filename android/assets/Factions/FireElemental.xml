@@ -21,6 +21,9 @@
 					<Cooldown>5,7</Cooldown>
 					<Target>Random</Target>
 					<Count>3</Count>
+					<Data>
+						<Speed>10</Speed>
+					</Data>
 				</Ability>
 				<Ability>
 					<Cooldown>4,8</Cooldown>
@@ -51,6 +54,9 @@
 					<Cooldown>5,7</Cooldown>
 					<Target>Random</Target>
 					<Count>4</Count>
+					<Data>
+						<Speed>10</Speed>
+					</Data>
 				</Ability>
 				<Ability>
 					<Cooldown>4,8</Cooldown>
@@ -81,6 +87,9 @@
 					<Cooldown>5,7</Cooldown>
 					<Target>Random</Target>
 					<Count>4</Count>
+					<Data>
+						<Speed>10</Speed>
+					</Data>
 				</Ability>
 				<Ability>
 					<Cooldown>4,8</Cooldown>
