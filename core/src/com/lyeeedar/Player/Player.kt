@@ -29,6 +29,9 @@ class Player()
 		}
 
 	var maxhp: Int = 10
+	var attackDam: Int = 1
+	var abilityDam: Int = 3
+	var powerGain: Int = 0
 
 	var gold: Int = 0
 	val inventory = ObjectMap<String, Item>()
@@ -40,6 +43,11 @@ class Player()
 	{
 		portrait = data.chosenSprite
 		portrait.drawActualSize = false
+
+		maxhp = data.maxhp
+		attackDam = data.attackDam
+		abilityDam = data.abilityDam
+		powerGain = data.powerGain
 
 		hp = maxhp
 

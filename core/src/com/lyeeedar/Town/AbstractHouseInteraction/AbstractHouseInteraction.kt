@@ -38,6 +38,7 @@ abstract class AbstractHouseInteraction
 			val type = when(name) {
 				"DIALOGUELINETEXT" -> HouseInteractionLine::class.java
 				"DIALOGUELINETREE" -> HouseInteractionTree::class.java
+				"DIALOGUELINEUPGRADE" -> HouseInteractionUpgrade::class.java
 
 			// ARGH everything broke
 				else -> throw RuntimeException("Invalid house action type: $name")

@@ -86,6 +86,7 @@ class MainGame : Game()
 			val player = PlayerData()
 			val world = World()
 			val town = Town(player, world)
+			Global.settings = Settings()
 			screens.put(ScreenEnum.TOWN, TownScreen(player, town))
 
 			println("New town")
@@ -97,6 +98,7 @@ class MainGame : Game()
 				val playerData = save.playerData.get()
 				val world = save.world.get()
 				val town = save.town.get(playerData, world)
+				Global.settings = save.settings
 				screens.put(ScreenEnum.TOWN, TownScreen(playerData, town))
 
 				println("Loaded town")
@@ -118,6 +120,7 @@ class MainGame : Game()
 				val player = PlayerData()
 				val world = World()
 				val town = Town(player, world)
+				Global.settings = Settings()
 				screens.put(ScreenEnum.TOWN, TownScreen(player, town))
 
 				save = null

@@ -11,7 +11,7 @@
                 <Explore Unlocks="Pyro"></Explore>
                 <Explore></Explore>
                 <Encounter Unlocks="Warrior">Dungeon/Encounter/SmallFireElemental</Encounter>
-                <Explore></Explore>
+                <Explore Unlocks="Blacksmith"></Explore>
                 <Encounter>Dungeon/Encounter/TreasureVault</Encounter>
                 <Explore></Explore>
                 <Encounter>Dungeon/Encounter/SmallFireElemental</Encounter>

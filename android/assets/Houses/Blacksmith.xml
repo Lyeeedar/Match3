@@ -1,0 +1,14 @@
+<House xmlns:meta="Editor">
+	<Sprite meta:RefKey="Sprite">
+		<Name>Oryx/Custom/townmap/blacksmith</Name>
+	</Sprite>
+	<Dialogue>
+		<Reference meta:RefKey="DialogueLineText">
+			<Text>Well hello there! You look like you could do with an upgrade. For some gold I can forge you some useful stuff.</Text>
+		</Reference>
+		<Reference meta:RefKey="DialogueLineUpgrade" />
+		<Reference meta:RefKey="DialogueLineText">
+			<Text>Be careful, I wouldn't like to see my work squandered.</Text>
+		</Reference>
+	</Dialogue>
+</House>

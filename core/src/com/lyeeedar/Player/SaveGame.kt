@@ -21,6 +21,7 @@ import com.lyeeedar.Map.Generators.HubGenerator
 import com.lyeeedar.Map.Objective.AbstractObjective
 import com.lyeeedar.Map.World
 import com.lyeeedar.Player.Ability.Ability
+import com.lyeeedar.Settings
 import com.lyeeedar.Town.Town
 import com.lyeeedar.Util.*
 import java.util.zip.GZIPOutputStream
@@ -37,6 +38,7 @@ class SaveGame
 	lateinit var town: SaveTown
 	var dungeon: SaveDungeonMap? = null
 	var player: SavePlayer? = null
+	lateinit var settings: Settings
 
 	fun save()
 	{
@@ -264,6 +266,8 @@ class SaveGame
 		private fun registerClasses(kryo: Kryo)
 		{
 			kryo.register(Point::class.java)
+			kryo.register(Settings::class.java)
+			kryo.register(Item::class.java)
 
 			kryo.register(SaveGame::class.java)
 			kryo.register(SavePlayerData::class.java)
@@ -271,8 +275,6 @@ class SaveGame
 			kryo.register(SaveTown::class.java)
 			kryo.register(SaveDungeonMap::class.java)
 			kryo.register(SaveWorld::class.java)
-
-			kryo.register(Item::class.java)
 
 			kryo.register(kotlin.Array<String>::class.java)
 			kryo.register(kotlin.Array<Any>::class.java)
@@ -321,12 +323,20 @@ class SavePlayerData : SaveableObject<PlayerData>
 	var equippedAbilities = Array<String?>(4){e -> null}
 	var gold = 0
 	var inventory = ObjectMap<String, Item>()
+	var maxhp: Int = 10
+	var attackDam: Int = 1
+	var abilityDam: Int = 3
+	var powerGain: Int = 0
 
 	override fun store(data: PlayerData) : SavePlayerData
 	{
 		unlockedSprites.addAll(data.unlockedSprites)
 		chosenSprite = unlockedSprites.indexOf(data.chosenSprite)
 		gold = data.gold
+		maxhp = data.maxhp
+		attackDam = data.attackDam
+		abilityDam = data.abilityDam
+		powerGain = data.powerGain
 
 		for (i in 0..3)
 		{
@@ -340,7 +350,7 @@ class SavePlayerData : SaveableObject<PlayerData>
 
 		for (tree in data.skillTrees)
 		{
-			val bought = tree.value.descendants().filter { it.value.bought }.map{ it.key }
+			val bought = tree.value.descendants().map { it.value }.filter { it.bought }.map{ it.guid }
 			unlockedAbilities[tree.key] = bought.asGdxArray()
 		}
 
@@ -356,6 +366,11 @@ class SavePlayerData : SaveableObject<PlayerData>
 
 		data.chosenSprite = unlockedSprites[chosenSprite]
 		data.gold = gold
+
+		data.maxhp = maxhp
+		data.attackDam = attackDam
+		data.abilityDam = abilityDam
+		data.powerGain = powerGain
 
 		for (i in 0..3)
 		{
@@ -472,6 +487,10 @@ class SavePlayer : SaveableObject<Player>
 	lateinit var portrait: Sprite
 	var hp: Int = 0
 	var gold: Int = 0
+	var maxhp: Int = 10
+	var attackDam: Int = 1
+	var abilityDam: Int = 3
+	var powerGain: Int = 0
 	var inventory = ObjectMap<String, Item>()
 	var equippedAbilities = Array<String?>(4){e -> null}
 
@@ -480,6 +499,10 @@ class SavePlayer : SaveableObject<Player>
 		portrait = data.portrait.copy()
 		hp = data.hp
 		gold = data.gold
+		maxhp = data.maxhp
+		attackDam = data.attackDam
+		abilityDam = data.abilityDam
+		powerGain = data.powerGain
 
 		for (i in 0..3)
 		{
@@ -503,6 +526,10 @@ class SavePlayer : SaveableObject<Player>
 
 		player.hp = hp
 		player.gold = gold
+		player.maxhp = maxhp
+		player.attackDam = attackDam
+		player.abilityDam = abilityDam
+		player.powerGain = powerGain
 
 		for (item in inventory)
 		{
@@ -513,7 +540,8 @@ class SavePlayer : SaveableObject<Player>
 		{
 			if (equippedAbilities[i] != null)
 			{
-				player.abilities[i] = data.getAbility(equippedAbilities[i]!!)
+				val ability = data.getAbility(equippedAbilities[i]!!) ?: throw Exception("Failed to load ability " + equippedAbilities[i] + "!")
+				player.abilities[i] = ability
 			}
 		}
 

@@ -139,8 +139,11 @@ class TownWidget(val town: Town, val player: PlayerData) : Widget()
 
 		if ((oldPos.x == cx || oldPos.x == cx-1) && (x == cx || x == cx-1))
 		{
-			val dst = Math.abs(oldPos.y - y)
 			val path = arrayOf(Vector2((oldPos.x - x).toFloat(), (oldPos.y - y).toFloat()), Vector2())
+
+			var dst = 0f
+			path.forEachIndexed { i, p -> if (i > 0) dst += path[i-1].dst(p) }
+
 			playerSprite.animation = MoveAnimation.obtain().set(dst * 0.2f, UnsmoothedPath(path))
 
 			if (arrivalFun != null) Future.call(arrivalFun, dst * 0.2f + 0.3f, this)
@@ -148,14 +151,13 @@ class TownWidget(val town: Town, val player: PlayerData) : Widget()
 		else if (oldPos.y != y)
 		{
 			// path to center, then on the y, then to the x
-			val path = arrayOf(oldPos, Point(cx, oldPos.y), Point(cx, playerPos.y), playerPos.copy())
+			val sx = if (oldPos.x < cx) cx-1 else cx
+			val ex = if (playerPos.x < cx) cx-1 else cx
 
-			val dst = path.sumBy(fun (p: Point): Int
-			{
-				val index = path.indexOf(p)
-				if (index > 0) return path[index-1].dist(p)
-				else return 0
-			})
+			val path = arrayOf(oldPos, Point(sx, oldPos.y), Point(ex, playerPos.y), playerPos.copy())
+
+			var dst = 0f
+			path.forEachIndexed { i, p -> if (i > 0) dst += path[i-1].euclideanDist(p) }
 
 			playerSprite.animation = MoveAnimation.obtain().set(dst * 0.2f, path)
 
@@ -163,8 +165,11 @@ class TownWidget(val town: Town, val player: PlayerData) : Widget()
 		}
 		else
 		{
-			val dst = oldPos.dist(playerPos)
 			val path = arrayOf(Vector2((oldPos.x - x).toFloat(), 0f), Vector2())
+
+			var dst = 0f
+			path.forEachIndexed { i, p -> if (i > 0) dst += path[i-1].dst(p) }
+
 			playerSprite.animation = MoveAnimation.obtain().set(dst * 0.2f, UnsmoothedPath(path))
 
 			if (arrivalFun != null) Future.call(arrivalFun, dst * 0.2f + 0.3f, this)

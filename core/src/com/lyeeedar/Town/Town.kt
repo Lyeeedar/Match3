@@ -1,6 +1,7 @@
 package com.lyeeedar.Town
 
 import com.badlogic.gdx.utils.Array
+import com.lyeeedar.Global
 import com.lyeeedar.Map.World
 import com.lyeeedar.Player.*
 import com.lyeeedar.Util.AssetManager
@@ -37,6 +38,7 @@ class Town(val playerData: PlayerData, val world: World)
 		save.town = SaveTown().store(this)
 		save.playerData = SavePlayerData().store(playerData)
 		save.world = SaveWorld().store(world)
+		save.settings = Global.settings
 
 		save.save()
 	}

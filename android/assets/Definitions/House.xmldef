@@ -5,10 +5,11 @@
 	<Definition Name="DialogueLineTree" meta:RefKey="StructDef">
 		<Data Name="Tree" BasePath="UnlockTrees" StripExtension="True" AllowedFileTypes="xml" meta:RefKey="File" />
 	</Definition>
+	<Definition Name="DialogueLineUpgrade" meta:RefKey="StructDef" />
 	<Definition Name="House" meta:RefKey="Struct">
 		<Data Name="Sprite" Keys="Sprite" meta:RefKey="Reference" />
 		<Data Name="Dialogue" MinCount="1" meta:RefKey="Collection">
-			<Data Name="Reference" Keys="DialogueLineText,DialogueLineTree" meta:RefKey="Reference" />
+			<Data Name="Reference" Keys="DialogueLineText,DialogueLineTree,DialogueLineUpgrade" meta:RefKey="Reference" />
 		</Data>
 	</Definition>
 </Definitions>

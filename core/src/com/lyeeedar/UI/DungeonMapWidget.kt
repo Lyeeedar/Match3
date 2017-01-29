@@ -145,6 +145,7 @@ class DungeonMapWidget(val map: DungeonMap, val player: Player, val dungeon: Wor
 		save.dungeon = SaveDungeonMap().store(map)
 		save.player = SavePlayer().store(player)
 		save.world = SaveWorld().store(TownScreen.instance.town.world)
+		save.settings = Global.settings
 
 		save.save()
 	}

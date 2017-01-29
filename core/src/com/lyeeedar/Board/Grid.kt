@@ -87,6 +87,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 
 	lateinit var updateFuns: kotlin.Array<() -> Boolean>
 	var inTurn = false
+	var gainedBonusPower = false
 
 	// ----------------------------------------------------------------------
 	init
@@ -128,6 +129,8 @@ class Grid(val width: Int, val height: Int, val level: Level)
 					monster.damSources.clear()
 				}
 			}
+
+			gainedBonusPower = false
 		}
 
 		onPop += fun (orb: Orb, delay: Float) {
@@ -141,6 +144,16 @@ class Grid(val width: Int, val height: Int, val level: Level)
 				if (dst != null)
 				{
 					Future.call({ Mote(pos, dst, sprite, { PowerBar.instance.power++ }) }, delay)
+
+					if (!gainedBonusPower)
+					{
+						gainedBonusPower = true
+
+						for (i in 0..level.player.powerGain-1)
+						{
+							Future.call({ Mote(pos, dst, sprite, { PowerBar.instance.power++ }) }, delay)
+						}
+					}
 				}
 			}
 		}
@@ -1222,7 +1235,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 				}
 				if (t.monster != null)
 				{
-					t.monster!!.hp -= if (!t.monster!!.damSources.contains(this)) 1 else 1
+					t.monster!!.hp -= if (!t.monster!!.damSources.contains(this)) level.player.attackDam else 1
 					t.monster!!.damSources.add(this)
 					onDamaged(t.monster!!)
 

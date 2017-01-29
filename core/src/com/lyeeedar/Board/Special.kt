@@ -38,7 +38,7 @@ abstract class Special(val orb: Orb)
 		fun popTile(special: Special, tile: Tile, point: Point, grid: Grid, offset: Float = 0f)
 		{
 			val delay = tile.dist(point) * 0.1f + offset
-			grid.pop(tile, delay + 0.2f, special, 1 + 2)
+			grid.pop(tile, delay + 0.2f, special, grid.level.player.abilityDam)
 		}
 
 		fun popColumn(special: Special, colour: Colour, x: Int, sy: Int, grid: Grid)
@@ -65,7 +65,7 @@ abstract class Special(val orb: Orb)
 					if (tile != null && cx == x && !hitSet.contains(tile))
 					{
 						hitSet.add(tile)
-						grid.pop(cx, cy, 0f, special, 1+2)
+						grid.pop(cx, cy, 0f, special, grid.level.player.abilityDam)
 					}
 				}
 				grid.grid[x, y].effects.add(effect)
@@ -131,7 +131,7 @@ abstract class Special(val orb: Orb)
 					if (tile != null && cy == y && !hitSet.contains(tile))
 					{
 						hitSet.add(tile)
-						grid.pop(cx, cy, 0f, special, 1 + 2)
+						grid.pop(cx, cy, 0f, special, grid.level.player.abilityDam)
 					}
 
 				}
@@ -248,7 +248,7 @@ class DualMatch(orb: Orb) : Special(orb)
 						if (tile != null && !hitSet.contains(tile) && tile.dist(point) < 4)
 						{
 							hitSet.add(tile)
-							grid.pop(cx, cy, 0f, this@DualMatch, 1+2)
+							grid.pop(cx, cy, 0f, this@DualMatch, grid.level.player.abilityDam)
 						}
 					}
 
@@ -296,7 +296,7 @@ class DualMatch(orb: Orb) : Special(orb)
 			if (tile != null && !hitSet.contains(tile) && tile.dist(point) < 3)
 			{
 				hitSet.add(tile)
-				grid.pop(cx, cy, 0f, this@DualMatch, 1+2)
+				grid.pop(cx, cy, 0f, this@DualMatch, grid.level.player.abilityDam)
 			}
 		}
 
@@ -330,7 +330,8 @@ class Match5(orb: Orb) : Special(orb)
 					{
 						if (tile.canHaveOrb)
 						{
-							popTile(this, tile, point, grid)
+							val delay = tile.dist(point) * 0.1f
+							grid.pop(tile, delay + 0.2f, special, grid.level.player.abilityDam + 2)
 						}
 					}
 				}
@@ -382,7 +383,7 @@ class Match5(orb: Orb) : Special(orb)
 									tile.orb!!.armed = func
 								}
 
-								grid.pop(tile, 0f, this, 1 + 2)
+								grid.pop(tile, 0f, this, grid.level.player.abilityDam + 1)
 							}
 							tile.effects.add(s)
 						}
@@ -399,7 +400,7 @@ class Match5(orb: Orb) : Special(orb)
 							s.animation = ExpandAnimation.obtain().set(animDuration, 0.5f, 1.3f, false)
 							s.completionCallback = fun()
 							{
-								grid.pop(tile, 0f, this, 1 + 2)
+								grid.pop(tile, 0f, this, grid.level.player.abilityDam + 1)
 							}
 							tile.effects.add(s)
 						}
@@ -439,7 +440,7 @@ class Match5(orb: Orb) : Special(orb)
 						s.animation = ExpandAnimation.obtain().set(animDuration, 0.5f, 1.3f, false)
 						s.completionCallback = fun()
 						{
-							grid.pop(tile, 0f, this, 1 + 2)
+							grid.pop(tile, 0f, this, grid.level.player.abilityDam + 1)
 						}
 						tile.effects.add(s)
 					}

@@ -18,6 +18,11 @@ class PlayerData
 	val unlockedSprites = com.badlogic.gdx.utils.Array<Sprite>()
 	lateinit var chosenSprite: Sprite
 
+	var maxhp: Int = 10
+	var attackDam: Int = 1
+	var abilityDam: Int = 3
+	var powerGain: Int = 0
+
 	val abilities = Array<String?>(4){e -> null}
 	var gold = 200
 	val inventory = ObjectMap<String, Item>()
