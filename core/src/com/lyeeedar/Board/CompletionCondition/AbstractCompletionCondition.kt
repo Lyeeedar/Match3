@@ -8,13 +8,14 @@ import com.badlogic.gdx.utils.reflect.ClassReflection
 import com.lyeeedar.Board.CompletionCondition.CompletionConditionTime
 import com.lyeeedar.Board.CompletionCondition.CompletionConditionTurns
 import com.lyeeedar.Board.Grid
+import com.lyeeedar.Board.LevelTheme
 
 abstract class AbstractCompletionCondition
 {
 	abstract fun attachHandlers(grid: Grid)
 	abstract fun isCompleted(): Boolean
 	abstract fun parse(xml: XmlReader.Element)
-	abstract fun createTable(skin: Skin): Table
+	abstract fun createTable(skin: Skin, theme: LevelTheme): Table
 	abstract fun getTextDescription(): String
 
 	companion object
@@ -49,6 +50,7 @@ abstract class AbstractCompletionCondition
 				"KILL" -> CompletionConditionKill::class.java
 				"MATCH", "MATCHES" -> CompletionConditionMatches::class.java
 				"SINK" -> CompletionConditionSink::class.java
+				"PLATE" -> CompletionConditionPlate::class.java
 
 			// ARGH everything broke
 				else -> throw RuntimeException("Invalid completion condition type: $name")

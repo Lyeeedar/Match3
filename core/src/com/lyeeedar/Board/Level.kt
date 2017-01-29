@@ -46,6 +46,7 @@ class Level(val loadPath: String)
 
 	var sealStrength = 1
 	var blockStrength = 1
+	var plateStrength = 1
 
 	var uncompletedMapSprite: Sprite? = null
 	var completedMapSprite: Sprite? = null
@@ -113,6 +114,20 @@ class Level(val loadPath: String)
 					tile.canHaveOrb = false
 					tile.isPit = true
 					tile.spriteSetter = theme.pit.copy()
+				}
+				else if (char == 'P')
+				{
+					tile.canHaveOrb = true
+					tile.spriteSetter = theme.floor.copy()
+					tile.plateStrength = plateStrength
+				}
+				else if (char == '-')
+				{
+					tile.canHaveOrb = true
+					tile.spriteSetter = theme.floor.copy()
+					tile.plateStrength = plateStrength
+					tile.block = Block(theme)
+					tile.block!!.count = blockStrength
 				}
 				else if (char == '=')
 				{

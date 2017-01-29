@@ -30,6 +30,9 @@
 		<Name>Oryx/uf_split/uf_items/coin_gold</Name>
 		<DrawActualSize>true</DrawActualSize>
 	</Coin>
+	<Plate meta:RefKey="Sprite">
+		<Name>Oryx/uf_split/uf_terrain/puddle_large_3</Name>
+	</Plate>
 	<Block>
 		<Sprite meta:RefKey="Sprite">
 			<Name>Oryx/Custom/terrain/VitaBloom2</Name>
@@ -72,7 +75,7 @@
 		</Bad>
 	</RoomWeights>
 	<SpawnWeights>
-		<Spawn>Orb,3</Spawn>
+		<Spawn>Orb,5</Spawn>
 		<Spawn>Changer,1</Spawn>
 	</SpawnWeights>
 </Theme>

@@ -1,0 +1,71 @@
+<Level xmlns:meta="Editor">
+	<Grid>
+		<Rows>
+			<Line>#..#..pp###</Line>
+			<Line>#.....p...#</Line>
+			<Line>#.........#</Line>
+			<Line>#....p...##</Line>
+			<Line>#....p#...#</Line>
+			<Line>#..p......#</Line>
+			<Line>#.........#</Line>
+			<Line>#..p......#</Line>
+			<Line>##.pp.....#</Line>
+			<Line>#...p.....#</Line>
+			<Line>###.p..####</Line>
+		</Rows>
+		<Rows>
+			<Line>#p.#..pp###</Line>
+			<Line>#pp.......#</Line>
+			<Line>#.........#</Line>
+			<Line>#.p.#p....#</Line>
+			<Line>#....p....#</Line>
+			<Line>#..p....p.#</Line>
+			<Line>###....pp.#</Line>
+			<Line>###p...pp##</Line>
+			<Line>##..p...pp#</Line>
+			<Line>#.........#</Line>
+			<Line>###....####</Line>
+		</Rows>
+		<Rows>
+			<Line>#..#....#.#</Line>
+			<Line>#...#...p.#</Line>
+			<Line>#..p#.....#</Line>
+			<Line>#......p..#</Line>
+			<Line>#.p...ppp.#</Line>
+			<Line>#.pp...#p.#</Line>
+			<Line>#.........#</Line>
+			<Line>#......p.##</Line>
+			<Line>#.ppp.....#</Line>
+			<Line>#..p.#....#</Line>
+			<Line>###..##..##</Line>
+		</Rows>
+	</Grid>
+	<AllowedVictories>
+		<Condition meta:RefKey="Plate" />
+	</AllowedVictories>
+	<AllowedDefeats>
+		<Condition meta:RefKey="Time">
+			<Seconds>30</Seconds>
+		</Condition>
+		<Condition meta:RefKey="Turns">
+			<Turns>20</Turns>
+		</Condition>
+	</AllowedDefeats>
+	<DefeatActions>
+		<Action meta:RefKey="Health">-5</Action>
+	</DefeatActions>
+	<DefeatText>Halfway across the ground gives way beneath your feet, pitching you into the marsh.</DefeatText>
+	<VictoryText>Gingerly you make your way across the dangerous path, carefully testing each step to check it will hold you.</VictoryText>
+	<EntryText>The ground ahead appears unstable and marshy, you'll have to tread carefully to find the solid ground.</EntryText>
+	<Type>Trap</Type>
+	<MinDepth>2</MinDepth>
+	<Category>Bad</Category>
+	<UncompletedMapSprite meta:RefKey="Sprite">
+		<Name>Oryx/uf_split/uf_terrain/puddle_large_3</Name>
+		<Colour>255,255,255,147</Colour>
+	</UncompletedMapSprite>
+	<CompletedMapSprite meta:RefKey="Sprite">
+		<Name>Oryx/uf_split/uf_terrain/puddle_small_3</Name>
+		<Colour>255,255,255,113</Colour>
+	</CompletedMapSprite>
+</Level>

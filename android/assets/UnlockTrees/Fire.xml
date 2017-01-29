@@ -21,7 +21,7 @@
 					<Cost>Gold,50</Cost>
 				</BuyCost>
 				<EffectData>
-					<Cost>3</Cost>
+					<Cost>5</Cost>
 					<Effect>1,Orb,Single,Pop</Effect>
 					<FlightEffect meta:RefKey="ParticleEffect">
 						<Name>Fire</Name>
@@ -50,7 +50,7 @@
 				</BuyCost>
 				<Upgrades>Firebolt</Upgrades>
 				<EffectData>
-					<Cost>3</Cost>
+					<Cost>5</Cost>
 					<Effect>2,Orb,Single,Pop</Effect>
 					<FlightEffect meta:RefKey="ParticleEffect">
 						<Name>Fire</Name>
@@ -80,7 +80,7 @@
 				</BuyCost>
 				<Upgrades>Firebolt</Upgrades>
 				<EffectData>
-					<Cost>3</Cost>
+					<Cost>5</Cost>
 					<Effect>3,Orb,Single,Pop</Effect>
 					<FlightEffect meta:RefKey="ParticleEffect">
 						<Name>Fire</Name>
@@ -109,7 +109,7 @@
 				</BuyCost>
 				<Upgrades>Firebolt</Upgrades>
 				<EffectData>
-					<Cost>4</Cost>
+					<Cost>5</Cost>
 					<Effect>4,Orb,Single,Pop</Effect>
 					<FlightEffect meta:RefKey="ParticleEffect">
 						<Name>Fire</Name>
@@ -193,7 +193,7 @@
 					<Cost>Flameheart,1</Cost>
 				</BuyCost>
 				<EffectData>
-					<Cost>5</Cost>
+					<Cost>6</Cost>
 					<Effect>1,Orb,Diamond,Pop</Effect>
 					<FlightEffect meta:RefKey="ParticleEffect">
 						<Name>FireOrb</Name>
@@ -222,7 +222,7 @@
 				</BuyCost>
 				<Upgrades>Fireball</Upgrades>
 				<EffectData>
-					<Cost>5</Cost>
+					<Cost>6</Cost>
 					<Effect>1,Orb,Diamond,Pop</Effect>
 					<Data>
 						<AOE>2</AOE>
@@ -254,7 +254,7 @@
 				</BuyCost>
 				<Upgrades>Fireball</Upgrades>
 				<EffectData>
-					<Cost>5</Cost>
+					<Cost>6</Cost>
 					<Effect>1,Orb,Diamond,Pop</Effect>
 					<Data>
 						<AOE>3</AOE>

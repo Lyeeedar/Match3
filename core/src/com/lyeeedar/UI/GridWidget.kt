@@ -242,6 +242,13 @@ class GridWidget(val grid: Grid) : Widget()
 					tileHeight++
 				}
 
+				if (tile.hasPlate)
+				{
+					ground.queueSprite(grid.level.theme.plate, xi, yi, TILE, tileHeight, tileColour)
+
+					tileHeight++
+				}
+
 				if (chest != null)
 				{
 					ground.queueSprite(chest.sprite, xi, yi, TILE, tileHeight, tileColour)
@@ -272,8 +279,6 @@ class GridWidget(val grid: Grid) : Widget()
 							floating.queueParticle(effect, 0f, 0f, EFFECT, 0)
 						}
 					}
-
-
 				}
 
 				if (orb != null)

@@ -10,6 +10,7 @@ import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Board.Grid
+import com.lyeeedar.Board.LevelTheme
 import com.lyeeedar.Board.Monster
 import com.lyeeedar.Board.MonsterDesc
 import com.lyeeedar.Global
@@ -53,7 +54,7 @@ class CompletionConditionKill() : AbstractCompletionCondition()
 	{
 	}
 
-	override fun createTable(skin: Skin): Table
+	override fun createTable(skin: Skin, theme: LevelTheme): Table
 	{
 		rebuildWidget()
 

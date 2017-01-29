@@ -29,6 +29,7 @@ class LevelTheme
 	lateinit var chestFull: Sprite
 	lateinit var chestEmpty: Sprite
 	lateinit var coin: Sprite
+	lateinit var plate: Sprite
 	val blockSprites = Array<Sprite>()
 	val sealSprites = Array<Sprite>()
 	val shieldSprites = Array<Sprite>()
@@ -56,6 +57,7 @@ class LevelTheme
 			theme.chestFull = AssetManager.loadSprite(chestEl.getChildByName("Full"))
 			theme.chestEmpty = AssetManager.loadSprite(chestEl.getChildByName("Empty"))
 			theme.coin = AssetManager.loadSprite(xml.getChildByName("Coin"))
+			theme.plate = AssetManager.loadSprite(xml.getChildByName("Plate"))
 
 			val blockEls = xml.getChildByName("Block")
 			for (i in 0..blockEls.childCount-1)

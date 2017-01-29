@@ -16,6 +16,7 @@
 		</Data>
 	</Definition>
 	<Definition Name="None" Nullable="False" SkipIfDefault="False" meta:RefKey="StructDef" />
+	<Definition Name="Plate" Nullable="False" SkipIfDefault="False" meta:RefKey="StructDef" />
 	<Definition Name="Kill" Nullable="False" SkipIfDefault="False" meta:RefKey="StructDef" />
 	<Definition Name="Matches" MinCount="1" SkipIfDefault="False" meta:RefKey="CollectionDef">
 		<Data Name="Orbs" Type="Int" Min="1" Default="10" SkipIfDefault="False" meta:RefKey="Number" />
@@ -39,10 +40,10 @@
 		<Data Name="Faction" meta:RefKey="String" />
 		<Data Name="OrbCount" Type="Int" Min="4" Default="6" meta:RefKey="Number" />
 		<Data Name="AllowedVictories" MinCount="1" meta:RefKey="Collection">
-			<Data Name="Condition" Keys="None,Kill,Matches,Sink,Time,Turns" Nullable="False" SkipIfDefault="False" meta:RefKey="Reference" />
+			<Data Name="Condition" Keys="None,Kill,Matches,Sink,Plate,Time,Turns" Nullable="False" SkipIfDefault="False" meta:RefKey="Reference" />
 		</Data>
 		<Data Name="AllowedDefeats" MinCount="1" meta:RefKey="Collection">
-			<Data Name="Condition" Keys="None,Kill,Matches,Sink,Time,Turns" Nullable="False" SkipIfDefault="False" meta:RefKey="Reference" />
+			<Data Name="Condition" Keys="None,Kill,Matches,Sink,Plate,Time,Turns" Nullable="False" SkipIfDefault="False" meta:RefKey="Reference" />
 		</Data>
 		<Data Name="VictoryActions" meta:RefKey="Collection">
 			<Data Name="Action" Keys="Money,Health,Items" meta:RefKey="Reference" />

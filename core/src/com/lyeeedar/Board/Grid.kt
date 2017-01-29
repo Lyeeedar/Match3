@@ -1346,6 +1346,14 @@ class Grid(val width: Int, val height: Int, val level: Level)
 	{
 		val tile = tile(x, y) ?: return
 
+		if (tile.hasPlate)
+		{
+			tile.plateStrength--
+			val hit = hitSprite.copy()
+			hit.renderDelay = delay
+			tile.effects.add(hit)
+		}
+
 		if (tile.block != null)
 		{
 			tile.block!!.count--

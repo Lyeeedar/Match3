@@ -91,8 +91,8 @@ class GridScreen(): AbstractScreen()
 
 		val powerBar = PowerBar()
 
-		val defeatWidget = level.defeat.createTable(Global.skin)
-		val victoryWidget = level.victory.createTable(Global.skin)
+		val defeatWidget = level.defeat.createTable(Global.skin, level.theme)
+		val victoryWidget = level.victory.createTable(Global.skin, level.theme)
 
 		defeatWidget.background = NinePatchDrawable(NinePatch(AssetManager.loadTextureRegion("Sprites/GUI/background.png"), 24, 24, 24, 24))
 		victoryWidget.background = NinePatchDrawable(NinePatch(AssetManager.loadTextureRegion("Sprites/GUI/background.png"), 24, 24, 24, 24))

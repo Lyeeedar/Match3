@@ -38,6 +38,9 @@
 		<Name>Oryx/uf_split/uf_items/coin_gold</Name>
 		<DrawActualSize>true</DrawActualSize>
 	</Coin>
+	<Plate meta:RefKey="Sprite">
+		<Name>white</Name>
+	</Plate>
 	<Block>
 		<Sprite meta:RefKey="Sprite">
 			<Name>Oryx/uf_split/uf_terrain/crate</Name>

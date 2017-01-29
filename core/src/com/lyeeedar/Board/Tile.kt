@@ -62,6 +62,10 @@ class Tile(x: Int, y: Int) : Point(x, y)
 			field = value
 		}
 
+	var plateStrength: Int = 0
+	val hasPlate: Boolean
+		get () = plateStrength > 0
+
 	var connectedTo: Tile? = null
 	var canHaveOrb: Boolean = true
 	var isPit: Boolean = false

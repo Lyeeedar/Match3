@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable
 import com.badlogic.gdx.utils.Align
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Board.Grid
+import com.lyeeedar.Board.LevelTheme
 import com.lyeeedar.Util.AssetManager
 
 /**
@@ -22,7 +23,7 @@ class CompletionConditionTurns(): AbstractCompletionCondition()
 
 	override fun getTextDescription(): String = "Run out of turns"
 
-	override fun createTable(skin: Skin): Table
+	override fun createTable(skin: Skin, theme: LevelTheme): Table
 	{
 		label = Label("$turnCount\nTurns", skin)
 		label.setAlignment(Align.center)

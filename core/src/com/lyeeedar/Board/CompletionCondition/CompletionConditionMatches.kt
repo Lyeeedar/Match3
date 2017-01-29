@@ -11,6 +11,7 @@ import com.badlogic.gdx.utils.IntIntMap
 import com.badlogic.gdx.utils.IntMap
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Board.Grid
+import com.lyeeedar.Board.LevelTheme
 import com.lyeeedar.Board.Orb
 import com.lyeeedar.Global
 import com.lyeeedar.Renderables.Sprite.Sprite
@@ -34,7 +35,7 @@ class CompletionConditionMatches(): AbstractCompletionCondition()
 
 	override fun getTextDescription(): String = "Match the orbs"
 
-	override fun createTable(skin: Skin): Table
+	override fun createTable(skin: Skin, theme: LevelTheme): Table
 	{
 		rebuildWidget()
 

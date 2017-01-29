@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Board.Grid
+import com.lyeeedar.Board.LevelTheme
 import com.lyeeedar.Board.Mote
 import com.lyeeedar.Global
 import com.lyeeedar.UI.GridWidget
@@ -43,11 +44,11 @@ class CompletionConditionSink() : AbstractCompletionCondition()
 		count = xml.getInt("Count")
 	}
 
-	override fun createTable(skin: Skin): Table
+	override fun createTable(skin: Skin, theme: LevelTheme): Table
 	{
 		val table = Table()
 
-		val sprite = AssetManager.loadSprite("Oryx/uf_split/uf_items/coin_gold")
+		val sprite = theme.coin.copy()
 		label = Label("$count", Global.skin)
 
 		table.add(SpriteWidget(sprite, 24f, 24f))

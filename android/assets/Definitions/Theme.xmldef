@@ -8,6 +8,7 @@
 			<Data Name="Empty" Keys="Sprite" Nullable="False" meta:RefKey="Reference" />
 		</Data>
 		<Data Name="Coin" Keys="Sprite" Nullable="False" meta:RefKey="Reference" />
+		<Data Name="Plate" Keys="Sprite" Nullable="False" meta:RefKey="Reference" />
 		<Data Name="Block" MinCount="1" meta:RefKey="Collection">
 			<Data Name="Sprite" Keys="Sprite" Nullable="False" meta:RefKey="Reference" />
 		</Data>
