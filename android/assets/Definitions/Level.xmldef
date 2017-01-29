@@ -50,6 +50,9 @@
 		<Data Name="DefeatActions" meta:RefKey="Collection">
 			<Data Name="Action" Keys="Money,Health,Items" meta:RefKey="Reference" />
 		</Data>
+		<Data Name="DefeatText" meta:RefKey="String" />
+		<Data Name="VictoryText" meta:RefKey="String" />
+		<Data Name="EntryText" meta:RefKey="String" />
 		<Data Name="Type" meta:RefKey="String" />
 		<Data Name="MinDepth" Type="Int" Min="0" meta:RefKey="Number" />
 		<Data Name="MaxDepth" Type="Int" Min="0" Default="9999999" meta:RefKey="Number" />

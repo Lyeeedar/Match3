@@ -32,6 +32,9 @@
 			<Item>Adamantine,1,1</Item>
 		</Action>
 	</VictoryActions>
+	<DefeatText>Sadly none of the contents have survived to this day, and you leave empty handed.</DefeatText>
+	<VictoryText>Many of the chests remain full of treasures, and you eagerly take them.</VictoryText>
+	<EntryText>The room beyond is filled with treasure chests, mostly untouched.</EntryText>
 	<Type>Treasure</Type>
 	<Category>Good</Category>
 	<UncompletedMapSprite meta:RefKey="Sprite">

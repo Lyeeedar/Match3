@@ -83,6 +83,9 @@
 	<DefeatActions>
 		<Action meta:RefKey="Health">-5</Action>
 	</DefeatActions>
+	<DefeatText>A clang echoes around the room as spears burst from the ground, piercing your foot.</DefeatText>
+	<VictoryText>The ticking stops, the trap defused.</VictoryText>
+	<EntryText>Barely audible over the sound of water is the ticking of gears as some hidden trap activates.</EntryText>
 	<Type>Trap</Type>
 	<MinDepth>6</MinDepth>
 	<Category>Bad</Category>

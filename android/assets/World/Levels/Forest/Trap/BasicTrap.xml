@@ -104,6 +104,9 @@
 	<DefeatActions>
 		<Action meta:RefKey="Health">-5</Action>
 	</DefeatActions>
+	<DefeatText>A vine whips across your arm, thorns cutting deep into your flesh.</DefeatText>
+	<VictoryText>You duck and weave through the lashing vegetation, finally escaping out into the forest beyond.</VictoryText>
+	<EntryText>Suddenly the forest around you writhes into horrifying life. Vines and branches whip through the air as the ground shifts.</EntryText>
 	<Type>Trap</Type>
 	<Category>Bad</Category>
 	<UncompletedMapSprite meta:RefKey="Sprite">

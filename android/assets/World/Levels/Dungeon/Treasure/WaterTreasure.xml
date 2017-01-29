@@ -84,6 +84,9 @@
 			<Item>Adamantine,1,1</Item>
 		</Action>
 	</VictoryActions>
+	<DefeatText>As you are leaving the room you trip and fall into the water, the treasures you found disappearing into the depths.</DefeatText>
+	<VictoryText>Breaking open one create you find some undamaged treasures, nestled in protective rags.</VictoryText>
+	<EntryText>Water has destroyed most of this storage room, but some items may still remain.</EntryText>
 	<Type>Treasure</Type>
 	<MinDepth>6</MinDepth>
 	<Category>Good</Category>

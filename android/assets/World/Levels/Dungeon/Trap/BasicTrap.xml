@@ -132,6 +132,9 @@
 	<DefeatActions>
 		<Action meta:RefKey="Health">-5</Action>
 	</DefeatActions>
+	<DefeatText>With a clang the trap activates, flinging tiny darts into your side.</DefeatText>
+	<VictoryText>The trap rumbles to a halt, defused.</VictoryText>
+	<EntryText>Ticking and rumbling of an ancient trap surround you as you step in a hidden pressure plate. Defuse the trap before it activates!</EntryText>
 	<Type>Trap</Type>
 	<Category>Bad</Category>
 	<UncompletedMapSprite meta:RefKey="Sprite">

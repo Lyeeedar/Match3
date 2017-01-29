@@ -115,6 +115,9 @@
 	<DefeatActions>
 		<Action meta:RefKey="Health">-5</Action>
 	</DefeatActions>
+	<DefeatText>With a clash the boxes land atop you, partially crushing your leg.</DefeatText>
+	<VictoryText>You manage to dodge and batter the crates away, emerging unscathed.</VictoryText>
+	<EntryText>As you enter the storage room some of the boxes shift, slowly collapsing towards you.</EntryText>
 	<Type>Trap</Type>
 	<MinDepth>2</MinDepth>
 	<Category>Bad</Category>

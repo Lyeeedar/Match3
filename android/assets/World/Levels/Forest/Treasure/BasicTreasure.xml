@@ -70,6 +70,9 @@
 			<Item>Adamantine,1,1</Item>
 		</Action>
 	</VictoryActions>
+	<DefeatText>As you go to take the treasure the ground shifts once again, swallowing the loot. Only by quickly jumping back did you avoid the same fate.</DefeatText>
+	<VictoryText>You cautiously grab the treasure, keeping a careful eye out for any danger. Nothing materialises though.</VictoryText>
+	<EntryText>You enter another clearing in the trees, spotting the glint of some discarded treasures in the grass.</EntryText>
 	<Type>Treasure</Type>
 	<Category>Good</Category>
 	<UncompletedMapSprite meta:RefKey="Sprite">

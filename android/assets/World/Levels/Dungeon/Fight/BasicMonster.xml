@@ -86,6 +86,9 @@
 	<AllowedDefeats>
 		<Condition meta:RefKey="None" />
 	</AllowedDefeats>
+	<DefeatText>You collapse to the ground, slain by the monsters.</DefeatText>
+	<VictoryText>You stand victorious over the corpses of the slain beasts.</VictoryText>
+	<EntryText>The room is filled with dangerous creatures, blocking your progress.</EntryText>
 	<Type>Encounter</Type>
 	<Category>Bad</Category>
 	<UncompletedMapSprite meta:RefKey="Sprite">

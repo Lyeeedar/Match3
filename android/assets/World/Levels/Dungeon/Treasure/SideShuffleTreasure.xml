@@ -81,6 +81,9 @@
 			<Item>Steel,1,3</Item>
 		</Action>
 	</VictoryActions>
+	<DefeatText>As you climb a rotten crate breaks and sends you tumbling down as the entire structure collapses, destroying any hope of getting the treasures.</DefeatText>
+	<VictoryText>Delicately you manage to climb up and grab the treasures without collapsing the entire structure.</VictoryText>
+	<EntryText>As you enter the room you stop some treasure on top of a towering pile of crates.</EntryText>
 	<Type>Treasure</Type>
 	<MinDepth>4</MinDepth>
 	<Category>Good</Category>

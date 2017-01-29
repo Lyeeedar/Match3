@@ -26,6 +26,9 @@
 	<VictoryActions>
 		<Action meta:RefKey="Money">200</Action>
 	</VictoryActions>
+	<DefeatText>Blast after blast of searing flames eventually bring you to your knees, your skin blistering and cracking from the heat.</DefeatText>
+	<VictoryText>Finally the elementals flames go out, leaving the room dark. All that remains is the faintly glowing heart of its power.</VictoryText>
+	<EntryText>A blazing heat radiates from the room beyond.</EntryText>
 	<Type>Boss</Type>
 	<Category>Bad</Category>
 	<UncompletedMapSprite meta:RefKey="Sprite">
