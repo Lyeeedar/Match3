@@ -189,7 +189,6 @@ class ParticleEditorScreen : AbstractScreen()
 		val p2 = Vector2(screenX / tileSize, (stage.height - screenY) / tileSize)
 
 		particle.position.set(p2)
-		particle.size = 2f
 
 		val dist = p1.dst(p2)
 

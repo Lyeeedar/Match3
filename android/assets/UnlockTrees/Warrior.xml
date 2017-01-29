@@ -1,6 +1,6 @@
 <AbilityTree meta:X="90" meta:Y="31" GUID="687122b5-b0ff-4af8-8709-442fb7ea9a82" xmlns:meta="Editor">
 	<Icon meta:RefKey="Sprite">
-		<Name>white</Name>
+		<Name>Icons/WarriorTree</Name>
 	</Icon>
 	<Resources />
 	<Tree>
@@ -14,7 +14,7 @@
 				<Name>Block</Name>
 				<Description>Block a single attack with a quick strike.</Description>
 				<Icon meta:RefKey="Sprite">
-					<Name>white</Name>
+					<Name>Icons/Block1</Name>
 				</Icon>
 				<UnboughtDescription>I'm sure even one such as you can learn you fight, if given the right tutelage.</UnboughtDescription>
 				<BuyCost>
@@ -35,7 +35,7 @@
 				<Name>Double Block</Name>
 				<Description>Block two attacks with careful precision.</Description>
 				<Icon meta:RefKey="Sprite">
-					<Name>white</Name>
+					<Name>Icons/Block2</Name>
 				</Icon>
 				<UnboughtDescription>Not bad, but you still have much to learn.</UnboughtDescription>
 				<BuyCost>
@@ -58,7 +58,7 @@
 				<Name>TripleBlock</Name>
 				<Description>Block three attacks with lightning swiftness.</Description>
 				<Icon meta:RefKey="Sprite">
-					<Name>white</Name>
+					<Name>Icons/Block3</Name>
 				</Icon>
 				<UnboughtDescription>Very good, you have learnt much. Now lets see if you can push yourself further.</UnboughtDescription>
 				<BuyCost>
@@ -105,6 +105,10 @@
 				<EffectData>
 					<Cost>3</Cost>
 					<Effect>1,Monster,Single,Pop</Effect>
+					<HitEffect meta:RefKey="ParticleEffect">
+						<Name>slash</Name>
+						<Colour>214,214,214,255</Colour>
+					</HitEffect>
 				</EffectData>
 			</AbilityData>
 			<Children>
@@ -128,6 +132,10 @@
 				<EffectData>
 					<Cost>3</Cost>
 					<Effect>2,Monster,Single,Pop</Effect>
+					<HitEffect meta:RefKey="ParticleEffect">
+						<Name>slash</Name>
+						<Colour>214,214,214,255</Colour>
+					</HitEffect>
 				</EffectData>
 			</AbilityData>
 			<Children>
@@ -153,6 +161,10 @@
 					<Data>
 						<Damage>2</Damage>
 					</Data>
+					<HitEffect meta:RefKey="ParticleEffect">
+						<Name>slash</Name>
+						<Colour>114,163,115,255</Colour>
+					</HitEffect>
 				</EffectData>
 			</AbilityData>
 			<Children />

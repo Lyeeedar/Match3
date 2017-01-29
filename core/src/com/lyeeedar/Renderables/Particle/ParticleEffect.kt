@@ -167,6 +167,8 @@ class ParticleEffect : Renderable()
 		shape.rect(worldx - 5f, worldy - 5f,10f, 10f)
 
 		val temp = Pools.obtain(Vector2::class.java)
+		val temp2 = Pools.obtain(Vector2::class.java)
+		val temp3 = Pools.obtain(Vector2::class.java)
 
 		// draw emitter volumes
 		shape.color = Color.GOLDENROD
@@ -198,12 +200,36 @@ class ParticleEffect : Renderable()
 			}
 			else if (emitter.shape == Emitter.EmissionShape.CONE)
 			{
-				val start = w + emitter.emitterRotation + emitter.rotation
-				shape.arc(ex, ey, emitter.height * tileSize, start, emitter.width)
+				val angleMin = -emitter.width*0.5f
+				val angleMax = emitter.width*.5f
+
+				val core = temp
+				val min = temp2
+				val max = temp3
+
+				core.set(ex, ey)
+
+				min.set(0f, h)
+				min.rotate(angleMin)
+				min.rotate(emitter.emitterRotation)
+				min.rotate(emitter.rotation)
+				min.add(core)
+
+				max.set(0f, h)
+				max.rotate(angleMax)
+				max.rotate(emitter.emitterRotation)
+				max.rotate(emitter.rotation)
+				max.add(core)
+
+				shape.line(core, min)
+				shape.line(core, max)
+				shape.line(min, max)
 			}
 		}
 
 		Pools.free(temp)
+		Pools.free(temp2)
+		Pools.free(temp3)
 	}
 
 	override fun copy(): ParticleEffect

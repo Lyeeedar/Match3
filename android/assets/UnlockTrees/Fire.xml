@@ -8,7 +8,7 @@
 		<Ability meta:RefKey="Ability">Fireball</Ability>
 	</Tree>
 	<Abilities>
-		<Ability meta:X="504.32235717773438" meta:Y="-264.42855834960938">
+		<Ability meta:X="504.32235717773437" meta:Y="-264.42855834960937">
 			<Key>Firebolt</Key>
 			<AbilityData>
 				<Name>Firebolt</Name>
@@ -36,7 +36,7 @@
 				<Ability meta:RefKey="Ability">DualFirebolt</Ability>
 			</Children>
 		</Ability>
-		<Ability meta:X="818.02569580078125" meta:Y="-268.42855834960938">
+		<Ability meta:X="818.02569580078125" meta:Y="-268.42855834960937">
 			<Key>DualFirebolt</Key>
 			<AbilityData>
 				<Name>Dual Firebolt</Name>
@@ -66,7 +66,7 @@
 				<Ability meta:RefKey="Ability">FireFlurry</Ability>
 			</Children>
 		</Ability>
-		<Ability meta:X="1117.819091796875" meta:Y="-398.42855834960938">
+		<Ability meta:X="1117.819091796875" meta:Y="-398.42855834960937">
 			<Key>TriFirebolt</Key>
 			<AbilityData>
 				<Name>Tri Firebolt</Name>
@@ -95,7 +95,7 @@
 				<Ability meta:RefKey="Ability">QuadFirebolt</Ability>
 			</Children>
 		</Ability>
-		<Ability meta:X="1431.799072265625" meta:Y="-398.42855834960938">
+		<Ability meta:X="1431.799072265625" meta:Y="-398.42855834960937">
 			<Key>QuadFirebolt</Key>
 			<AbilityData>
 				<Name>Quad Firebolt</Name>
@@ -195,12 +195,11 @@
 				<EffectData>
 					<Cost>5</Cost>
 					<Effect>1,Orb,Diamond,Pop</Effect>
-					<Data />
 					<FlightEffect meta:RefKey="ParticleEffect">
-						<Name>Fire</Name>
+						<Name>FireOrb</Name>
 					</FlightEffect>
 					<HitEffect meta:RefKey="ParticleEffect">
-						<Name>Fireburst</Name>
+						<Name>Explosion</Name>
 					</HitEffect>
 				</EffectData>
 			</AbilityData>
@@ -229,10 +228,10 @@
 						<AOE>2</AOE>
 					</Data>
 					<FlightEffect meta:RefKey="ParticleEffect">
-						<Name>Fire</Name>
+						<Name>FireOrb</Name>
 					</FlightEffect>
 					<HitEffect meta:RefKey="ParticleEffect">
-						<Name>Fireburst</Name>
+						<Name>Explosion</Name>
 					</HitEffect>
 				</EffectData>
 			</AbilityData>
@@ -261,10 +260,10 @@
 						<AOE>3</AOE>
 					</Data>
 					<FlightEffect meta:RefKey="ParticleEffect">
-						<Name>Fire</Name>
+						<Name>FireOrb</Name>
 					</FlightEffect>
 					<HitEffect meta:RefKey="ParticleEffect">
-						<Name>Fireburst</Name>
+						<Name>Explosion</Name>
 					</HitEffect>
 				</EffectData>
 			</AbilityData>
