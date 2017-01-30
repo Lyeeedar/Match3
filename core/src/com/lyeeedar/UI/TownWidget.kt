@@ -238,6 +238,8 @@ class TownWidget(val town: Town, val player: PlayerData) : Widget()
 			offsety -= offset[1] * tileSize
 		}
 
+		renderer.begin(Gdx.app.graphics.deltaTime, offsetx, offsety)
+
 		// draw grass
 
 		for (x in -tilesWidth..tilesWidth*2)
@@ -296,7 +298,7 @@ class TownWidget(val town: Town, val player: PlayerData) : Widget()
 			}
 		}
 
-		renderer.flush(Gdx.app.graphics.deltaTime, offsetx, offsety, batch as SpriteBatch)
+		renderer.flush(batch as SpriteBatch)
 		playerSprite.render(batch, x + width / 2 - tileSize * 0.5f, y + height / 2 - tileSize * 0.2f, tileSize, tileSize)
 	}
 }

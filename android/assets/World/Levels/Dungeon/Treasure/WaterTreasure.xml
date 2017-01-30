@@ -88,7 +88,7 @@
 	<VictoryText>Breaking open one create you find some undamaged treasures, nestled in protective rags.</VictoryText>
 	<EntryText>Water has destroyed most of this storage room, but some items may still remain.</EntryText>
 	<Type>Treasure</Type>
-	<MinDepth>6</MinDepth>
+	<MinDepth>5</MinDepth>
 	<Category>Good</Category>
 	<UncompletedMapSprite meta:RefKey="Sprite">
 		<Name>Oryx/Custom/dungeonmap/treasure</Name>

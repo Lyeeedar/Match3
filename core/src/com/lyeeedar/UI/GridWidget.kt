@@ -138,6 +138,9 @@ class GridWidget(val grid: Grid) : Widget()
 		val xp = this.x + (this.width / 2f) - ((grid.width * tileSize) / 2f)
 		val yp = this.y
 
+		ground.begin(Gdx.app.graphics.deltaTime, xp, yp)
+		floating.begin(Gdx.app.graphics.deltaTime, xp, yp)
+
 		if (grid.activeAbility == null)
 		{
 			batch!!.color = Color.WHITE
@@ -376,8 +379,8 @@ class GridWidget(val grid: Grid) : Widget()
 			}
 		}
 
-		ground.flush(Gdx.app.graphics.deltaTime, xp, yp, batch!!)
-		floating.flush(Gdx.app.graphics.deltaTime, xp, yp, batch)
+		ground.flush(batch!!)
+		floating.flush(batch)
 	}
 
 	companion object

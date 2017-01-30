@@ -111,7 +111,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 					{
 						orb.attackTimer--
 					}
-					else if (orb.isChanger)
+					if (orb.isChanger)
 					{
 						orb.desc = orb.nextDesc!!
 						orb.nextDesc = Orb.getRandomOrb(level, orb.desc)

@@ -24,8 +24,8 @@ class ObjectiveEncounter : AbstractObjective()
 
 	override fun update(map: DungeonMap)
 	{
-		val rooms = map.map.filter { it.value.level?.loadPath == levels[0].loadPath }
-		val uncompletedCount = rooms.filter { !it.value.isCompleted }.count()
+		val rooms = map.map.map { it.value }.filter { it.level?.loadPath == levels[0].loadPath }
+		val uncompletedCount = rooms.filter { !it.isCompleted }.count()
 
 		if (uncompletedCount == 0)
 		{

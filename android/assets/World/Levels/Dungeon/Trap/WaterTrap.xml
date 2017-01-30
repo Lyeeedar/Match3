@@ -87,7 +87,7 @@
 	<VictoryText>The ticking stops, the trap defused.</VictoryText>
 	<EntryText>Barely audible over the sound of water is the ticking of gears as some hidden trap activates.</EntryText>
 	<Type>Trap</Type>
-	<MinDepth>6</MinDepth>
+	<MinDepth>5</MinDepth>
 	<Category>Bad</Category>
 	<UncompletedMapSprite meta:RefKey="Sprite">
 		<Name>Oryx/Custom/dungeonmap/spiketrap</Name>

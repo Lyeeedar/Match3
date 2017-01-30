@@ -145,6 +145,8 @@ class ParticleEditorScreen : AbstractScreen()
 	{
 		particle.collisionGrid = collision
 
+		spriteRender.begin(delta, 0f, 0f)
+
 		for (x in 0..background.xSize-1)
 		{
 			for (y in 0..background.ySize-1)
@@ -171,7 +173,7 @@ class ParticleEditorScreen : AbstractScreen()
 
 		batch.color = Color.WHITE
 		batch.begin()
-		spriteRender.flush(delta, 0f, 0f, batch)
+		spriteRender.flush(batch)
 		batch.end()
 
 		shape.projectionMatrix = stage.camera.combined

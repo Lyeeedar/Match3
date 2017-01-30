@@ -253,6 +253,8 @@ class DungeonMapWidget(val map: DungeonMap, val player: Player, val dungeon: Wor
 			offsety -= offset[1] * tileSize
 		}
 
+		renderer.begin(Gdx.app.graphics.deltaTime, offsetx, offsety)
+
 		renderer.queueSprite(playerSprite, map.playerPos.x.toFloat(), map.playerPos.y.toFloat() + 0.2f, PLAYER, 0, update = false)
 
 		for (entry in map.map.values())
@@ -323,7 +325,7 @@ class DungeonMapWidget(val map: DungeonMap, val player: Player, val dungeon: Wor
 			}
 		}
 
-		renderer.flush(Gdx.app.graphics.deltaTime, offsetx, offsety, batch as SpriteBatch)
+		renderer.flush(batch as SpriteBatch)
 	}
 
 	// ----------------------------------------------------------------------
