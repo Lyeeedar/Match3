@@ -437,13 +437,15 @@ abstract class Unlockable()
 	val buyCost = ObjectMap<String, Int>()
 	var upgrades: String? = null
 
-	val key: String
-		get() = upgrades ?: name
+	var key: String = ""
+		get() = upgrades ?: field
 
 	lateinit var icon: Sprite
 
 	fun load(xml: XmlReader.Element, resources: ObjectMap<String, XmlReader.Element>)
 	{
+		key = xml.get("Key")
+
 		val dataEl = xml.getChildByName("AbilityData")
 
 		name = dataEl.get("Name")

@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.ObjectSet
 import com.badlogic.gdx.utils.XmlReader
+import com.lyeeedar.Util.children
 import com.lyeeedar.Util.getChildrenRecursively
 import ktx.collections.get
 import ktx.collections.set
@@ -48,7 +49,7 @@ class UnlockableValidator
 	{
 		val xml = XmlReader().parse(Gdx.files.internal(path))
 
-		if (!xml.name.equals("UnlockTree")) return
+		if (xml.name != "AbilityTree") return
 
 		val resources = ObjectSet<String>()
 		val resourcesEl = xml.getChildByName("Resources")
@@ -64,40 +65,51 @@ class UnlockableValidator
 		}
 
 		val unlockables = ObjectMap<String, XmlReader.Element>()
-		val xmlUnlockableNames = ObjectSet<String>()
-		val unlockablesEl = xml.getChildByName("Unlockables")
+		val unlockablesEl = xml.getChildByName("Abilities")
 		for (i in 0..unlockablesEl.childCount-1)
 		{
 			val el = unlockablesEl.getChild(i)
 
-			val name = el.get("Name")
+			val name = el.get("Key")
 			if (unlockables.containsKey(name)) throw Exception("Duplicate unlockable name $name. Path: $path")
 
 			unlockables[name] = el
-
-			if (xmlUnlockableNames.contains(el.name)) throw Exception("Duplicate unlockable xml name ${el.name}. Path: $path")
-			xmlUnlockableNames.add(el.name)
 		}
 
 		for (unlockable in unlockables)
 		{
-			val upgrades = unlockable.value.get("Upgrades", null)
+			val dataEl = unlockable.value.getChildByName("AbilityData")
+
+			val upgrades = dataEl.get("Upgrades", null)
 			if (upgrades != null)
 			{
 				if (!unlockables.containsKey(upgrades)) throw Exception("Upgraded unlockable does not exist! ${unlockable.key} -> $upgrades. Path: $path")
 			}
 
-			val flightSprite = unlockable.value.get("FlightSprite", null)
+			val effectDataEl = dataEl.getChildByName("EffectData")
+
+			val flightSprite = effectDataEl.get("FlightSprite", null)
 			if (flightSprite != null && !resources.contains(flightSprite)) throw Exception("Resource does not exist! Resource: $flightSprite, Unlockable: ${unlockable.key}, Path: $path")
 
-			val hitSprite = unlockable.value.get("HitSprite", null)
+			val hitSprite = effectDataEl.get("HitSprite", null)
 			if (hitSprite != null && !resources.contains(hitSprite)) throw Exception("Resource does not exist! Resource: $hitSprite, Unlockable: ${unlockable.key}, Path: $path")
+
+			val childrenEl = unlockable.value.getChildByName("Children")
+			if (childrenEl != null)
+			{
+				for (child in childrenEl.children())
+				{
+					val childKey = child.text
+					if (!unlockables.containsKey(childKey)) throw Exception("Linked child does not exist! ${unlockable.key} -> $childKey. Path: $path")
+				}
+			}
 		}
 
 		val tree = xml.getChildByName("Tree")
-		for (el in tree.getChildrenRecursively())
+		for (child in tree.children())
 		{
-			if (!xmlUnlockableNames.contains(el.name)) throw Exception("Unlockable in tree does not exist! Unlockable: ${el.name}, Path: $path")
+			val childKey = child.text
+			if (!unlockables.containsKey(childKey)) throw Exception("Linked child does not exist! $childKey. Path: $path")
 		}
 
 	}
