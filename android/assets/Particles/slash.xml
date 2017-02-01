@@ -1,4 +1,4 @@
-<Effect>
+<Effect xmlns:meta="Editor">
 	<MoveSpeed>0</MoveSpeed>
 	<Emitters>
 		<Emitter>
@@ -52,6 +52,7 @@
 		</Emitter>
 		<Emitter>
 			<Name>Motes</Name>
+			<Enabled>false</Enabled>
 			<Type>Accumulated</Type>
 			<Width>0.1</Width>
 			<Height>0.1</Height>

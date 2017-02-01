@@ -141,6 +141,7 @@
 					<Effect>0,Orb,Random,Pop</Effect>
 					<Data>
 						<Count>3</Count>
+						<Damage>0</Damage>
 					</Data>
 					<FlightEffect meta:RefKey="ParticleEffect">
 						<Name>Fire</Name>
@@ -169,6 +170,7 @@
 					<Effect>0,Orb,Random,Pop</Effect>
 					<Data>
 						<Count>5</Count>
+						<Damage>0</Damage>
 					</Data>
 					<FlightEffect meta:RefKey="ParticleEffect">
 						<Name>Fire</Name>
@@ -179,7 +181,7 @@
 				</EffectData>
 			</AbilityData>
 		</Ability>
-		<Ability meta:X="487.177001953125" meta:Y="565.0494384765625">
+		<Ability meta:X="488.177001953125" meta:Y="566.0494384765625">
 			<Key>Fireball</Key>
 			<AbilityData>
 				<Name>Fireball</Name>
@@ -189,12 +191,16 @@
 				</Icon>
 				<UnboughtDescription>I've heard tales of a fabled creature of flame. With it's heart I'm sure I could develop a new spell of some form.</UnboughtDescription>
 				<BuyCost>
-					<Cost>Gold,1000</Cost>
+					<Cost>Gold,500</Cost>
 					<Cost>Flameheart,1</Cost>
 				</BuyCost>
 				<EffectData>
 					<Cost>6</Cost>
 					<Effect>1,Orb,Diamond,Pop</Effect>
+					<Data>
+						<AOE>1</AOE>
+						<Damage>0</Damage>
+					</Data>
 					<FlightEffect meta:RefKey="ParticleEffect">
 						<Name>FireOrb</Name>
 					</FlightEffect>
@@ -226,6 +232,7 @@
 					<Effect>1,Orb,Diamond,Pop</Effect>
 					<Data>
 						<AOE>2</AOE>
+						<Damage>0</Damage>
 					</Data>
 					<FlightEffect meta:RefKey="ParticleEffect">
 						<Name>FireOrb</Name>
@@ -258,6 +265,7 @@
 					<Effect>1,Orb,Diamond,Pop</Effect>
 					<Data>
 						<AOE>3</AOE>
+						<Damage>0</Damage>
 					</Data>
 					<FlightEffect meta:RefKey="ParticleEffect">
 						<Name>FireOrb</Name>

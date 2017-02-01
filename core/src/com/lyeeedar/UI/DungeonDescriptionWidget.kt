@@ -50,7 +50,7 @@ class DungeonDescriptionWidget(val dungeon: WorldDungeon, val playerData: Player
 		table.row()
 		table.add(Seperator(Global.skin)).expand().fillX().padTop(30f)
 		table.row()
-		table.add(Label("Explore", Global.skin, "title")).pad(30f)
+		table.add(Label("Objective", Global.skin, "title")).pad(30f)
 		table.row()
 
 		val objective = dungeon.getObjective()

@@ -1,5 +1,5 @@
 <Effect xmlns:meta="Editor">
-	<MoveSpeed>0.2</MoveSpeed>
+	<MoveSpeed>0.1</MoveSpeed>
 	<Emitters>
 		<Emitter>
 			<Name>Glow</Name>

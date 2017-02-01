@@ -31,10 +31,10 @@
 					<Data Name="Effect" EnumValues="Pop,Convert" meta:RefKey="Enum" />
 				</Data>
 				<Data Name="Data" meta:RefKey="Struct">
-					<Data Name="AOE" Type="Int" Min="1" Default="1" VisibleIf="Parent.Effect.Permuter==Block || Parent.Effect.Permuter==Diamond" meta:RefKey="Number" />
-					<Data Name="Count" Type="Int" Min="1" Default="1" VisibleIf="Parent.Effect.Permuter==Random || Parent.Effect.Permuter==NOfType" meta:RefKey="Number" />
-					<Data Name="Type" VisibleIf="Parent.Effect.Permuter==NofType || Parent.Effect.Permuter==AllOfType" meta:RefKey="String" />
-					<Data Name="Damage" Type="Int" Min="0" VisibleIf="Parent.Effect.Effect == Pop" meta:RefKey="Number" />
+					<Data Name="AOE" Type="Int" Min="1" Default="1" SkipIfDefault="False" VisibleIf="Parent.Effect.Permuter==Block || Parent.Effect.Permuter==Diamond" meta:RefKey="Number" />
+					<Data Name="Count" Type="Int" Min="1" Default="1" SkipIfDefault="False" VisibleIf="Parent.Effect.Permuter==Random || Parent.Effect.Permuter==NOfType" meta:RefKey="Number" />
+					<Data Name="Type" SkipIfDefault="False" VisibleIf="Parent.Effect.Permuter==NofType || Parent.Effect.Permuter==AllOfType" meta:RefKey="String" />
+					<Data Name="Damage" Type="Int" Min="0" SkipIfDefault="False" VisibleIf="Parent.Effect.Effect == Pop" meta:RefKey="Number" />
 				</Data>
 				<Data Name="FlightEffect" Keys="ParticleEffect" meta:RefKey="Reference" />
 				<Data Name="HitEffect" Keys="ParticleEffect" meta:RefKey="Reference" />
