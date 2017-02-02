@@ -33,8 +33,8 @@
 					<SizeKeyframes>
 						<Stream>
 							<Keyframe>0|0|0</Keyframe>
-							<Keyframe>0.3|0.7|0.9</Keyframe>
-							<Keyframe>1|0.9|1.3</Keyframe>
+							<Keyframe>0.3|0.4|0.6</Keyframe>
+							<Keyframe>1|0.8|1</Keyframe>
 						</Stream>
 					</SizeKeyframes>
 					<RotationSpeedKeyframes>

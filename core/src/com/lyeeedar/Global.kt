@@ -54,6 +54,9 @@ class Global
 			val titlefont = AssetManager.loadFont("Sprites/Unpacked/font.ttf", 20, Color(1f, 0.9f, 0.8f, 1f), 1, Color.BLACK, true)
 			skin.add("title", titlefont)
 
+			val popupfont = AssetManager.loadFont("Sprites/Unpacked/font.ttf", 15, Color(1f, 1f, 1f, 1f), 1, Color.DARK_GRAY, true)
+			skin.add("popup", popupfont)
+
 			val pixmap = Pixmap(1, 1, Pixmap.Format.RGBA8888)
 			pixmap.setColor(Color.WHITE)
 			pixmap.fill()
@@ -77,6 +80,10 @@ class Global
 			val titleLabel = Label.LabelStyle()
 			titleLabel.font = skin.getFont("title")
 			skin.add("title", titleLabel)
+
+			val popupLabel = Label.LabelStyle()
+			popupLabel.font = skin.getFont("popup")
+			skin.add("popup", popupLabel)
 
 			val checkButton = CheckBox.CheckBoxStyle()
 			checkButton.checkboxOff = TextureRegionDrawable(AssetManager.loadTextureRegion("Sprites/GUI/Unchecked.png"))

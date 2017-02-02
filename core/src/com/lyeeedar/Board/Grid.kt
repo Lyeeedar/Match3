@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.math.Interpolation
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Vector2
+import com.badlogic.gdx.scenes.scene2d.actions.Actions.*
+import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.IntIntMap
 import com.badlogic.gdx.utils.ObjectSet
@@ -20,8 +22,12 @@ import com.lyeeedar.Screens.GridScreen
 import com.lyeeedar.UI.FullscreenMessage
 import com.lyeeedar.UI.GridWidget
 import com.lyeeedar.UI.PowerBar
+import com.lyeeedar.UI.shake
 import com.lyeeedar.Util.*
 import com.sun.org.apache.xpath.internal.operations.Or
+import ktx.actors.parallelTo
+import ktx.actors.plus
+import ktx.actors.then
 import java.util.*
 
 /**
@@ -88,6 +94,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 	lateinit var updateFuns: kotlin.Array<() -> Boolean>
 	var inTurn = false
 	var gainedBonusPower = false
+	var matchCount = 0
 
 	// ----------------------------------------------------------------------
 	init
@@ -131,6 +138,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 			}
 
 			gainedBonusPower = false
+			matchCount = 0
 		}
 
 		onPop += fun (orb: Orb, delay: Float) {
@@ -776,7 +784,55 @@ class Grid(val width: Int, val height: Int, val level: Level)
 
 		lastSwapped = Point.MINUS_ONE
 
+		if (matches.size > 0)
+		{
+			matchCount++
+
+			val chosen = matches.random()
+			val point = chosen.points().asSequence().random()
+			displayMatchMessage(point!!)
+		}
+
 		return matches.size == 0
+	}
+
+	// ----------------------------------------------------------------------
+	fun displayMatchMessage(point: Point)
+	{
+		data class MessageData(val text: String, val colour: Colour, val size: Float)
+		val message = when(matchCount)
+		{
+			3 -> MessageData("Impressive", Colour(0.8f, 0.9f, 1f, 1f), 1f)
+			5 -> MessageData("Amazing", Colour(0.8f, 1f, 0.9f, 1f), 1.3f)
+			7 -> MessageData("Magical", Colour(0.2f, 0.82f, 1f, 1f), 1.6f)
+			9 -> MessageData("Legendary", Colour(1f, 0.81f, 0.5f, 1f), 1.9f)
+			11 -> MessageData("Mythical", Colour(0.8f, 0.5f, 0.95f, 1f), 2.2f)
+			13 -> MessageData("Divine", Colour(0.95f, 1f, 0.81f, 1f), 2.5f)
+			15 -> MessageData("Godlike", Colour(0.8f, 0.55f, 0.78f, 1f), 2.8f)
+			else -> null
+		}
+
+		if (message != null)
+		{
+			val pos = GridWidget.instance.pointToScreenspace(point)
+
+			val sequence = alpha(0f) then fadeIn(0.1f) then parallel(moveBy(MathUtils.random(-5f, 5f), MathUtils.random(0f, 5f), 1f), shake(matchCount.toFloat() / 20f, 0.03f, 1f)) then fadeOut(0.1f) then removeActor()
+
+			val label = Label(message.text, Global.skin, "popup")
+			label.color = message.colour.color()
+			label.setFontScale(message.size)
+			label.rotation = -20f
+			label.setPosition(pos.x, pos.y)
+			label + sequence
+
+			val width = label.prefWidth
+			if (pos.x + width > Global.stage.width)
+			{
+				label.setPosition(Global.stage.width - width - 20, pos.y)
+			}
+
+			Global.stage.addActor(label)
+		}
 	}
 
 	// ----------------------------------------------------------------------
@@ -909,6 +965,13 @@ class Grid(val width: Int, val height: Int, val level: Level)
 
 			tile.orb!!.armed = null
 			complete = false
+		}
+
+		if (!complete)
+		{
+			matchCount++
+			val point = tilesToDetonate.random()
+			displayMatchMessage(point!!)
 		}
 
 		return complete
