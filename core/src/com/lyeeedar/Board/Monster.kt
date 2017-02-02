@@ -159,6 +159,7 @@ class MonsterAbility
 		SEALEDATTACK,
 		SHIELD,
 		SEAL,
+		BLOCK,
 		MOVE,
 		HEAL
 	}
@@ -348,6 +349,11 @@ class MonsterAbility
 			if (effect == Effect.MOVE)
 			{
 
+			}
+			if (effect == Effect.BLOCK)
+			{
+				target.block = Block(grid.level.theme)
+				target.block!!.count = strength
 			}
 		}
 	}

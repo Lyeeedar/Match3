@@ -115,11 +115,19 @@ class Level(val loadPath: String)
 					tile.isPit = true
 					tile.spriteSetter = theme.pit.copy()
 				}
+				else if (char == 'p')
+				{
+					tile.canHaveOrb = true
+					tile.spriteSetter = theme.floor.copy()
+					tile.plateStrength = plateStrength
+				}
 				else if (char == 'P')
 				{
 					tile.canHaveOrb = true
 					tile.spriteSetter = theme.floor.copy()
 					tile.plateStrength = plateStrength
+					tile.block = Block(theme)
+					tile.block!!.count = blockStrength
 				}
 				else if (char == '-')
 				{

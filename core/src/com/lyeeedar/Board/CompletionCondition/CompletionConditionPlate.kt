@@ -13,11 +13,13 @@ import com.lyeeedar.Util.AssetManager
 
 class CompletionConditionPlate : AbstractCompletionCondition()
 {
-	var remaining = 0
+	var remaining = -1
 	lateinit var label: Label
 
 	override fun attachHandlers(grid: Grid)
 	{
+		remaining = grid.grid.count(Tile::hasPlate)
+
 		grid.onTurn += {
 			remaining = grid.grid.count(Tile::hasPlate)
 			label.setText("$remaining")

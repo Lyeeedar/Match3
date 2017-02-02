@@ -295,20 +295,34 @@ class GridWidget(val grid: Grid) : Widget()
 
 					if (orb is Orb && orb.isChanger)
 					{
-						val offset = orb.sprite.animation?.renderOffset()
-
-						var xii = xi
-						var yii = yi
-
-						if (offset != null)
+						if (orb.sprite.visible && (orb.sprite.showBeforeRender || orb.sprite.renderDelay <= 0))
 						{
-							xii += offset[0]
-							yii += offset[1]
+							val offset = orb.sprite.animation?.renderOffset()
+
+							var xii = xi
+							var yii = yi
+
+							if (offset != null)
+							{
+								xii += offset[0]
+								yii += offset[1]
+							}
+
+							tempCol.set(orbColour).mul(orb.nextDesc!!.sprite.colour)
+
+							var scaleX = orb.sprite.baseScale[0]
+							var scaleY = orb.sprite.baseScale[1]
+
+							val scale = orb.sprite.animation?.renderScale()
+
+							if (scale != null)
+							{
+								scaleX *= scale[0]
+								scaleY *= scale[1]
+							}
+
+							ground.queueSprite(changer, xii, yii, ORB, 2, tempCol, scaleX = scaleX, scaleY = scaleY)
 						}
-
-						tempCol.set(orbColour).mul(orb.nextDesc!!.sprite.colour)
-
-						ground.queueSprite(changer, xii, yii, ORB, 2, tempCol)
 					}
 
 					if (orb is Orb && orb.sprite.renderDelay <= 0)

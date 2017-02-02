@@ -85,13 +85,16 @@ class MonsterDesc
 			desc.hp = xml.getInt("HP", 10)
 
 			val rewardsEl = xml.getChildByName("Rewards")
-			for (i in 0..rewardsEl.childCount-1)
+			if (rewardsEl != null)
 			{
-				val el = rewardsEl.getChild(i)
-				val text = el.text
-				val split = text.split(",")
+				for (i in 0..rewardsEl.childCount - 1)
+				{
+					val el = rewardsEl.getChild(i)
+					val text = el.text
+					val split = text.split(",")
 
-				desc.rewards[split[0]] = Pair<Int, Int>(split[1].toInt(), split[2].toInt())
+					desc.rewards[split[0]] = Pair<Int, Int>(split[1].toInt(), split[2].toInt())
+				}
 			}
 
 			val abilitiesEl = xml.getChildByName("Abilities")

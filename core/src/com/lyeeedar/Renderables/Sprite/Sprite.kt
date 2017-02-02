@@ -188,10 +188,10 @@ class Sprite(val fileName: String, var animationDelay: Float, var textures: Arra
 		render(batch, x, y, size, size, scaleX, scaleY, animationState)
 	}
 
-	fun render(batch: Batch, x: Float, y: Float, width: Float, height: Float)
+	fun render(batch: Batch, x: Float, y: Float, width: Float, height: Float, scaleX: Float = 1f, scaleY: Float = 1f)
 	{
-		var scaleX = baseScale[0]
-		var scaleY = baseScale[1]
+		var scaleX = baseScale[0] * scaleX
+		var scaleY = baseScale[1] * scaleY
 
 		if (animation != null)
 		{

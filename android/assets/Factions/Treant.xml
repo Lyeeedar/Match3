@@ -1,0 +1,67 @@
+<Faction xmlns:meta="Editor">
+	<Monsters>
+		<Monster>
+			<Sprite meta:RefKey="Sprite">
+				<Name>Oryx/Custom/heroes/treant</Name>
+				<DrawActualSize>true</DrawActualSize>
+			</Sprite>
+			<Death meta:RefKey="Sprite">
+				<Name>EffectSprites/Hit/Hit</Name>
+				<UpdateRate>0.1</UpdateRate>
+				<Colour>176,152,73,255</Colour>
+			</Death>
+			<AttackDelay>5</AttackDelay>
+			<AttackSpeed>5</AttackSpeed>
+			<HP>15</HP>
+			<Abilities>
+				<Ability>
+					<Cooldown>5,8</Cooldown>
+					<Effect>Block</Effect>
+					<Data />
+				</Ability>
+				<Ability>
+					<Cooldown>5,15</Cooldown>
+					<Target>Random</Target>
+					<Count>2</Count>
+					<Effect>Block</Effect>
+					<Data />
+				</Ability>
+				<Ability>
+					<Cooldown>7,20</Cooldown>
+					<Effect>Move</Effect>
+				</Ability>
+			</Abilities>
+		</Monster>
+		<Monster>
+			<Sprite meta:RefKey="Sprite">
+				<Name>Oryx/Custom/heroes/treant</Name>
+				<DrawActualSize>true</DrawActualSize>
+			</Sprite>
+			<Death meta:RefKey="Sprite">
+				<Name>EffectSprites/Hit/Hit</Name>
+				<UpdateRate>0.1</UpdateRate>
+				<Colour>176,152,73,255</Colour>
+			</Death>
+			<AttackDelay>6</AttackDelay>
+			<AttackSpeed>4</AttackSpeed>
+			<Size>2</Size>
+			<HP>30</HP>
+			<Abilities>
+				<Ability>
+					<Cooldown>5,8</Cooldown>
+					<Effect>Block</Effect>
+				</Ability>
+				<Ability>
+					<Cooldown>5,15</Cooldown>
+					<Target>Random</Target>
+					<Count>2</Count>
+					<Effect>Block</Effect>
+				</Ability>
+				<Ability>
+					<Cooldown>7,20</Cooldown>
+					<Effect>Move</Effect>
+				</Ability>
+			</Abilities>
+		</Monster>
+	</Monsters>
+</Faction>

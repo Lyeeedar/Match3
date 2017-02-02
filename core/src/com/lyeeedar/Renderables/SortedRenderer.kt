@@ -116,7 +116,7 @@ class SortedRenderer(var tileSize: Float, val width: Float, val height: Float, v
 			if (batch is HDRColourSpriteBatch) batch.setColor(rs.colour)
 			else batch.setColor(rs.colour.toFloatBits())
 
-			rs.sprite?.render(batch, localx, localy, localw, localh )
+			rs.sprite?.render(batch, localx, localy, localw, localh, rs.scaleX, rs.scaleY )
 
 			if (rs.tilingSprite != null)
 			{
@@ -133,18 +133,18 @@ class SortedRenderer(var tileSize: Float, val width: Float, val height: Float, v
 				}
 
 				val sprite = rs.tilingSprite!!.getSprite(bitflag)
-				sprite.render(batch, localx, localy, localw, localh )
+				sprite.render(batch, localx, localy, localw, localh, rs.scaleX, rs.scaleY )
 			}
 
 			if (rs.texture != null)
 			{
 				if (batch is HDRColourSpriteBatch)
 				{
-					batch.draw(rs.texture, localx, localy, 0.5f, 0.5f, 1f, 1f, localw, localh, rs.rotation, rs.flipX, rs.flipY)
+					batch.draw(rs.texture, localx, localy, 0.5f, 0.5f, 1f, 1f, localw * rs.scaleX, localh * rs.scaleY, rs.rotation, rs.flipX, rs.flipY)
 				}
 				else
 				{
-					batch.draw(rs.texture, localx, localy, 0.5f, 0.5f, 1f, 1f, localw, localh, rs.rotation)
+					batch.draw(rs.texture, localx, localy, 0.5f, 0.5f, 1f, 1f, localw * rs.scaleX, localh * rs.scaleY, rs.rotation)
 				}
 			}
 		}
@@ -300,7 +300,7 @@ class SortedRenderer(var tileSize: Float, val width: Float, val height: Float, v
 
 					val comparisonVal = getComparisonVal((drawx-sizex*0.5f).toInt(), (drawy-sizey*0.5f).toInt(), layer, index, particle.blend)
 
-					val rs = RenderSprite.obtain().set( null, null, tex, drawx * tileSize, drawy * tileSize, tempVec.x, tempVec.y, col, sizex, sizey, rotation, effect.flipX, effect.flipY, particle.blend, comparisonVal )
+					val rs = RenderSprite.obtain().set( null, null, tex, drawx * tileSize, drawy * tileSize, tempVec.x, tempVec.y, col, sizex, sizey, rotation, 1f, 1f, effect.flipX, effect.flipY, particle.blend, comparisonVal )
 
 					heap.add( rs, rs.comparisonVal )
 				}
@@ -360,13 +360,13 @@ class SortedRenderer(var tileSize: Float, val width: Float, val height: Float, v
 
 		val comparisonVal = getComparisonVal(lx.toInt(), ly.toInt(), layer, index, BlendMode.MULTIPLICATIVE)
 
-		val rs = RenderSprite.obtain().set( null, tilingSprite, null, x, y, ix, iy, colour, width, height, 0f, false, false, BlendMode.MULTIPLICATIVE, comparisonVal )
+		val rs = RenderSprite.obtain().set( null, tilingSprite, null, x, y, ix, iy, colour, width, height, 0f, 1f, 1f, false, false, BlendMode.MULTIPLICATIVE, comparisonVal )
 
 		heap.add( rs, rs.comparisonVal )
 	}
 
 	// ----------------------------------------------------------------------
-	fun queueSprite(sprite: Sprite, ix: Float, iy: Float, layer: Int, index: Int, colour: Colour = Colour.WHITE, update: Boolean = true, width: Float = 1f, height: Float = 1f)
+	fun queueSprite(sprite: Sprite, ix: Float, iy: Float, layer: Int, index: Int, colour: Colour = Colour.WHITE, update: Boolean = true, width: Float = 1f, height: Float = 1f, scaleX: Float = 1f, scaleY: Float = 1f)
 	{
 		if (!inBegin) throw Exception("Queue called before begin!")
 
@@ -416,7 +416,7 @@ class SortedRenderer(var tileSize: Float, val width: Float, val height: Float, v
 
 		val comparisonVal = getComparisonVal(lx.toInt(), ly.toInt(), layer, index, BlendMode.MULTIPLICATIVE)
 
-		val rs = RenderSprite.obtain().set( sprite, null, null, x, y, ix, iy, colour, width, height, 0f, false, false, BlendMode.MULTIPLICATIVE, comparisonVal )
+		val rs = RenderSprite.obtain().set( sprite, null, null, x, y, ix, iy, colour, width, height, 0f, scaleX, scaleY, false, false, BlendMode.MULTIPLICATIVE, comparisonVal )
 
 		heap.add( rs, rs.comparisonVal )
 	}
@@ -524,6 +524,8 @@ class RenderSprite : BinaryHeap.Node(0f)
 	var width: Float = 1f
 	var height: Float = 1f
 	var rotation: Float = 0f
+	var scaleX: Float = 1f
+	var scaleY: Float = 1f
 	var flipX: Boolean = false
 	var flipY: Boolean = false
 	var blend: BlendMode = BlendMode.MULTIPLICATIVE
@@ -537,6 +539,7 @@ class RenderSprite : BinaryHeap.Node(0f)
 					 colour: Colour,
 					 width: Float, height: Float,
 					 rotation: Float,
+					 scaleX: Float, scaleY: Float,
 					 flipX: Boolean, flipY: Boolean,
 					 blend: BlendMode,
 					 comparisonVal: Float): RenderSprite
@@ -557,6 +560,8 @@ class RenderSprite : BinaryHeap.Node(0f)
 		this.comparisonVal = comparisonVal
 		this.blend = blend
 		this.rotation = rotation
+		this.scaleX = scaleX
+		this.scaleY = scaleY
 		this.flipX = flipX
 		this.flipY = flipY
 

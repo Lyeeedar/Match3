@@ -99,7 +99,7 @@
 			<Line>#....~....#</Line>
 		</Rows>
 	</Grid>
-	<Faction>ForestSpider</Faction>
+	<Faction>ForestSpider,Treant</Faction>
 	<AllowedVictories>
 		<Condition meta:RefKey="Kill" />
 	</AllowedVictories>
