@@ -78,6 +78,58 @@
 			<Line>#....#...##</Line>
 			<Line>#........##</Line>
 		</Rows>
+		<Rows>
+			<Line>#..##....##</Line>
+			<Line>#.........#</Line>
+			<Line>#.........#</Line>
+			<Line>#........~~</Line>
+			<Line>#........~~</Line>
+			<Line>#........~~</Line>
+			<Line>#........~~</Line>
+			<Line>#.#......##</Line>
+			<Line>#.........#</Line>
+			<Line>~~........#</Line>
+			<Line>~~........#</Line>
+		</Rows>
+		<Rows>
+			<Line>#..##....##</Line>
+			<Line>#......=..#</Line>
+			<Line>#=.......=#</Line>
+			<Line>#........~~</Line>
+			<Line>#...=.=..~~</Line>
+			<Line>#........~~</Line>
+			<Line>#=.......~~</Line>
+			<Line>#.#......##</Line>
+			<Line>#.......=.#</Line>
+			<Line>~~...=....#</Line>
+			<Line>~~=.......#</Line>
+		</Rows>
+		<Rows>
+			<Line>#.........#</Line>
+			<Line>#=........#</Line>
+			<Line>#==.....~=#</Line>
+			<Line>~~~.===.~~~</Line>
+			<Line>~..==.~...#</Line>
+			<Line>#.........#</Line>
+			<Line>#.......=.#</Line>
+			<Line>#.......==#</Line>
+			<Line>#..=~...~~#</Line>
+			<Line>#.==~.....#</Line>
+			<Line>#.....===.#</Line>
+		</Rows>
+		<Rows>
+			<Line>#.........#</Line>
+			<Line>#=........#</Line>
+			<Line>#==......=#</Line>
+			<Line>#...===...#</Line>
+			<Line>#..==.....#</Line>
+			<Line>#.........#</Line>
+			<Line>#.......=.#</Line>
+			<Line>#.......==#</Line>
+			<Line>#..==.....#</Line>
+			<Line>#.==......#</Line>
+			<Line>#.....===.#</Line>
+		</Rows>
 	</Grid>
 	<AllowedVictories>
 		<Condition meta:RefKey="Matches">

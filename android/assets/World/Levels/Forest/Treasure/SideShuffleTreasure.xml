@@ -1,0 +1,59 @@
+<Level xmlns:meta="Editor">
+	<Grid>
+		<Rows>
+			<Line>#....$....#</Line>
+			<Line>#.........#</Line>
+			<Line>#.#.......#</Line>
+			<Line>#.........#</Line>
+			<Line>#.........#</Line>
+			<Line>#....#....#</Line>
+			<Line>#.........#</Line>
+			<Line>#........##</Line>
+			<Line>##........#</Line>
+		</Rows>
+		<Rows>
+			<Line>#..#...$..#</Line>
+			<Line>#.###.....#</Line>
+			<Line>#..$......#</Line>
+			<Line>#........##</Line>
+			<Line>#.........#</Line>
+			<Line>#......#..#</Line>
+			<Line>#.........#</Line>
+			<Line>#.........#</Line>
+			<Line>##.#......#</Line>
+			<Line>#.........#</Line>
+			<Line>#.........#</Line>
+		</Rows>
+	</Grid>
+	<OrbCount>5</OrbCount>
+	<AllowedVictories>
+		<Condition meta:RefKey="Sink">
+			<Count>2</Count>
+		</Condition>
+	</AllowedVictories>
+	<AllowedDefeats>
+		<Condition meta:RefKey="Turns">
+			<Turns>40</Turns>
+		</Condition>
+	</AllowedDefeats>
+	<VictoryActions>
+		<Action meta:RefKey="Money">25</Action>
+		<Action NumToDrop="rnd(1)" meta:RefKey="Items">
+			<Item>Iron,1,5</Item>
+			<Item>Steel,1,3</Item>
+			<Item>Adamantine,1,1</Item>
+		</Action>
+	</VictoryActions>
+	<DefeatText>As you are climbing down you slip and drop the treasures. They tumble away into the undergrowth, disappearing from view.</DefeatText>
+	<VictoryText>Carefully you climb up and grab the treasures.</VictoryText>
+	<EntryText>As you walk along suddenly a glint catches your eye. High up in the branches of a tree lie some treasures.</EntryText>
+	<Type>Treasure</Type>
+	<MinDepth>3</MinDepth>
+	<Category>Good</Category>
+	<UncompletedMapSprite meta:RefKey="Sprite">
+		<Name>Oryx/Custom/dungeonmap/treasure</Name>
+	</UncompletedMapSprite>
+	<CompletedMapSprite meta:RefKey="Sprite">
+		<Name>Oryx/Custom/dungeonmap/treasure_complete</Name>
+	</CompletedMapSprite>
+</Level>

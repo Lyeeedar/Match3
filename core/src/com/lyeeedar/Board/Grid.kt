@@ -138,7 +138,6 @@ class Grid(val width: Int, val height: Int, val level: Level)
 			}
 
 			gainedBonusPower = false
-			matchCount = 0
 		}
 
 		onPop += fun (orb: Orb, delay: Float) {
@@ -564,6 +563,8 @@ class Grid(val width: Int, val height: Int, val level: Level)
 				inTurn = false
 			}
 
+			matchCount = 0
+
 			if (!level.completed && FullscreenMessage.instance == null)
 			{
 				if (activeAbility == null) matchHint = findValidMove()
@@ -802,26 +803,28 @@ class Grid(val width: Int, val height: Int, val level: Level)
 		data class MessageData(val text: String, val colour: Colour, val size: Float)
 		val message = when(matchCount)
 		{
-			3 -> MessageData("Impressive", Colour(0.8f, 0.9f, 1f, 1f), 1f)
-			5 -> MessageData("Amazing", Colour(0.8f, 1f, 0.9f, 1f), 1.3f)
-			7 -> MessageData("Magical", Colour(0.2f, 0.82f, 1f, 1f), 1.6f)
-			9 -> MessageData("Legendary", Colour(1f, 0.81f, 0.5f, 1f), 1.9f)
-			11 -> MessageData("Mythical", Colour(0.8f, 0.5f, 0.95f, 1f), 2.2f)
-			13 -> MessageData("Divine", Colour(0.95f, 1f, 0.81f, 1f), 2.5f)
-			15 -> MessageData("Godlike", Colour(0.8f, 0.55f, 0.78f, 1f), 2.8f)
+			4 -> MessageData("Impressive", Colour(0.8f, 0.9f, 1f, 1f), 1f)
+			7 -> MessageData("Amazing", Colour(0.8f, 1f, 0.9f, 1f), 1.3f)
+			10 -> MessageData("Spectacular", Colour(1f, 0.8f, 0.9f, 1f), 1.6f)
+			14 -> MessageData("Magical", Colour(0.2f, 0.82f, 1f, 1f), 1.9f)
+			18 -> MessageData("Legendary", Colour(1f, 0.81f, 0.5f, 1f), 2.2f)
+			22 -> MessageData("Mythical", Colour(0.8f, 0.5f, 0.95f, 1f), 2.5f)
+			26 -> MessageData("Divine", Colour(0.95f, 1f, 0.81f, 1f), 2.8f)
+			30 -> MessageData("Godlike", Colour(0.8f, 0.55f, 0.78f, 1f), 3.1f)
 			else -> null
 		}
+		val maxVal = 32f
 
 		if (message != null)
 		{
 			val pos = GridWidget.instance.pointToScreenspace(point)
 
-			val sequence = alpha(0f) then fadeIn(0.1f) then parallel(moveBy(MathUtils.random(-5f, 5f), MathUtils.random(0f, 5f), 1f), shake(matchCount.toFloat() / 20f, 0.03f, 1f)) then fadeOut(0.1f) then removeActor()
+			val sequence = alpha(0f) then fadeIn(0.1f) then parallel(moveBy(MathUtils.random(-2f, 2f), MathUtils.random(0f, 2f), 1f), shake(matchCount.toFloat() / maxVal, 0.03f, 1f)) then fadeOut(0.1f) then removeActor()
 
 			val label = Label(message.text, Global.skin, "popup")
 			label.color = message.colour.color()
 			label.setFontScale(message.size)
-			label.rotation = -20f
+			label.rotation = -60f
 			label.setPosition(pos.x, pos.y)
 			label + sequence
 

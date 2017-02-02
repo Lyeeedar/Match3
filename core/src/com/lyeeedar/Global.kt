@@ -54,7 +54,7 @@ class Global
 			val titlefont = AssetManager.loadFont("Sprites/Unpacked/font.ttf", 20, Color(1f, 0.9f, 0.8f, 1f), 1, Color.BLACK, true)
 			skin.add("title", titlefont)
 
-			val popupfont = AssetManager.loadFont("Sprites/Unpacked/font.ttf", 15, Color(1f, 1f, 1f, 1f), 1, Color.DARK_GRAY, true)
+			val popupfont = AssetManager.loadFont("Sprites/Unpacked/font.ttf", 20, Color(1f, 1f, 1f, 1f), 1, Color.DARK_GRAY, true)
 			skin.add("popup", popupfont)
 
 			val pixmap = Pixmap(1, 1, Pixmap.Format.RGBA8888)

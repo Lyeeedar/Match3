@@ -16,5 +16,7 @@
 		<Level>Forest/Trap/BasicTrap</Level>
 		<Level>Forest/Trap/PlateTrap</Level>
 		<Level>Forest/Treasure/BasicTreasure</Level>
+		<Level>Forest/Treasure/RangedTreasure</Level>
+		<Level>Forest/Treasure/SideShuffleTreasure</Level>
 	</Forest>
 </Dungeons>

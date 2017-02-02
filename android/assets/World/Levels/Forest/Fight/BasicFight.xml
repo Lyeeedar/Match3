@@ -46,6 +46,58 @@
 			<Line>#.........#</Line>
 			<Line>###########</Line>
 		</Rows>
+		<Rows>
+			<Line>#.........#</Line>
+			<Line>#......#..#</Line>
+			<Line>#..!......#</Line>
+			<Line>#.#.....!.#</Line>
+			<Line>#........##</Line>
+			<Line>#.........#</Line>
+			<Line>#.........#</Line>
+			<Line>#.....!...#</Line>
+			<Line>#.........#</Line>
+			<Line>#....#....#</Line>
+			<Line>#........##</Line>
+		</Rows>
+		<Rows>
+			<Line>#.........#</Line>
+			<Line>#......#..#</Line>
+			<Line>#.........#</Line>
+			<Line>#.#.....!.#</Line>
+			<Line>#........##</Line>
+			<Line>#.........#</Line>
+			<Line>#....!!...#</Line>
+			<Line>#....!!...#</Line>
+			<Line>#.........#</Line>
+			<Line>#....#....#</Line>
+			<Line>#........##</Line>
+		</Rows>
+		<Rows>
+			<Line>#.........#</Line>
+			<Line>#.....=#=.#</Line>
+			<Line>#..=......#</Line>
+			<Line>#.#....=!.#</Line>
+			<Line>#=.......##</Line>
+			<Line>#...==....#</Line>
+			<Line>#...=!!...#</Line>
+			<Line>#....!!...#</Line>
+			<Line>#.......=.#</Line>
+			<Line>#.=..#....#</Line>
+			<Line>#....=...##</Line>
+		</Rows>
+		<Rows>
+			<Line>#.........#</Line>
+			<Line>#.........#</Line>
+			<Line>#..!......#</Line>
+			<Line>#.......~~~</Line>
+			<Line>#...===.~.#</Line>
+			<Line>#...==~~~.#</Line>
+			<Line>#....==...#</Line>
+			<Line>#.........#</Line>
+			<Line>#~~~~..!..#</Line>
+			<Line>~~..~~....#</Line>
+			<Line>#....~....#</Line>
+		</Rows>
 	</Grid>
 	<Faction>ForestSpider</Faction>
 	<AllowedVictories>
@@ -54,7 +106,7 @@
 	<AllowedDefeats>
 		<Condition meta:RefKey="None" />
 	</AllowedDefeats>
-	<DefeatText>A strike from the beast kocks you to the floor. Your last sight is the bleached skull of another unfortunate adventurer, lying forgotten in the grass.</DefeatText>
+	<DefeatText>A strike from the beast knocks you to the floor. Your last sight is the bleached skull of another unfortunate adventurer, lying forgotten in the grass.</DefeatText>
 	<VictoryText>Skillfully you bring the beast down, striking it till it moves no more.</VictoryText>
 	<EntryText>As you enter a clearing in the shifting wood a rustling behind you spins you around. A monster is blocking your escape. Fight for you life!</EntryText>
 	<Type>Encounter</Type>
