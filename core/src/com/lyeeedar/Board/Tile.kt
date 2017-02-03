@@ -47,8 +47,17 @@ class Tile(x: Int, y: Int) : Point(x, y)
 		get() = contents as? Chest
 		set(value) { contents = value }
 
+	var creature: Creature?
+		get() = contents as? Creature
+		set(value) { contents = value }
+
+
 	var monster: Monster?
 		get() = contents as? Monster
+		set(value) { contents = value }
+
+	var friendly: Friendly?
+		get() = contents as? Friendly
 		set(value) { contents = value }
 
 	var contents: Any? = null
@@ -56,7 +65,7 @@ class Tile(x: Int, y: Int) : Point(x, y)
 		{
 			if (value != null && !canHaveOrb)
 			{
-				com.lyeeedar.Util.error("Tried to put something in tile that can't should be empty. IsPit: $isPit, object: $value")
+				com.lyeeedar.Util.error("Tried to put something in tile that should be empty. IsPit: $isPit, Existing: $field, object: $value")
 				return
 			}
 			field = value
@@ -66,7 +75,6 @@ class Tile(x: Int, y: Int) : Point(x, y)
 	val hasPlate: Boolean
 		get () = plateStrength > 0
 
-	var connectedTo: Tile? = null
 	var canHaveOrb: Boolean = true
 	var isPit: Boolean = false
 
@@ -82,7 +90,11 @@ class Tile(x: Int, y: Int) : Point(x, y)
 		if (sinkable != null) return "c"
 		if (block != null) return "="
 		if (monster != null) return "!"
+		if (friendly != null) return "?"
+		if (shield != null) return "s"
 		if (chest != null) return "£"
+		if (isPit) return "~"
+		if (!canHaveOrb) return "#"
 
 		return " "
 	}

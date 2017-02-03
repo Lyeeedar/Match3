@@ -53,7 +53,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 	val onTime = Event1Arg<Float>()
 	val onPop = Event2Arg<Orb, Float>()
 	val onSunk = Event1Arg<Sinkable>()
-	val onDamaged = Event1Arg<Monster>()
+	val onDamaged = Event1Arg<Creature>()
 	val onSpawn = Event1Arg<Swappable>()
 	val onAttacked = Event1Arg<Orb>()
 
@@ -128,12 +128,12 @@ class Grid(val width: Int, val height: Int, val level: Level)
 					}
 				}
 
-				// process monsters
-				val monster = tile.monster
-				if (monster != null && tile == monster.tiles[0, 0])
+				// process creatures
+				val creature = tile.creature
+				if (creature != null && tile == creature.tiles[0, 0])
 				{
-					monster.onTurn(this@Grid)
-					monster.damSources.clear()
+					creature.onTurn(this@Grid)
+					creature.damSources.clear()
 				}
 			}
 
@@ -288,7 +288,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 			val tile = grid[x, currentY]
 
 			// read up column, find first gap
-			if (tile.canHaveOrb && tile.swappable == null && tile.monster == null)
+			if (tile.canHaveOrb && tile.swappable == null && tile.creature == null)
 			{
 				// if gap found read up until solid / spawner
 				var found: Tile? = null
@@ -321,7 +321,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 					{
 						break
 					}
-					else if (stile.monster != null)
+					else if (stile.creature != null)
 					{
 						break
 					}
@@ -387,14 +387,14 @@ class Grid(val width: Int, val height: Int, val level: Level)
 			while (currentY < height)
 			{
 				val tile = grid[x, currentY]
-				if (tile.canHaveOrb && tile.swappable == null && tile.block == null && tile.monster == null)
+				if (tile.canHaveOrb && tile.swappable == null && tile.block == null && tile.creature == null)
 				{
 					if (lookingForOrb == 0)
 					{
 						lookingForOrb = 1
 					}
 				}
-				else if (!tile.canHaveOrb || lookingForOrb == 2 || tile.block != null || tile.monster != null)
+				else if (!tile.canHaveOrb || lookingForOrb == 2 || tile.block != null || tile.creature != null)
 				{
 					lookingForOrb = 0
 				}
@@ -723,49 +723,52 @@ class Grid(val width: Int, val height: Int, val level: Level)
 						tile.shield = null
 					}
 				}
-				else if (tile.monster != null)
+				else if (tile.creature != null)
 				{
-					val monster = tile.monster!!
-					if (monster.hp <= 0)
+					val creature = tile.creature!!
+					if (creature.hp <= 0)
 					{
-						for (t in monster.tiles)
+						for (t in creature.tiles)
 						{
-							t.monster = null
+							t.creature = null
 						}
 
-						val death = monster.death
-						death.size[0] = monster.size
-						death.size[1] = monster.size
+						val death = creature.death
+						death.size[0] = creature.size
+						death.size[1] = creature.size
 
 						tile.effects.add(death)
 
-						for (reward in monster.rewards)
+						if (creature is Monster)
 						{
-							if (MathUtils.random(100) < reward.value.second)
+							for (reward in creature.rewards)
 							{
-								for (i in 1..reward.value.first)
+								if (MathUtils.random(100) < reward.value.second)
 								{
-									if (reward.key == "Gold")
+									for (i in 1..reward.value.first)
 									{
-										val pos = GridWidget.instance.pointToScreenspace(tile)
-										val dst = GridScreen.instance.playerPortrait.localToStageCoordinates(Vector2())
-										val sprite = level.theme.coin.copy()
-
-										if (dst != null)
+										if (reward.key == "Gold")
 										{
-											Mote(pos, dst, sprite, { level.player.gold++ })
-										}
-									} else
-									{
-										val item = Item.load(reward.key)
+											val pos = GridWidget.instance.pointToScreenspace(tile)
+											val dst = GridScreen.instance.playerPortrait.localToStageCoordinates(Vector2())
+											val sprite = level.theme.coin.copy()
 
-										val pos = GridWidget.instance.pointToScreenspace(tile)
-										val dst = GridScreen.instance.playerPortrait.localToStageCoordinates(Vector2())
-										val sprite = item.icon.copy()
-
-										if (dst != null)
+											if (dst != null)
+											{
+												Mote(pos, dst, sprite, { level.player.gold++ })
+											}
+										} else
 										{
-											Mote(pos, dst, sprite, { level.player.addItem(item) })
+											val item = Item.load(reward.key)
+
+											val pos = GridWidget.instance.pointToScreenspace(tile)
+											val dst = GridScreen.instance.playerPortrait.localToStageCoordinates(Vector2())
+											val sprite = item.icon.copy()
+
+											if (dst != null)
+											{
+												Mote(pos, dst, sprite, { level.player.addItem(item) })
+											}
 										}
 									}
 								}
@@ -1063,7 +1066,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 		{
 			for (y in 0..height-1)
 			{
-				if (grid[x, y].canHaveOrb && grid[x, y].block == null && grid[x, y].monster == null)
+				if (grid[x, y].canHaveOrb && grid[x, y].block == null && grid[x, y].creature == null)
 				{
 					val toSpawn = if (orbOnly) Orb(Orb.getRandomOrb(level), level.theme) else level.spawnOrb()
 
@@ -1299,11 +1302,11 @@ class Grid(val width: Int, val height: Int, val level: Level)
 
 					t.effects.add(hitSprite.copy())
 				}
-				if (t.monster != null)
+				if (t.creature != null)
 				{
-					t.monster!!.hp -= if (!t.monster!!.damSources.contains(this)) level.player.attackDam else 1
-					t.monster!!.damSources.add(this)
-					onDamaged(t.monster!!)
+					t.creature!!.hp -= if (!t.creature!!.damSources.contains(this)) level.player.attackDam else 1
+					t.creature!!.damSources.add(this)
+					onDamaged(t.creature!!)
 
 					t.effects.add(hitSprite.copy())
 				}
@@ -1438,14 +1441,14 @@ class Grid(val width: Int, val height: Int, val level: Level)
 			return
 		}
 
-		if (tile.monster != null)
+		if (tile.creature != null)
 		{
-			tile.monster!!.hp -= if (!tile.monster!!.damSources.contains(damSource)) 1 + bonusDam else 1
-			if (damSource != null) tile.monster!!.damSources.add(damSource)
+			tile.creature!!.hp -= if (!tile.creature!!.damSources.contains(damSource)) 1 + bonusDam else 1
+			if (damSource != null) tile.creature!!.damSources.add(damSource)
 			val hit = hitSprite.copy()
 			hit.renderDelay = delay
 			tile.effects.add(hit)
-			onDamaged(tile.monster!!)
+			onDamaged(tile.creature!!)
 			return
 		}
 

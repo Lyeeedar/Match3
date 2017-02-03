@@ -22,44 +22,11 @@ import ktx.collections.toGdxArray
  * Created by Philip on 22-Jul-16.
  */
 
-class Monster(val desc: MonsterDesc)
+class Monster(val desc: MonsterDesc) : Creature(desc.hp, desc.size, desc.sprite.copy(), desc.death.copy())
 {
-	var hp: Int = 1
-		set(value)
-		{
-			if (value < field)
-			{
-				sprite.colourAnimation = BlinkAnimation.obtain().set(Colour(Color.RED), sprite.colour, 0.15f, true)
-			}
-
-			field = value
-			if (field < 0) field = 0
-		}
-
-	var maxhp: Int = 1
-		set(value)
-		{
-			field = value
-			hp = value
-		}
-
-	var size = 2
-		set(value)
-		{
-			field = value
-			tiles = Array2D(size, size){ x, y -> Tile(0, 0) }
-		}
-
-	lateinit var tiles: Array2D<Tile>
-
-	lateinit var sprite: Sprite
-	lateinit var death: Sprite
-
 	var attackSpeed: Int = 5
 	var attackDelay: Int = 5
 	var attackAccumulator: Int = 1
-
-	val damSources = ObjectSet<Any>()
 
 	val rewards = ObjectMap<String, Pair<Int, Int>>()
 
@@ -69,10 +36,6 @@ class Monster(val desc: MonsterDesc)
 	{
 		attackSpeed = desc.attackSpeed
 		attackDelay = desc.attackDelay
-		size = desc.size
-		sprite = desc.sprite.copy()
-		death = desc.death.copy()
-		maxhp = desc.hp
 		abilities.addAll(desc.abilities.map{ it.copy() }.toGdxArray())
 
 		attackAccumulator = (MathUtils.random() * attackDelay).toInt()
@@ -83,7 +46,7 @@ class Monster(val desc: MonsterDesc)
 		}
 	}
 
-	fun onTurn(grid: Grid)
+	override fun onTurn(grid: Grid)
 	{
 		attackAccumulator++
 		if (attackAccumulator >= attackDelay)
@@ -210,14 +173,7 @@ class MonsterAbility
 
 		if (target == Target.NEIGHBOUR)
 		{
-			for (tile in grid.grid)
-			{
-				val minDiff = monster.tiles.map { it.dist(tile) }.min()!!
-				if (minDiff <= 1)
-				{
-					availableTargets.add(tile)
-				}
-			}
+			availableTargets.addAll(monster.getBorderTiles(grid))
 		}
 		else if (target == Target.RANDOM)
 		{
