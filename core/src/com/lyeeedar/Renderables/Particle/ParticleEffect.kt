@@ -22,10 +22,17 @@ import com.lyeeedar.Util.getXml
 
 class ParticleEffect : Renderable()
 {
+	enum class MoveType
+	{
+		Linear,
+		Leap
+	}
+
 	private lateinit var loadPath: String
 
 	var colour: Colour = Colour(Color.WHITE)
 	var speedMultiplier: Float = 1f
+	var moveType: MoveType = MoveType.Linear
 
 	var completed = false
 	var killOnAnimComplete = true
@@ -254,6 +261,7 @@ class ParticleEffect : Renderable()
 
 			effect.warmupTime = xml.getFloat("Warmup", 0f)
 			effect.moveSpeed = xml.getFloat("MoveSpeed", 1f)
+			effect.moveType = MoveType.valueOf(xml.get("MoveType", "Linear"))
 
 			val emittersEl = xml.getChildByName("Emitters")
 			for (i in 0..emittersEl.childCount-1)

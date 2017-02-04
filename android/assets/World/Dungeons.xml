@@ -14,11 +14,11 @@
                 <Explore Unlocks="Blacksmith"></Explore>
                 <Encounter>Dungeon/Encounter/TreasureVault</Encounter>
                 <Explore></Explore>
-                <Encounter>Dungeon/Encounter/SmallFireElemental</Encounter>
+                <Encounter>Dungeon/Encounter/InfestedVault</Encounter>
             </QuestOrder>
             <LoopQuests>
                 <Encounter>Dungeon/Encounter/SmallFireElemental</Encounter>
-                <Encounter>Dungeon/Encounter/TreasureVault</Encounter>
+                <Encounter>Dungeon/Encounter/InfestedVault</Encounter>
             </LoopQuests>
         </Dungeon>
         <Dungeon>

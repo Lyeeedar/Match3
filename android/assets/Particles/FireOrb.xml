@@ -1,5 +1,6 @@
 <Effect xmlns:meta="Editor">
-	<MoveSpeed>0.1</MoveSpeed>
+	<MoveSpeed>1.5</MoveSpeed>
+	<MoveType>Leap</MoveType>
 	<Emitters>
 		<Emitter>
 			<Name>Glow</Name>

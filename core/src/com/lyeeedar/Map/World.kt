@@ -42,7 +42,7 @@ class WorldDungeon
 
 	fun getObjective(): AbstractObjective
 	{
-		if (progression == progressionQuests.size) return AbstractObjective.load(loopQuests.random())
+		if (progression >= progressionQuests.size) return AbstractObjective.load(loopQuests.random())
 		else return AbstractObjective.load(progressionQuests[progression])
 	}
 

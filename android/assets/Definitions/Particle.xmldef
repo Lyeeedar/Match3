@@ -2,6 +2,7 @@
 	<Definition Name="Effect" meta:RefKey="Struct">
 		<Data Name="Warmup" Min="0" meta:RefKey="Number" />
 		<Data Name="MoveSpeed" Min="0" Default="1" meta:RefKey="Number" />
+		<Data Name="MoveType" EnumValues="Linear,Leap" meta:RefKey="Enum" />
 		<Data Name="Emitters" MinCount="1" meta:RefKey="Collection">
 			<Data Name="Emitter" meta:RefKey="Struct">
 				<Data Name="Name" meta:RefKey="String" />

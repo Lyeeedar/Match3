@@ -50,7 +50,7 @@ class DungeonDescriptionWidget(val dungeon: WorldDungeon, val playerData: Player
 		table.row()
 		table.add(Seperator(Global.skin)).expand().fillX().padTop(30f)
 		table.row()
-		var completionString = "Completion: " + ((dungeon.progression.toFloat() / dungeon.progressionQuests.size.toFloat()) * 100f).toInt() + "%"
+		var completionString = "Completion: " + (((dungeon.progression.toFloat()-1) / dungeon.progressionQuests.size.toFloat()) * 100f).toInt() + "%"
 		if (!Global.release) completionString += " (" + dungeon.progression + "/" + dungeon.progressionQuests.size + ")"
 		table.add(Label(completionString, Global.skin)).pad(30f)
 		table.row()
