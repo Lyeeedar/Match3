@@ -96,8 +96,8 @@
 					<AlphaKeyframes>
 						<Stream>
 							<Keyframe>0|0</Keyframe>
-							<Keyframe>0.01501437|0.3</Keyframe>
-							<Keyframe>0.7625718|0.3</Keyframe>
+							<Keyframe>0.01501437|0.7</Keyframe>
+							<Keyframe>0.7625718|0.7</Keyframe>
 							<Keyframe>1|0</Keyframe>
 						</Stream>
 					</AlphaKeyframes>

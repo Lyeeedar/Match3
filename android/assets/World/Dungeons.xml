@@ -15,6 +15,7 @@
                 <Encounter>Dungeon/Encounter/TreasureVault</Encounter>
                 <Explore></Explore>
                 <Encounter>Dungeon/Encounter/InfestedVault</Encounter>
+                <Encounter>Dungeon/Encounter/RatKing</Encounter>
             </QuestOrder>
             <LoopQuests>
                 <Encounter>Dungeon/Encounter/SmallFireElemental</Encounter>

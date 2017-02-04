@@ -53,5 +53,39 @@
 				</Ability>
 			</Abilities>
 		</Monster>
+		<Monster>
+			<Name>RatKing</Name>
+			<Sprite meta:RefKey="Sprite">
+				<Name>Oryx/Custom/heroes/rat_king</Name>
+				<DrawActualSize>true</DrawActualSize>
+			</Sprite>
+			<Death meta:RefKey="Sprite">
+				<Name>EffectSprites/Splatter/Splatter</Name>
+				<UpdateRate>0.1</UpdateRate>
+				<Colour>189,9,9,255</Colour>
+			</Death>
+			<AttackDelay>3</AttackDelay>
+			<AttackSpeed>5</AttackSpeed>
+			<Size>3</Size>
+			<HP>35</HP>
+			<Rewards>
+				<Item>RatSkin,2,50</Item>
+				<Item>RatTail,2,50</Item>
+			</Rewards>
+			<Abilities>
+				<Ability>
+					<Cooldown>4,8</Cooldown>
+					<TargetRestriction>BasicOrb</TargetRestriction>
+					<Effect>Move</Effect>
+				</Ability>
+				<Ability>
+					<Cooldown>4,8</Cooldown>
+					<Count>2</Count>
+					<Data>
+						<Speed>8</Speed>
+					</Data>
+				</Ability>
+			</Abilities>
+		</Monster>
 	</Monsters>
 </Faction>
