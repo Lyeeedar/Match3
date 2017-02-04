@@ -1,15 +1,30 @@
 package com.lyeeedar.Board
 
 import com.badlogic.gdx.math.Interpolation
+import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.utils.Array
+import com.badlogic.gdx.utils.ObjectMap
+import com.badlogic.gdx.utils.XmlReader
+import com.lyeeedar.Player.Ability.Permuter
+import com.lyeeedar.Player.Ability.Targetter
+import com.lyeeedar.Renderables.Animation.ExpandAnimation
+import com.lyeeedar.Renderables.Animation.LeapAnimation
 import com.lyeeedar.Renderables.Animation.MoveAnimation
 import com.lyeeedar.Renderables.Sprite.Sprite
-import com.lyeeedar.Util.UnsmoothedPath
-import com.lyeeedar.Util.addAll
-import com.lyeeedar.Util.random
+import com.lyeeedar.Util.*
+import ktx.collections.set
+import ktx.collections.toGdxArray
 
 class Friendly(val desc: FriendlyDesc) : Creature(desc.hp, desc.size, desc.sprite.copy(), desc.death.copy())
 {
+	val abilities: Array<FriendlyAbility> = Array()
+	var isSummon: Boolean = false
+
+	init
+	{
+		abilities.addAll(desc.abilities.map { it.copy() }.toGdxArray())
+	}
+
 	override fun onTurn(grid: Grid)
 	{
 		val border = getBorderTiles(grid)
@@ -24,6 +39,27 @@ class Friendly(val desc: FriendlyDesc) : Creature(desc.hp, desc.size, desc.sprit
 				closest!!.effects.add(grid.hitSprite.copy())
 			}
 		}
+
+		var doneAbility = false
+		for (ability in abilities)
+		{
+			ability.cooldownTimer--
+			if (ability.cooldownTimer <= 0 && !doneAbility)
+			{
+				if (MathUtils.randomBoolean())
+				{
+					ability.cooldownTimer = ability.cooldownMin + MathUtils.random(ability.cooldownMax - ability.cooldownMin)
+					ability.activate(this, grid)
+
+					doneAbility = true // only use 1 a turn
+				}
+			}
+		}
+
+		if (isSummon)
+		{
+			hp--
+		}
 	}
 
 }
@@ -34,6 +70,36 @@ class FriendlyDesc
 	lateinit var death: Sprite
 	var size: Int = 1
 	var hp: Int = 25
+	val abilities: Array<FriendlyAbility> = Array()
+
+	companion object
+	{
+		fun load(path: String): FriendlyDesc
+		{
+			val xml = getXml(path)
+
+			val desc = FriendlyDesc()
+
+			desc.sprite = AssetManager.loadSprite(xml.getChildByName("Sprite"))
+			desc.death = AssetManager.loadSprite(xml.getChildByName("Death"))
+
+			desc.size = xml.getInt("Size", 1)
+			desc.hp = xml.getInt("HP", 10)
+
+			val abilitiesEl = xml.getChildByName("Abilities")
+			if (abilitiesEl != null)
+			{
+				for (i in 0..abilitiesEl.childCount-1)
+				{
+					val el = abilitiesEl.getChild(i)
+					val ability = FriendlyAbility.load(el)
+					desc.abilities.add(ability)
+				}
+			}
+
+			return desc
+		}
+	}
 }
 
 abstract class FriendlyAbility
@@ -41,6 +107,99 @@ abstract class FriendlyAbility
 	var cooldownTimer: Int = 0
 	var cooldownMin: Int = 1
 	var cooldownMax: Int = 1
+
+	abstract fun activate(friendly: Friendly, grid: Grid)
+	abstract fun parse(xml: XmlReader.Element)
+	abstract fun copy(): FriendlyAbility
+
+	companion object
+	{
+		fun load(xml: XmlReader.Element): FriendlyAbility
+		{
+			val ability = when(xml.name)
+			{
+				"Attack" -> AttackAbility()
+				"Move" -> MoveAbility()
+				else -> throw NotImplementedError()
+			}
+
+			val cooldown = xml.get("Cooldown").split(",")
+			ability.cooldownMin = cooldown[0].toInt()
+			ability.cooldownMax = cooldown[1].toInt()
+			ability.cooldownTimer = ability.cooldownMin + MathUtils.random(ability.cooldownMax - ability.cooldownMin)
+
+			ability.parse(xml)
+
+			return ability
+		}
+	}
+}
+
+class AttackAbility : FriendlyAbility()
+{
+	var range: Int = 1
+	var targets: Int = 1
+	lateinit var targetter: Targetter
+	lateinit var permuter: Permuter
+	val data: ObjectMap<String, String> = ObjectMap()
+
+	override fun activate(friendly: Friendly, grid: Grid)
+	{
+		val availableTargets = friendly.getBorderTiles(grid, range)
+		val validTargets = availableTargets.filter { targetter.isValid(it, data) }
+
+		val chosen = validTargets.random(targets)
+		val final = Array<Tile>()
+
+		for (c in chosen)
+		{
+			for (t in permuter.permute(c, grid, data))
+			{
+				if (!final.contains(t))
+				{
+					final.add(t)
+				}
+			}
+		}
+
+		for (tile in final)
+		{
+			grid.pop(tile, 0f)
+		}
+	}
+
+	override fun parse(xml: XmlReader.Element)
+	{
+		range = xml.getInt("Range", 1)
+		targets = xml.getInt("Count", 1)
+
+		targetter = Targetter(Targetter.Type.valueOf(xml.get("TargetRestriction", "Orb").toUpperCase()))
+		permuter = Permuter(Permuter.Type.valueOf(xml.get("Permuter", "Single").toUpperCase()))
+
+		val dEl = xml.getChildByName("Data")
+		if (dEl != null)
+		{
+			for (el in dEl.children())
+			{
+				data[el.name.toUpperCase()] = el.text.toUpperCase()
+			}
+		}
+	}
+
+	override fun copy(): FriendlyAbility
+	{
+		val out = AttackAbility()
+		out.cooldownMin = cooldownMin
+		out.cooldownMax = cooldownMax
+		out.cooldownTimer = out.cooldownMin + MathUtils.random(out.cooldownMax - out.cooldownMin)
+		out.range = range
+		out.targets = targets
+		out.targetter = targetter
+		out.permuter = permuter
+		out.data.putAll(data)
+
+		return out
+	}
 }
 
 class MoveAbility : FriendlyAbility()
@@ -62,7 +221,7 @@ class MoveAbility : FriendlyAbility()
 	lateinit var target: Target
 	lateinit var destination: Destination
 
-	fun activate(friendly: Friendly, grid: Grid)
+	override fun activate(friendly: Friendly, grid: Grid)
 	{
 		val availableTargets = Array<Tile>()
 
@@ -178,7 +337,36 @@ class MoveAbility : FriendlyAbility()
 
 			val end = friendly.tiles.first()
 
-			friendly.sprite.animation = MoveAnimation.obtain().set(0.25f, UnsmoothedPath(end.getPosDiff(start)), Interpolation.linear)
+			if (this.target == Target.RANDOM)
+			{
+				val dst = chosen.euclideanDist(friendly.tiles[0, 0])
+				val animDuration = 0.25f + dst * 0.025f
+
+				friendly.sprite.animation = LeapAnimation.obtain().set(0.25f, chosen.getPosDiff(friendly.tiles[0, 0]), 1f + dst * 0.25f)
+				friendly.sprite.animation = ExpandAnimation.obtain().set(animDuration, 0.5f, 1.5f, false)
+			}
+			else
+			{
+				friendly.sprite.animation = MoveAnimation.obtain().set(0.25f, UnsmoothedPath(end.getPosDiff(start)), Interpolation.linear)
+			}
 		}
+	}
+
+	override fun parse(xml: XmlReader.Element)
+	{
+		target = Target.valueOf(xml.get("Target", "NEIGHBOUR").toUpperCase())
+		destination = Destination.valueOf(xml.get("Destination", "RANDOM").toUpperCase())
+	}
+
+	override fun copy(): FriendlyAbility
+	{
+		val out = MoveAbility()
+		out.cooldownMin = cooldownMin
+		out.cooldownMax = cooldownMax
+		out.cooldownTimer = out.cooldownMin + MathUtils.random(out.cooldownMax - out.cooldownMin)
+		out.target = target
+		out.destination = destination
+
+		return out
 	}
 }

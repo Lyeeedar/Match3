@@ -264,7 +264,18 @@ class MonsterAbility
 
 				val end = monster.tiles.first()
 
-				monster.sprite.animation = MoveAnimation.obtain().set(0.25f, UnsmoothedPath(end.getPosDiff(start)), Interpolation.linear)
+				if (this.target == Target.RANDOM)
+				{
+					val dst = target.euclideanDist(monster.tiles[0, 0])
+					val animDuration = 0.25f + dst * 0.025f
+
+					monster.sprite.animation = LeapAnimation.obtain().set(0.25f, target.getPosDiff(monster.tiles[0, 0]), 1f + dst * 0.25f)
+					monster.sprite.animation = ExpandAnimation.obtain().set(animDuration, 0.5f, 1.5f, false)
+				}
+				else
+				{
+					monster.sprite.animation = MoveAnimation.obtain().set(0.25f, UnsmoothedPath(end.getPosDiff(start)), Interpolation.linear)
+				}
 			}
 
 			return

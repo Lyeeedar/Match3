@@ -42,6 +42,8 @@ class GridWidget(val grid: Grid) : Widget()
 	val frame: Sprite = AssetManager.loadSprite("GUI/frame", colour = Colour(Color(0.6f, 0.7f, 0.9f, 0.6f)))
 	val border: Sprite = AssetManager.loadSprite("GUI/border", colour = Colour(Color(0.6f, 0.9f, 0.6f, 0.6f)))
 	val hp_full: Sprite = AssetManager.loadSprite("GUI/health_full")
+	val hp_full_friendly: Sprite = AssetManager.loadSprite("GUI/health_full_green")
+	val hp_full_summon: Sprite = AssetManager.loadSprite("GUI/health_full_blue")
 	val hp_empty: Sprite = AssetManager.loadSprite("GUI/health_empty")
 	val atk_full: Sprite = AssetManager.loadSprite("GUI/attack_full")
 	val atk_empty: Sprite = AssetManager.loadSprite("GUI/attack_empty")
@@ -155,6 +157,7 @@ class GridWidget(val grid: Grid) : Widget()
 				val block = tile.block
 				val chest = tile.chest
 				val monster = tile.monster
+				val friendly = tile.friendly
 
 				var tileColour = Colour.WHITE
 				var orbColour = Colour.WHITE
@@ -369,6 +372,28 @@ class GridWidget(val grid: Grid) : Widget()
 					for (i in 0..monster.maxhp-1)
 					{
 						val sprite = if(i < monster.hp) hp_full else hp_empty
+						floating.queueSprite(sprite, xi+i*spacePerPip, yi+0.1f, ORB, 2, width = solid, height = 0.15f)
+					}
+				}
+
+				if (friendly != null && tile == friendly.tiles[0, friendly.size-1])
+				{
+					friendly.sprite.size[0] = friendly.size
+					friendly.sprite.size[1] = friendly.size
+					ground.queueSprite(friendly.sprite, xi, yi, ORB, 1, orbColour)
+
+					// do hp bar
+					val solidSpaceRatio = 0.12f // 20% free space
+					val space = friendly.size.toFloat()
+					val spacePerPip = space / friendly.maxhp.toFloat()
+					val spacing = spacePerPip * solidSpaceRatio
+					val solid = spacePerPip - spacing
+
+					val fullHp = if (friendly.isSummon) hp_full_summon else hp_full_friendly
+
+					for (i in 0..friendly.maxhp-1)
+					{
+						val sprite = if(i < friendly.hp) fullHp else hp_empty
 						floating.queueSprite(sprite, xi+i*spacePerPip, yi+0.1f, ORB, 2, width = solid, height = 0.15f)
 					}
 				}

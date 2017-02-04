@@ -52,9 +52,9 @@ abstract class Creature(maxHp: Int, size: Int, sprite: Sprite, death: Sprite)
 
 	abstract fun onTurn(grid: Grid)
 
-	fun getBorderTiles(grid: Grid): Sequence<Tile>
+	fun getBorderTiles(grid: Grid, range: Int = 1): Sequence<Tile>
 	{
-		fun isBorder(tile: Tile) = tiles.map { it.dist(tile) }.min()!! <= 1
+		fun isBorder(tile: Tile) = tiles.map { it.dist(tile) }.min()!! <= range
 		return grid.grid.filter(::isBorder)
 	}
 }
