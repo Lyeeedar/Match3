@@ -50,6 +50,34 @@ abstract class Creature(maxHp: Int, size: Int, sprite: Sprite, death: Sprite)
 		this.death = death
 	}
 
+	fun setTile(target: Tile, grid: Grid)
+	{
+		for (tile in tiles)
+		{
+			tile.monster = null
+		}
+		for (x in 0..size-1)
+		{
+			for (y in 0..size - 1)
+			{
+				val tile = grid.tile(target.x + x, target.y + y)!!
+
+				if (tile.orb != null)
+				{
+					val orb = tile.orb!!
+
+					val sprite = orb.desc.death.copy()
+					sprite.colour = orb.sprite.colour
+
+					tile.effects.add(sprite)
+				}
+
+				tile.creature = this
+				tiles[x, y] = tile
+			}
+		}
+	}
+
 	abstract fun onTurn(grid: Grid)
 
 	fun getBorderTiles(grid: Grid, range: Int = 1): Sequence<Tile>

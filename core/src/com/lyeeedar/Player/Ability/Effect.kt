@@ -13,6 +13,7 @@ class Effect(val type: Type)
 	{
 		POP,
 		CONVERT,
+		SUMMON,
 		TEST
 	}
 
@@ -24,6 +25,7 @@ class Effect(val type: Type)
 		{
 			Type.POP -> fun (tile: Tile, grid: Grid, delay: Float, data: ObjectMap<String, String>) { grid.pop(tile, delay, damSource = this, bonusDam = data["DAMAGE", "0"].toInt() + grid.level.player.abilityDam, skipPowerOrb = true) }
 			Type.CONVERT -> fun (tile: Tile, grid: Grid, delay: Float, data: ObjectMap<String, String>) { val orb = tile.orb ?: return; tile.orb = if(data["CONVERTTO"] == "RANDOM") Orb(Orb.getRandomOrb(grid.level), grid.level.theme) else Orb(Orb.getOrb(data["CONVERTTO"]), grid.level.theme); tile.orb!!.setAttributes(orb) }
+			Type.SUMMON ->  fun (tile: Tile, grid: Grid, delay: Float, data: ObjectMap<String, String>) { Friendly.load(data["SUMMON"], true).setTile(tile, grid) }
 			Type.TEST ->  fun (tile: Tile, grid: Grid, delay: Float, data: ObjectMap<String, String>) { val orb = tile.orb ?: return; orb.special = Match5(orb) }
 			else -> throw Exception("Invalid effect type $type")
 		}

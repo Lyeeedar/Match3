@@ -236,32 +236,7 @@ class MonsterAbility
 			if (target != null)
 			{
 				val start = monster.tiles.first()
-
-				for (tile in monster.tiles)
-				{
-					tile.monster = null
-				}
-				for (x in 0..monster.size-1)
-				{
-					for (y in 0..monster.size - 1)
-					{
-						val tile = grid.tile(target.x + x, target.y + y)!!
-
-						if (tile.orb != null)
-						{
-							val orb = tile.orb!!
-
-							val sprite = orb.desc.death.copy()
-							sprite.colour = orb.sprite.colour
-
-							tile.effects.add(sprite)
-						}
-
-						tile.monster = monster
-						monster.tiles[x, y] = tile
-					}
-				}
-
+				monster.setTile(target, grid)
 				val end = monster.tiles.first()
 
 				if (this.target == Target.RANDOM)

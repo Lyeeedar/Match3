@@ -1,5 +1,7 @@
 package com.lyeeedar.Board
 
+import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.files.FileHandle
 import com.badlogic.gdx.math.Interpolation
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.utils.Array
@@ -14,6 +16,7 @@ import com.lyeeedar.Renderables.Sprite.Sprite
 import com.lyeeedar.Util.*
 import ktx.collections.set
 import ktx.collections.toGdxArray
+import java.util.*
 
 class Friendly(val desc: FriendlyDesc) : Creature(desc.hp, desc.size, desc.sprite.copy(), desc.death.copy())
 {
@@ -40,19 +43,13 @@ class Friendly(val desc: FriendlyDesc) : Creature(desc.hp, desc.size, desc.sprit
 			}
 		}
 
-		var doneAbility = false
 		for (ability in abilities)
 		{
 			ability.cooldownTimer--
-			if (ability.cooldownTimer <= 0 && !doneAbility)
+			if (ability.cooldownTimer <= 0)
 			{
-				if (MathUtils.randomBoolean())
-				{
-					ability.cooldownTimer = ability.cooldownMin + MathUtils.random(ability.cooldownMax - ability.cooldownMin)
-					ability.activate(this, grid)
-
-					doneAbility = true // only use 1 a turn
-				}
+				ability.cooldownTimer = ability.cooldownMin + MathUtils.random(ability.cooldownMax - ability.cooldownMin)
+				ability.activate(this, grid)
 			}
 		}
 
@@ -62,6 +59,15 @@ class Friendly(val desc: FriendlyDesc) : Creature(desc.hp, desc.size, desc.sprit
 		}
 	}
 
+	companion object
+	{
+		fun load(path: String, isSummon: Boolean): Friendly
+		{
+			val friendly = Friendly(FriendlyDesc.load(path))
+			friendly.isSummon = isSummon
+			return friendly
+		}
+	}
 }
 
 class FriendlyDesc
@@ -74,9 +80,27 @@ class FriendlyDesc
 
 	companion object
 	{
+		val files: ObjectMap<String, FileHandle> by lazy { loadFriendlies() }
+
+		private fun loadFriendlies(): ObjectMap<String, FileHandle>
+		{
+			val rootPath = "Friendlies"
+			var root = Gdx.files.internal(rootPath)
+			if (!root.exists()) root = Gdx.files.absolute(rootPath)
+
+			val out = ObjectMap<String, FileHandle>()
+
+			for (f in root.list())
+			{
+				out[f.nameWithoutExtension().toUpperCase()] = f
+			}
+
+			return out
+		}
+
 		fun load(path: String): FriendlyDesc
 		{
-			val xml = getXml(path)
+			val xml = XmlReader().parse(files[path.toUpperCase()])
 
 			val desc = FriendlyDesc()
 
@@ -309,32 +333,7 @@ class MoveAbility : FriendlyAbility()
 		if (chosen != null)
 		{
 			val start = friendly.tiles.first()
-
-			for (tile in friendly.tiles)
-			{
-				tile.monster = null
-			}
-			for (x in 0..friendly.size-1)
-			{
-				for (y in 0..friendly.size - 1)
-				{
-					val tile = grid.tile(chosen.x + x, chosen.y + y)!!
-
-					if (tile.orb != null)
-					{
-						val orb = tile.orb!!
-
-						val sprite = orb.desc.death.copy()
-						sprite.colour = orb.sprite.colour
-
-						tile.effects.add(sprite)
-					}
-
-					tile.friendly = friendly
-					friendly.tiles[x, y] = tile
-				}
-			}
-
+			friendly.setTile(chosen, grid)
 			val end = friendly.tiles.first()
 
 			if (this.target == Target.RANDOM)
