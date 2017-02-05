@@ -194,6 +194,8 @@ open class Point : Pool.Poolable, Comparable<Point>
 		return false
 	}
 
+	fun lerp(p2: Point, alpha: Float) = obtain().set(x + ((p2.x - x) * alpha).toInt(), y + ((p2.y - y) * alpha).toInt())
+
 	operator fun times(other: Int) = obtain().set(x * other, y * other)
 
 	operator fun times(other: Matrix3): Point

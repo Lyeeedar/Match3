@@ -1,19 +1,27 @@
 <Theme xmlns:meta="Editor">
 	<Floor meta:RefKey="SpriteWrapper">
 		<Sprite meta:RefKey="Sprite">
-			<Name>Oryx/uf_split/uf_terrain/ground_grass_1</Name>
-			<Colour>191,191,191,255</Colour>
+			<Name>Oryx/uf_split/uf_terrain/floor_tile_sandy_1</Name>
 		</Sprite>
 	</Floor>
 	<Wall meta:RefKey="SpriteWrapper">
-		<Sprite meta:RefKey="Sprite">
-			<Name>Oryx/Custom/terrain/tree1</Name>
-			<DrawActualSize>true</DrawActualSize>
-		</Sprite>
+		<TilingSprite meta:RefKey="TilingSprite">
+			<Name>Wall</Name>
+			<Mode>Premade</Mode>
+			<Front meta:RefKey="Sprite">
+				<Name>Oryx/uf_split/uf_terrain/wall_ruins_14</Name>
+			</Front>
+			<Top meta:RefKey="Sprite">
+				<Name>Oryx/uf_split/uf_terrain/wall_ruins_7</Name>
+			</Top>
+			<Overhang meta:RefKey="Sprite">
+				<Name>Oryx/uf_split/uf_terrain/wall_ruins_1</Name>
+			</Overhang>
+		</TilingSprite>
 	</Wall>
 	<Pit meta:RefKey="SpriteWrapper">
 		<Sprite meta:RefKey="Sprite">
-			<Name>Oryx/uf_split/uf_terrain/water_teal</Name>
+			<Name>Oryx/uf_split/uf_terrain/door_trap_open_tan_2</Name>
 		</Sprite>
 	</Pit>
 	<Chest>
@@ -31,51 +39,43 @@
 		<DrawActualSize>true</DrawActualSize>
 	</Coin>
 	<Plate meta:RefKey="Sprite">
-		<Name>Oryx/Custom/terrain/marsh</Name>
+		<Name>white</Name>
 	</Plate>
 	<Block>
 		<Sprite meta:RefKey="Sprite">
-			<Name>Oryx/Custom/terrain/VitaBloom2</Name>
+			<Name>Oryx/uf_split/uf_terrain/wall_ruins_13</Name>
 			<DrawActualSize>true</DrawActualSize>
+			<Colour>255,227,105,255</Colour>
 		</Sprite>
 	</Block>
 	<Seal>
 		<Sprite meta:RefKey="Sprite">
-			<Name>Oryx/Custom/terrain/spiderweb</Name>
+			<Name>Oryx/uf_split/uf_items/shield_vorpal_buckler</Name>
 			<DrawActualSize>true</DrawActualSize>
-			<Colour>255,255,255,54</Colour>
-		</Sprite>
-		<Sprite meta:RefKey="Sprite">
-			<Name>Oryx/Custom/terrain/spiderweb</Name>
-			<DrawActualSize>true</DrawActualSize>
-			<Colour>255,255,255,142</Colour>
-		</Sprite>
-		<Sprite meta:RefKey="Sprite">
-			<Name>Oryx/Custom/terrain/spiderweb</Name>
-			<DrawActualSize>true</DrawActualSize>
+			<Colour>255,255,255,112</Colour>
 		</Sprite>
 	</Seal>
 	<Shield>
 		<Sprite meta:RefKey="Sprite">
-			<Name>Oryx/uf_split/uf_items/shield_iron_heater</Name>
+			<Name>Oryx/Custom/terrain/sandstone_block</Name>
 			<DrawActualSize>true</DrawActualSize>
 		</Sprite>
 	</Shield>
 	<Map>
-		<Room meta:RefKey="DirectedSprite">Oryx/Custom/dungeonmap/grass_room</Room>
-		<Corridor meta:RefKey="DirectedSprite">Oryx/Custom/dungeonmap/grass_corridor</Corridor>
+		<Room meta:RefKey="DirectedSprite">Oryx/Custom/dungeonmap/ruin_room</Room>
+		<Corridor meta:RefKey="DirectedSprite">Oryx/Custom/dungeonmap/ruin_corridor</Corridor>
 	</Map>
 	<RoomWeights>
 		<Good>
 			<Pair>Treasure,1</Pair>
 		</Good>
 		<Bad>
+			<Pair>Trap,0</Pair>
 			<Pair>Encounter,1</Pair>
-			<Pair>Trap,1</Pair>
 		</Bad>
 	</RoomWeights>
 	<SpawnWeights>
 		<Spawn>Orb,5</Spawn>
-		<Spawn>Changer,1</Spawn>
+		<Spawn>Shield,1</Spawn>
 	</SpawnWeights>
 </Theme>

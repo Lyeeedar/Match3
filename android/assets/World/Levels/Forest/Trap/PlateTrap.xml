@@ -58,7 +58,6 @@
 	<VictoryText>Gingerly you make your way across the dangerous path, carefully testing each step to check it will hold you.</VictoryText>
 	<EntryText>The ground ahead appears unstable and marshy, you'll have to tread carefully to find the solid ground.</EntryText>
 	<Type>Trap</Type>
-	<MinDepth>1</MinDepth>
 	<Category>Bad</Category>
 	<UncompletedMapSprite meta:RefKey="Sprite">
 		<Name>Oryx/uf_split/uf_terrain/puddle_large_3</Name>

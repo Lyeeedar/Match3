@@ -5,6 +5,9 @@ import com.badlogic.gdx.files.FileHandle
 import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.XmlReader
+import com.lyeeedar.Board.Level
+import com.lyeeedar.Board.LevelTheme
+import com.lyeeedar.Player.Player
 import ktx.collections.get
 import ktx.collections.set
 import java.io.File
@@ -67,7 +70,14 @@ class LevelProcessor
 			}
 			else if (file.path.endsWith(".xml"))
 			{
-				parseXml(file.path, dungeon)
+				try
+				{
+					parseXml(file.path, dungeon)
+				}
+				catch (e: Exception)
+				{
+					error("Failed to load '${file.path}'!\n${e.message}")
+				}
 			}
 		}
 	}
@@ -76,7 +86,18 @@ class LevelProcessor
 	{
 		val xml = XmlReader().parse(Gdx.files.internal(path))
 
-		if (!xml.name.equals("Level") || !xml.getBooleanAttribute("IsInMapPool", true)) return
+		if (xml.name != "Level") return
+
+		// Test load the level
+		val theme = LevelTheme.load(dungeon)
+		val levels = Level.load(path.removePrefix("World\\Levels\\"))
+
+		for (level in levels)
+		{
+			level.create(theme, Player())
+		}
+
+		if (!xml.getBooleanAttribute("IsInMapPool", true)) return
 
 		var p = path
 		p = p.replace("\\", "/")

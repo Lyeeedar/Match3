@@ -16,7 +16,7 @@
 			<Line>#############</Line>
 		</Rows>
 	</Grid>
-	<Faction>Rat</Faction>
+	<Faction>Rats</Faction>
 	<AllowedVictories>
 		<Condition meta:RefKey="Kill" />
 	</AllowedVictories>

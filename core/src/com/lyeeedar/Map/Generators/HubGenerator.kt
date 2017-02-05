@@ -168,6 +168,8 @@ class HubGenerator(val seed: Long)
 					val level = valid.random(ran)
 					room.level = level.copy()
 
+					println("Spawning level: " + level.loadPath)
+
 					used.add(level)
 				}
 				else

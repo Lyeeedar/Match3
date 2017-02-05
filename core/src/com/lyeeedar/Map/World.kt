@@ -7,11 +7,14 @@ import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Map.Objective.AbstractObjective
 import com.lyeeedar.Util.AssetManager
 import com.lyeeedar.Util.Point
+import ktx.collections.toGdxArray
 
 class World
 {
 	var mapImage: Texture
 	val dungeons: Array<WorldDungeon> = Array()
+
+	operator fun get(name: String): WorldDungeon = dungeons.first { it.name == name }
 
 	init
 	{
@@ -26,6 +29,14 @@ class World
 			val dungeon = WorldDungeon.load(dungeonEl)
 			dungeons.add(dungeon)
 		}
+
+		for (dungeon in dungeons.toGdxArray())
+		{
+			if (dungeon.unlockedByName != "")
+			{
+				dungeon.unlockedBy = this[dungeon.unlockedByName]
+			}
+		}
 	}
 }
 
@@ -35,7 +46,8 @@ class WorldDungeon
 	lateinit var description: String
 	lateinit var theme: String
 	val location: Point = Point()
-	lateinit var unlockedBy: String
+	lateinit var unlockedByName: String
+	var unlockedBy: WorldDungeon? = null
 	val progressionQuests = Array<XmlReader.Element>()
 	val loopQuests = Array<XmlReader.Element>()
 	var progression: Int = 0
@@ -50,10 +62,8 @@ class WorldDungeon
 
 	fun isUnlocked(world: World): Boolean
 	{
-		if (unlockedBy == "") return true
-
-		val parent = world.dungeons.first{ it.name == unlockedBy }
-		return parent.isCompleted(world)
+		if (unlockedBy == null) return true
+		return unlockedBy!!.isCompleted(world)
 	}
 
 	companion object
@@ -66,7 +76,7 @@ class WorldDungeon
 			dungeon.description = xml.get("Description")
 			dungeon.theme = xml.get("Theme")
 			dungeon.location.set(xml.get("Location"))
-			dungeon.unlockedBy = xml.get("UnlockedBy", "")
+			dungeon.unlockedByName = xml.get("UnlockedBy", "")
 
 			val questsEl = xml.getChildByName("QuestOrder")
 			for (i in 0..questsEl.childCount-1)

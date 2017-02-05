@@ -367,7 +367,7 @@ class Level(val loadPath: String)
 	{
 		fun load(path: String): Array<Level>
 		{
-			val xml = XmlReader().parse(Gdx.files.internal("World/Levels/$path.xml"))
+			val xml = getXml("World/Levels/$path")
 
 			val levels = Array<Level>()
 

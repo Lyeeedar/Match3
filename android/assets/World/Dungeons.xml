@@ -24,9 +24,30 @@
         </Dungeon>
         <Dungeon>
             <Name>Enchanted Forest</Name>
+            <UnlockedBy>Dungeon Ruins</UnlockedBy>
             <Description>Deep within these woods people just disappear, leaving only a few scattered belongings behind. All this loot makes it an attractive but dangerous place to venture.</Description>
             <Location>230,276</Location>
             <Theme>Forest</Theme>
+            <QuestOrder>
+                <Explore></Explore>
+                <Explore></Explore>
+                <Encounter>Dungeon/Encounter/SmallFireElemental</Encounter>
+                <Explore></Explore>
+                <Encounter>Dungeon/Encounter/TreasureVault</Encounter>
+                <Explore></Explore>
+                <Encounter>Dungeon/Encounter/SmallFireElemental</Encounter>
+            </QuestOrder>
+            <LoopQuests>
+                <Encounter>Dungeon/Encounter/SmallFireElemental</Encounter>
+                <Encounter>Dungeon/Encounter/TreasureVault</Encounter>
+            </LoopQuests>
+        </Dungeon>
+        <Dungeon>
+            <Name>Ancient Pyramid</Name>
+            <UnlockedBy>Enchanted Forest</UnlockedBy>
+            <Description>A testament to a long dead civilisation the pyramid of Phycos stands tall, daring people to enter it's dark depths. Many an adventurer has disappeared within, whether to the ingenious traps or to something... else.</Description>
+            <Location>557,144</Location>
+            <Theme>Pyramid</Theme>
             <QuestOrder>
                 <Explore></Explore>
                 <Explore></Explore>
