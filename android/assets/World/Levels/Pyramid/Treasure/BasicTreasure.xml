@@ -1,0 +1,39 @@
+<Level xmlns:meta="Editor">
+	<Grid>
+		<Rows>
+			<Line>#..#~~~#..#</Line>
+			<Line>#..#~$~#..#</Line>
+			<Line>#..#~.~#..#</Line>
+			<Line>#..##.##..#</Line>
+			<Line>#.........#</Line>
+			<Line>#.........#</Line>
+			<Line>#.........#</Line>
+			<Line>#.........#</Line>
+			<Line>#.........#</Line>
+			<Line>#.........#</Line>
+			<Line>#.........#</Line>
+		</Rows>
+	</Grid>
+	<OrbCount>5</OrbCount>
+	<AllowedVictories>
+		<Condition meta:RefKey="Sink">
+			<Count>4</Count>
+		</Condition>
+	</AllowedVictories>
+	<AllowedDefeats>
+		<Condition meta:RefKey="Time">
+			<Seconds>30</Seconds>
+		</Condition>
+		<Condition meta:RefKey="Turns">
+			<Turns>20</Turns>
+		</Condition>
+	</AllowedDefeats>
+	<Type>Treasure</Type>
+	<Category>Good</Category>
+	<UncompletedMapSprite meta:RefKey="Sprite">
+		<Name>Oryx/Custom/dungeonmap/treasure</Name>
+	</UncompletedMapSprite>
+	<CompletedMapSprite meta:RefKey="Sprite">
+		<Name>Oryx/Custom/dungeonmap/treasure_complete</Name>
+	</CompletedMapSprite>
+</Level>

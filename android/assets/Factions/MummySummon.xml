@@ -1,0 +1,27 @@
+<Faction xmlns:meta="Editor">
+	<Monsters>
+		<Monster>
+			<Name>SandWraith</Name>
+			<Sprite meta:RefKey="Sprite">
+				<Name>Oryx/uf_split/uf_heroes/spirit</Name>
+				<DrawActualSize>true</DrawActualSize>
+				<Colour>255,200,59,255</Colour>
+			</Sprite>
+			<Death meta:RefKey="Sprite">
+				<Name>EffectSprites/Splatter/Splatter</Name>
+				<UpdateRate>0.1</UpdateRate>
+				<Colour>252,226,111,255</Colour>
+			</Death>
+			<AttackDelay>8</AttackDelay>
+			<AttackSpeed>8</AttackSpeed>
+			<HP>15</HP>
+			<Abilities>
+				<Ability>
+					<Cooldown>2,4</Cooldown>
+					<Effect>Move</Effect>
+					<Data />
+				</Ability>
+			</Abilities>
+		</Monster>
+	</Monsters>
+</Faction>

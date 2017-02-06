@@ -2,6 +2,7 @@
 	<Floor meta:RefKey="SpriteWrapper">
 		<Sprite meta:RefKey="Sprite">
 			<Name>Oryx/uf_split/uf_terrain/floor_tile_sandy_1</Name>
+			<Colour>133,124,94,255</Colour>
 		</Sprite>
 	</Floor>
 	<Wall meta:RefKey="SpriteWrapper">
@@ -59,6 +60,7 @@
 		<Sprite meta:RefKey="Sprite">
 			<Name>Oryx/Custom/terrain/sandstone_block</Name>
 			<DrawActualSize>true</DrawActualSize>
+			<Colour>199,199,199,255</Colour>
 		</Sprite>
 	</Shield>
 	<Map>

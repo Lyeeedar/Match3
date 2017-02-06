@@ -1,0 +1,99 @@
+<Level xmlns:meta="Editor">
+	<Grid>
+		<Rows>
+			<Line>#.....#...#</Line>
+			<Line>#.....#...#</Line>
+			<Line>#.....#...#</Line>
+			<Line>#.....##.##</Line>
+			<Line>#....~~...#</Line>
+			<Line>#....~~...#</Line>
+			<Line>##.###....#</Line>
+			<Line>#....#....#</Line>
+			<Line>#....#....#</Line>
+			<Line>#....#....#</Line>
+			<Line>###########</Line>
+		</Rows>
+		<Rows>
+			<Line>#....#....#</Line>
+			<Line>#....#....#</Line>
+			<Line>#....#....#</Line>
+			<Line>#....#....#</Line>
+			<Line>#....#....#</Line>
+			<Line>#....#....#</Line>
+			<Line>#....#....#</Line>
+			<Line>#~~~~#~~~~#</Line>
+			<Line>#~~~~#~~~~#</Line>
+			<Line>#~~~~~~~~~#</Line>
+			<Line>#.........#</Line>
+			<Line>#.........#</Line>
+			<Line>#.........#</Line>
+			<Line>#.........#</Line>
+			<Line>###########</Line>
+		</Rows>
+		<Rows>
+			<Line>#..#..#..#</Line>
+			<Line>#..#..#..#</Line>
+			<Line>#..#..#..#</Line>
+			<Line>#..#..#..#</Line>
+			<Line>#........#</Line>
+			<Line>#........#</Line>
+			<Line>#........#</Line>
+			<Line>####.#####</Line>
+			<Line>#........#</Line>
+			<Line>#........#</Line>
+			<Line>##########</Line>
+		</Rows>
+		<Rows>
+			<Line>#.........#</Line>
+			<Line>#.........#</Line>
+			<Line>#.........#</Line>
+			<Line>#.####....#</Line>
+			<Line>#.#~~#....#</Line>
+			<Line>#.#~~#....#</Line>
+			<Line>#.####....#</Line>
+			<Line>#.........#</Line>
+			<Line>#.........#</Line>
+			<Line>#.........#</Line>
+			<Line>#.........#</Line>
+		</Rows>
+	</Grid>
+	<AllowedVictories>
+		<Condition meta:RefKey="Matches">
+			<Orbs>10</Orbs>
+			<Orbs>10</Orbs>
+			<Orbs>10</Orbs>
+			<Orbs>10</Orbs>
+			<Orbs>10</Orbs>
+		</Condition>
+		<Condition meta:RefKey="Matches">
+			<Orbs>30</Orbs>
+		</Condition>
+		<Condition meta:RefKey="Matches">
+			<Orbs>20</Orbs>
+			<Orbs>10</Orbs>
+			<Orbs>10</Orbs>
+		</Condition>
+	</AllowedVictories>
+	<AllowedDefeats>
+		<Condition meta:RefKey="Time">
+			<Seconds>30</Seconds>
+		</Condition>
+		<Condition meta:RefKey="Turns">
+			<Turns>20</Turns>
+		</Condition>
+	</AllowedDefeats>
+	<DefeatActions>
+		<Action meta:RefKey="Health">-10</Action>
+	</DefeatActions>
+	<DefeatText>Darts spring out of a nearby wall, their pointed tips piercing deep into your side.</DefeatText>
+	<VictoryText>With a creak and a long groan the trap grinds to a halt.</VictoryText>
+	<EntryText>Dust rains down around you as some ancient trap rumbles into life.</EntryText>
+	<Type>Trap</Type>
+	<Category>Bad</Category>
+	<UncompletedMapSprite meta:RefKey="Sprite">
+		<Name>Oryx/Custom/dungeonmap/spiketrap</Name>
+	</UncompletedMapSprite>
+	<CompletedMapSprite meta:RefKey="Sprite">
+		<Name>Oryx/Custom/dungeonmap/spiketrap_complete</Name>
+	</CompletedMapSprite>
+</Level>

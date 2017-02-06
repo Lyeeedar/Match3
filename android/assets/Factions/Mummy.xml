@@ -1,0 +1,37 @@
+<Faction xmlns:meta="Editor">
+	<Monsters>
+		<Monster>
+			<Sprite meta:RefKey="Sprite">
+				<Name>Oryx/uf_split/uf_heroes/mummy_pharoah</Name>
+				<DrawActualSize>true</DrawActualSize>
+			</Sprite>
+			<Death meta:RefKey="Sprite">
+				<Name>EffectSprites/Shout/Shout</Name>
+				<UpdateRate>0.1</UpdateRate>
+				<Colour>255,232,129,255</Colour>
+			</Death>
+			<AttackDelay>4</AttackDelay>
+			<AttackSpeed>5</AttackSpeed>
+			<HP>20</HP>
+			<Abilities>
+				<Ability>
+					<Cooldown>4,8</Cooldown>
+					<Count>3</Count>
+					<TargetRestriction>Shield</TargetRestriction>
+					<Data>
+						<Range>2</Range>
+					</Data>
+				</Ability>
+				<Ability>
+					<Cooldown>7,10</Cooldown>
+					<TargetRestriction>Shield</TargetRestriction>
+					<Effect>Summon</Effect>
+					<Data>
+						<Faction>MummySummon</Faction>
+						<Name>SandWraith</Name>
+					</Data>
+				</Ability>
+			</Abilities>
+		</Monster>
+	</Monsters>
+</Faction>

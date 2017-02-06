@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Board.Grid
 import com.lyeeedar.Board.LevelTheme
+import com.lyeeedar.Board.Orb
 import com.lyeeedar.Board.Tile
 import com.lyeeedar.Global
 import com.lyeeedar.UI.SpriteWidget
@@ -21,6 +22,11 @@ class CompletionConditionPlate : AbstractCompletionCondition()
 		remaining = grid.grid.count(Tile::hasPlate)
 
 		grid.onTurn += {
+			remaining = grid.grid.count(Tile::hasPlate)
+			label.setText("$remaining")
+		}
+
+		grid.onPop += fun (orb: Orb, delay: Float ) {
 			remaining = grid.grid.count(Tile::hasPlate)
 			label.setText("$remaining")
 		}

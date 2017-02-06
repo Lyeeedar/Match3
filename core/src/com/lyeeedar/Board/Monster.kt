@@ -24,6 +24,8 @@ import ktx.collections.toGdxArray
 
 class Monster(val desc: MonsterDesc) : Creature(desc.hp, desc.size, desc.sprite.copy(), desc.death.copy())
 {
+	var isSummon = false
+
 	var attackSpeed: Int = 5
 	var attackDelay: Int = 5
 	var attackAccumulator: Int = 1
@@ -90,6 +92,11 @@ class Monster(val desc: MonsterDesc) : Creature(desc.hp, desc.size, desc.sprite.
 				}
 			}
 		}
+
+		if (isSummon)
+		{
+			hp--
+		}
 	}
 }
 
@@ -124,7 +131,8 @@ class MonsterAbility
 		SEAL,
 		BLOCK,
 		MOVE,
-		HEAL
+		HEAL,
+		SUMMON
 	}
 
 	var cooldownTimer: Int = 0
@@ -155,6 +163,8 @@ class MonsterAbility
 
 	fun activate(grid: Grid, monster: Monster)
 	{
+		println("Monster trying to use ability '$effect'")
+
 		if (effect == Effect.HEAL)
 		{
 			monster.hp += data["AMOUNT"].toInt()
@@ -173,7 +183,7 @@ class MonsterAbility
 
 		if (target == Target.NEIGHBOUR)
 		{
-			availableTargets.addAll(monster.getBorderTiles(grid))
+			availableTargets.addAll(monster.getBorderTiles(grid, data["RANGE", "1"].toInt()))
 		}
 		else if (target == Target.RANDOM)
 		{
@@ -186,7 +196,7 @@ class MonsterAbility
 
 		var validTargets = availableTargets.filter { targetRestriction.isValid(it, data) }
 
-		if (effect == Effect.ATTACK || effect == Effect.SEALEDATTACK)
+		if (targetRestriction.type == Targetter.Type.ORB && (effect == Effect.ATTACK || effect == Effect.SEALEDATTACK))
 		{
 			validTargets = validTargets.filter { validAttack(grid, it) }
 		}
@@ -244,7 +254,7 @@ class MonsterAbility
 					val dst = target.euclideanDist(monster.tiles[0, 0])
 					val animDuration = 0.25f + dst * 0.025f
 
-					monster.sprite.animation = LeapAnimation.obtain().set(0.25f, target.getPosDiff(monster.tiles[0, 0]), 1f + dst * 0.25f)
+					monster.sprite.animation = LeapAnimation.obtain().set(animDuration, target.getPosDiff(monster.tiles[0, 0]), 1f + dst * 0.25f)
 					monster.sprite.animation = ExpandAnimation.obtain().set(animDuration, 0.5f, 1.5f, false)
 				}
 				else
@@ -263,6 +273,12 @@ class MonsterAbility
 			if (effect == Effect.ATTACK || effect == Effect.SEALEDATTACK)
 			{
 				val speed = data.get("SPEED", monster.attackSpeed.toString()).toInt()
+
+				if (target.orb == null)
+				{
+					target.effects.add(grid.hitSprite.copy())
+					target.orb = Orb(Orb.getRandomOrb(grid.level), grid.level.theme)
+				}
 
 				target.orb!!.attackTimer = speed
 				val diff = target.getPosDiff(monster.tiles[0, 0])
@@ -296,6 +312,17 @@ class MonsterAbility
 			{
 				target.block = Block(grid.level.theme)
 				target.block!!.count = strength
+			}
+			if (effect == Effect.SUMMON)
+			{
+				val factionName = data["FACTION"]
+				val name = data["NAME"]
+
+				val faction = Faction.load(factionName)
+				val summoned = Monster(faction.get(name)!!)
+				summoned.isSummon = true
+
+				summoned.setTile(target, grid)
 			}
 		}
 	}

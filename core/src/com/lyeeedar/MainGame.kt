@@ -115,7 +115,7 @@ class MainGame : Game()
 			}
 			catch (ex: Exception)
 			{
-				System.err.println("Load failed")
+				System.err.println("Load failed\n" + ex.message)
 
 				val player = PlayerData()
 				val world = World()

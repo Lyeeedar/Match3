@@ -30,6 +30,19 @@ class Faction
 		return sizeMap.values().first().random()
 	}
 
+	fun get(name: String): MonsterDesc?
+	{
+		for (size in sizeMap)
+		{
+			for (monster in size.value)
+			{
+				if (monster.name == name) return monster
+			}
+		}
+
+		return null
+	}
+
 	companion object
 	{
 		fun load(path: String): Faction
@@ -59,6 +72,7 @@ class Faction
 
 class MonsterDesc
 {
+	lateinit var name: String
 	lateinit var sprite: Sprite
 	lateinit var death: Sprite
 	var attackDelay: Int = 5
@@ -73,6 +87,8 @@ class MonsterDesc
 		fun load(xml: XmlReader.Element): MonsterDesc
 		{
 			val desc = MonsterDesc()
+
+			desc.name = xml.get("Name", "")
 
 			desc.sprite = AssetManager.loadSprite(xml.getChildByName("Sprite"))
 			desc.death = AssetManager.loadSprite(xml.getChildByName("Death"))
