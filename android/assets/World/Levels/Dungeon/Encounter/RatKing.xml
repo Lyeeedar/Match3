@@ -1,4 +1,4 @@
-<Level xmlns:meta="Editor">
+<Level IsInMapPool="False" xmlns:meta="Editor">
 	<Grid>
 		<Rows>
 			<Line>#.....==~...#</Line>

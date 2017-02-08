@@ -14,6 +14,7 @@ import com.lyeeedar.Util.*
 import java.util.*
 import ktx.collections.get
 import ktx.collections.set
+import ktx.collections.toGdxArray
 
 /**
  * Created by Philip on 24-Jul-16.
@@ -44,20 +45,20 @@ class HubGenerator(val seed: Long)
 			}
 		}
 
-		val endOfChainRooms = Array<DungeonMapEntry>()
-		val unfilledRooms = Array<DungeonMapEntry>()
+		val endOfChainRooms = Array<DungeonMapEntry>(false, 16)
+		val unfilledRooms = Array<DungeonMapEntry>(false, 16)
 
-		for (room in map.map)
+		for (room in map.map.values().sortedBy { it.point.hashCode() })
 		{
-			if (room.value.isRoom && room.value != hub)
+			if (room.isRoom && room != hub)
 			{
-				if (room.value.connections.size == 1)
+				if (room.connections.size == 1)
 				{
-					endOfChainRooms.add(room.value)
+					endOfChainRooms.add(room)
 				}
 				else
 				{
-					unfilledRooms.add(room.value)
+					unfilledRooms.add(room)
 				}
 			}
 		}
@@ -71,18 +72,18 @@ class HubGenerator(val seed: Long)
 			room.isRoom = true
 		}
 
-		// 0.1 emtpy
+		// 0.1 empty
 		// 0.7 bad
 		// 0.2 good
 		val totalCount = endOfChainRooms.size + unfilledRooms.size
 
-		val empty = (unfilledRooms.size * 0.1f).toInt()
-		val good = Math.max(0, (totalCount * 0.2f).toInt() - endOfChainRooms.size)
+		val empty = (unfilledRooms.size * 0.1).toInt()
+		val good = Math.max(0, (totalCount * 0.2).toInt() - endOfChainRooms.size)
 		val bad = unfilledRooms.size - (empty + good)
 
-		val emptyRooms = Array<DungeonMapEntry>()
-		val goodRooms = Array<DungeonMapEntry>()
-		val badRooms = Array<DungeonMapEntry>()
+		val emptyRooms = Array<DungeonMapEntry>(false, 16)
+		val goodRooms = Array<DungeonMapEntry>(false, 16)
+		val badRooms = Array<DungeonMapEntry>(false, 16)
 
 		for (room in endOfChainRooms)
 		{
@@ -116,12 +117,12 @@ class HubGenerator(val seed: Long)
 			val typeList = Array<String>()
 
 			val weights = theme.roomWeights[type] ?: return typeList
-			val total = weights.sumBy { it.value }.toFloat()
-			if (total == 0f) return typeList
+			val total = weights.sumBy { it.value }.toDouble()
+			if (total == 0.0) return typeList
 
 			for (weight in weights)
 			{
-				val ratio = weight.value.toFloat() / total
+				val ratio = weight.value.toDouble() / total
 				val num = (count * ratio).toInt()
 				for (i in 1..num) typeList.add(weight.key)
 			}

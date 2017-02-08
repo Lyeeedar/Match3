@@ -56,6 +56,8 @@ class DungeonMapWidget(val map: DungeonMap, val player: Player, val dungeon: Wor
 	var waitingOnTransition: Boolean = false
 	var dungeonComplete = false
 
+	var inputLockoutTimer = 0f
+
 	init
 	{
 		upArrow.rotation = Direction.NORTH.angle
@@ -79,6 +81,8 @@ class DungeonMapWidget(val map: DungeonMap, val player: Player, val dungeon: Wor
 		{
 			override fun clicked(event: InputEvent?, x: Float, y: Float)
 			{
+				if (inputLockoutTimer > 0f) return
+
 				if (moveTo != null) return
 
 				val cx = width / 2f
@@ -161,6 +165,11 @@ class DungeonMapWidget(val map: DungeonMap, val player: Player, val dungeon: Wor
 	override fun act(delta: Float)
 	{
 		super.act(delta)
+
+		if (inputLockoutTimer > 0f)
+		{
+			inputLockoutTimer -= delta
+		}
 
 		if (dungeonComplete)
 		{

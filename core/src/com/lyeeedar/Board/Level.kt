@@ -326,6 +326,8 @@ class Level(val loadPath: String)
 
 	private fun complete()
 	{
+		MapScreen.instance.dungeonWidget!!.inputLockoutTimer = 1f
+
 		completeFun = null
 		if (player.hp <= 0)
 		{

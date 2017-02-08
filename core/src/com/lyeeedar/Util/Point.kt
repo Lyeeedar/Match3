@@ -3,6 +3,7 @@ package com.lyeeedar.Util
 import com.badlogic.gdx.math.Matrix3
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.math.Vector3
+import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.Pool
 import com.badlogic.gdx.utils.Pools
@@ -82,6 +83,8 @@ open class Point : Pool.Poolable, Comparable<Point>
 		@JvmField val MAX = Point(Int.MAX_VALUE, Int.MAX_VALUE, true)
 		@JvmField val MIN = Point(-Int.MAX_VALUE, -Int.MAX_VALUE, true)
 
+		val tempPointList = Array<Point>(false, 32)
+
         private val pool: Pool<Point> = getPool()
 
         @JvmStatic fun obtain(): Point
@@ -96,6 +99,17 @@ open class Point : Pool.Poolable, Comparable<Point>
 			point.obtained = true
 			return point
 		}
+
+		@JvmStatic fun obtainTemp(): Point
+		{
+			val point = obtain()
+
+			tempPointList.add(point)
+
+			return point
+		}
+
+		fun freeTemp() = { freeAll(tempPointList); tempPointList.clear() }
 
 		@JvmStatic fun freeAll(items: Iterable<Point>) = { for (item in items) item.free() }
     }
@@ -317,7 +331,7 @@ class PointIterator(val start: Point, val end: Point): Iterator<Point>
 		val y = start.y + Math.round(ystep * i.toFloat()).toInt()
 		i++
 
-		return Point.obtain().set(x, y)
+		return Point.obtainTemp().set(x, y)
 	}
 }
 

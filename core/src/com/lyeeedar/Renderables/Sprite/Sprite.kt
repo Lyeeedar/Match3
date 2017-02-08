@@ -215,15 +215,22 @@ class Sprite(val fileName: String, var animationDelay: Float, var textures: Arra
 			return
 		}
 
-		val oldCol = (batch as? HDRColourSpriteBatch)?.colour ?: tempCol.set(batch.color, batch.packedColor)
+		if (colour == Colour.WHITE)
+		{
+			drawTexture(batch, textures.items[animationState.texIndex], x, y, width, height, scaleX, scaleY, animationState)
+		}
+		else
+		{
+			val oldCol = (batch as? HDRColourSpriteBatch)?.colour ?: tempCol.set(batch.color, batch.packedColor)
 
-		val col = tempColour.set(oldCol)
-		col *= colour
-		(batch as? HDRColourSpriteBatch)?.setColor(col) ?: batch.setColor(col.toFloatBits())
+			val col = tempColour.set(oldCol)
+			col *= colour
+			(batch as? HDRColourSpriteBatch)?.setColor(col) ?: batch.setColor(col.toFloatBits())
 
-		drawTexture(batch, textures.items[animationState.texIndex], x, y, width, height, scaleX, scaleY, animationState)
+			drawTexture(batch, textures.items[animationState.texIndex], x, y, width, height, scaleX, scaleY, animationState)
 
-		(batch as? HDRColourSpriteBatch)?.setColor(oldCol) ?: batch.setColor(oldCol.toFloatBits())
+			(batch as? HDRColourSpriteBatch)?.setColor(oldCol) ?: batch.setColor(oldCol.toFloatBits())
+		}
 	}
 
 	private fun drawTexture(batch: Batch, texture: TextureRegion, x: Float, y: Float, width: Float, height: Float, scaleX: Float, scaleY: Float, animationState: AnimationState)

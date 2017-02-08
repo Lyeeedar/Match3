@@ -1,6 +1,7 @@
 package com.lyeeedar.Board
 
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.files.FileHandle
 import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.IntMap
 import com.badlogic.gdx.utils.ObjectMap
@@ -45,9 +46,27 @@ class Faction
 
 	companion object
 	{
+		val files: ObjectMap<String, FileHandle> by lazy { loadAll() }
+
+		private fun loadAll(): ObjectMap<String, FileHandle>
+		{
+			val rootPath = "Factions"
+			var root = Gdx.files.internal(rootPath)
+			if (!root.exists()) root = Gdx.files.absolute(rootPath)
+
+			val out = ObjectMap<String, FileHandle>()
+
+			for (f in root.list())
+			{
+				out[f.nameWithoutExtension().toUpperCase()] = f
+			}
+
+			return out
+		}
+
 		fun load(path: String): Faction
 		{
-			val xml = XmlReader().parse(Gdx.files.internal("Factions/$path.xml"))
+			val xml = XmlReader().parse(files[path.toUpperCase()])
 
 			val faction = Faction()
 

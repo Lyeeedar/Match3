@@ -225,6 +225,18 @@ class Colour()
 		return Color(r, g, b, a)
 	}
 
+	override fun equals(other: Any?): Boolean
+	{
+		if (other !is Colour) return false
+
+		if (other.r != r) return false
+		if (other.g != g) return false
+		if (other.b != b) return false
+		if (other.a != a) return false
+
+		return true
+	}
+
 	companion object
 	{
 		val WHITE = Colour(Color.WHITE)

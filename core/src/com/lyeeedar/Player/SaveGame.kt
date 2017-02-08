@@ -444,6 +444,8 @@ class SaveDungeonMap : SaveableObject<DungeonMap>
 		val generator = HubGenerator(seed)
 		val dungeon = generator.generate(themeObj, numRooms, depth, AbstractObjective.load(objectiveXml), dungeonName)
 
+		System.out.println(dungeon)
+
 		for (seen in seenRooms)
 		{
 			dungeon.map[seen].seen = true

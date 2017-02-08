@@ -1168,7 +1168,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 				{
 					if (key != -1)
 					{
-						addMatch(Point(sx,y), Point(x-1,y))
+						addMatch(Point.obtainTemp().set(sx,y), Point.obtainTemp().set(x-1,y))
 					}
 
 					key = -1
@@ -1180,7 +1180,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 						// if we were matching, close matching
 						if (key != -1)
 						{
-							addMatch(Point(sx,y), Point(x-1,y))
+							addMatch(Point.obtainTemp().set(sx,y), Point.obtainTemp().set(x-1,y))
 						}
 
 						sx = x
@@ -1191,7 +1191,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 
 			if (key != -1)
 			{
-				addMatch(Point(sx,y), Point(width-1,y))
+				addMatch(Point.obtainTemp().set(sx,y), Point.obtainTemp().set(width-1,y))
 			}
 		}
 
@@ -1210,7 +1210,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 				{
 					if (key != -1)
 					{
-						addMatch(Point(x,sy), Point(x,y-1))
+						addMatch(Point.obtainTemp().set(x,sy), Point.obtainTemp().set(x,y-1))
 					}
 
 					key = -1
@@ -1222,7 +1222,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 						// if we were matching, close matching
 						if (key != -1)
 						{
-							addMatch(Point(x,sy), Point(x,y-1))
+							addMatch(Point.obtainTemp().set(x,sy), Point.obtainTemp().set(x,y-1))
 						}
 
 						sy = y
@@ -1233,7 +1233,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 
 			if (key != -1)
 			{
-				addMatch(Point(x,sy), Point(x,height-1))
+				addMatch(Point.obtainTemp().set(x,sy), Point.obtainTemp().set(x,height-1))
 			}
 		}
 

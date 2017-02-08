@@ -80,6 +80,8 @@ class MapScreen(): AbstractScreen()
 
 	override fun show()
 	{
+		if (dungeonWidget != null && dungeonWidget!!.inputLockoutTimer <= 0f) dungeonWidget!!.inputLockoutTimer = 0.5f
+
 		super.show()
 		save()
 	}

@@ -64,6 +64,26 @@ class DungeonMap(val seed: Long, val numRooms: Int, val depth: Int, val theme: L
 	}
 
 	val onRoomComplete = Event1Arg<DungeonMapEntry>()
+
+	override fun toString(): String
+	{
+		var out = ""
+
+		for (y in 0..height)
+		{
+			for (x in 0..width)
+			{
+				val entry = get(Point(x, y))
+				if (entry == null) out += " "
+				else if (entry.isRoom) out += "R"
+				else out += "C"
+			}
+
+			out += "\n"
+		}
+
+		return out
+	}
 }
 
 class DungeonMapEntry(val point: Point)

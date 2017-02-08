@@ -1,6 +1,5 @@
 <Dungeons>
 	<Dungeon>
-		<Level>Dungeon/Encounter/RatKing</Level>
 		<Level>Dungeon/Fight/BasicMonster</Level>
 		<Level>Dungeon/Fight/BoxMonster</Level>
 		<Level>Dungeon/Fight/WaterMonster</Level>

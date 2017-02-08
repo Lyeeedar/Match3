@@ -71,6 +71,8 @@ abstract class AbstractScreen() : Screen, InputProcessor
 
         stage.draw()
 
+		Point.freeTemp()
+
         // limit fps
         sleep()
     }
