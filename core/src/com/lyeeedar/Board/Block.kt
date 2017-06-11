@@ -11,7 +11,7 @@ class Block(val theme: LevelTheme)
 {
 	var sprite = theme.blockSprites.tryGet(0).copy()
 
-	val death = AssetManager.loadSprite("EffectSprites/Hit/Hit", 0.1f)
+	val death = AssetManager.loadParticleEffect("Hit")
 	var count = 1
 		set(value)
 		{

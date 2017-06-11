@@ -242,6 +242,7 @@ class DualMatch(orb: Orb) : Special(orb)
 					effect.colour = modifyColour(orb.sprite.colour)
 					effect.size[0] = 4
 					effect.size[1] = 4
+					effect.isCentered = true
 					effect.collisionFun = fun(cx: Int, pcy: Int)
 					{
 
@@ -291,6 +292,7 @@ class DualMatch(orb: Orb) : Special(orb)
 		effect.colour = modifyColour(orb.sprite.colour)
 		effect.size[0] = 3
 		effect.size[1] = 3
+		effect.isCentered = true
 		effect.collisionFun = fun(cx: Int, pcy: Int)
 		{
 
@@ -355,6 +357,7 @@ class Match5(orb: Orb) : Special(orb)
 					val effect = AssetManager.loadParticleEffect("SpecialExplosion")
 					effect.size[0] = 2
 					effect.size[1] = 2
+					effect.isCentered = true
 					effect.colour = other.sprite.colour
 
 					grid.tile(point)?.effects?.add(effect)
@@ -426,6 +429,7 @@ class Match5(orb: Orb) : Special(orb)
 				val effect = AssetManager.loadParticleEffect("SpecialExplosion")
 				effect.size[0] = 2
 				effect.size[1] = 2
+				effect.isCentered = true
 				effect.colour = other.sprite.colour
 
 				grid.tile(point)?.effects?.add(effect)

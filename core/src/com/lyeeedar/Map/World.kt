@@ -1,8 +1,8 @@
 package com.lyeeedar.Map
 
 import com.badlogic.gdx.Gdx
-import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.graphics.Texture
+import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Map.Objective.AbstractObjective
 import com.lyeeedar.Util.AssetManager
@@ -58,7 +58,7 @@ class WorldDungeon
 		else return AbstractObjective.load(progressionQuests[progression])
 	}
 
-	fun isCompleted(world: World) = isUnlocked(world) && progression == progressionQuests.size
+	fun isCompleted(world: World) = isUnlocked(world) && progression >= progressionQuests.size
 
 	fun isUnlocked(world: World): Boolean
 	{

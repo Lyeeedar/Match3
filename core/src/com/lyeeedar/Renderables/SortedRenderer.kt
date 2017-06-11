@@ -286,7 +286,14 @@ class SortedRenderer(var tileSize: Float, val width: Float, val height: Float, v
 		}
 		else
 		{
-			effect.setPosition(ix + effect.size[0].toFloat() * 0.5f, iy + effect.size[1].toFloat() * 0.5f)
+			if (effect.isCentered)
+			{
+				effect.setPosition(ix + 0.5f, iy + 0.5f)
+			}
+			else
+			{
+				effect.setPosition(ix + effect.size[0].toFloat() * 0.5f, iy + effect.size[1].toFloat() * 0.5f)
+			}
 		}
 
 		update(effect)

@@ -7,7 +7,7 @@ buildscript {
         maven { url "http://dl.bintray.com/kotlin/kotlin-eap-1.1" }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.2.2'
+        classpath 'com.android.tools.build:gradle:2.0.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }

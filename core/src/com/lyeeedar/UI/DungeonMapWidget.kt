@@ -188,7 +188,7 @@ class DungeonMapWidget(val map: DungeonMap, val player: Player, val dungeon: Wor
 			)
 		}
 
-		//playerSprite.update(delta)
+		renderer.update(playerSprite)
 
 		if (waitingOnTransition) return
 

@@ -2,7 +2,7 @@ package com.lyeeedar
 
 import com.badlogic.gdx.Game
 import com.badlogic.gdx.Gdx
-import com.badlogic.gdx.files.FileHandle
+import com.badlogic.gdx.Screen
 import com.lyeeedar.Board.Level
 import com.lyeeedar.Board.LevelTheme
 import com.lyeeedar.Map.World
@@ -11,11 +11,10 @@ import com.lyeeedar.Player.PlayerData
 import com.lyeeedar.Player.SaveGame
 import com.lyeeedar.Screens.*
 import com.lyeeedar.Town.Town
-
-import javax.swing.*
 import java.io.PrintWriter
 import java.io.StringWriter
-import java.util.HashMap
+import java.util.*
+import javax.swing.JOptionPane
 
 class MainGame : Game()
 {
@@ -164,5 +163,13 @@ class MainGame : Game()
 	fun switchScreen(screen: ScreenEnum)
 	{
 		this.setScreen(screens[screen])
+	}
+
+	override fun setScreen(screen: Screen?)
+	{
+		super.setScreen(screen)
+
+		val ascreen = screen as AbstractScreen
+		Global.stage = ascreen.stage
 	}
 }

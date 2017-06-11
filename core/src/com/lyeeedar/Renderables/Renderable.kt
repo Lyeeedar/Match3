@@ -19,6 +19,8 @@ abstract class Renderable
 	var flipX: Boolean = false
 	var flipY: Boolean = false
 
+	var isCentered = false
+
 	var animation: AbstractAnimation? = null
 		set(value)
 		{

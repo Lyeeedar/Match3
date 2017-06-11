@@ -8,14 +8,14 @@
 			<Height>0.1</Height>
 			<ParticleSpeed>2,3</ParticleSpeed>
 			<ParticleRotation>0,1</ParticleRotation>
-			<Gravity>-8</Gravity>
+			<Gravity>-10</Gravity>
 			<RateKeyframes>
 				<Keyframe>0|10</Keyframe>
 			</RateKeyframes>
 			<SingleBurst>true</SingleBurst>
 			<Particles>
 				<Particle>
-					<Lifetime>0.35,0.8</Lifetime>
+					<Lifetime>0.25,0.7</Lifetime>
 					<BlendMode>Multiplicative</BlendMode>
 					<Collision>Slide</Collision>
 					<VelocityAligned>true</VelocityAligned>

@@ -1,20 +1,18 @@
 package com.lyeeedar.Board
 
-import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.Interpolation
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.ObjectMap
-import com.badlogic.gdx.utils.ObjectSet
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Direction
-import com.lyeeedar.Player.Ability.Effect
 import com.lyeeedar.Player.Ability.Permuter
 import com.lyeeedar.Player.Ability.Targetter
-import com.lyeeedar.Renderables.Animation.*
-import com.lyeeedar.Renderables.Sprite.Sprite
+import com.lyeeedar.Renderables.Animation.BumpAnimation
+import com.lyeeedar.Renderables.Animation.ExpandAnimation
+import com.lyeeedar.Renderables.Animation.LeapAnimation
+import com.lyeeedar.Renderables.Animation.MoveAnimation
 import com.lyeeedar.Util.*
-import ktx.collections.get
 import ktx.collections.set
 import ktx.collections.toGdxArray
 
@@ -235,6 +233,16 @@ class MonsterAbility
 						{
 							return false
 						}
+
+						if (tile.orb == null)
+						{
+							return false
+						}
+
+						if (tile.orb!!.special != null)
+						{
+							return false
+						}
 					}
 				}
 
@@ -276,7 +284,7 @@ class MonsterAbility
 
 				if (target.orb == null)
 				{
-					target.effects.add(grid.hitSprite.copy())
+					target.effects.add(grid.hitEffect.copy())
 					target.orb = Orb(Orb.getRandomOrb(grid.level), grid.level.theme)
 				}
 

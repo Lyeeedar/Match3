@@ -10,7 +10,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.*
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable
 import com.badlogic.gdx.utils.ObjectMap
-import com.lyeeedar.Screens.AbstractScreen
 import com.lyeeedar.UI.LayeredDrawable
 import com.lyeeedar.UI.Seperator
 import com.lyeeedar.UI.TabPanel
@@ -28,7 +27,7 @@ class Global
 	{
 		val PARTICLE_EDITOR = false
 
-		val resolution = Vector2(360f, 480f)
+		val resolution = Vector2(360f, 640f)
 
 		lateinit var skin: Skin
 		var fps = 60
@@ -38,11 +37,11 @@ class Global
 		lateinit var applicationChanger: AbstractApplicationChanger
 		var settings = Settings()
 
-		val stage: Stage
-			get() = (game.screen as AbstractScreen).stage
+		lateinit var stage: Stage
 
 		fun setup()
 		{
+			stage = Stage()
 			skin = loadSkin()
 		}
 

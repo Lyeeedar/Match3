@@ -56,7 +56,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 	var matchHint: Pair<Point, Point>? = null
 
 	// ----------------------------------------------------------------------
-	val hitSprite = AssetManager.loadSprite("EffectSprites/Hit/Hit", 0.1f)
+	val hitEffect = AssetManager.loadParticleEffect("Hit")
 
 	// ----------------------------------------------------------------------
 	var activeAbility: Ability? = null
@@ -649,6 +649,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 		newTile.swappable = oldSwap
 
 		val matches = findMatches()
+		for (match in matches) match.free()
 		if (matches.size == 0)
 		{
 			oldTile.swappable = oldSwap
@@ -791,6 +792,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 	{
 		val matches = findMatches(3)
 		clearMatches(matches)
+		for (match in matches) match.free()
 
 		lastSwapped = Point.MINUS_ONE
 
@@ -883,12 +885,22 @@ class Grid(val width: Int, val height: Int, val level: Level)
 			// the one before first is at first-dir
 			val beforeFirst = match.p1 + dir.opposite
 			val beforeFirstPair = checkSurrounding(beforeFirst, dir.opposite, key)
-			if (beforeFirstPair != null) return beforeFirstPair
+			if (beforeFirstPair != null)
+			{
+				for (match in matches) match.free()
+				return beforeFirstPair
+			}
 
 			val afterSecond = match.p2 + dir
 			val afterSecondPair = checkSurrounding(afterSecond, dir, key)
-			if (afterSecondPair != null) return afterSecondPair
+			if (afterSecondPair != null)
+			{
+				for (match in matches) match.free()
+				return afterSecondPair
+			}
 		}
+
+		for (match in matches) match.free()
 
 		fun getTileKey(x: Int, y: Int, dir: Direction): Int
 		{
@@ -1306,7 +1318,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 				{
 					t.block!!.count--
 
-					t.effects.add(hitSprite.copy())
+					t.effects.add(hitEffect.copy())
 				}
 				if (t.creature != null)
 				{
@@ -1314,13 +1326,13 @@ class Grid(val width: Int, val height: Int, val level: Level)
 					t.creature!!.damSources.add(this)
 					onDamaged(t.creature!!)
 
-					t.effects.add(hitSprite.copy())
+					t.effects.add(hitEffect.copy())
 				}
 				if (t.shield != null)
 				{
 					t.shield!!.count--
 
-					t.effects.add(hitSprite.copy())
+					t.effects.add(hitEffect.copy())
 				}
 			}
 		}
@@ -1424,7 +1436,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 		if (tile.hasPlate)
 		{
 			tile.plateStrength--
-			val hit = hitSprite.copy()
+			val hit = hitEffect.copy()
 			hit.renderDelay = delay
 			tile.effects.add(hit)
 		}
@@ -1432,7 +1444,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 		if (tile.block != null)
 		{
 			tile.block!!.count--
-			val hit = hitSprite.copy()
+			val hit = hitEffect.copy()
 			hit.renderDelay = delay
 			tile.effects.add(hit)
 			return
@@ -1441,7 +1453,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 		if (tile.shield != null)
 		{
 			tile.shield!!.count--
-			val hit = hitSprite.copy()
+			val hit = hitEffect.copy()
 			hit.renderDelay = delay
 			tile.effects.add(hit)
 			return
@@ -1451,7 +1463,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 		{
 			tile.creature!!.hp -= if (!tile.creature!!.damSources.contains(damSource)) 1 + bonusDam else 1
 			if (damSource != null) tile.creature!!.damSources.add(damSource)
-			val hit = hitSprite.copy()
+			val hit = hitEffect.copy()
 			hit.renderDelay = delay
 			tile.effects.add(hit)
 			onDamaged(tile.creature!!)
@@ -1465,7 +1477,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 		if (orb.sealed)
 		{
 			orb.sealCount--
-			val hit = hitSprite.copy()
+			val hit = hitEffect.copy()
 			hit.renderDelay = delay
 			tile.effects.add(hit)
 			return
@@ -1515,4 +1527,9 @@ data class Match(val p1: Point, val p2: Point, var used: Boolean = false)
 	fun length() = p1.dist(p2) + 1
 	fun points() = p1.rangeTo(p2)
 	fun direction() = Direction.getDirection(p1, p2)
+	fun free()
+	{
+		p1.free()
+		p2.free()
+	}
 }

@@ -3,6 +3,8 @@
 	<Emitters>
 		<Emitter>
 			<Name>Flash</Name>
+			<Width>0</Width>
+			<Height>0</Height>
 			<ParticleSpeed>0,0</ParticleSpeed>
 			<ParticleRotation>0,360</ParticleRotation>
 			<RateKeyframes>
@@ -11,7 +13,7 @@
 			<SingleBurst>true</SingleBurst>
 			<Particles>
 				<Particle>
-					<Lifetime>0.1,0.1</Lifetime>
+					<Lifetime>0.3,0.3</Lifetime>
 					<BlendMode>Additive</BlendMode>
 					<AllowResize>false</AllowResize>
 					<BlendKeyframes>true</BlendKeyframes>
@@ -25,7 +27,7 @@
 					</TextureKeyframes>
 					<SizeKeyframes>
 						<Stream>
-							<Keyframe>0|0.8|0.8</Keyframe>
+							<Keyframe>0|1.2|1.2</Keyframe>
 						</Stream>
 					</SizeKeyframes>
 					<ColourKeyframes>

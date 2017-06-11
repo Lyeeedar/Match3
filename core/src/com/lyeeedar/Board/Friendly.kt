@@ -38,7 +38,7 @@ class Friendly(val desc: FriendlyDesc) : Creature(desc.hp, desc.size, desc.sprit
 				hp -= 1
 
 				val closest = tiles.minBy { tile.euclideanDist2(it) }
-				closest!!.effects.add(grid.hitSprite.copy())
+				closest!!.effects.add(grid.hitEffect.copy())
 			}
 		}
 
