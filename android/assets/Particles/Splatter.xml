@@ -1,21 +1,21 @@
-<Effect>
-	<MoveSpeed>0</MoveSpeed>
+<Effect xmlns:meta="Editor">
+	<Loop>false</Loop>
 	<Emitters>
 		<Emitter>
 			<Name>Splatter</Name>
 			<Shape>Cone</Shape>
 			<Width>45</Width>
 			<Height>0.1</Height>
-			<ParticleSpeed>1.5,2</ParticleSpeed>
+			<ParticleSpeed>2,3</ParticleSpeed>
 			<ParticleRotation>0,1</ParticleRotation>
-			<Gravity>-4</Gravity>
+			<Gravity>-8</Gravity>
 			<RateKeyframes>
 				<Keyframe>0|10</Keyframe>
-				<Keyframe>0.1|0</Keyframe>
 			</RateKeyframes>
+			<SingleBurst>true</SingleBurst>
 			<Particles>
 				<Particle>
-					<Lifetime>0.5,1.2</Lifetime>
+					<Lifetime>0.35,0.8</Lifetime>
 					<BlendMode>Multiplicative</BlendMode>
 					<Collision>Slide</Collision>
 					<VelocityAligned>true</VelocityAligned>

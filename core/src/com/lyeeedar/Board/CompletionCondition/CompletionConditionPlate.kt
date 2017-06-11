@@ -10,7 +10,6 @@ import com.lyeeedar.Board.Orb
 import com.lyeeedar.Board.Tile
 import com.lyeeedar.Global
 import com.lyeeedar.UI.SpriteWidget
-import com.lyeeedar.Util.AssetManager
 
 class CompletionConditionPlate : AbstractCompletionCondition()
 {
@@ -24,11 +23,14 @@ class CompletionConditionPlate : AbstractCompletionCondition()
 		grid.onTurn += {
 			remaining = grid.grid.count(Tile::hasPlate)
 			label.setText("$remaining")
+			false
 		}
 
-		grid.onPop += fun (orb: Orb, delay: Float ) {
+		grid.onPop += fun (orb: Orb, delay: Float ) : Boolean {
 			remaining = grid.grid.count(Tile::hasPlate)
 			label.setText("$remaining")
+
+			return false
 		}
 	}
 

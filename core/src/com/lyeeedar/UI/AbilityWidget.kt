@@ -37,6 +37,8 @@ class AbilityWidget(val ability: Ability, val w: Float, val h: Float, val grid: 
 			{
 				widget.color = Color.DARK_GRAY
 			}
+
+			false
 		}
 		PowerBar.instance.powerChanged()
 

@@ -16,8 +16,8 @@ import com.lyeeedar.Player.Player
 import com.lyeeedar.UI.DungeonMapWidget
 import com.lyeeedar.UI.PlayerWidget
 import com.lyeeedar.UI.SpriteWidget
+import com.lyeeedar.UI.addClickListener
 import com.lyeeedar.Util.AssetManager
-import com.lyeeedar.Util.addClickListener
 
 /**
  * Created by Philip on 25-Jul-16.

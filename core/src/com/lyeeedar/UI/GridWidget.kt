@@ -3,26 +3,20 @@ package com.lyeeedar.UI
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.Batch
-import com.badlogic.gdx.graphics.g2d.HDRColourSpriteBatch
-import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.scenes.scene2d.InputEvent
 import com.badlogic.gdx.scenes.scene2d.InputListener
 import com.badlogic.gdx.scenes.scene2d.Touchable
-import com.badlogic.gdx.scenes.scene2d.actions.Actions
 import com.badlogic.gdx.scenes.scene2d.ui.Widget
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener
 import com.lyeeedar.Board.Grid
-import com.lyeeedar.Board.Mote
 import com.lyeeedar.Board.Orb
-import com.lyeeedar.Direction
-import com.lyeeedar.Global
 import com.lyeeedar.Player.Ability.Targetter
-import com.lyeeedar.Player.Player
 import com.lyeeedar.Renderables.Particle.ParticleEffect
 import com.lyeeedar.Renderables.SortedRenderer
 import com.lyeeedar.Renderables.Sprite.Sprite
-import com.lyeeedar.Util.*
+import com.lyeeedar.Util.AssetManager
+import com.lyeeedar.Util.Colour
+import com.lyeeedar.Util.Point
 
 /**
  * Created by Philip on 05-Jul-16.
@@ -281,8 +275,7 @@ class GridWidget(val grid: Grid) : Widget()
 						}
 						else
 						{
-							effect.setPosition(xi+0.5f, yi+0.5f)
-							floating.queueParticle(effect, 0f, 0f, EFFECT, 0)
+							floating.queueParticle(effect, xi, yi, EFFECT, 0)
 						}
 					}
 				}

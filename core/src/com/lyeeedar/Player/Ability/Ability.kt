@@ -7,18 +7,16 @@ import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Board.Grid
 import com.lyeeedar.Board.Tile
-import com.lyeeedar.Global
-import com.lyeeedar.Renderables.Animation.ExpandAnimation
-import com.lyeeedar.Renderables.Animation.LeapAnimation
 import com.lyeeedar.Renderables.Animation.MoveAnimation
 import com.lyeeedar.Renderables.Particle.ParticleEffect
-import com.lyeeedar.Renderables.Sprite.Sprite
 import com.lyeeedar.Screens.GridScreen
 import com.lyeeedar.UI.GridWidget
 import com.lyeeedar.UI.PowerBar
 import com.lyeeedar.UI.Unlockable
-import com.lyeeedar.Util.*
-import ktx.collections.get
+import com.lyeeedar.Util.AssetManager
+import com.lyeeedar.Util.Future
+import com.lyeeedar.Util.getRotation
+import com.lyeeedar.Util.iterator
 import ktx.collections.set
 
 /**
@@ -89,24 +87,24 @@ class Ability() : Unlockable()
 
 				val dist = p1.dst(p2)
 
-				if (fs.moveType == ParticleEffect.MoveType.Leap)
-				{
-					val animDuration = (0.25f + dist * 0.025f) * fs.moveSpeed
-
-					val path = arrayOf(p1, p2)
-					for (point in path)
-					{
-						point.x -= path.last().x
-						point.y -= path.last().y
-					}
-
-					fs.animation = LeapAnimation.obtain().set(animDuration, path, 1f + dist * 0.25f)
-					fs.animation = ExpandAnimation.obtain().set(animDuration, 0.5f, 1.5f, false)
-				}
-				else
-				{
-					fs.animation = MoveAnimation.obtain().set(dist * fs.moveSpeed, arrayOf(p1, p2), Interpolation.linear)
-				}
+//				if (fs.moveType == ParticleEffect.MoveType.Leap)
+//				{
+//					val animDuration = (0.25f + dist * 0.025f) * fs.moveSpeed
+//
+//					val path = arrayOf(p1, p2)
+//					for (point in path)
+//					{
+//						point.x -= path.last().x
+//						point.y -= path.last().y
+//					}
+//
+//					fs.animation = LeapAnimation.obtain().set(animDuration, path, 1f + dist * 0.25f)
+//					fs.animation = ExpandAnimation.obtain().set(animDuration, 0.5f, 1.5f, false)
+//				}
+//				else
+//				{
+					fs.animation = MoveAnimation.obtain().set(dist, arrayOf(p1, p2), Interpolation.linear)
+//				}
 
 				fs.rotation = getRotation(p1, p2)
 				delay += fs.lifetime

@@ -8,8 +8,8 @@ import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Global
 import com.lyeeedar.Player.PlayerData
 import com.lyeeedar.Town.House
+import com.lyeeedar.UI.addClickListener
 import com.lyeeedar.Util.AssetManager
-import com.lyeeedar.Util.addClickListener
 import ktx.scene2d.label
 import ktx.scene2d.table
 import ktx.scene2d.textButton

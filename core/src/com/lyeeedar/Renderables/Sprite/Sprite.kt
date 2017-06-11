@@ -13,8 +13,7 @@ import com.badlogic.gdx.utils.Array
 import com.lyeeedar.Renderables.Animation.AbstractAnimation
 import com.lyeeedar.Renderables.Animation.AbstractColourAnimation
 import com.lyeeedar.Renderables.Renderable
-import com.lyeeedar.Util.Colour
-import com.lyeeedar.Util.Point
+import com.lyeeedar.Util.*
 
 class Sprite(val fileName: String, var animationDelay: Float, var textures: Array<TextureRegion>, colour: Colour, mode: Sprite.AnimationMode, var drawActualSize: Boolean) : Renderable()
 {
@@ -39,6 +38,7 @@ class Sprite(val fileName: String, var animationDelay: Float, var textures: Arra
 	var referenceSize: Float? = null
 
 	var tempCol = Colour()
+	var oldCol = Colour()
 	var colour = Colour(1f,1f,1f,1f)
 	var colourAnimation: AbstractColourAnimation? = null
 
@@ -48,13 +48,8 @@ class Sprite(val fileName: String, var animationDelay: Float, var textures: Arra
 
 	var faceInMoveDirection: Boolean = false
 	val lastPos: Vector2 = Vector2()
-	var rotation: Float = 0.toFloat()
 	var fixPosition: Boolean = false
 
-	var flipX: Boolean = false
-	var flipY: Boolean = false
-
-	val size = intArrayOf(1, 1)
 
 	var completed = false
 
@@ -64,6 +59,10 @@ class Sprite(val fileName: String, var animationDelay: Float, var textures: Arra
 	var baseScale = floatArrayOf(1f, 1f)
 
 	var completionCallback: (() -> Unit)? = null
+
+	var removeAmount: Float = 0.0f
+
+	var frameBlend = false
 
 	init
 	{
@@ -185,10 +184,10 @@ class Sprite(val fileName: String, var animationDelay: Float, var textures: Arra
 			}
 		}
 
-		render(batch, x, y, size, size, scaleX, scaleY, animationState)
+		render(batch, x, y, size, size, scaleX, scaleY, animationState, rotation)
 	}
 
-	fun render(batch: Batch, x: Float, y: Float, width: Float, height: Float, scaleX: Float = 1f, scaleY: Float = 1f)
+	fun render(batch: Batch, x: Float, y: Float, width: Float, height: Float, scaleX: Float = 1f, scaleY: Float = 1f, rotation: Float = 0f)
 	{
 		var scaleX = baseScale[0] * scaleX
 		var scaleY = baseScale[1] * scaleY
@@ -203,10 +202,10 @@ class Sprite(val fileName: String, var animationDelay: Float, var textures: Arra
 			}
 		}
 
-		render(batch, x, y, width, height, scaleX, scaleY, animationState)
+		render(batch, x, y, width, height, scaleX, scaleY, animationState, rotation + this.rotation)
 	}
 
-	private fun render(batch: Batch, x: Float, y: Float, width: Float, height: Float, scaleX: Float, scaleY: Float, animationState: AnimationState)
+	private fun render(batch: Batch, x: Float, y: Float, width: Float, height: Float, scaleX: Float, scaleY: Float, animationState: AnimationState, rotation: Float)
 	{
 		val colour = if (colourAnimation != null) colourAnimation!!.renderColour()!! else if (animation?.renderColour() != null) animation!!.renderColour()!! else this.colour
 
@@ -217,23 +216,24 @@ class Sprite(val fileName: String, var animationDelay: Float, var textures: Arra
 
 		if (colour == Colour.WHITE)
 		{
-			drawTexture(batch, textures.items[animationState.texIndex], x, y, width, height, scaleX, scaleY, animationState)
+			drawTexture(batch, animationState.texIndex, x, y, width, height, scaleX, scaleY, rotation)
 		}
 		else
 		{
-			val oldCol = (batch as? HDRColourSpriteBatch)?.colour ?: tempCol.set(batch.color, batch.packedColor)
+			val c = (batch as? HDRColourSpriteBatch)?.colour ?: oldCol.set(batch.color, batch.packedColor)
+			val oldCol = oldCol.set(c)
 
 			val col = tempColour.set(oldCol)
 			col *= colour
 			(batch as? HDRColourSpriteBatch)?.setColor(col) ?: batch.setColor(col.toFloatBits())
 
-			drawTexture(batch, textures.items[animationState.texIndex], x, y, width, height, scaleX, scaleY, animationState)
+			drawTexture(batch, animationState.texIndex, x, y, width, height, scaleX, scaleY, rotation)
 
 			(batch as? HDRColourSpriteBatch)?.setColor(oldCol) ?: batch.setColor(oldCol.toFloatBits())
 		}
 	}
 
-	private fun drawTexture(batch: Batch, texture: TextureRegion, x: Float, y: Float, width: Float, height: Float, scaleX: Float, scaleY: Float, animationState: AnimationState)
+	private fun drawTexture(batch: Batch, textureIndex: Int, x: Float, y: Float, width: Float, height: Float, scaleX: Float, scaleY: Float, rotation: Float)
 	{
 		var x = x
 		var y = y
@@ -242,6 +242,8 @@ class Sprite(val fileName: String, var animationDelay: Float, var textures: Arra
 
 		width *= size[0]
 		height *= size[1]
+
+		val texture = textures[textureIndex]
 
 		if (drawActualSize)
 		{
@@ -268,13 +270,16 @@ class Sprite(val fileName: String, var animationDelay: Float, var textures: Arra
 			y -= offset.y
 		}
 
-		if (batch is HDRColourSpriteBatch)
+		if (frameBlend && textures.size > 1)
 		{
-			batch.draw(texture, x, y, width / 2.0f, height / 2.0f, width, height, scaleX, scaleY, rotation, flipX, flipY)
+			val alpha = animationAccumulator / animationDelay
+			val nextIndex = if (textureIndex+1 == textures.size) 0 else textureIndex+1
+
+			drawBlend(batch, texture, textures[nextIndex], alpha, x, y, width / 2.0f, height / 2.0f, width, height, scaleX, scaleY, rotation, flipX, flipY, removeAmount)
 		}
 		else
 		{
-			batch.draw(texture, x, y, width / 2.0f, height / 2.0f, width, height, scaleX, scaleY, rotation)
+			draw(batch, texture, x, y, width / 2.0f, height / 2.0f, width, height, scaleX, scaleY, rotation, flipX, flipY, removeAmount)
 		}
 	}
 
@@ -384,7 +389,8 @@ class Sprite(val fileName: String, var animationDelay: Float, var textures: Arra
 
 				x4 = x1 + (x3 - x2)
 				y4 = y3 - (y2 - y1)
-			} else
+			}
+			else
 			{
 				x1 = p1x
 				y1 = p1y

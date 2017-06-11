@@ -1,11 +1,6 @@
 package com.lyeeedar.Renderables.Particle
 
-import com.badlogic.gdx.graphics.Color
-import com.badlogic.gdx.graphics.GL20
-import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.g2d.TextureRegion
-import com.badlogic.gdx.math.Interpolation
-import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Rectangle
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.Array
@@ -15,7 +10,7 @@ import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.BlendMode
 import com.lyeeedar.Direction
 import com.lyeeedar.Util.*
-import com.sun.org.apache.xpath.internal.operations.Bool
+import ktx.math.div
 
 /**
  * Created by Philip on 14-Aug-16.
@@ -36,6 +31,7 @@ class Particle(val emitter: Emitter)
 	private val normal = Vector2()
 	private val reflection = Vector2()
 	private val temp = Vector2()
+	private val temp2 = Vector2()
 	private val collisionList = Array<Direction>(false, 16)
 
 	val particles = Array<ParticleData>(false, 16)
@@ -44,8 +40,10 @@ class Particle(val emitter: Emitter)
 	lateinit var lifetime: Range
 	lateinit var blend: BlendMode
 	var drag = 0f
+	var brownian = 0f
 	var velocityAligned = false
 	lateinit var collision: CollisionAction
+	var blendKeyframes = false
 	val texture = StepTimeline<TextureRegion>()
 	val colour = ColourTimeline()
 	val alpha = LerpTimeline()
@@ -93,6 +91,22 @@ class Particle(val emitter: Emitter)
 				particle.velocity.sub(temp)
 
 				particle.velocity.y += gravity * delta
+
+				if (brownian > 0f)
+				{
+					val direction = temp2.set(particle.velocity)
+					val length = particle.velocity.len()
+
+					if (length != 0f) direction.div(length)
+
+					val impulseVector = temp.set(Random.random()-0.5f, Random.random()-0.5f)
+					impulseVector.nor()
+
+					direction.lerp(impulseVector, brownian * delta)
+					direction.nor()
+
+					particle.velocity.set(direction).scl(length)
+				}
 
 				moveVec.set(particle.velocity).scl(delta)
 
@@ -187,7 +201,7 @@ class Particle(val emitter: Emitter)
 		{
 			for (y in aabb.y.toInt()..(aabb.y+aabb.height).toInt())
 			{
-				if (collisionGrid.tryGet(x, y, false))
+				if (collisionGrid.tryGet(x, y, false)!!)
 				{
 					// calculate collision normal
 
@@ -237,8 +251,8 @@ class Particle(val emitter: Emitter)
 		val sx = scale * emitter.size.x
 		val sy = scale * emitter.size.y
 
-		val x = if (overridePos == null) particle.position.x else overridePos.x
-		val y = if (overridePos == null) particle.position.y else overridePos.y
+		val x = overridePos?.x ?: particle.position.x
+		val y = overridePos?.y ?: particle.position.y
 
 		var actualx = x
 		var actualy = y
@@ -276,13 +290,13 @@ class Particle(val emitter: Emitter)
 	{
 		val particle = ParticleData.obtain().set(
 				position, velocity,
-				rotation, lifetime.v1 * MathUtils.random(),
-				MathUtils.random(texture.streams.size-1),
-				MathUtils.random(colour.streams.size-1),
-				MathUtils.random(alpha.streams.size-1),
-				MathUtils.random(rotationSpeed.streams.size-1),
-				MathUtils.random(size.streams.size-1),
-				MathUtils.random())
+				rotation, (lifetime.v2 - lifetime.v1) * Random.random(),
+				Random.random(texture.streams.size-1),
+				Random.random(colour.streams.size-1),
+				Random.random(alpha.streams.size-1),
+				Random.random(rotationSpeed.streams.size-1),
+				Random.random(size.streams.size-1),
+				Random.random())
 
 		particles.add(particle)
 	}
@@ -299,6 +313,9 @@ class Particle(val emitter: Emitter)
 			particle.drag = xml.getFloat("Drag", 0f)
 			particle.velocityAligned = xml.getBoolean("VelocityAligned", false)
 			particle.allowResize = xml.getBoolean("AllowResize", true)
+			particle.brownian = xml.getFloat("Brownian", 0f)
+
+			particle.blendKeyframes = xml.getBoolean("BlendKeyframes", false)
 
 			val textureEls = xml.getChildByName("TextureKeyframes")
 			if (textureEls != null)
@@ -380,7 +397,13 @@ data class ParticleData(val position: Vector2, val velocity: Vector2,
 	var obtained: Boolean = false
 	companion object
 	{
-		private val pool: Pool<ParticleData> = getPool()
+		private val pool: Pool<ParticleData> = object : Pool<ParticleData>() {
+			override fun newObject(): ParticleData
+			{
+				return ParticleData()
+			}
+
+		}
 
 		@JvmStatic fun obtain(): ParticleData
 		{

@@ -3,33 +3,28 @@ package com.lyeeedar.Screens
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.NinePatch
-import com.badlogic.gdx.graphics.g2d.SpriteBatch
-import com.badlogic.gdx.math.Bezier
-import com.badlogic.gdx.math.Interpolation
-import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.scenes.scene2d.InputEvent
-import com.badlogic.gdx.scenes.scene2d.InputListener
 import com.badlogic.gdx.scenes.scene2d.Touchable
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton
-import com.badlogic.gdx.scenes.scene2d.ui.Value
-import com.badlogic.gdx.scenes.scene2d.utils.*
-import com.lyeeedar.Board.Grid
+import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable
+import com.badlogic.gdx.scenes.scene2d.utils.TiledDrawable
 import com.lyeeedar.Board.Level
-import com.lyeeedar.Board.LevelTheme
 import com.lyeeedar.Global
 import com.lyeeedar.Player.Player
 import com.lyeeedar.Renderables.Animation.ExpandAnimation
 import com.lyeeedar.Renderables.Animation.LeapAnimation
-import com.lyeeedar.Renderables.Animation.MoveAnimation
 import com.lyeeedar.Renderables.Sprite.Sprite
 import com.lyeeedar.Renderables.Sprite.SpriteEffectActor
-import ktx.scene2d.*
-import ktx.actors.*
-
 import com.lyeeedar.UI.*
 import com.lyeeedar.Util.AssetManager
+import ktx.actors.onClick
+import ktx.scene2d.KTextButton
+import ktx.scene2d.stack
+import ktx.scene2d.table
+import ktx.scene2d.textButton
 
 /**
  * Created by Philip on 20-Mar-16.
@@ -138,6 +133,8 @@ class GridScreen(): AbstractScreen()
 
 						SpriteEffectActor(AssetManager.loadSprite("EffectSprites/Hit/Hit", 0.1f), 32f, 32f, dst)
 					})
+
+			false
 		}
 
 		mainTable.clear()
@@ -156,8 +153,7 @@ class GridScreen(): AbstractScreen()
 					onClick { inputEvent: InputEvent, kTextButton: KTextButton ->
 						if (level.grid.activeAbility != null && level.grid.activeAbility!!.selectedTargets.size > 0)
 						{
-							level.grid.activeAbility!!.activate(level.grid)
-							level.grid.activeAbility = null
+							level.grid.activateAbility()
 						}
 					}
 				}

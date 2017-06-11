@@ -43,8 +43,9 @@ class CompletionConditionKill() : AbstractCompletionCondition()
 			}
 		}
 
-		grid.onDamaged += {
+		grid.onDamaged += fun(c) : Boolean {
 			rebuildWidget()
+			return false
 		}
 	}
 

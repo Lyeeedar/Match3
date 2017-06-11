@@ -16,7 +16,6 @@ import com.lyeeedar.Renderables.Sprite.Sprite
 import com.lyeeedar.Util.*
 import ktx.collections.set
 import ktx.collections.toGdxArray
-import java.util.*
 
 class Friendly(val desc: FriendlyDesc) : Creature(desc.hp, desc.size, desc.sprite.copy(), desc.death.copy())
 {

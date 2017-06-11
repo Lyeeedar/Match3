@@ -9,12 +9,11 @@ import com.lyeeedar.Direction
 import com.lyeeedar.Map.DungeonMap
 import com.lyeeedar.Map.DungeonMapEntry
 import com.lyeeedar.Map.Objective.AbstractObjective
-import com.lyeeedar.Map.Objective.ObjectiveExplore
-import com.lyeeedar.Util.*
-import java.util.*
-import ktx.collections.get
+import com.lyeeedar.Util.Point
+import com.lyeeedar.Util.Random
+import com.lyeeedar.Util.random
+import com.lyeeedar.Util.removeRandom
 import ktx.collections.set
-import ktx.collections.toGdxArray
 
 /**
  * Created by Philip on 24-Jul-16.
@@ -22,7 +21,7 @@ import ktx.collections.toGdxArray
 
 class HubGenerator(val seed: Long)
 {
-	val ran = Random(seed)
+	val ran = Random.obtainTS(seed)
 	val maxCorridorLength = 4
 	val maxLength = 10
 	var numRoomsToSpawn = 0

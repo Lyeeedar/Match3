@@ -98,16 +98,4 @@ class Tile(x: Int, y: Int) : Point(x, y)
 
 		return " "
 	}
-
-	fun getPosDiff(p: Point): kotlin.Array<Vector2> = getPosDiff(p.x, p.y)
-	fun getPosDiff(px: Int, py: Int): kotlin.Array<Vector2>
-	{
-		val oldPos = Vector2(px.toFloat(), py.toFloat())
-		val newPos = Vector2(x.toFloat(), y.toFloat())
-
-		val diff = newPos.sub(oldPos)
-		diff.x *= -1
-
-		return arrayOf(diff, Vector2())
-	}
 }

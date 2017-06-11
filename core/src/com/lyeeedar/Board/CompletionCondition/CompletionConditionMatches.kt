@@ -1,11 +1,9 @@
 package com.lyeeedar.Board.CompletionCondition
 
 import com.badlogic.gdx.graphics.Color
-import com.badlogic.gdx.graphics.g2d.NinePatch
 import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.badlogic.gdx.scenes.scene2d.ui.Skin
 import com.badlogic.gdx.scenes.scene2d.ui.Table
-import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable
 import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.IntIntMap
 import com.badlogic.gdx.utils.IntMap
@@ -93,7 +91,7 @@ class CompletionConditionMatches(): AbstractCompletionCondition()
 			}
 		}
 
-		grid.onPop += fun (orb: Orb, delay: Float ) {
+		grid.onPop += fun (orb: Orb, delay: Float ) : Boolean {
 			if (toBeMatched.containsKey(orb.key))
 			{
 				var count = toBeMatched[orb.key]
@@ -102,6 +100,8 @@ class CompletionConditionMatches(): AbstractCompletionCondition()
 
 				rebuildWidget()
 			}
+
+			return false
 		}
 
 		for (entry in toBeMatched.entries())

@@ -1,22 +1,23 @@
 package com.lyeeedar.Board
 
-import com.badlogic.gdx.math.Bezier
-import com.badlogic.gdx.math.CatmullRomSpline
 import com.badlogic.gdx.math.Interpolation
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.ObjectSet
-import com.lyeeedar.Direction
-import com.lyeeedar.Global
 import com.lyeeedar.Renderables.Animation.ChromaticAnimation
 import com.lyeeedar.Renderables.Animation.ExpandAnimation
 import com.lyeeedar.Renderables.Animation.LeapAnimation
 import com.lyeeedar.Renderables.Animation.MoveAnimation
 import com.lyeeedar.Renderables.Sprite.Sprite
-import com.lyeeedar.Util.*
+import com.lyeeedar.Util.AssetManager
+import com.lyeeedar.Util.Colour
+import com.lyeeedar.Util.Point
+import com.lyeeedar.Util.getRotation
 
 /**
  * Created by Philip on 30-Jul-16.
  */
+
+val beamMoveSpeed = 0.1f
 
 abstract class Special(val orb: Orb)
 {
@@ -56,7 +57,7 @@ abstract class Special(val orb: Orb)
 
 				val effect = AssetManager.loadParticleEffect("SpecialBeam")
 				effect.colour = modifyColour(colour)
-				effect.animation = MoveAnimation.obtain().set(dist * effect.moveSpeed, arrayOf(p1, p2), Interpolation.linear)
+				effect.animation = MoveAnimation.obtain().set(dist * beamMoveSpeed, arrayOf(p1, p2), Interpolation.linear)
 				effect.rotation = getRotation(p1, p2)
 				effect.collisionFun = fun(cx: Int, pcy: Int)
 				{
@@ -122,7 +123,7 @@ abstract class Special(val orb: Orb)
 
 				val effect = AssetManager.loadParticleEffect("SpecialBeam")
 				effect.colour = modifyColour(colour)
-				effect.animation = MoveAnimation.obtain().set(dist * effect.moveSpeed, arrayOf(p1, p2), Interpolation.linear)
+				effect.animation = MoveAnimation.obtain().set(dist * beamMoveSpeed, arrayOf(p1, p2), Interpolation.linear)
 				effect.rotation = getRotation(p1, p2)
 				effect.collisionFun = fun(cx: Int, pcy: Int)
 				{
@@ -239,7 +240,8 @@ class DualMatch(orb: Orb) : Special(orb)
 
 					val effect = AssetManager.loadParticleEffect("SpecialExplosion")
 					effect.colour = modifyColour(orb.sprite.colour)
-					effect.size = 4f
+					effect.size[0] = 4
+					effect.size[1] = 4
 					effect.collisionFun = fun(cx: Int, pcy: Int)
 					{
 
@@ -287,7 +289,8 @@ class DualMatch(orb: Orb) : Special(orb)
 
 		val effect = AssetManager.loadParticleEffect("SpecialExplosion")
 		effect.colour = modifyColour(orb.sprite.colour)
-		effect.size = 3f
+		effect.size[0] = 3
+		effect.size[1] = 3
 		effect.collisionFun = fun(cx: Int, pcy: Int)
 		{
 
@@ -350,7 +353,8 @@ class Match5(orb: Orb) : Special(orb)
 				return fun (point: Point, grid: Grid, orb: Orb)
 				{
 					val effect = AssetManager.loadParticleEffect("SpecialExplosion")
-					effect.size = 2.5f
+					effect.size[0] = 2
+					effect.size[1] = 2
 					effect.colour = other.sprite.colour
 
 					grid.tile(point)?.effects?.add(effect)
@@ -420,7 +424,8 @@ class Match5(orb: Orb) : Special(orb)
 			return fun (point: Point, grid: Grid, orb: Orb)
 			{
 				val effect = AssetManager.loadParticleEffect("SpecialExplosion")
-				effect.size = 2.5f
+				effect.size[0] = 2
+				effect.size[1] = 2
 				effect.colour = other.sprite.colour
 
 				grid.tile(point)?.effects?.add(effect)

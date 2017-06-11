@@ -1,11 +1,10 @@
 package com.lyeeedar.Renderables.Animation
 
-import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.utils.Pool
-import com.badlogic.gdx.utils.Pools
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Util.Colour
+import com.lyeeedar.Util.lerp
 
 /**
  * Created by Philip on 31-Jul-16.
@@ -16,8 +15,10 @@ class AlphaAnimation() : AbstractColourAnimation()
 	private var duration: Float = 0f
 	private var time: Float = 0f
 	private val colour: Colour = Colour()
+
 	private val startColour: Colour = Colour()
-	private lateinit var alphas: FloatArray
+	private var startAlpha: Float = 1f
+	private var endAlpha: Float = 1f
 
 	override fun duration(): Float = duration
 	override fun time(): Float = time
@@ -28,10 +29,10 @@ class AlphaAnimation() : AbstractColourAnimation()
 		time += delta
 
 		val alpha = MathUtils.clamp(time / duration, 0f, 1f)
-		val index = MathUtils.clamp(Math.round(alphas.size.toFloat() * alpha).toInt(), 0, alphas.size-1)
+		val alphaValue = startAlpha.lerp(endAlpha, alpha)
 
 		colour.set(startColour)
-		colour.a = alphas[index]
+		colour.a *= alphaValue
 
 		if (time >= duration)
 		{
@@ -46,25 +47,32 @@ class AlphaAnimation() : AbstractColourAnimation()
 	{
 	}
 
-	fun set(alphas: FloatArray, start: Colour, duration: Float, oneTime: Boolean = true): AlphaAnimation
+	fun set(duration: Float, start: Float, end: Float, colour: Colour = Colour.WHITE, oneTime: Boolean = true): AlphaAnimation
 	{
-		this.startColour.set(start)
-		this.alphas = alphas
+		this.startColour.set(colour)
+		this.startAlpha = start
+		this.endAlpha = end
 		this.duration = duration
 		this.oneTime = oneTime
 
 		this.time = 0f
-		this.colour.set(start)
+		this.colour.set(startColour)
 
 		return this
 	}
 
-	override fun copy(): AbstractAnimation = AlphaAnimation.obtain().set(alphas, startColour, duration, oneTime)
+	override fun copy(): AbstractAnimation = AlphaAnimation.obtain().set(duration, startAlpha, endAlpha, colour, oneTime)
 
 	var obtained: Boolean = false
 	companion object
 	{
-		private val pool: Pool<AlphaAnimation> = Pools.get( AlphaAnimation::class.java, Int.MAX_VALUE )
+		private val pool: Pool<AlphaAnimation> = object : Pool<AlphaAnimation>() {
+			override fun newObject(): AlphaAnimation
+			{
+				return AlphaAnimation()
+			}
+
+		}
 
 		@JvmStatic fun obtain(): AlphaAnimation
 		{

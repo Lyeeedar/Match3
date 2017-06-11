@@ -1,16 +1,13 @@
 package com.lyeeedar.Renderables.Particle
 
 import com.badlogic.gdx.graphics.Color
-import com.badlogic.gdx.graphics.GL20
-import com.badlogic.gdx.graphics.Pixmap
 import com.badlogic.gdx.graphics.g2d.Batch
-import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.Array
-import com.badlogic.gdx.utils.Pool
 import com.badlogic.gdx.utils.Pools
 import com.badlogic.gdx.utils.XmlReader
+import com.lyeeedar.Direction
 import com.lyeeedar.Renderables.Renderable
 import com.lyeeedar.Util.Array2D
 import com.lyeeedar.Util.Colour
@@ -22,52 +19,35 @@ import com.lyeeedar.Util.getXml
 
 class ParticleEffect : Renderable()
 {
-	enum class MoveType
-	{
-		Linear,
-		Leap
-	}
-
 	private lateinit var loadPath: String
 
 	var colour: Colour = Colour(Color.WHITE)
-	var speedMultiplier: Float = 1f
-	var moveType: MoveType = MoveType.Linear
 
+	var loop = true
 	var completed = false
 	var killOnAnimComplete = true
 	private var warmupTime = 0f
 	private var doneWarmup = false
-	var moveSpeed: Float = 1f
 	val emitters = Array<Emitter>()
 
 	// local stuff
 	val position = Vector2()
-	var rotation: Float = 0f
-	var sizex: Float = 1f
-	var sizey: Float = 1f
-	var flipX: Boolean = false
-	var flipY: Boolean = false
-
-	var size: Float
-		get() = 0f
-		set(value)
-		{
-			sizex = value
-			sizey = value
-		}
+	var lockPosition = false
+	var facing: Direction = Direction.NORTH
+	var useFacing = true
 
 	var collisionGrid: Array2D<Boolean>? = null
 	var collisionFun: ((x: Int, y: Int) -> Unit)? = null
 
 	val lifetime: Float
-		get() = (animation?.duration() ?: emitters.maxBy { it.lifetime() }!!.lifetime()) * (1f / speedMultiplier)
+		get() = (animation?.duration() ?: emitters.maxBy { it.lifetime() }!!.lifetime())
 
 	fun start()
 	{
 		for (emitter in emitters)
 		{
 			emitter.time = 0f
+			emitter.emitted = false
 			emitter.start()
 		}
 	}
@@ -81,20 +61,12 @@ class ParticleEffect : Renderable()
 	{
 		var complete = false
 
-		if (moveSpeed == 0f)
+		complete = animation?.update(delta) ?: false
+		if (complete)
 		{
+			if (killOnAnimComplete) stop()
 			animation?.free()
 			animation = null
-		}
-		else
-		{
-			complete = animation?.update(delta * speedMultiplier) ?: false
-			if (complete)
-			{
-				if (killOnAnimComplete) stop()
-				animation?.free()
-				animation = null
-			}
 		}
 
 		val posOffset = animation?.renderOffset()
@@ -102,8 +74,8 @@ class ParticleEffect : Renderable()
 		val y = position.y + (posOffset?.get(1) ?: 0f)
 
 		val scale = animation?.renderScale()
-		val sx = sizex * (scale?.get(0) ?: 1f)
-		val sy = sizey * (scale?.get(1) ?: 1f)
+		val sx = size[0] * (scale?.get(0) ?: 1f)
+		val sy = size[1] * (scale?.get(1) ?: 1f)
 
 		for (emitter in emitters)
 		{
@@ -124,7 +96,7 @@ class ParticleEffect : Renderable()
 			}
 		}
 
-		for (emitter in emitters) emitter.update(delta * speedMultiplier, collisionGrid)
+		for (emitter in emitters) emitter.update(delta, collisionGrid)
 
 		if (collisionFun != null)
 		{
@@ -138,6 +110,9 @@ class ParticleEffect : Renderable()
 				for (emitter in emitters) emitter.time = 0f
 				complete = true
 				completed = true
+
+				if (!loop) stop()
+				else for (emitter in emitters) emitter.emitted = false
 			}
 			else
 			{
@@ -148,7 +123,7 @@ class ParticleEffect : Renderable()
 		return complete
 	}
 
-	fun complete() = emitters.firstOrNull{ !it.complete() } == null
+	fun complete() = emitters.all{ it.complete() }
 
 	fun setPosition(x: Float, y: Float)
 	{
@@ -160,7 +135,7 @@ class ParticleEffect : Renderable()
 
 	}
 
-	fun debug(shape: ShapeRenderer, offsetx: Float, offsety: Float, tileSize: Float)
+	fun debug(shape: ShapeRenderer, offsetx: Float, offsety: Float, tileSize: Float, drawEmitter: Boolean, drawParticles: Boolean)
 	{
 		val posOffset = animation?.renderOffset()
 		val x = position.x + (posOffset?.get(0) ?: 0f)
@@ -197,7 +172,11 @@ class ParticleEffect : Renderable()
 			val w2 = w * 0.5f
 			val h2 = h * 0.5f
 
-			if (emitter.shape == Emitter.EmissionShape.BOX)
+			if (!drawEmitter)
+			{
+
+			}
+			else if (emitter.shape == Emitter.EmissionShape.BOX)
 			{
 				shape.rect(ex-w2, ey-h2, w2, h2, w, h, 1f, 1f, emitter.emitterRotation + rotation)
 			}
@@ -232,6 +211,56 @@ class ParticleEffect : Renderable()
 				shape.line(core, max)
 				shape.line(min, max)
 			}
+			else
+			{
+				throw Exception("Unhandled emitter type '${emitter.shape}'!")
+			}
+
+			if (drawParticles)
+			{
+				for (particle in emitter.particles)
+				{
+					var px = 0f
+					var py = 0f
+
+					if (emitter.simulationSpace == Emitter.SimulationSpace.LOCAL)
+					{
+						temp.set(emitter.offset.valAt(0, emitter.time))
+						temp.scl(emitter.size)
+						temp.rotate(emitter.rotation)
+
+						px += (emitter.position.x + temp.x)
+						py += (emitter.position.y + temp.y)
+					}
+
+					for (pdata in particle.particles)
+					{
+						val size = particle.size.valAt(pdata.sizeStream, pdata.life).lerp(pdata.ranVal)
+						var sizex = size
+						var sizey = size
+
+						if (particle.allowResize)
+						{
+							sizex *= emitter.size.x
+							sizey *= emitter.size.y
+						}
+
+						sizex *= tileSize
+						sizey *= tileSize
+
+						val rotation = if (emitter.simulationSpace == Emitter.SimulationSpace.LOCAL) pdata.rotation + emitter.rotation + emitter.emitterRotation else pdata.rotation
+
+						temp.set(pdata.position)
+
+						if (emitter.simulationSpace == Emitter.SimulationSpace.LOCAL) temp.scl(emitter.size).rotate(emitter.rotation + emitter.emitterRotation)
+
+						val drawx = (temp.x + px) * tileSize + offsetx
+						val drawy = (temp.y + py) * tileSize + offsety
+
+						shape.rect(drawx - sizex / 2f, drawy - sizey / 2f, sizex / 2f, sizey / 2f, sizex, sizey, 1f, 1f, rotation)
+					}
+				}
+			}
 		}
 
 		Pools.free(temp)
@@ -242,14 +271,17 @@ class ParticleEffect : Renderable()
 	override fun copy(): ParticleEffect
 	{
 		val effect = ParticleEffect.load(loadPath)
+		effect.killOnAnimComplete = killOnAnimComplete
 		effect.setPosition(position.x, position.y)
 		effect.rotation = rotation
 		effect.colour.set(colour)
-		effect.speedMultiplier = speedMultiplier
+		effect.warmupTime = warmupTime
+		effect.loop = loop
 		effect.flipX = flipX
 		effect.flipY = flipY
-		effect.sizex = sizex
-		effect.sizey = sizey
+		effect.useFacing = useFacing
+		effect.size[0] = size[0]
+		effect.size[1] = size[1]
 		return effect
 	}
 
@@ -260,8 +292,7 @@ class ParticleEffect : Renderable()
 			val effect = ParticleEffect()
 
 			effect.warmupTime = xml.getFloat("Warmup", 0f)
-			effect.moveSpeed = xml.getFloat("MoveSpeed", 1f)
-			effect.moveType = MoveType.valueOf(xml.get("MoveType", "Linear"))
+			effect.loop = xml.getBoolean("Loop", true)
 
 			val emittersEl = xml.getChildByName("Emitters")
 			for (i in 0..emittersEl.childCount-1)

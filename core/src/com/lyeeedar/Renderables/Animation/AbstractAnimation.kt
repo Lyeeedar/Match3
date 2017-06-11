@@ -1,24 +1,24 @@
 package com.lyeeedar.Renderables.Animation
 
-import com.badlogic.gdx.graphics.Color
-import com.badlogic.gdx.utils.XmlReader
-import java.util.HashMap
-
 import com.badlogic.gdx.utils.XmlReader.Element
 import com.badlogic.gdx.utils.reflect.ClassReflection
-import com.badlogic.gdx.utils.reflect.ReflectionException
 import com.lyeeedar.Util.Colour
 
 abstract class AbstractAnimation
 {
 	var startDelay = 0f
 
+	var isBlocking = true
+
 	abstract fun renderOffset(): FloatArray?
 	abstract fun renderScale(): FloatArray?
 	abstract fun renderColour(): Colour?
+	abstract fun renderRotation(): Float?
 
 	abstract fun duration(): Float
 	abstract fun time(): Float
+	fun remaining() = Math.max(duration() - time(), 0f)
+
 	abstract fun update(delta: Float): Boolean
 	abstract fun parse(xml: Element)
 

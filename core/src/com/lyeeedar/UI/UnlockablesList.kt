@@ -4,9 +4,7 @@ import com.badlogic.gdx.graphics.g2d.NinePatch
 import com.badlogic.gdx.scenes.scene2d.ui.*
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable
 import com.lyeeedar.Global
-import com.lyeeedar.Player.PlayerData
 import com.lyeeedar.Util.AssetManager
-import com.lyeeedar.Util.addClickListener
 
 /**
  * Created by Philip on 06-Aug-16.

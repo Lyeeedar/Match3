@@ -3,23 +3,21 @@ package com.lyeeedar.UI
 import com.badlogic.gdx.graphics.g2d.NinePatch
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.scenes.scene2d.Actor
-import com.badlogic.gdx.scenes.scene2d.ui.*
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener
+import com.badlogic.gdx.scenes.scene2d.ui.Button
+import com.badlogic.gdx.scenes.scene2d.ui.Label
+import com.badlogic.gdx.scenes.scene2d.ui.Table
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable
-import com.badlogic.gdx.utils.Align
 import com.lyeeedar.Board.LevelTheme
 import com.lyeeedar.Global
 import com.lyeeedar.MainGame
 import com.lyeeedar.Map.DungeonMap
 import com.lyeeedar.Map.Generators.HubGenerator
-import com.lyeeedar.Map.Objective.AbstractObjective
 import com.lyeeedar.Map.WorldDungeon
-import com.lyeeedar.Player.Ability.Ability
 import com.lyeeedar.Player.Player
 import com.lyeeedar.Player.PlayerData
 import com.lyeeedar.Screens.MapScreen
 import com.lyeeedar.Util.AssetManager
-import com.lyeeedar.Util.addClickListener
 
 /**
  * Created by Philip on 02-Aug-16.

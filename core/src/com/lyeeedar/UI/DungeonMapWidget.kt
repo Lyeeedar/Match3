@@ -3,7 +3,6 @@ package com.lyeeedar.UI
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.Batch
-import com.badlogic.gdx.graphics.g2d.HDRColourSpriteBatch
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.scenes.scene2d.InputEvent
@@ -13,6 +12,7 @@ import com.lyeeedar.Direction
 import com.lyeeedar.Global
 import com.lyeeedar.MainGame
 import com.lyeeedar.Map.DungeonMap
+import com.lyeeedar.Map.WorldDungeon
 import com.lyeeedar.Player.*
 import com.lyeeedar.Renderables.Animation.MoveAnimation
 import com.lyeeedar.Renderables.SortedRenderer
@@ -21,7 +21,6 @@ import com.lyeeedar.Renderables.Sprite.TilingSprite
 import com.lyeeedar.Screens.GridScreen
 import com.lyeeedar.Screens.TownScreen
 import com.lyeeedar.Util.*
-import com.lyeeedar.Map.WorldDungeon
 
 /**
  * Created by Philip on 24-Jul-16.
@@ -189,7 +188,7 @@ class DungeonMapWidget(val map: DungeonMap, val player: Player, val dungeon: Wor
 			)
 		}
 
-		playerSprite.update(delta)
+		//playerSprite.update(delta)
 
 		if (waitingOnTransition) return
 
@@ -264,7 +263,7 @@ class DungeonMapWidget(val map: DungeonMap, val player: Player, val dungeon: Wor
 
 		renderer.begin(Gdx.app.graphics.deltaTime, offsetx, offsety)
 
-		renderer.queueSprite(playerSprite, map.playerPos.x.toFloat(), map.playerPos.y.toFloat() + 0.2f, PLAYER, 0, update = false)
+		renderer.queueSprite(playerSprite, map.playerPos.x.toFloat(), map.playerPos.y.toFloat() + 0.2f, PLAYER, 0)
 
 		for (entry in map.map.values())
 		{

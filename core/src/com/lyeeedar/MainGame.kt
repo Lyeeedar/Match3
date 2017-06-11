@@ -105,12 +105,21 @@ class MainGame : Game()
 
 				if (save.dungeon != null && save.player != null)
 				{
-					val dungeon = save.dungeon!!.get()
-					val player = save.player!!.get(playerData)
+					try
+					{
+						val dungeon = save.dungeon!!.get()
+						val player = save.player!!.get(playerData)
 
-					MapScreen.instance.setMap(dungeon, player, world.dungeons.first { it.name == dungeon.dungeonName })
+						MapScreen.instance.setMap(dungeon, player, world.dungeons.first { it.name == dungeon.dungeonName })
 
-					println("Loaded dungeon")
+						println("Loaded dungeon")
+					}
+					catch (ex: Exception)
+					{
+						System.err.println("Dungeon Load failed\n" + ex.message)
+
+						save.dungeon = null
+					}
 				}
 			}
 			catch (ex: Exception)

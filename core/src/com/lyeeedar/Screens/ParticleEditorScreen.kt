@@ -28,6 +28,7 @@ import com.lyeeedar.Renderables.SortedRenderer
 import com.lyeeedar.Renderables.Sprite.Sprite
 import com.lyeeedar.Renderables.Sprite.TilingSprite
 import com.lyeeedar.UI.GridWidget
+import com.lyeeedar.UI.addClickListener
 import com.lyeeedar.Util.*
 import javax.swing.JColorChooser
 import javax.swing.JFileChooser
@@ -65,7 +66,7 @@ class ParticleEditorScreen : AbstractScreen()
 		{
 			override fun changed(event: ChangeEvent?, actor: Actor?)
 			{
-				particle.speedMultiplier = playbackSpeedBox.selected
+			//	particle.speedMultiplier = playbackSpeedBox.selected
 			}
 
 		})
@@ -91,7 +92,7 @@ class ParticleEditorScreen : AbstractScreen()
 				nparticle.killOnAnimComplete = false
 				nparticle.setPosition(particle.position.x, particle.position.y)
 				nparticle.rotation = particle.rotation
-				nparticle.speedMultiplier = playbackSpeedBox.selected
+				//nparticle.speedMultiplier = playbackSpeedBox.selected
 				nparticle.colour.set(colour.red / 255f, colour.green / 255f, colour.blue / 255f, colour.alpha / 255f)
 				particle = nparticle
 			}
@@ -103,7 +104,7 @@ class ParticleEditorScreen : AbstractScreen()
 			nparticle.killOnAnimComplete = false
 			nparticle.setPosition(particle.position.x, particle.position.y)
 			nparticle.rotation = particle.rotation
-			nparticle.speedMultiplier = playbackSpeedBox.selected
+			//nparticle.speedMultiplier = playbackSpeedBox.selected
 			nparticle.colour.set(colour.red / 255f, colour.green / 255f, colour.blue / 255f, colour.alpha / 255f)
 			particle = nparticle
 		}
@@ -180,7 +181,7 @@ class ParticleEditorScreen : AbstractScreen()
 		shape.setAutoShapeType(true)
 		shape.begin()
 
-		particle.debug(shape, 0f, 0f, tileSize)
+		particle.debug(shape, 0f, 0f, tileSize, true, true)
 
 		shape.end()
 	}
@@ -194,8 +195,8 @@ class ParticleEditorScreen : AbstractScreen()
 
 		val dist = p1.dst(p2)
 
-		particle.animation = MoveAnimation.obtain().set(dist * particle.moveSpeed, arrayOf(p1, p2), Interpolation.linear)
-		if (particle.moveSpeed > 0f) particle.rotation = getRotation(p1, p2)
+		particle.animation = MoveAnimation.obtain().set(dist, arrayOf(p1, p2), Interpolation.linear)
+		particle.rotation = getRotation(p1, p2)
 
 		Point.freeAll(crossedTiles)
 		crossedTiles.clear()

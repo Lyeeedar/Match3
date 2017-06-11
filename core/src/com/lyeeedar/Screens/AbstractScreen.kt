@@ -5,18 +5,13 @@ import com.badlogic.gdx.InputMultiplexer
 import com.badlogic.gdx.InputProcessor
 import com.badlogic.gdx.Screen
 import com.badlogic.gdx.graphics.GL20
-import com.badlogic.gdx.graphics.OrthographicCamera
-import com.badlogic.gdx.graphics.g2d.HDRColourSpriteBatch
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.utils.Scaling
-import com.badlogic.gdx.utils.viewport.ExtendViewport
 import com.badlogic.gdx.utils.viewport.ScalingViewport
-import com.badlogic.gdx.utils.viewport.ScreenViewport
 import com.lyeeedar.Global
 import com.lyeeedar.Util.Future
-import com.lyeeedar.Util.Point
 
 /**
  * Created by Philip on 20-Mar-16.
@@ -61,6 +56,8 @@ abstract class AbstractScreen() : Screen, InputProcessor
     // ----------------------------------------------------------------------
     override fun render(delta: Float)
 	{
+		val start = System.nanoTime()
+
         stage.act()
 		Future.update(delta)
 
@@ -71,7 +68,18 @@ abstract class AbstractScreen() : Screen, InputProcessor
 
         stage.draw()
 
-		Point.freeTemp()
+		val end = System.nanoTime()
+
+		val diff = (end - start) / 1000000000f
+		frameDuration = (frameDuration + diff) / 2f
+
+		fpsAccumulator += delta
+		if (fpsAccumulator > 0.5f)
+		{
+			fpsAccumulator = 0f
+
+			fps = (1f / frameDuration).toInt()
+		}
 
         // limit fps
         sleep()
@@ -124,7 +132,7 @@ abstract class AbstractScreen() : Screen, InputProcessor
     // ----------------------------------------------------------------------
     fun baseCreate()
 	{
-        stage = Stage(ScalingViewport(Scaling.fit, 360f, 640f), SpriteBatch())
+        stage = Stage(ScalingViewport(Scaling.fit, Global.resolution.x, Global.resolution.y), SpriteBatch())
 
         mainTable = Table()
         mainTable.setFillParent(true)
@@ -180,6 +188,9 @@ abstract class AbstractScreen() : Screen, InputProcessor
     var diff: Long = 0
     var start: Long = System.currentTimeMillis()
 	var frametime: Float = -1f
+	var frameDuration: Float = 0f
+	var fps: Int = 0
+	var fpsAccumulator: Float = 0f
 
 	var debugAccumulator: Float = 0f
 

@@ -16,7 +16,7 @@ class HouseInteractionLine : AbstractHouseInteraction()
 	override fun apply(house: House, playerData: PlayerData)
 	{
 		val message = FullscreenMessage(line, "", {})
-		message.onClosed += { house.advance(playerData) }
+		message.onClosed += { house.advance(playerData); false }
 		message.show()
 	}
 

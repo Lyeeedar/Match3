@@ -3,10 +3,8 @@ package com.lyeeedar.Renderables.Animation
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.Pool
-import com.badlogic.gdx.utils.Pools
 import com.badlogic.gdx.utils.XmlReader.Element
 import com.lyeeedar.Util.Point
-import com.lyeeedar.Util.getPool
 
 class LeapAnimation : AbstractMoveAnimation
 {
@@ -59,7 +57,20 @@ class LeapAnimation : AbstractMoveAnimation
 		return this
 	}
 
-	fun set(duration: Float, p1: Point, p2: Point, height: Float): LeapAnimation
+	fun setRelative(duration: Float, p1: Point, p2: Point, height: Float): LeapAnimation
+	{
+		this.duration = duration
+		this.p1.set(p1.x.toFloat() - p2.x.toFloat(), p1.y.toFloat() - p2.y.toFloat())
+		this.p2.set(0f, 0f)
+		this.height = height
+		this.time = 0f
+
+		update(0f)
+
+		return this
+	}
+
+	fun setAbsolute(duration: Float, p1: Point, p2: Point, height: Float): LeapAnimation
 	{
 		this.duration = duration
 		this.p1.set(p1.x.toFloat(), p1.y.toFloat())
@@ -94,7 +105,13 @@ class LeapAnimation : AbstractMoveAnimation
 	var obtained: Boolean = false
 	companion object
 	{
-		private val pool: Pool<LeapAnimation> = getPool()
+		private val pool: Pool<LeapAnimation> = object : Pool<LeapAnimation>() {
+			override fun newObject(): LeapAnimation
+			{
+				return LeapAnimation()
+			}
+
+		}
 
 		@JvmStatic fun obtain(): LeapAnimation
 		{

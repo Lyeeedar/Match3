@@ -10,7 +10,6 @@ import com.lyeeedar.Player.Player
 import com.lyeeedar.Renderables.Sprite.Sprite
 import com.lyeeedar.Screens.TownScreen
 import com.lyeeedar.Util.AssetManager
-import com.lyeeedar.Util.addClickListener
 
 /**
  * Created by Philip on 29-Jul-16.

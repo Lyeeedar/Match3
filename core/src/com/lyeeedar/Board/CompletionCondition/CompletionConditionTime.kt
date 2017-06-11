@@ -1,15 +1,12 @@
 package com.lyeeedar.Board.CompletionCondition
 
-import com.badlogic.gdx.graphics.g2d.NinePatch
 import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.badlogic.gdx.scenes.scene2d.ui.Skin
 import com.badlogic.gdx.scenes.scene2d.ui.Table
-import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable
 import com.badlogic.gdx.utils.Align
 import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Board.Grid
 import com.lyeeedar.Board.LevelTheme
-import com.lyeeedar.Util.AssetManager
 
 /**
  * Created by Philip on 13-Jul-16.
@@ -48,6 +45,7 @@ class CompletionConditionTime(): AbstractCompletionCondition()
 					time -= it
 					val t = time.toInt()
 					label.setText("$t\nSeconds")
+					false
 				}
 	}
 

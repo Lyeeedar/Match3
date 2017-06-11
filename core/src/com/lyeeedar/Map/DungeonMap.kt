@@ -56,11 +56,11 @@ class DungeonMap(val seed: Long, val numRooms: Int, val depth: Int, val theme: L
 		{
 			if (room.value.isRoom)
 			{
-				room.value.onComplete += {onRoomComplete(room.value)}
+				room.value.onComplete += {onRoomComplete(room.value); false}
 			}
 		}
 
-		onRoomComplete += {objective.update(this@DungeonMap)}
+		onRoomComplete += {objective.update(this@DungeonMap); false}
 	}
 
 	val onRoomComplete = Event1Arg<DungeonMapEntry>()
@@ -106,7 +106,7 @@ class DungeonMapEntry(val point: Point)
 			field = value
 			if (value != null)
 			{
-				value.onComplete += {onComplete()}
+				value.onComplete += {onComplete(); false}
 			}
 		}
 

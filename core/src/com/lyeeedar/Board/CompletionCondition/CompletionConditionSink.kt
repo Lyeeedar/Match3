@@ -34,6 +34,8 @@ class CompletionConditionSink() : AbstractCompletionCondition()
 			val src = GridWidget.instance.pointToScreenspace(it)
 
 			Mote(src, dst, sprite, { if (count > 0) count--; label.setText("$count") })
+
+			false
 		}
 	}
 

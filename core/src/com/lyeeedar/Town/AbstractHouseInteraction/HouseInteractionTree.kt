@@ -8,7 +8,7 @@ import com.lyeeedar.Global
 import com.lyeeedar.Player.PlayerData
 import com.lyeeedar.Town.House
 import com.lyeeedar.UI.UnlockTreeWidget
-import com.lyeeedar.Util.addClickListener
+import com.lyeeedar.UI.addClickListener
 
 /**
  * Created by Philip on 11-Aug-16.

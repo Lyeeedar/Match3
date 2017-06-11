@@ -1,15 +1,12 @@
 package com.lyeeedar.Board
 
-import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.math.Interpolation
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.scenes.scene2d.actions.Actions.*
 import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.badlogic.gdx.utils.Array
-import com.badlogic.gdx.utils.IntIntMap
 import com.badlogic.gdx.utils.ObjectSet
-import com.badlogic.gdx.utils.XmlReader
 import com.lyeeedar.Direction
 import com.lyeeedar.Global
 import com.lyeeedar.Player.Ability.Ability
@@ -24,11 +21,8 @@ import com.lyeeedar.UI.GridWidget
 import com.lyeeedar.UI.PowerBar
 import com.lyeeedar.UI.shake
 import com.lyeeedar.Util.*
-import com.sun.org.apache.xpath.internal.operations.Or
-import ktx.actors.parallelTo
 import ktx.actors.plus
 import ktx.actors.then
-import java.util.*
 
 /**
  * Created by Philip on 04-Jul-16.
@@ -138,9 +132,11 @@ class Grid(val width: Int, val height: Int, val level: Level)
 			}
 
 			gainedBonusPower = false
+
+			false
 		}
 
-		onPop += fun (orb: Orb, delay: Float) {
+		onPop += fun (orb: Orb, delay: Float) : Boolean {
 
 			if (!orb.skipPowerOrb)
 			{
@@ -163,7 +159,17 @@ class Grid(val width: Int, val height: Int, val level: Level)
 					}
 				}
 			}
+
+			return false
 		}
+	}
+
+	// ----------------------------------------------------------------------
+	fun activateAbility()
+	{
+		activeAbility!!.activate(level.grid)
+		activeAbility = null
+		onTurn()
 	}
 
 	// ----------------------------------------------------------------------
@@ -686,7 +692,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 							val sprite = orb.sprite.copy()
 							sprite.renderDelay = orb.deletionEffectDelay - 0.2f
 							sprite.showBeforeRender = true
-							sprite.animation = AlphaAnimation.obtain().set(floatArrayOf(1f, 0f), sprite.colour, 0.2f)
+							sprite.animation = AlphaAnimation.obtain().set(0.2f, 1f, 0f, sprite.colour)
 							tile.effects.add(sprite)
 						}
 					}
@@ -1168,7 +1174,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 				{
 					if (key != -1)
 					{
-						addMatch(Point.obtainTemp().set(sx,y), Point.obtainTemp().set(x-1,y))
+						addMatch(Point.obtain().set(sx,y), Point.obtain().set(x-1,y))
 					}
 
 					key = -1
@@ -1180,7 +1186,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 						// if we were matching, close matching
 						if (key != -1)
 						{
-							addMatch(Point.obtainTemp().set(sx,y), Point.obtainTemp().set(x-1,y))
+							addMatch(Point.obtain().set(sx,y), Point.obtain().set(x-1,y))
 						}
 
 						sx = x
@@ -1191,7 +1197,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 
 			if (key != -1)
 			{
-				addMatch(Point.obtainTemp().set(sx,y), Point.obtainTemp().set(width-1,y))
+				addMatch(Point.obtain().set(sx,y), Point.obtain().set(width-1,y))
 			}
 		}
 
@@ -1210,7 +1216,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 				{
 					if (key != -1)
 					{
-						addMatch(Point.obtainTemp().set(x,sy), Point.obtainTemp().set(x,y-1))
+						addMatch(Point.obtain().set(x,sy), Point.obtain().set(x,y-1))
 					}
 
 					key = -1
@@ -1222,7 +1228,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 						// if we were matching, close matching
 						if (key != -1)
 						{
-							addMatch(Point.obtainTemp().set(x,sy), Point.obtainTemp().set(x,y-1))
+							addMatch(Point.obtain().set(x,sy), Point.obtain().set(x,y-1))
 						}
 
 						sy = y
@@ -1233,7 +1239,7 @@ class Grid(val width: Int, val height: Int, val level: Level)
 
 			if (key != -1)
 			{
-				addMatch(Point.obtainTemp().set(x,sy), Point.obtainTemp().set(x,height-1))
+				addMatch(Point.obtain().set(x,sy), Point.obtain().set(x,height-1))
 			}
 		}
 

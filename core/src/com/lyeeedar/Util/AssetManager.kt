@@ -1,32 +1,25 @@
 package com.lyeeedar.Util
 
-import java.nio.IntBuffer
-import java.util.HashMap
-
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.audio.Sound
-import com.badlogic.gdx.files.FileHandle
 import com.badlogic.gdx.graphics.Color
-import com.badlogic.gdx.graphics.GL20
-import com.badlogic.gdx.graphics.Pixmap
-import com.badlogic.gdx.graphics.Pixmap.Format
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.Texture.TextureFilter
 import com.badlogic.gdx.graphics.g2d.BitmapFont
-import com.badlogic.gdx.graphics.g2d.PixmapPacker
 import com.badlogic.gdx.graphics.g2d.TextureAtlas
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter
 import com.badlogic.gdx.utils.Array
-import com.badlogic.gdx.utils.BufferUtils
 import com.badlogic.gdx.utils.ObjectMap
 import com.badlogic.gdx.utils.XmlReader.Element
 import com.lyeeedar.Renderables.Animation.AbstractAnimation
 import com.lyeeedar.Renderables.Particle.ParticleEffect
+import com.lyeeedar.Renderables.Renderable
 import com.lyeeedar.Renderables.Sprite.DirectionalSprite
 import com.lyeeedar.Renderables.Sprite.Sprite
 import com.lyeeedar.Renderables.Sprite.TilingSprite
+import java.util.*
 
 class AssetManager
 {
@@ -107,7 +100,7 @@ class AssetManager
 			}
 
 			var atlasName = path
-			atlasName = atlasName.replaceFirst("Sprites/".toRegex(), "")
+			if (atlasName.startsWith("Sprites/")) atlasName = atlasName.replaceFirst("Sprites/".toRegex(), "")
 			atlasName = atlasName.replace(".png", "")
 
 			val region = prepackedAtlas.findRegion(atlasName)
@@ -116,7 +109,8 @@ class AssetManager
 				val textureRegion = TextureRegion(region)
 				loadedTextureRegions.put(path, textureRegion)
 				return textureRegion
-			} else
+			}
+			else
 			{
 				loadedTextureRegions.put(path, null)
 				return null
@@ -166,10 +160,9 @@ class AssetManager
 
 			effect.colour.set(colour)
 
-			effect.speedMultiplier = xml.getFloat("SpeedMultiplier", 1f)
-
 			effect.flipX = xml.getBoolean("FlipX", false)
 			effect.flipY = xml.getBoolean("FlipY", false)
+			effect.useFacing = xml.getBoolean("UseFacing", true)
 
 			return effect
 		}
@@ -293,6 +286,13 @@ class AssetManager
 					xml.getBoolean("DrawActualSize", false))
 
 			sprite.repeatDelay = xml.getFloat("RepeatDelay", 0f)
+			sprite.frameBlend = xml.getBoolean("Blend", false)
+
+			if (xml.getBoolean("RandomStart", false))
+			{
+				sprite.animationState.texIndex = Random.random(sprite.textures.size)
+				sprite.animationAccumulator = Random.random(sprite.animationDelay)
+			}
 
 			val animationElement = xml.getChildByName("Animation")
 			if (animationElement != null)
@@ -369,7 +369,7 @@ class AssetManager
 			return TilingSprite.load(xml)
 		}
 
-		fun loadDirectionalSprite(xml: Element): DirectionalSprite
+		fun loadDirectionalSprite(xml: Element, size: Int = 1): DirectionalSprite
 		{
 			val directionalSprite = DirectionalSprite()
 
@@ -377,14 +377,33 @@ class AssetManager
 			for (i in 0.. anims.childCount-1)
 			{
 				val el = anims.getChild(i)
-				val name = el.name
+				val name = el.get("Name").toLowerCase()
 				val up = AssetManager.loadSprite(el.getChildByName("Up"))
 				val down = AssetManager.loadSprite(el.getChildByName("Down"))
+
+				up.size[0] = size
+				up.size[1] = size
+
+				down.size[0] = size
+				down.size[1] = size
 
 				directionalSprite.addAnim(name, up, down)
 			}
 
 			return directionalSprite
+		}
+
+		fun loadRenderable(xml: Element): Renderable
+		{
+			val type = xml.getAttribute("meta:RefKey", null)?.toUpperCase() ?: xml.name.toUpperCase()
+
+			return when(type)
+			{
+				"SPRITE" -> AssetManager.loadSprite(xml)
+				"PARTICLEEFFECT", "PARTICLE" -> AssetManager.loadParticleEffect(xml)
+				"TILINGSPRITE" -> AssetManager.loadTilingSprite(xml)
+				else -> throw Exception("Unknown renderable type '$type'!")
+			};
 		}
 	}
 }
